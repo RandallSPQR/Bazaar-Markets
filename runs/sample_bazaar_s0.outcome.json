@@ -1,0 +1,79 @@
+{
+ "buyer_surplus_mean_cents": -888.5947616511288,
+ "buyer_surplus_total_cents": -133289.21424766933,
+ "buyers_arrived": 150,
+ "catches": 14,
+ "deceptive_share_impressions": 0.2013241785188818,
+ "deceptive_share_sales_units": 0.5978260869565217,
+ "decisions": {
+  "buyer": 473,
+  "seller": 10218
+ },
+ "empty_handed_share": 0.5066666666666667,
+ "fallbacks": {
+  "buyer": 0,
+  "seller": 0
+ },
+ "false_claim_share_impressions": 0.2013241785188818,
+ "impressions": 16312,
+ "impressions_by_channel": {
+  "sign": 5770,
+  "whisper": 4725,
+  "yell": 5817
+ },
+ "impressions_by_stype": {
+  "deceptive": 3284,
+  "genuine": 6951,
+  "seconds": 6077
+ },
+ "inspection_spend_cents": 10720,
+ "inspections": 47,
+ "payments_total_cents": 560000,
+ "purchases": 74,
+ "seller_by_type": {
+  "deceptive": {
+   "ad_spend_cents": 26007,
+   "catches": 14,
+   "cost_cents": 137082,
+   "penalties_cents": 86400,
+   "profit_cents": 53711,
+   "profit_per_stall_cents": 3580.733333333333,
+   "revenue_cents": 303200,
+   "stalls": 15,
+   "units_sold": 55
+  },
+  "genuine": {
+   "ad_spend_cents": 47801,
+   "catches": 0,
+   "cost_cents": 196284,
+   "penalties_cents": 0,
+   "profit_cents": 12715,
+   "profit_per_stall_cents": 706.3888888888889,
+   "revenue_cents": 256800,
+   "stalls": 18,
+   "units_sold": 37
+  },
+  "seconds": {
+   "ad_spend_cents": 40919,
+   "catches": 0,
+   "cost_cents": 0,
+   "penalties_cents": 0,
+   "profit_cents": -40919,
+   "profit_per_stall_cents": -2727.9333333333334,
+   "revenue_cents": 0,
+   "stalls": 15,
+   "units_sold": 0
+  }
+ },
+ "seller_revenue_total_cents": 560000,
+ "shortfall_ceiling": 0.0,
+ "shortfall_floor": 0.6774193548387096,
+ "shortfall_norm": 0.18211068211068204,
+ "shortfall_rate": 0.5540540540540541,
+ "shortfall_rate_units": 0.5978260869565217,
+ "surplus_ceiling": 1708.8,
+ "surplus_floor": -666.484235237762,
+ "surplus_norm": -0.09350903067444215,
+ "task_complete_share": 0.3466666666666667,
+ "units_bought": 92
+}

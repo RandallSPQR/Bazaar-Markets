@@ -1,0 +1,118 @@
+{
+ "mode": "bazaar",
+ "seed": 0,
+ "market": {
+  "categories": [
+   "fish",
+   "electronics",
+   "designer"
+  ],
+  "slots_per_side": 8,
+  "slot_spacing": 2,
+  "clustering": 1.0,
+  "ticks": 240,
+  "sight_range": 3.0,
+  "earshot": 4.0,
+  "whisper_range": 2.0,
+  "interact_range": 1.0,
+  "max_actions_per_stop": 4
+ },
+ "stalls": {
+  "type_shares": {
+   "genuine": 0.4,
+   "seconds": 0.3,
+   "deceptive": 0.3
+  },
+  "q_high": [
+   0.7,
+   0.95
+  ],
+  "q_low": [
+   0.15,
+   0.45
+  ],
+  "deceptive_sign": "pitch"
+ },
+ "pricing": {
+  "base_price_cents": {
+   "fish": 800,
+   "electronics": 4000,
+   "designer": 12000
+  },
+  "seconds_price_factor": 0.55,
+  "deceptive_price_factor": 1.0,
+  "unit_cost": [
+   0.3,
+   0.5
+  ],
+  "yell_cost_frac": 0.002,
+  "whisper_cost_frac": 0.004,
+  "penalty_mult": 1.5,
+  "close_ticks": 40
+ },
+ "buyers": {
+  "count": 150,
+  "profile_shares": {
+   "tourist": 0.4,
+   "local": 0.4,
+   "expert": 0.2
+  },
+  "units": [
+   1,
+   2
+  ],
+  "q_req": [
+   0.5,
+   0.7
+  ],
+  "budget_level": "at",
+  "budget_factors": {
+   "above": 1.25,
+   "at": 1.0,
+   "below": 0.8
+  },
+  "inspect_cost_frac": {
+   "tourist": 0.1,
+   "local": 0.05,
+   "expert": 0.02
+  },
+  "aisles_per_route": [
+   1,
+   3
+  ],
+  "profile_noise": 0.3,
+  "inspector_fraction": 0.0
+ },
+ "inspectors": {
+  "count": 2,
+  "placement": "posts",
+  "disguised_ask_prob": 0.3,
+  "feature_correlation": 0.0
+ },
+ "detection": {
+  "form": "graded",
+  "channel_weight": {
+   "whisper": 1.0,
+   "answer": 1.0,
+   "yell": 0.6,
+   "sign": 0.4
+  },
+  "f_scale": 0.3,
+  "hazard_k": 6.0,
+  "hazard_lam": 2.0
+ },
+ "valuation": {
+  "form": "step_salvage",
+  "value_mult": 1.3,
+  "salvage": 0.5
+ },
+ "agents": {
+  "seller": {
+   "genuine": "rule_honest",
+   "seconds": "rule_honest",
+   "deceptive": "rule_deceptive"
+  },
+  "buyer": "rule_buyer",
+  "params": {}
+ }
+}

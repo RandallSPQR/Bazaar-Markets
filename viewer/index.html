@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bazaar Viewer</title>
+<style>
+:root {
+  --bg: #f6f4ef; --panel: #fffdf8; --ink: #23211d; --muted: #6f6a61; --line: #ddd7cb;
+  --aisle: #ece7dc; --corridor: #e4ddcf;
+  --genuine: #2f8f6b; --seconds: #c08a1e; --deceptive: #c2423a; --closed: #9a958c;
+  --tourist: #3f6fb5; --local: #7a5bb0; --expert: #1f8a96; --inspector: #1d1b18;
+  --truth: #5b84c4; --false: #d0463b; --buy: #2f8f6b; --short: #d9822b; --accent: #23211d;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171614; --panel: #201f1c; --ink: #ece8df; --muted: #a29c91; --line: #37342f;
+    --aisle: #2a2824; --corridor: #312e29;
+    --genuine: #4fb88f; --seconds: #e0a83c; --deceptive: #e2625a; --closed: #6c675f;
+    --tourist: #6f9be0; --local: #a688db; --expert: #4cbac6; --inspector: #f3efe6;
+    --truth: #7fa6e3; --false: #f06a5f; --buy: #4fb88f; --short: #f0a050; --accent: #ece8df;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171614; --panel: #201f1c; --ink: #ece8df; --muted: #a29c91; --line: #37342f;
+  --aisle: #2a2824; --corridor: #312e29;
+  --genuine: #4fb88f; --seconds: #e0a83c; --deceptive: #e2625a; --closed: #6c675f;
+  --tourist: #6f9be0; --local: #a688db; --expert: #4cbac6; --inspector: #f3efe6;
+  --truth: #7fa6e3; --false: #f06a5f; --buy: #4fb88f; --short: #f0a050; --accent: #ece8df;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 14px 16px 6px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+h1 { font-size: 18px; margin: 0; font-weight: 650; letter-spacing: .2px; }
+#source { color: var(--muted); font-size: 13px; }
+.bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 6px 16px 10px; }
+button, select, label.file { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+button:hover, label.file:hover { border-color: var(--muted); }
+label.file input { display: none; }
+#scrub { flex: 1 1 200px; min-width: 140px; accent-color: var(--accent); }
+#tick { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 92px; text-align: right; }
+main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; padding: 0 16px 16px; }
+@media (max-width: 860px) { main { grid-template-columns: minmax(0, 1fr); } }
+#stage { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px; min-width: 0; }
+canvas { display: block; width: 100%; }
+aside { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin: 0 0 6px; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+td { padding: 2px 0; } td:last-child { text-align: right; }
+.legend { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; font-size: 13px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+#feed { font-size: 12.5px; max-height: 220px; overflow: auto; margin: 0; padding: 0; list-style: none; }
+#feed li { padding: 2px 0; border-bottom: 1px dashed var(--line); }
+#feed li:last-child { border-bottom: 0; }
+.note { color: var(--muted); font-size: 12.5px; margin: 0; }
+.err { color: var(--false); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Bazaar Viewer</h1>
+  <span id="source">demo</span>
+</header>
+<div class="bar">
+  <button id="demo" title="Generate a new demo market (JS rules, not the engine)">New demo</button>
+  <label class="file">Load engine log (.jsonl)<input id="file" type="file" accept=".jsonl,.json,.txt"></label>
+  <button id="play">Pause</button>
+  <select id="speed" aria-label="Playback speed">
+    <option value="2">0.5×</option><option value="4" selected>1×</option><option value="8">2×</option><option value="16">4×</option>
+  </select>
+  <input id="scrub" type="range" min="0" max="0" value="0" aria-label="Tick">
+  <span id="tick">t 0</span>
+</div>
+<main>
+  <div id="stage"><canvas id="cv" aria-label="Market playback"></canvas></div>
+  <aside>
+    <div class="card"><h2>So far</h2><table id="stats"></table></div>
+    <div class="card" id="legend"><h2>Legend</h2>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--genuine)"></i>genuine stall</span>
+        <span><i class="sw" style="background:var(--tourist);border-radius:50%"></i>tourist</span>
+        <span><i class="sw" style="background:var(--seconds)"></i>honest seconds</span>
+        <span><i class="sw" style="background:var(--local);border-radius:50%"></i>local</span>
+        <span><i class="sw" style="background:var(--deceptive)"></i>deceptive stall</span>
+        <span><i class="sw" style="background:var(--expert);border-radius:50%"></i>expert</span>
+        <span><i class="sw" style="background:var(--closed)"></i>closed (caught)</span>
+        <span><i class="sw" style="background:var(--inspector);transform:rotate(45deg) scale(.8)"></i>inspector</span>
+        <span><i class="sw" style="background:var(--truth)"></i>true claim</span>
+        <span><i class="sw" style="background:var(--false)"></i>false claim</span>
+      </div>
+      <p class="note" style="margin-top:6px">Rings are yells, dashed lines whispers, solid lines answers. A ringed buyer is also an inspector.</p>
+    </div>
+    <div class="card"><h2>Events</h2><ul id="feed"></ul></div>
+  </aside>
+</main>
+<script>
+"use strict";
+// ---------------------------------------------------------------- state
+const S = { mode: "bazaar", world: null, frames: [], m0: null, outcome: null, cum: [], i: 0, sub: 0, playing: true, speed: 4 };
+const $ = (id) => document.getElementById(id);
+const cv = $("cv"), ctx = cv.getContext("2d");
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+// ---------------------------------------------------------------- log loading
+function loadLog(text, name) {
+  const header = [], world = [], frames = [], gens = [];
+  let outcome = null;
+  for (const line of text.split("\n")) {
+    if (!line) continue;
+    // Skip obs/raw/action lines without parsing them; they dominate file size.
+    if (line.includes('"ev":"delta"')) frames.push(JSON.parse(line));
+    else if (line.includes('"ev":"generation"')) gens.push(JSON.parse(line));
+    else if (line.includes('"ev":"world"')) world.push(JSON.parse(line));
+    else if (line.includes('"ev":"header"')) header.push(JSON.parse(line));
+    else if (line.includes('"ev":"outcome"')) outcome = JSON.parse(line);
+  }
+  if (!header.length) throw new Error("no header event: is this an engine log?");
+  const h = header[0];
+  if (h.mode === "m0") {
+    S.mode = "m0"; S.m0 = { header: h, gens }; S.outcome = outcome; S.frames = gens;
+  } else {
+    if (!world.length) throw new Error("no world event");
+    S.mode = "bazaar"; S.world = normaliseWorld(world[0], h.config); S.frames = frames; S.outcome = outcome;
+  }
+  $("source").textContent = `${name} · ${h.mode} · seed ${h.config.seed} · engine ${h.engine_version}`;
+  start();
+}
+
+function normaliseWorld(w, config) {
+  const people = {};
+  for (const p of w.people) people[p.pid] = p;
+  return { W: w.grid.W, H: w.grid.H, aisle_y: w.grid.aisle_y, categories: w.grid.categories,
+           stalls: w.stalls, people, earshot: config.market.earshot };
+}
+
+// Cumulative counters per frame, for the stats panel.
+function accumulate() {
+  S.cum = [];
+  if (S.mode !== "bazaar") return;
+  const bySid = Object.fromEntries(S.world.stalls.map((s) => [s.sid, s]));
+  let c = { imp: 0, dec: 0, fals: 0, units: 0, decUnits: 0, buys: 0, short: 0, catches: 0, inspects: 0, spent: 0 };
+  for (const f of S.frames) {
+    c = { ...c };
+    for (const m of f.msgs) {
+      const n = m.to.length;
+      c.imp += n;
+      if (bySid[m.from].stype === "deceptive") c.dec += n;
+      if (m.false) c.fals += n;
+    }
+    for (const b of f.buys) {
+      c.buys++; c.units += b.units; c.spent += b.amount_cents;
+      if (b.stype === "deceptive") c.decUnits += b.units;
+      if (b.shortfall) c.short++;
+    }
+    c.catches += f.catches.length; c.inspects += (f.inspects || []).length;
+    S.cum.push(c);
+  }
+}
+
+// ---------------------------------------------------------------- demo (own JS rules)
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a);
+  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+function makeDemo(seed) {
+  // A simplified market with the same layout and event format as the engine.
+  // Rules here are illustrative only; research results come from the Python engine.
+  const R = mulberry32(seed), cats = ["fish", "electronics", "designer"], spacing = 2, per = 8;
+  const W = 2 + spacing * per + 1, H = 9, aisle_y = [1, 4, 7], ticks = 240, close = 40;
+  const stalls = [];
+  let n = 0;
+  cats.forEach((cat, k) => {
+    const types = [];
+    for (let i = 0; i < 16; i++) types.push(i < 6 ? "genuine" : i < 11 ? "seconds" : "deceptive");
+    types.sort(() => R() - 0.5);
+    let j = 0;
+    for (const y of [3 * k, 3 * k + 2]) for (let i = 0; i < per; i++) {
+      const stype = types[j++], hi = 0.7 + 0.25 * R(), lo = 0.15 + 0.3 * R();
+      stalls.push({ sid: "s" + String(n++).padStart(2, "0"), category: cat, stype, pos: [2 + spacing * i, y],
+        q_true: stype === "genuine" ? hi : lo, q_pitch: stype === "seconds" ? lo : hi, closed_until: 0, seen: new Set() });
+    }
+  });
+  const people = {}, walkers = [];
+  const route = (aisles, left) => { let side = left ? 0 : W - 1; const p = [[side, aisle_y[aisles[0]]]];
+    for (const k of aisles) { const y = aisle_y[k];
+      while (p.at(-1)[1] !== y) p.push([side, p.at(-1)[1] + Math.sign(y - p.at(-1)[1])]);
+      const to = side === 0 ? W - 1 : 0; while (p.at(-1)[0] !== to) p.push([p.at(-1)[0] + Math.sign(to - p.at(-1)[0]), y]); side = to; }
+    return p; };
+  const profs = ["tourist", "local", "expert"];
+  for (let i = 0; i < 110; i++) {
+    const k = [0, 1, 2].sort(() => R() - 0.5).slice(0, 1 + Math.floor(R() * 3));
+    const pid = "p" + String(i).padStart(3, "0"), profile = R() < 0.4 ? "tourist" : R() < 0.67 ? "local" : "expert";
+    people[pid] = { pid, kind: "buyer", profile, is_inspector: false };
+    walkers.push({ pid, route: route(k, R() < 0.5), arrive: Math.floor(i * 1.7), step: 0, stay: 0, want: cats[Math.floor(R() * 3)],
+      qreq: 0.5 + 0.2 * R(), done: false });
+  }
+  for (let j = 0; j < 3; j++) {
+    const pid = "p" + String(200 + j); people[pid] = { pid, kind: "inspector", profile: profs[Math.floor(R() * 3)], is_inspector: true };
+    walkers.push({ pid, route: [[3 + 6 * j, aisle_y[j]]], arrive: 0, step: 0, stay: 0, insp: true });
+  }
+  const d = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const frames = [];
+  for (let t = 0; t < ticks; t++) {
+    const act = walkers.filter((w) => w.arrive <= t && w.step < w.route.length);
+    const f = { t, pos: {}, msgs: [], buys: [], catches: [], closed: [], inspects: [] };
+    for (const s of stalls) {
+      if (t < s.closed_until) continue;
+      const near = act.filter((w) => d(w.route[w.step], s.pos) <= 4);
+      const seers = near.filter((w) => d(w.route[w.step], s.pos) <= 3 && !s.seen.has(w.pid));
+      seers.forEach((w) => s.seen.add(w.pid));
+      const lie = s.stype === "deceptive";
+      if (seers.length) f.msgs.push({ from: s.sid, ch: "sign", false: lie, q: s.q_pitch, to: seers.map((w) => w.pid) });
+      if (near.length >= 3 && (t + s.pos[0]) % 8 === 0) f.msgs.push({ from: s.sid, ch: "yell", false: lie, q: s.q_pitch, to: near.map((w) => w.pid) });
+      const close1 = near.find((w) => d(w.route[w.step], s.pos) <= 1.5 && !w.insp && people[w.pid].profile !== "expert");
+      if (close1 && R() < 0.25) f.msgs.push({ from: s.sid, ch: "whisper", false: lie, q: s.q_pitch, to: [close1.pid] });
+      if (lie) for (const w of near) if (w.insp && R() < 0.015) {
+        s.closed_until = t + 1 + close; f.catches.push({ stall: s.sid, by: w.pid, channel: "yell" }); break; }
+    }
+    for (const w of act) {
+      if (!w.insp && !w.done) {
+        const here = stalls.filter((s) => s.category === w.want && t >= s.closed_until && d(w.route[w.step], s.pos) <= 1);
+        const s = here.find((s) => s.q_pitch >= w.qreq);
+        if (s && w.stay === 0) {
+          w.done = true; w.stay = 1;
+          f.buys.push({ buyer: w.pid, stall: s.sid, stype: s.stype, units: 1, amount_cents: 1000, shortfall: s.q_true < w.qreq });
+        }
+      }
+      if (w.stay > 0) w.stay--; else if (!w.insp) w.step++;
+      if (w.step < w.route.length) f.pos[w.pid] = w.route[w.step];
+    }
+    f.closed = stalls.filter((s) => t + 1 < s.closed_until).map((s) => s.sid);
+    frames.push(f);
+  }
+  S.mode = "bazaar";
+  S.world = { W, H, aisle_y, categories: cats, stalls: stalls.map(({ seen, closed_until, ...s }) => s), people, earshot: 4 };
+  S.frames = frames; S.outcome = null;
+  $("source").textContent = `demo · seed ${seed} · JS rules (illustrative, not the engine)`;
+  start();
+}
+
+// ---------------------------------------------------------------- playback
+function start() {
+  accumulate();
+  $("legend").style.display = S.mode === "m0" ? "none" : "";
+  S.i = 0; S.sub = 0; $("feed").innerHTML = "";
+  $("scrub").max = Math.max(0, S.frames.length - 1); $("scrub").value = 0;
+  S.playing = true; $("play").textContent = "Pause";
+  resize(); render();
+}
+
+let last = 0;
+function loop(ts) {
+  const dt = Math.min(0.1, (ts - last) / 1000); last = ts;
+  if (S.playing && S.frames.length) {
+    S.sub += dt * S.speed;
+    while (S.sub >= 1) {
+      S.sub -= 1;
+      if (S.i < S.frames.length - 1) { S.i++; pushFeed(S.frames[S.i]); }
+      else { S.playing = false; $("play").textContent = "Play"; S.sub = 0; }
+    }
+    $("scrub").value = S.i;
+  }
+  render();
+  requestAnimationFrame(loop);
+}
+
+function pushFeed(f) {
+  if (S.mode !== "bazaar") return;
+  const feed = $("feed"), bySid = Object.fromEntries(S.world.stalls.map((s) => [s.sid, s]));
+  const add = (html) => { const li = document.createElement("li"); li.innerHTML = html; feed.prepend(li);
+    while (feed.children.length > 60) feed.lastChild.remove(); };
+  for (const c of f.catches) add(`t${f.t} <b style="color:var(--false)">caught</b> ${bySid[c.stall].brand || c.stall} (${c.channel})`);
+  for (const b of f.buys) add(`t${f.t} ${b.buyer} bought ${b.units}× at ${bySid[b.stall].brand || b.stall}` +
+    (b.shortfall ? ` <span style="color:var(--short)">shortfall</span>` : ""));
+}
+
+// ---------------------------------------------------------------- rendering
+function resize() {
+  const dpr = window.devicePixelRatio || 1, w = cv.parentElement.clientWidth - 16;
+  const aspect = S.mode === "m0" || !S.world ? 0.5 : (S.world.H + 1.2) / (S.world.W + 3.4);
+  cv.style.height = Math.round(w * aspect) + "px";
+  cv.width = Math.round(w * dpr); cv.height = Math.round(w * aspect * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener("resize", () => { resize(); render(); });
+
+function render() {
+  const w = cv.width / (window.devicePixelRatio || 1), h = cv.height / (window.devicePixelRatio || 1);
+  ctx.clearRect(0, 0, w, h);
+  if (!S.frames.length) return;
+  $("tick").textContent = (S.mode === "m0" ? "gen " : "t ") + S.frames[S.i][S.mode === "m0" ? "g" : "t"] + " / " + (S.frames.length - 1);
+  if (S.mode === "m0") return renderM0(w, h);
+  renderBazaar(w, h);
+  renderStats();
+}
+
+function renderBazaar(w, h) {
+  const Wd = S.world, LBL = 3.4, cell = Math.min(w / (Wd.W + LBL), h / (Wd.H + 1.2)), ox = (w - cell * (Wd.W + LBL)) / 2 + cell / 2, oy = cell * 0.9;
+  const X = (x) => ox + x * cell, Y = (y) => oy + y * cell;
+  const f = S.frames[S.i], prev = S.frames[Math.max(0, S.i - 1)], nxt = S.frames[Math.min(S.frames.length - 1, S.i + 1)];
+  const k = S.playing ? S.sub : 0;
+  // aisles and corridors
+  ctx.fillStyle = css("--aisle");
+  for (const y of Wd.aisle_y) ctx.fillRect(X(-0.5), Y(y - 0.45), cell * Wd.W, cell * 0.9);
+  ctx.fillStyle = css("--corridor");
+  ctx.fillRect(X(-0.45), Y(-0.5), cell * 0.9, cell * Wd.H); ctx.fillRect(X(Wd.W - 1.45), Y(-0.5), cell * 0.9, cell * Wd.H);
+  ctx.fillStyle = css("--muted"); ctx.font = `${Math.max(10, cell * 0.36)}px system-ui`; ctx.textBaseline = "middle";
+  // aisle labels: the dominant category in each aisle
+  for (const y of Wd.aisle_y) {
+    const counts = {};
+    for (const s of Wd.stalls) if (Math.abs(s.pos[1] - y) === 1) counts[s.category] = (counts[s.category] || 0) + 1;
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    ctx.fillText(top.length > 1 && top[1][1] > 2 ? "mixed" : top[0][0], X(Wd.W - 0.25), Y(y));
+  }
+  const closed = new Set(f.closed), pos = {};
+  for (const [pid, p] of Object.entries(f.pos)) {
+    const q = nxt.pos[pid] || p;
+    pos[pid] = [p[0] + (q[0] - p[0]) * k, p[1] + (q[1] - p[1]) * k];
+  }
+  // stalls
+  const bySid = {};
+  for (const s of Wd.stalls) {
+    bySid[s.sid] = s;
+    const c = closed.has(s.sid) ? css("--closed") : css("--" + s.stype), sz = cell * 0.78;
+    ctx.fillStyle = c; ctx.beginPath(); ctx.roundRect(X(s.pos[0]) - sz / 2, Y(s.pos[1]) - sz / 2, sz, sz, cell * 0.12); ctx.fill();
+    ctx.fillStyle = css("--panel"); ctx.textAlign = "center";
+    ctx.font = `600 ${Math.max(9, cell * 0.38)}px system-ui`;
+    ctx.fillText(s.category[0].toUpperCase(), X(s.pos[0]), Y(s.pos[1]) + 1);
+    if (closed.has(s.sid)) { ctx.strokeStyle = css("--panel"); ctx.lineWidth = 2; ctx.beginPath();
+      ctx.moveTo(X(s.pos[0]) - sz / 3, Y(s.pos[1]) - sz / 3); ctx.lineTo(X(s.pos[0]) + sz / 3, Y(s.pos[1]) + sz / 3); ctx.stroke(); }
+  }
+  ctx.textAlign = "left";
+  // messages of this tick
+  const fade = 1 - k;
+  for (const m of f.msgs) {
+    if (m.ch === "sign") continue;
+    const s = bySid[m.from], col = m.false ? css("--false") : css("--truth");
+    ctx.strokeStyle = col; ctx.globalAlpha = 0.75 * fade; ctx.lineWidth = 1.5;
+    if (m.ch === "yell") {
+      ctx.beginPath(); ctx.arc(X(s.pos[0]), Y(s.pos[1]), cell * (0.6 + (Wd.earshot - 0.6) * (0.35 + 0.65 * k)), 0, 7); ctx.stroke();
+    } else {
+      for (const pid of m.to) { const p = pos[pid] || f.pos[pid]; if (!p) continue;
+        ctx.setLineDash(m.ch === "whisper" ? [4, 3] : []);
+        ctx.beginPath(); ctx.moveTo(X(s.pos[0]), Y(s.pos[1])); ctx.lineTo(X(p[0]), Y(p[1])); ctx.stroke(); }
+      ctx.setLineDash([]);
+    }
+  }
+  ctx.globalAlpha = 1;
+  // people
+  for (const [pid, p] of Object.entries(pos)) {
+    const meta = Wd.people[pid] || { kind: "buyer", profile: "tourist" }, x = X(p[0]), y = Y(p[1]), r = cell * 0.2;
+    if (meta.kind === "inspector") {
+      ctx.fillStyle = css("--inspector"); ctx.beginPath();
+      ctx.moveTo(x, y - r * 1.4); ctx.lineTo(x + r * 1.4, y); ctx.lineTo(x, y + r * 1.4); ctx.lineTo(x - r * 1.4, y); ctx.closePath(); ctx.fill();
+    } else {
+      ctx.fillStyle = css("--" + meta.profile); ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+      if (meta.is_inspector) { ctx.strokeStyle = css("--inspector"); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, r + 2.5, 0, 7); ctx.stroke(); }
+    }
+  }
+  // purchases and catches
+  for (const b of f.buys) { const p = pos[b.buyer] || f.pos[b.buyer]; if (!p) continue;
+    ctx.strokeStyle = b.shortfall ? css("--short") : css("--buy"); ctx.lineWidth = 2.5; ctx.globalAlpha = fade;
+    ctx.beginPath(); ctx.arc(X(p[0]), Y(p[1]), cell * (0.3 + 0.4 * k), 0, 7); ctx.stroke(); }
+  for (const c of f.catches) { const s = bySid[c.stall];
+    ctx.strokeStyle = css("--false"); ctx.lineWidth = 3; ctx.globalAlpha = fade;
+    ctx.beginPath(); ctx.arc(X(s.pos[0]), Y(s.pos[1]), cell * (0.5 + 1.2 * k), 0, 7); ctx.stroke(); }
+  ctx.globalAlpha = 1;
+}
+
+function pct(a, b) { return b ? (100 * a / b).toFixed(1) + "%" : "–"; }
+
+function renderStats() {
+  const c = S.cum[S.i]; if (!c) return;
+  const rows = [
+    ["Impressions", c.imp.toLocaleString()],
+    ["Deceptive share of impressions", pct(c.dec, c.imp)],
+    ["False-claim share", pct(c.fals, c.imp)],
+    ["Purchases", c.buys],
+    ["Deceptive share of units", pct(c.decUnits, c.units)],
+    ["Shortfall rate", pct(c.short, c.buys)],
+    ["Inspections", c.inspects],
+    ["Catches", c.catches],
+  ];
+  if (S.outcome && S.i === S.frames.length - 1 && S.outcome.buyer_surplus_mean_cents != null)
+    rows.push(["Mean buyer surplus (final)", "$" + (S.outcome.buyer_surplus_mean_cents / 100).toFixed(2)]);
+  $("stats").innerHTML = rows.map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("");
+}
+
+function renderM0(w, h) {
+  const g = S.frames, pad = { l: 44, r: 16, t: 18, b: 30 }, iw = w - pad.l - pad.r, ih = h - pad.t - pad.b;
+  const X = (i) => pad.l + iw * i / Math.max(1, g.length - 1), Y = (v) => pad.t + ih * (1 - v);
+  ctx.strokeStyle = css("--line"); ctx.fillStyle = css("--muted"); ctx.lineWidth = 1; ctx.font = "12px system-ui";
+  for (const v of [0, 0.25, 0.5, 0.75, 1]) { ctx.beginPath(); ctx.moveTo(pad.l, Y(v)); ctx.lineTo(w - pad.r, Y(v)); ctx.stroke();
+    ctx.fillText((v * 100) + "%", 6, Y(v) + 4); }
+  ctx.fillText("generation", w - pad.r - 64, h - 8);
+  const line = (key, col, upto) => { ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath();
+    g.slice(0, upto + 1).forEach((r, i) => { const v = r[key] ?? 0; i ? ctx.lineTo(X(i), Y(v)) : ctx.moveTo(X(i), Y(v)); }); ctx.stroke(); };
+  line("dec_pop", css("--seconds"), S.i); line("dec_share_imp", css("--deceptive"), S.i);
+  ctx.fillStyle = css("--deceptive"); ctx.fillText("deceptive share of impressions", pad.l + 8, pad.t + 12);
+  ctx.fillStyle = css("--seconds"); ctx.fillText("deceptive share of advertisers", pad.l + 8, pad.t + 28);
+  const r = g[S.i], cfg = S.m0.header.config;
+  $("stats").innerHTML = [["Enforcer mode", cfg.enforcer_mode], ["Enforcer rate", (cfg.f_enf * 100) + "%"],
+    ["Deceptive share (this gen)", pct(r.dec_share_imp, 1)], ["Deceptive advertisers", pct(r.dec_pop, 1)], ["Fill rate", pct(r.fill, 1)],
+    ["Catches (this gen)", r.catches], ["Headline (last " + (S.outcome?.last ?? 30) + ")", S.outcome ? pct(S.outcome.dec_share_imp_last, 1) : "–"]]
+    .map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join("");
+}
+
+// ---------------------------------------------------------------- controls
+$("play").onclick = () => { if (S.i >= S.frames.length - 1) S.i = 0; S.playing = !S.playing; $("play").textContent = S.playing ? "Pause" : "Play"; };
+$("speed").onchange = (e) => { S.speed = +e.target.value; };
+$("scrub").oninput = (e) => { S.i = +e.target.value; S.sub = 0; render(); };
+$("demo").onclick = () => makeDemo((Math.random() * 1e9) | 0);
+$("file").onchange = (e) => {
+  const file = e.target.files[0]; if (!file) return;
+  $("source").textContent = "loading " + file.name + "…";
+  file.text().then((t) => loadLog(t, file.name)).catch((err) => {
+    $("source").innerHTML = `<span class="err">Could not load ${file.name}: ${err.message}</span>`; });
+};
+makeDemo(7);
+requestAnimationFrame((ts) => { last = ts; loop(ts); });
+</script>
+</body>
+</html>

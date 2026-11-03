@@ -1,0 +1,7 @@
+{
+ "mode": "m0",
+ "seed": 0,
+ "f_enf": 0.05,
+ "r_min": 0.02,
+ "enforcer_mode": "redraw"
+}
