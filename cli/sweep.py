@@ -39,9 +39,17 @@ def parse_seeds(s: str) -> list[int]:
 
 
 def flatten(out: dict) -> dict:
+    """Expose nested outcome blocks as dotted metric names, e.g.
+    inspector_active_ticks.dedicated or impressions_by_channel.yell."""
     flat = dict(out)
     for t, d in out.get("seller_by_type", {}).items():
         flat[f"profit_per_stall.{t}"] = d["profit_per_stall_cents"]
+    for key, block in out.items():
+        if key == "seller_by_type" or not isinstance(block, dict):
+            continue
+        for sub, v in block.items():
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                flat[f"{key}.{sub}"] = v
     return flat
 
 

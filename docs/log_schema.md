@@ -34,7 +34,7 @@ outcome
 | field | type | meaning |
 |---|---|---|
 | `mode` | `"bazaar"` \| `"m0"` | |
-| `engine_version` | string | `engine.ENGINE_VERSION` |
+| `engine_version` | string | `engine.ENGINE_VERSION`, bumped whenever a change can alter the log for the same inputs. Replay reports a different version as a warning; the rest of the log decides, and a mismatch names the version difference as the likely cause. |
 | `config` | object | the full resolved config, defaults included. Replay rebuilds the run from it. |
 | `env` | object | `python` and `numpy` versions. Replay reports a mismatch here as a warning only. |
 | `agents` | object | keyed `"<role>:<policy>"` by the config's policy name. Each value is that agent's `meta()`: `policy`, `version`, `model_id`, `sampling`, and for LLM agents also `provider`, `max_retries`, `max_calls`, `system_prompt`. Reference agents also carry `reference` (`random`/`informed`), and the informed reference `privileged: true`. |

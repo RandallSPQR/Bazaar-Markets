@@ -280,3 +280,30 @@ def test_agent_streams_are_separate_from_engine():
     r1 = make_factory(a.cfg)("buyer", "random_reference", "p000", 0).rng.random(4)
     r2 = make_factory(a.cfg)("buyer", "random_reference", "p000", 0).rng.random(4)
     assert np.array_equal(r1, r2)
+
+
+# ---------------------------------------------------------------- tooling
+
+def test_sweep_flatten_exposes_nested_metrics():
+    from cli.sweep import BAZAAR_METRICS, flatten
+    out, _ = run_config(cfg_for("default", 0, ["inspectors.placement=disguised"]))
+    flat = flatten(out)
+    for m in BAZAAR_METRICS:
+        if not m.endswith("_rel"):          # relative scores need --normalize
+            assert m in flat, m
+    assert flat["inspector_active_ticks.dedicated"] == out["inspector_active_ticks"]["dedicated"] > 0
+
+
+def test_replay_warns_on_engine_version_and_names_cause():
+    log = JsonlLog()
+    bazaar.run(cfg_for("default", 0), log=log)
+    head = json.loads(log.lines[0])
+    head["engine_version"] = "0.0.9"
+    old = [json.dumps(head, sort_keys=True, separators=(",", ":"), ensure_ascii=False)] + log.lines[1:]
+    _, new = replay(old)
+    res = compare_logs(old, new.lines)
+    assert res["identical"] and any("engine 0.0.9" in w for w in res["warnings"])
+    # same version mismatch plus a real content difference -> mismatch with a likely cause
+    old[1] = old[1].replace('"H":9', '"H":10')
+    res = compare_logs(old, new.lines)
+    assert not res["identical"] and "0.0.9" in res["likely_cause"]

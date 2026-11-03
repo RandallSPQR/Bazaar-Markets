@@ -4,8 +4,9 @@
 
 The engine is rebuilt from the header's config and seed. Agents are replaced
 by the raw outputs recorded in the log, in order. The new log must match the
-old one byte for byte. Only the header's `env` block may differ, and that is
-reported as a warning. Exit status: 0 = identical, 1 = mismatch.
+old one byte for byte. Only the header's `env` block and `engine_version` may
+differ; those are reported as warnings. A log from another engine version that
+does not replay is reported with that version difference as the likely cause. Exit status: 0 = identical, 1 = mismatch.
 """
 from __future__ import annotations
 

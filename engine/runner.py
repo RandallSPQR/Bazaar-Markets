@@ -61,19 +61,33 @@ def replay(lines: list[str]) -> tuple[list[str], JsonlLog]:
 
 
 def compare_logs(old: list[str], new: list[str]) -> dict:
-    """Byte comparison, line by line. The header's `env` block is compared
-    separately: differences there are reported as warnings, not mismatches."""
+    """Byte comparison, line by line. The header's `env` and `engine_version` are
+    compared separately: a difference there is a warning, not a mismatch, and the
+    rest of the log decides. When a log from another engine version does not
+    replay, the result says so, since that is the likely cause."""
     warnings = []
     o0, n0 = json.loads(old[0]), json.loads(new[0])
     if o0.get("env") != n0.get("env"):
         warnings.append(f"environment differs: logged {o0.get('env')} vs now {n0.get('env')}")
-    o0.pop("env", None); n0.pop("env", None)
+    v_old, v_new = o0.get("engine_version"), n0.get("engine_version")
+    version_differs = v_old != v_new
+    if version_differs:
+        warnings.append(f"log written by engine {v_old}; this is engine {v_new}")
+    for h in (o0, n0):
+        h.pop("env", None); h.pop("engine_version", None)
+
+    def mismatch(**kw) -> dict:
+        res = {"identical": False, "warnings": warnings, **kw}
+        if version_differs:
+            res["likely_cause"] = (f"the log was written by engine {v_old}, this is {v_new}; "
+                                   f"replay it with engine {v_old} or regenerate it")
+        return res
+
     if o0 != n0:
-        return {"identical": False, "first_diff_line": 1, "warnings": warnings, "old": old[0][:300], "new": new[0][:300]}
+        return mismatch(first_diff_line=1, old=old[0][:300], new=new[0][:300])
     for i, (a, b) in enumerate(zip(old[1:], new[1:]), start=2):
         if a != b:
-            return {"identical": False, "first_diff_line": i, "warnings": warnings, "old": a[:300], "new": b[:300]}
+            return mismatch(first_diff_line=i, old=a[:300], new=b[:300])
     if len(old) != len(new):
-        return {"identical": False, "first_diff_line": min(len(old), len(new)) + 1, "warnings": warnings,
-                "old_lines": len(old), "new_lines": len(new)}
+        return mismatch(first_diff_line=min(len(old), len(new)) + 1, old_lines=len(old), new_lines=len(new))
     return {"identical": True, "lines": len(old), "warnings": warnings}
