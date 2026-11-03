@@ -23,7 +23,7 @@ def main(argv=None) -> int:
     ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE", help="dotted override, repeatable")
     ap.add_argument("--log", help="write the JSONL event log here")
     ap.add_argument("--normalize", action="store_true",
-                    help="bazaar: also run random and perfect-information buyers on the same world and seed")
+                    help="bazaar: also run the random and informed reference buyers on the same world and seed")
     args = ap.parse_args(argv)
     overrides = list(args.set) + ([f"seed={args.seed}"] if args.seed is not None else [])
     cfg = load(args.config, overrides, mode=args.mode)

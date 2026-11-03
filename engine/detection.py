@@ -10,6 +10,13 @@ with proximity(d) = max(0, 1 - d / channel_range) for broadcast channels
 (sign, yell) and 1 for private ones (whisper, answer), which reach an
 inspector only when the inspector is the recipient.
 
+Defaults make private channels easier to detect than broadcast ones, conditional on
+an inspector perceiving the message (weight 1.0 vs 0.6 / 0.4, and no distance decay).
+That is a modelling choice: channel outcomes then mix exposure differences with
+detection differences. proximity="flat" plus equal channel weights
+(configs/detection_equal.json) removes the detection difference, so channels differ
+only in exposure.
+
 Alternatives:
     "step":   p = w_channel * proximity(d) whenever falsity > 0
     "hazard": p = 1 - exp(-k * falsity * w_channel * exp(-d / lam))
@@ -33,11 +40,15 @@ def catch_prob(cfg: DetectionCfg, falsity: float, channel: str, d: float, channe
     if falsity <= 0:
         return 0.0
     w = cfg.channel_weight[channel]
+    if cfg.proximity not in ("linear", "flat"):
+        raise ValueError(f"unknown detection proximity {cfg.proximity!r}")
+    flat = cfg.proximity == "flat"
+    prox = 1.0 if flat else proximity(channel, d, channel_range)
     if cfg.form == "graded":
-        return w * proximity(channel, d, channel_range) * min(1.0, falsity / cfg.f_scale)
+        return w * prox * min(1.0, falsity / cfg.f_scale)
     if cfg.form == "step":
-        return w * proximity(channel, d, channel_range)
+        return w * prox
     if cfg.form == "hazard":
-        reach = 1.0 if channel in PRIVATE else math.exp(-d / cfg.hazard_lam)
+        reach = 1.0 if (channel in PRIVATE or flat) else math.exp(-d / cfg.hazard_lam)
         return 1.0 - math.exp(-cfg.hazard_k * falsity * w * reach)
     raise ValueError(f"unknown detection form {cfg.form!r}")

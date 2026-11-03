@@ -47,9 +47,12 @@ class BazaarEngine:
         self.rng_routes = np.random.default_rng([s, 1])
         self.rng_people = np.random.default_rng([s, 2])
         self.rng_detect = np.random.default_rng([s, 3])
+        self.rng_treat = np.random.default_rng([s, 5])
+        self.rng_insp = np.random.default_rng([s, 6])
         self.layout = Layout(cfg)
         self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world)
-        self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people)
+        self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
+                                                 self.rng_treat, self.rng_insp)
         self.by_sid = {st.sid: st for st in self.stalls}
         self.by_pid = {p.pid: p for p in self.people}
         self.buyers = [p for p in self.people if p.kind == "buyer"]
@@ -74,6 +77,7 @@ class BazaarEngine:
         self.decisions = {"seller": 0, "buyer": 0}
         self._buys_now: list[dict] = []
         self._inspects_now: list[dict] = []
+        self.inspector_active_ticks = {"dedicated": 0, "inspector_buyers": 0}
 
     # ------------------------------------------------------------------ helpers
 
@@ -95,6 +99,17 @@ class BazaarEngine:
             u, k = r.random(), int(r.integers(3))
             self._noise_cache[key] = PROFILES[k] if u < self.cfg.buyers.profile_noise else p.profile
         return self._noise_cache[key]
+
+    def enforces(self, p: Person) -> bool:
+        """Can this person trigger a catch? Dedicated inspectors always; inspector-buyers
+        only when buyers.inspector_enforcement is on."""
+        if not p.is_inspector:
+            return False
+        return p.kind == "inspector" or self.cfg.buyers.inspector_enforcement
+
+    def knows_quality(self, p: Person) -> bool:
+        """Does this buyer get reliable quality information (own_assessment)?"""
+        return p.kind == "buyer" and p.is_inspector and self.cfg.buyers.inspector_knowledge
 
     def active(self) -> list[Person]:
         return [p for p in self.people if p.active]
@@ -165,6 +180,9 @@ class BazaarEngine:
             if not p.active and not p.done and p.arrive == t:
                 p.active, p.step = True, 0
         act = self.active()
+        for p in act:
+            if self.enforces(p):
+                self.inspector_active_ticks["dedicated" if p.kind == "inspector" else "inspector_buyers"] += 1
         msgs: list[dict] = []
         catches: list[dict] = []
         caught_now: set = set()
@@ -220,7 +238,7 @@ class BazaarEngine:
                 if ch == "sign":
                     p.seen_signs.add((st.sid, st.epoch))
                 self.deliver(st, p, ch, q)
-                if p.is_inspector and false and st.sid not in caught_now:
+                if false and st.sid not in caught_now and self.enforces(p):
                     d = _dist(p.pos, st.pos)
                     pr = catch_prob(self.cfg.detection, q - st.q_true, ch, d, self.channel_range(ch))
                     if pr > 0 and self.rng_detect.random() < pr:
@@ -342,6 +360,8 @@ class BazaarEngine:
         amount = units * st.price_cents
         p.paid_cents += amount
         p.units += units
+        if st.q_true >= p.task["q_req"]:
+            p.q_units += units
         st.revenue_cents += amount
         st.cost_cents += units * st.unit_cost_cents
         st.units_sold += units
@@ -389,6 +409,10 @@ class BazaarEngine:
             row = {"id": st.sid, "brand": st.brand, "category": st.category, "price_cents": st.price_cents,
                    "messages": info["claims"], "inspected_quality": info["inspected_q"],
                    "ask_pending": p.pid in self.pending_asks.get(st.sid, [])}
+            if self.knows_quality(p):
+                # Reliable quality information from the buyer's own expertise. Only
+                # inspector-buyers with buyers.inspector_knowledge on get this field.
+                row["own_assessment"] = st.q_true
             stalls.append(row)
         obs = {
             "role": "buyer", "tick": self.t,
@@ -400,7 +424,7 @@ class BazaarEngine:
             "actions_left_here": self.cfg.market.max_actions_per_stop - p.stop_actions,
         }
         if privileged:
-            # Reference-agent only (perfect-information ceiling). Never given to study agents.
+            # Informed reference agent only. Never given to study agents.
             obs["oracle"] = {"true_quality": {st.sid: st.q_true for st in here},
                              "route_ahead": self.route_ahead(p)}
         return obs
@@ -445,7 +469,11 @@ class BazaarEngine:
             "shortfall_rate": (sum(x["shortfall"] for x in self.purchases) / n_buy) if n_buy else None,
             "shortfall_rate_units": short_units / units if units else None,
             "empty_handed_share": (sum(p.units == 0 for p in arrived) / len(arrived)) if arrived else None,
-            "task_complete_share": (sum(p.units >= p.task["units"] for p in arrived) / len(arrived)) if arrived else None,
+            # Task complete = the required quantity at Q >= Q_req. Quantity fulfilled =
+            # the required quantity of anything; reported separately.
+            "task_complete_share": (sum(p.q_units >= p.task["units"] for p in arrived) / len(arrived)) if arrived else None,
+            "quantity_fulfilled_share": (sum(p.units >= p.task["units"] for p in arrived) / len(arrived)) if arrived else None,
+            "inspector_active_ticks": dict(self.inspector_active_ticks),
             "impressions": imp["total"], "impressions_by_channel": imp["by_channel"],
             "impressions_by_stype": imp["by_stype"],
             "deceptive_share_impressions": imp["by_stype"].get("deceptive", 0) / imp["total"] if imp["total"] else None,

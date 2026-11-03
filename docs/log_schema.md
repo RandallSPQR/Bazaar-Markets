@@ -37,7 +37,7 @@ outcome
 | `engine_version` | string | `engine.ENGINE_VERSION` |
 | `config` | object | the full resolved config, defaults included. Replay rebuilds the run from it. |
 | `env` | object | `python` and `numpy` versions. Replay reports a mismatch here as a warning only. |
-| `agents` | object | keyed `"<role>:<policy>"` by the config's policy name. Each value is that agent's `meta()`: `policy`, `version`, `model_id`, `sampling`, and for LLM agents also `provider`, `max_retries`, `max_calls`, `system_prompt`. Reference agents also carry `reference` (`floor`/`ceiling`), and the perfect-information buyer `privileged: true`. |
+| `agents` | object | keyed `"<role>:<policy>"` by the config's policy name. Each value is that agent's `meta()`: `policy`, `version`, `model_id`, `sampling`, and for LLM agents also `provider`, `max_retries`, `max_calls`, `system_prompt`. Reference agents also carry `reference` (`random`/`informed`), and the informed reference `privileged: true`. |
 | `placeholders` | object | bazaar only: which defaults are placeholders still awaiting a research decision |
 | `break_even` | number | M0 only: analytic e\* for the configured m, delta, P |
 
@@ -130,7 +130,7 @@ outcome or enforcement.
 
 Bazaar: `buyers_arrived`, `buyer_surplus_mean_cents`, `buyer_surplus_total_cents`,
 `purchases`, `units_bought`, `shortfall_rate` (share of purchases with Q < Q_req),
-`shortfall_rate_units`, `empty_handed_share`, `task_complete_share`, `impressions`,
+`shortfall_rate_units`, `empty_handed_share`, `task_complete_share` (required quantity at Q ≥ Q_req), `quantity_fulfilled_share` (required quantity of anything), `inspector_active_ticks.{dedicated, inspector_buyers}` (enforcing person-ticks; equal headcounts are not equal effort), `impressions`,
 `impressions_by_channel`, `impressions_by_stype`, `deceptive_share_impressions`,
 `false_claim_share_impressions`, `deceptive_share_sales_units`, `inspections`,
 `inspection_spend_cents`, `catches`,
@@ -138,9 +138,13 @@ Bazaar: `buyers_arrived`, `buyer_surplus_mean_cents`, `buyer_surplus_total_cents
 `payments_total_cents`, `seller_revenue_total_cents` (always equal), `decisions`, `fallbacks`.
 
 Buyer surplus = V(Q delivered) − price paid − inspection costs, averaged over
-buyers who arrived. Normalised outcomes are not in the log, because they need
-two extra reference runs: `cli.run --normalize` and `cli.sweep --normalize`
-add `surplus_norm` and `shortfall_norm`.
+buyers who arrived. Relative scores are not in the log, because they need two
+extra reference runs: `cli.run --normalize` and `cli.sweep --normalize` add
+`surplus_rel` and `shortfall_rel` (0 = random reference, 1 = informed reference;
+comparisons, not bounds, so they can fall outside [0, 1]; `shortfall_rel` is null
+whenever any of the three runs made no purchases) and the raw reference values
+`surplus_random_ref`, `surplus_informed_ref`, `shortfall_random_ref`,
+`shortfall_informed_ref`. Raw outcomes are primary.
 
 M0: `dec_share_imp_last` (mean deceptive share of filled impressions over the
 last `last` generations), `final_dec_pop`.
@@ -149,4 +153,8 @@ last `last` generations), `final_dec_pop`.
 
 `g`, `dec_share_imp`, `dec_pop`, `fill` (these three exactly as in the
 prototype's history), `impressions`, `sales`, `dec_share_sales`, `catches`,
-`ad_spend`, `revenue`, `penalties`, `profit` (= revenue − penalties − ad_spend).
+`ad_spend`, `revenue`, `penalties`, `profit` (= revenue − penalties − ad_spend),
+`cap_overflow` (impressions won beyond the cap under `cap_mode=batch`; always 0
+under `strict`). `sales` counts realized sales only, the same definition the
+accounting uses: within sale distance, excluding deceptive impressions that
+reached an enforcer (those earn no revenue and pay P).

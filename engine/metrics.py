@@ -1,4 +1,4 @@
-"""Across-seed statistics and reference normalisation.
+"""Across-seed statistics and reference comparisons.
 
 The replication unit is the seed. Intervals are t-intervals over per-seed
 values. Condition comparisons use paired seeds: the same seed list in both
@@ -39,32 +39,39 @@ def paired_diff(a: list, b: list) -> dict:
     return mean_ci([y - x for x, y in pairs])
 
 
-def normalise(value: float | None, floor: float | None, ceiling: float | None) -> float | None:
-    """(value - floor) / (ceiling - floor). 0 = random buyer, 1 = perfect-information buyer."""
-    if value is None or floor is None or ceiling is None or ceiling == floor:
+def relative(value: float | None, random_ref: float | None, informed_ref: float | None) -> float | None:
+    """(value - random_ref) / (informed_ref - random_ref).
+
+    0 = the random reference's outcome, 1 = the informed reference's. These are
+    comparison points, not bounds, so the score can be below 0 or above 1. Undefined
+    (None) when any input is undefined or the references coincide."""
+    if value is None or random_ref is None or informed_ref is None or informed_ref == random_ref:
         return None
-    return (value - floor) / (ceiling - floor)
+    return (value - random_ref) / (informed_ref - random_ref)
 
 
 def reference_configs(cfg) -> dict:
     """Same world and seed, with the buyer policy swapped for each reference agent."""
     out = {}
-    for name, policy in (("floor", "random_buyer"), ("ceiling", "perfect_buyer")):
+    for name, policy in (("random_ref", "random_reference"), ("informed_ref", "informed_reference")):
         c = copy.deepcopy(cfg)
         c.agents.buyer = policy
         out[name] = c
     return out
 
 
-def normalised_outcomes(out: dict, floor: dict, ceiling: dict) -> dict:
-    """Normalised surplus and shortfall. For shortfall, lower is better, so the
-    scale is inverted: 1 means as few shortfalls as the perfect buyer."""
-    s = normalise(out["buyer_surplus_mean_cents"], floor["buyer_surplus_mean_cents"],
-                  ceiling["buyer_surplus_mean_cents"])
-    sf = None
-    if out["shortfall_rate"] is not None and floor["shortfall_rate"] is not None:
-        c = ceiling["shortfall_rate"] or 0.0
-        sf = normalise(-out["shortfall_rate"], -floor["shortfall_rate"], -c)
-    return {"surplus_norm": s, "shortfall_norm": sf,
-            "surplus_floor": floor["buyer_surplus_mean_cents"], "surplus_ceiling": ceiling["buyer_surplus_mean_cents"],
-            "shortfall_floor": floor["shortfall_rate"], "shortfall_ceiling": ceiling["shortfall_rate"]}
+def relative_outcomes(out: dict, random_ref: dict, informed_ref: dict) -> dict:
+    """Surplus and shortfall relative to the two references. Raw outcomes stay
+    primary; report these alongside them. For shortfall, lower is better, so the
+    scale is inverted (1 = as few shortfalls as the informed reference). A shortfall
+    rate is undefined when there were no purchases, and then so is the score: an
+    undefined rate is never treated as zero shortfall."""
+    s = relative(out["buyer_surplus_mean_cents"], random_ref["buyer_surplus_mean_cents"],
+                 informed_ref["buyer_surplus_mean_cents"])
+    rates = (out["shortfall_rate"], random_ref["shortfall_rate"], informed_ref["shortfall_rate"])
+    sf = None if any(r is None for r in rates) else relative(-rates[0], -rates[1], -rates[2])
+    return {"surplus_rel": s, "shortfall_rel": sf,
+            "surplus_random_ref": random_ref["buyer_surplus_mean_cents"],
+            "surplus_informed_ref": informed_ref["buyer_surplus_mean_cents"],
+            "shortfall_random_ref": random_ref["shortfall_rate"],
+            "shortfall_informed_ref": informed_ref["shortfall_rate"]}

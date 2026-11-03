@@ -17,10 +17,10 @@ SMALL = ["market.ticks=120", "buyers.count=60"]
 
 CONFIGS = {
     "default": [],
-    "mixed_budget_random": ["buyers.budget_level=mixed", "agents.buyer=random_buyer"],
+    "mixed_budget_random": ["buyers.budget_level=mixed", "agents.buyer=random_reference"],
     "disguised": ["inspectors.placement=disguised", "inspectors.count=6"],
     "patrol_scattered": ["inspectors.placement=patrolling", "market.clustering=0.0", "inspectors.count=4"],
-    "perfect": ["agents.buyer=perfect_buyer", "buyers.budget_level=below"],
+    "perfect": ["agents.buyer=informed_reference", "buyers.budget_level=below"],
 }
 
 
@@ -208,6 +208,8 @@ def test_observations_hide_privileged_facts():
             n_buyer += 1
             assert "oracle" not in e["obs"]
             assert "true_quality" not in s and "stall_type" not in s
+            # own_assessment is reliable quality information, given only to
+            # inspector-buyers with knowledge (tested in test_bazaar_sanity).
         else:
             n_seller += 1
             for p in e["obs"]["passersby"]:
@@ -215,7 +217,7 @@ def test_observations_hide_privileged_facts():
     assert n_seller and n_buyer
 
 
-def test_oracle_only_for_perfect_reference_buyer():
+def test_oracle_only_for_informed_reference_buyer():
     log = JsonlLog()
     bazaar.run(cfg_for("perfect", 0), log=log)
     obs = [json.loads(x)["obs"] for x in log.lines if '"ev":"obs"' in x and '"role":"buyer"' in x]
@@ -275,6 +277,6 @@ def test_agent_streams_are_separate_from_engine():
     b = bazaar.BazaarEngine(cfg_for("mixed_budget_random", 9, ["buyers.budget_level=at"]))
     assert truth_snapshot(a) == truth_snapshot(b)
     assert [p.route for p in a.people] == [p.route for p in b.people]
-    r1 = make_factory(a.cfg)("buyer", "random_buyer", "p000", 0).rng.random(4)
-    r2 = make_factory(a.cfg)("buyer", "random_buyer", "p000", 0).rng.random(4)
+    r1 = make_factory(a.cfg)("buyer", "random_reference", "p000", 0).rng.random(4)
+    r2 = make_factory(a.cfg)("buyer", "random_reference", "p000", 0).rng.random(4)
     assert np.array_equal(r1, r2)

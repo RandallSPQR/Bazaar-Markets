@@ -1,79 +1,84 @@
 {
- "buyer_surplus_mean_cents": -888.5947616511288,
- "buyer_surplus_total_cents": -133289.21424766933,
+ "buyer_surplus_mean_cents": -463.95623074687865,
+ "buyer_surplus_total_cents": -69593.4346120318,
  "buyers_arrived": 150,
- "catches": 14,
- "deceptive_share_impressions": 0.2013241785188818,
- "deceptive_share_sales_units": 0.5978260869565217,
+ "catches": 13,
+ "deceptive_share_impressions": 0.20495837637479491,
+ "deceptive_share_sales_units": 0.6428571428571429,
  "decisions": {
-  "buyer": 473,
-  "seller": 10218
+  "buyer": 424,
+  "seller": 10213
  },
- "empty_handed_share": 0.5066666666666667,
+ "empty_handed_share": 0.48,
  "fallbacks": {
   "buyer": 0,
   "seller": 0
  },
- "false_claim_share_impressions": 0.2013241785188818,
- "impressions": 16312,
+ "false_claim_share_impressions": 0.20495837637479491,
+ "impressions": 16457,
  "impressions_by_channel": {
-  "sign": 5770,
-  "whisper": 4725,
-  "yell": 5817
+  "sign": 5758,
+  "whisper": 4748,
+  "yell": 5951
  },
  "impressions_by_stype": {
-  "deceptive": 3284,
-  "genuine": 6951,
-  "seconds": 6077
+  "deceptive": 3373,
+  "genuine": 6966,
+  "seconds": 6118
  },
- "inspection_spend_cents": 10720,
- "inspections": 47,
- "payments_total_cents": 560000,
- "purchases": 74,
+ "inspection_spend_cents": 12240,
+ "inspections": 58,
+ "inspector_active_ticks": {
+  "dedicated": 480,
+  "inspector_buyers": 0
+ },
+ "payments_total_cents": 441600,
+ "purchases": 78,
+ "quantity_fulfilled_share": 0.36,
  "seller_by_type": {
   "deceptive": {
-   "ad_spend_cents": 26007,
-   "catches": 14,
-   "cost_cents": 137082,
-   "penalties_cents": 86400,
-   "profit_cents": 53711,
-   "profit_per_stall_cents": 3580.733333333333,
-   "revenue_cents": 303200,
+   "ad_spend_cents": 26883,
+   "catches": 13,
+   "cost_cents": 94169,
+   "penalties_cents": 63600,
+   "profit_cents": 17748,
+   "profit_per_stall_cents": 1183.2,
+   "revenue_cents": 202400,
    "stalls": 15,
-   "units_sold": 55
+   "units_sold": 63
   },
   "genuine": {
-   "ad_spend_cents": 47801,
+   "ad_spend_cents": 47368,
    "catches": 0,
-   "cost_cents": 196284,
+   "cost_cents": 181781,
    "penalties_cents": 0,
-   "profit_cents": 12715,
-   "profit_per_stall_cents": 706.3888888888889,
-   "revenue_cents": 256800,
+   "profit_cents": 10051,
+   "profit_per_stall_cents": 558.3888888888889,
+   "revenue_cents": 239200,
    "stalls": 18,
-   "units_sold": 37
+   "units_sold": 35
   },
   "seconds": {
-   "ad_spend_cents": 40919,
+   "ad_spend_cents": 41242,
    "catches": 0,
    "cost_cents": 0,
    "penalties_cents": 0,
-   "profit_cents": -40919,
-   "profit_per_stall_cents": -2727.9333333333334,
+   "profit_cents": -41242,
+   "profit_per_stall_cents": -2749.4666666666667,
    "revenue_cents": 0,
    "stalls": 15,
    "units_sold": 0
   }
  },
- "seller_revenue_total_cents": 560000,
- "shortfall_ceiling": 0.0,
- "shortfall_floor": 0.6774193548387096,
- "shortfall_norm": 0.18211068211068204,
- "shortfall_rate": 0.5540540540540541,
- "shortfall_rate_units": 0.5978260869565217,
- "surplus_ceiling": 1708.8,
- "surplus_floor": -666.484235237762,
- "surplus_norm": -0.09350903067444215,
- "task_complete_share": 0.3466666666666667,
- "units_bought": 92
+ "seller_revenue_total_cents": 441600,
+ "shortfall_informed_ref": 0.0,
+ "shortfall_random_ref": 0.7441860465116279,
+ "shortfall_rate": 0.5641025641025641,
+ "shortfall_rate_units": 0.6428571428571429,
+ "shortfall_rel": 0.2419871794871795,
+ "surplus_informed_ref": 1276.8,
+ "surplus_random_ref": -748.2583635495452,
+ "surplus_rel": 0.14039206865343798,
+ "task_complete_share": 0.06666666666666667,
+ "units_bought": 98
 }

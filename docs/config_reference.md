@@ -28,8 +28,11 @@ Source of truth: `engine/config.py`. Full default configs:
 | `gens` | 250 | prototype | generations |
 | `T` | null (= 20·n_adv) | prototype | impressions per generation |
 | `keep`, `flip` | 0.2, 0.02 | prototype | selection share, type-flip probability |
-| `cap_mult` | 3.0 | prototype | budget cap = cap_mult × fair share per generation |
-| `enforcer_mode` | `fixed` | | `fixed` = fixed enforcer customers (sim.py); `redraw` = enforcer status drawn per impression from a separate stream (reconstruction; tighten.py unavailable) |
+| `cap_mult` | 3.0 | prototype | impression cap (not a money budget) = int(cap_mult × T / n_adv) impressions per advertiser per generation, reset each generation |
+| `cap_mode` | `batch` | prototype | `batch`: cap checked once per batch of T/40 impressions, so a seller can overshoot within a batch (soft limit; generation events log `cap_overflow`). `strict`: enforced per impression, overflow goes to the next-highest eligible bidder |
+| `selection` | `idle_lowest` | | `idle_lowest`: firms that won nothing rank below every active firm, loss-makers included (prototype v1; all doc results). `prototype_v0`: idle fitness −1e-9, so idle firms outrank loss-makers (original sim.py; historical compatibility only). Both are selection assumptions; see the doc's sensitivity table |
+| `tie_break` | `stable` | | `stable`: stable sort, identical on every platform. `numpy_default`: the prototypes' sort, whose tie order varies by numpy build; needed only for bit-exact prototype comparison |
+| `enforcer_mode` | `fixed` | | `fixed` = fixed enforcer customers; `redraw` = enforcer status drawn per impression from a separate stream (paired design); `redraw_main` = drawn from the main stream, exactly as tests/reference/tighten_v1.py (reproduces the doc's mechanism numbers) |
 | `summary_last` | 30 | prototype | generations averaged for the headline (221–250) |
 
 ## Mode `bazaar`
@@ -78,7 +81,9 @@ sanity check depends on this separation.
 | `inspect_cost_frac` | tourist .10, local .05, expert .02 | | inspection cost, as a fraction of base, paid from the budget |
 | `aisles_per_route` | [1, 3] | | |
 | `profile_noise` | 0.3 | | chance a seller sees a random profile instead of the observable one (stable per seller–person pair) |
-| `inspector_fraction` | 0.0 | | share of buyers who are also inspectors (1.0 for the "every buyer an inspector" check) |
+| `inspector_fraction` | 0.0 | | share of buyers who are also inspectors ("inspector-buyers"; 1.0 for the "every buyer an inspector" check) |
+| `inspector_knowledge` | true | | inspector-buyers see reliable quality (`own_assessment`) and their policy can use it |
+| `inspector_enforcement` | true | | inspector-buyers can trigger catches; set false for knowledge without enforcement |
 
 ### `inspectors`
 | key | default | status | meaning |
@@ -95,6 +100,14 @@ sanity check depends on this separation.
 | `channel_weight` | whisper 1.0, answer 1.0, yell 0.6, sign 0.4 | PLACEHOLDER | private channels reach an inspector only when the inspector is the recipient |
 | `f_scale` | 0.3 | PLACEHOLDER | |
 | `hazard_k`, `hazard_lam` | 6.0, 2.0 | | |
+| `proximity` | `linear` | | `linear`: prox(d) as below. `flat`: prox = 1 for every channel |
+
+The defaults make private channels easier to detect than broadcast ones *given*
+that an inspector perceives the message, so channel comparisons mix exposure
+with detection. For channel claims, also run `configs/detection_equal.json`
+(equal weights, flat proximity: equal detection given exposure), and compare
+`inspector_active_ticks`, since disguised inspectors make one trip while posts
+and patrols stay all run.
 
 prox(d) = max(0, 1 − d / channel range) for sign and yell; 1 for whisper and
 answer. Falsity = max(0, claimed Q − true Q). True claims are never caught. A
@@ -112,7 +125,7 @@ after the stall reopens).
 | key | default | meaning |
 |---|---|---|
 | `seller` | genuine/seconds → `rule_honest`, deceptive → `rule_deceptive` | |
-| `buyer` | `rule_buyer` | also `random_buyer` (floor), `perfect_buyer` (ceiling), `llm` (stub) |
+| `buyer` | `rule_buyer` | also `random_reference`, `informed_reference` (comparison points, not bounds; old names `random_buyer`, `perfect_buyer` still accepted), `llm` (stub) |
 | `params` | {} | per-policy keyword arguments, e.g. `{"rule_deceptive": {"cautious": false}}`, `{"llm": {"model_id": "...", "sampling": {...}, "max_calls": 0}}` |
 
 Policies: `agents/registry.py`.

@@ -8,15 +8,18 @@ from __future__ import annotations
 import numpy as np
 
 from .llm_stub import LLMAgent
-from .reference import PerfectInfoBuyer, RandomBuyer
+from .reference import InformedReferenceBuyer, RandomReferenceBuyer
 from .rule_based import DeceptiveSeller, HonestSeller, RuleBuyer
 
 POLICIES = {
     "rule_honest": HonestSeller,
     "rule_deceptive": DeceptiveSeller,
     "rule_buyer": RuleBuyer,
-    "random_buyer": RandomBuyer,
-    "perfect_buyer": PerfectInfoBuyer,
+    "random_reference": RandomReferenceBuyer,
+    "informed_reference": InformedReferenceBuyer,
+    # deprecated aliases (pre-rename logs and configs)
+    "random_buyer": RandomReferenceBuyer,
+    "perfect_buyer": InformedReferenceBuyer,
     "llm": LLMAgent,
 }
 
@@ -29,7 +32,7 @@ def make_factory(cfg):
             raise KeyError(f"unknown policy {policy!r}; known: {sorted(POLICIES)}")
         rng = np.random.default_rng([cfg.seed, 7, ROLE_CODE[role], idx])
         params = dict(cfg.agents.params.get(policy, {}))
-        if policy == "perfect_buyer":
+        if policy in ("informed_reference", "perfect_buyer"):
             params.update(valuation=cfg.valuation, base_price_cents=cfg.pricing.base_price_cents)
         if policy == "llm":
             params.setdefault("role", role)

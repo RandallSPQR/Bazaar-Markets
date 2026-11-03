@@ -18,7 +18,7 @@ This phase contains:
 ```
 engine/    m0.py (prototype port), bazaar.py (engine loop), world.py, detection.py, valuation.py,
            interface.py (action schemas, parse/fallback), config.py, jsonlog.py, metrics.py, runner.py
-agents/    rule_based.py, reference.py (random floor, perfect-information ceiling), llm_stub.py, registry.py
+agents/    rule_based.py, reference.py (random and informed reference buyers), llm_stub.py, registry.py
 cli/       run.py, sweep.py, replay.py, m0_regression.py
 tests/     test_m0.py, test_invariants.py, test_bazaar_sanity.py, reference/sim_prototype.py
 docs/      log_schema.md, config_reference.md
@@ -40,9 +40,9 @@ All commands below run from the repo root with `.venv/bin/python` (or an activat
 .venv/bin/python -m pytest -q
 ```
 
-About 70 s. The suite covers:
-- an exact port check against the prototype;
-- the M0 regression;
+About 100 s. The suite covers:
+- exact port checks against both prototype versions;
+- pinned M0 regression values (default config);
 - the accounting identity;
 - determinism and byte-identical replay;
 - hostile agents unable to change ground truth;
@@ -52,30 +52,51 @@ About 70 s. The suite covers:
 ## M0 regression
 
 ```bash
-.venv/bin/python -m cli.m0_regression           # baseline + redraw at 5%, seeds 0-5
-.venv/bin/python -m cli.m0_regression --sweep   # plus the enforcer-rate sweep
+.venv/bin/python -m cli.m0_regression                # compatibility + scientific check (30 seeds)
+.venv/bin/python -m cli.m0_regression --compat-only  # exact prototype agreement only
 ```
 
-In `enforcer_mode=fixed`, M0 consumes random numbers in the same order as the
-prototype and reproduces its per-generation history exactly
-(`tests/test_m0.py`). Results, seeds 0–5, mean over generations 221–250, 95% t-interval:
+Two separate checks:
 
-| condition | this repo | prototype |
+1. **Compatibility (exact).** With `tie_break=numpy_default`, the port reproduces
+   each bundled prototype's per-generation history bit for bit:
+   `tests/reference/sim_prototype.py` (v0, the original idle rule, via
+   `selection=prototype_v0`) and `tests/reference/sim_prototype_v1.py` (v1, the
+   corrected idle rule that every doc result used; the default `selection`).
+   `enforcer_mode=redraw_main` reproduces `tests/reference/tighten_v1.py`'s
+   mechanism test exactly. Exactness holds on one platform only: the
+   prototypes' default `argsort` breaks ties among idle firms differently on
+   different numpy builds.
+2. **Scientific check (tolerance).** The default config (stable ties, so
+   identical on every platform; separate-stream redraw) is compared with the
+   published numbers. Rule, prespecified: the 30-seed mean must be within 0.05
+   of 0.695, and the redraw mean must be below 0.05. 0.05 is the smallest
+   difference treated as substantive; with an across-seed SD of about 0.10, 30
+   seeds give a 95% half-width of about 0.04, so the rule is testable. The
+   published 0.695 is itself a 6-seed estimate.
+
+Current result (seeds 0–29, generations 221–250, 95% t-interval):
+
+| condition | this repo (default) | published |
 |---|---|---|
-| fixed enforcers, 5%, r_min 0.02 | 74.7% [65.3, 84.1] | 70% [60, 79] |
-| redraw per impression, 5% | 0.6% [−0.2, 1.4] | ~0% |
-| redraw 1% / 2% / 3% / 4% | 79% / 41% / 2.7% / 0.7% | majority ends between 2% and 3% |
+| fixed enforcers, 5%, r_min 0.02 | 70.3% [66.4, 74.1] | 69.5% [60, 79] (6 seeds) |
+| redraw per impression, 5% | 1.0% [0.6, 1.4] | ~0% |
 
-Notes:
-- **Baseline seeds.** Seeds 0–5 happen to land high. Over 20 seeds the
-  prototype averages about 69%, and seeds 12–17 give 70.0% [60.1, 79.9]. The
-  pass rule is: the 6-seed mean lies inside [60, 79], and the intervals overlap.
-- **Redraw is a reconstruction.** `tighten.py` was not available, so redraw
-  draws each impression's enforcer status from a separate stream (seed, 1).
-  This keeps the main stream paired with the baseline. It reproduces ~0% at 5%.
-  It places the 50% crossing between 1% and 2% (41% at 2%), slightly below
-  the reported 2–3%. The analytic break-even is e\* = 3.2%. If `tighten.py`
-  turns up, diff its redraw against `engine/m0.py`.
+Sensitivity of the baseline (paired seeds):
+- tie order, stable vs numpy default: +4.1 points [−0.5, +8.6], 30 seeds;
+- cap enforcement, strict vs batch: +4.5 points [−0.6, +9.7], 20 seeds.
+
+Notes on M0 definitions:
+- **Selection rule.** `idle_lowest` ranks firms that won nothing below every
+  active firm, loss-makers included. This favors participation even when it
+  loses money; it is a selection assumption, tested in the doc's sensitivity
+  table, not a neutral default. `prototype_v0` is kept for historical comparison.
+- **Impression cap.** `cap_mult` sets an impression limit, not a money budget.
+  The prototypes check it once per batch of T/40 impressions (`cap_mode=batch`,
+  a soft limit whose overshoot is logged as `cap_overflow`); `cap_mode=strict`
+  enforces it per impression.
+- **Realized sales.** Logged `sales` use the accounting definition: within sale
+  distance, excluding deceptive impressions that reached an enforcer.
 
 ## A sample bazaar run
 
@@ -85,8 +106,10 @@ Notes:
 ```
 
 `--normalize` reruns the same world and seed twice more: once with the random
-buyer (floor) and once with the perfect-information buyer (ceiling). It adds
-`surplus_norm` and `shortfall_norm`, where 0 = random and 1 = perfect.
+reference buyer and once with the informed reference buyer. It adds
+`surplus_rel` and `shortfall_rel`, where 0 = random reference and 1 = informed
+reference. These are comparison points, not bounds: scores can fall below 0 or
+above 1, and raw outcomes stay primary.
 
 Compare conditions over seeds. Seeds are paired across conditions:
 

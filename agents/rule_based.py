@@ -87,8 +87,9 @@ class DeceptiveSeller(HonestSeller):
 class RuleBuyer:
     """Heuristic shopper.
 
-    Uses the most recent claim from each stall (or the inspected quality,
-    which overrides claims). Tourists trust claims. Locals trust a stall's
+    Uses the most recent claim from each stall, unless it has better information:
+    its own reliable assessment (inspector-buyers with knowledge) or an
+    inspection, which override claims. Tourists trust claims. Locals trust a stall's
     sign and answers but inspect a stall that yelled or whispered at them.
     Experts inspect before every purchase. Asks a stall it has heard nothing from.
     """
@@ -111,8 +112,11 @@ class RuleBuyer:
             units = min(need, left // s["price_cents"])
             if units < 1:
                 continue
-            if s["inspected_quality"] is not None:
-                if s["inspected_quality"] >= q_req:
+            known = s.get("own_assessment")
+            if known is None:
+                known = s["inspected_quality"]
+            if known is not None:
+                if known >= q_req:
                     return _out({"action": "buy", "stall": s["id"], "units": int(units)})
                 continue
             if not s["messages"]:
@@ -130,6 +134,7 @@ class RuleBuyer:
             return _out({"action": "buy", "stall": s["id"], "units": int(units)})
         for s in stalls:
             if not s["messages"] and not s["ask_pending"] and s["inspected_quality"] is None \
+                    and s.get("own_assessment") is None \
                     and s["price_cents"] <= left:
                 return _out({"action": "ask", "stall": s["id"]})
         return _out({"action": "move_on"})

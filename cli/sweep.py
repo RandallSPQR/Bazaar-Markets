@@ -21,10 +21,12 @@ from engine.metrics import mean_ci, paired_diff
 from engine.runner import run_config
 
 M0_METRICS = ["dec_share_imp_last", "final_dec_pop"]
-BAZAAR_METRICS = ["buyer_surplus_mean_cents", "shortfall_rate", "empty_handed_share",
+BAZAAR_METRICS = ["buyer_surplus_mean_cents", "shortfall_rate", "task_complete_share",
+                  "quantity_fulfilled_share", "empty_handed_share",
                   "deceptive_share_impressions", "deceptive_share_sales_units", "inspections", "catches",
                   "profit_per_stall.genuine", "profit_per_stall.seconds", "profit_per_stall.deceptive",
-                  "surplus_norm", "shortfall_norm"]
+                  "inspector_active_ticks.dedicated", "inspector_active_ticks.inspector_buyers",
+                  "surplus_rel", "shortfall_rel"]
 
 
 def parse_seeds(s: str) -> list[int]:

@@ -1,0 +1,12 @@
+{
+ "mode": "bazaar",
+ "detection": {
+  "proximity": "flat",
+  "channel_weight": {
+   "whisper": 1.0,
+   "answer": 1.0,
+   "yell": 1.0,
+   "sign": 1.0
+  }
+ }
+}

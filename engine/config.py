@@ -41,6 +41,28 @@ class M0Config:
     # "redraw": enforcer status is drawn fresh for every impression at rate f_enf
     #           (mechanism test; reconstructed - tighten.py was not available).
     enforcer_mode: str = "fixed"
+    #   "redraw_main": as "redraw", but the draws come from the main stream right after
+    #           the impression draw, exactly as tests/reference/tighten_v1.py did. Use it
+    #           only to reproduce the doc's mechanism-test numbers bit for bit.
+    # Selection rule (which firms are replaced each generation):
+    #   "idle_lowest"  : firms that won nothing rank below every active firm, loss-makers
+    #                    included (prototype v1; every result in the research doc).
+    #   "prototype_v0" : idle firms get fitness -1e-9, so they still outrank loss-makers
+    #                    (original sim.py). Historical compatibility only.
+    selection: str = "idle_lowest"
+    # Impression capacity (not a money budget): each advertiser may win at most
+    # int(cap_mult * T / n_adv) impressions per generation.
+    #   "batch"  : eligibility is checked once per batch of T/40 impressions, so a seller
+    #              can overshoot within a batch (soft limit; both prototypes).
+    #   "strict" : enforced per impression; overflow impressions go to the next-highest
+    #              eligible bidder.
+    cap_mode: str = "batch"
+    # Tie-breaking when ranking firms for selection (idle firms all tie):
+    #   "stable"        : stable sort; identical results on every platform (default).
+    #   "numpy_default" : np.argsort's default, as both prototypes used. Its tie order
+    #                     varies with numpy version and CPU, so exact prototype
+    #                     agreement holds only on the same platform.
+    tie_break: str = "stable"
     summary_last: int = 30        # generations averaged for the headline number
 
 
@@ -92,7 +114,16 @@ class BuyersCfg:
     inspect_cost_frac: dict = field(default_factory=lambda: {"tourist": 0.10, "local": 0.05, "expert": 0.02})
     aisles_per_route: list = field(default_factory=lambda: [1, 3])
     profile_noise: float = 0.3   # chance a seller sees a uniformly random profile instead of the true one
-    inspector_fraction: float = 0.0  # share of buyers who are also inspectors (sanity checks)
+    inspector_fraction: float = 0.0  # share of buyers who are also inspectors ("inspector-buyers")
+    # What an inspector-buyer has. Knowledge and enforcement are separate switches so
+    # they can be tested apart:
+    #   knowledge   : reliable quality information about each stall it reaches
+    #                 (obs field "own_assessment"), which its purchasing policy can use;
+    #   enforcement : perceiving a false claim can trigger a catch.
+    # Both on = a well-informed buyer who also reports; enforcement only = an automatic
+    # auditor with ordinary shopping; knowledge only = an expert shopper who never reports.
+    inspector_knowledge: bool = True
+    inspector_enforcement: bool = True
 
 
 @dataclass
@@ -110,6 +141,12 @@ class InspectorsCfg:
 class DetectionCfg:
     # PLACEHOLDER (default "graded"): p = w_channel * proximity(d) * min(1, falsity / f_scale)
     form: str = "graded"           # "graded" | "step" | "hazard"
+    # How detection depends on distance for broadcast channels (sign, yell).
+    #   "linear": proximity = 1 - d / range (default); private channels always 1.
+    #   "flat"  : proximity = 1 for every channel. With equal channel weights this is the
+    #             equal-detection-given-exposure condition (configs/detection_equal.json):
+    #             channels then differ only in who perceives them.
+    proximity: str = "linear"
     channel_weight: dict = field(default_factory=lambda: {"whisper": 1.0, "answer": 1.0, "yell": 0.6, "sign": 0.4})
     f_scale: float = 0.3           # graded: falsity at which detection saturates
     hazard_k: float = 6.0          # hazard: p = 1 - exp(-k * falsity * w * exp(-d / lam))

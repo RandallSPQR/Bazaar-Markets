@@ -7,7 +7,7 @@ from contextlib import nullcontext
 from . import bazaar, m0
 from .config import from_dict
 from .jsonlog import JsonlLog
-from .metrics import normalised_outcomes, reference_configs
+from .metrics import reference_configs, relative_outcomes
 
 
 def run_config(cfg, log_path: str | None = None, normalize: bool = False, keep_lines: bool = False,
@@ -23,7 +23,7 @@ def run_config(cfg, log_path: str | None = None, normalize: bool = False, keep_l
             out = bazaar.run(cfg, log=log, agent_factory=agent_factory)
     if normalize and cfg.mode == "bazaar":
         refs = {k: bazaar.run(c) for k, c in reference_configs(cfg).items()}
-        out = {**out, **normalised_outcomes(out, refs["floor"], refs["ceiling"])}
+        out = {**out, **relative_outcomes(out, refs["random_ref"], refs["informed_ref"])}
     return out, log
 
 

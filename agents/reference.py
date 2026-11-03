@@ -1,13 +1,19 @@
-"""Reference buyers for normalising outcomes.
+"""Reference buyers: comparison points, not bounds.
 
-RandomBuyer (floor): ignores all messages; at each stop buys from a random
-affordable stall with probability p_buy, as many units as it can afford.
+RandomReferenceBuyer ("random reference"): ignores all messages; at each stop
+buys from a random affordable stall with probability p_buy, as many units as it
+can afford. It is not a lower bound: a study buyer that follows false claims can
+do worse than random.
 
-PerfectInfoBuyer (ceiling): receives the privileged `oracle` block (true
-quality here and on the rest of its route). It buys where per-unit surplus
-V(Q) - price is positive and no better deal lies ahead on its route. It never
-asks or inspects. This is a myopic, route-aware oracle, not a global
-optimum over all routes.
+InformedReferenceBuyer ("informed reference"): receives the privileged `oracle`
+block (true quality here and on the rest of its route) and follows a heuristic:
+buy where per-unit surplus V(Q) - price is positive and no better deal lies ahead
+on its route. It is not an upper bound either: it can wait for a better offer that
+is gone when it arrives (closed stall, spent budget), and it does not solve the
+joint quantity/budget problem. It never asks or inspects.
+
+Raw outcomes are primary. Scores relative to these references (engine.metrics)
+are comparisons and can fall outside [0, 1].
 """
 from __future__ import annotations
 
@@ -22,15 +28,15 @@ def _out(obj: dict) -> str:
     return json.dumps(obj, sort_keys=True, separators=(",", ":"))
 
 
-class RandomBuyer:
-    VERSION = "random_buyer-1"
+class RandomReferenceBuyer:
+    VERSION = "random_reference-1"
 
     def __init__(self, rng: np.random.Generator, p_buy: float = 0.3):
         self.rng, self.p_buy = rng, p_buy
 
     def meta(self) -> dict:
-        return {"policy": "random_buyer", "version": self.VERSION, "model_id": None, "sampling": None,
-                "params": {"p_buy": self.p_buy}, "reference": "floor"}
+        return {"policy": "random_reference", "version": self.VERSION, "model_id": None, "sampling": None,
+                "params": {"p_buy": self.p_buy}, "reference": "random"}
 
     def act(self, obs: dict) -> str:
         task = obs["you"]["task"]
@@ -43,15 +49,15 @@ class RandomBuyer:
         return _out({"action": "buy", "stall": s["id"], "units": int(min(need, left // s["price_cents"]))})
 
 
-class PerfectInfoBuyer:
-    VERSION = "perfect_buyer-1"
+class InformedReferenceBuyer:
+    VERSION = "informed_reference-1"
 
     def __init__(self, rng: np.random.Generator | None = None, valuation=None, base_price_cents: dict | None = None):
         self.valuation, self.base = valuation, base_price_cents
 
     def meta(self) -> dict:
-        return {"policy": "perfect_buyer", "version": self.VERSION, "model_id": None, "sampling": None,
-                "privileged": True, "reference": "ceiling"}
+        return {"policy": "informed_reference", "version": self.VERSION, "model_id": None, "sampling": None,
+                "privileged": True, "reference": "informed"}
 
     def surplus(self, q: float, price: int, q_req: float, cat: str) -> float:
         return unit_value(self.valuation, q, q_req, self.base[cat]) - price
@@ -70,3 +76,8 @@ class PerfectInfoBuyer:
         if best_s <= 0 or (ahead and max(ahead) > best_s):
             return _out({"action": "move_on"})
         return _out({"action": "buy", "stall": best_id, "units": int(min(need, left // price))})
+
+
+# Old names, kept so logs written before the rename still replay.
+RandomBuyer = RandomReferenceBuyer
+PerfectInfoBuyer = InformedReferenceBuyer
