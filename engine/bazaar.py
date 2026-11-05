@@ -26,7 +26,7 @@ from .detection import catch_prob
 from .interface import FALLBACK, Agent, parse
 from .jsonlog import JsonlLog, env_info
 from .valuation import unit_value
-from .world import Layout, Person, Stall, build_people, build_stalls, spec_text
+from .world import UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, spec_text
 
 PROFILES = ("tourist", "local", "expert")
 
@@ -78,6 +78,16 @@ class BazaarEngine:
         self._buys_now: list[dict] = []
         self._inspects_now: list[dict] = []
         self.inspector_active_ticks = {"dedicated": 0, "inspector_buyers": 0}
+        # Uniform-eligible inspectors: dedicated inspectors on a placement that can wear a
+        # uniform. They are the uniformed ones when inspectors.uniformed is true. The
+        # diagnostics below are keyed on eligibility, not on the uniform itself, so the
+        # outcome of a policy that ignores the uniform does not depend on the flag.
+        self.uniform_eligible = {p.pid for p in self.people
+                                 if p.kind == "inspector" and cfg.inspectors.placement in UNIFORMABLE}
+        self.false_impressions_to_eligible = 0
+        self.false_claims_by_stall = {st.sid: {"messages": 0, "no_eligible_in_earshot": 0}
+                                      for st in self.stalls if st.stype == "deceptive"}
+        self.catch_ticks: list[tuple[int, Stall]] = []   # (tick, stall), for public catch notices
 
     # ------------------------------------------------------------------ helpers
 
@@ -214,6 +224,8 @@ class BazaarEngine:
                 return None
 
             a = self.decide("seller", st.sid, self.seller_agents[st.sid], obs, check)
+            if a.get("sign") is not None:   # takes effect in this tick's delivery
+                st.sign = a["sign"]
             if a["yell"] is not None:
                 st.ad_spend_cents += st.yell_cost_cents
                 outgoing.append((st, "yell", a["yell"]["claim"], [p for p, d in near]))
@@ -231,10 +243,20 @@ class BazaarEngine:
             seers = [p for p in act if _dist(p.pos, st.pos) <= mk.sight_range and (st.sid, st.epoch) not in p.seen_signs]
             if seers:
                 sign_out.append((st, "sign", "pitch" if st.sign == "pitch" else "truth", seers))
+        watched: dict[str, bool] = {}
         for st, ch, claim, recips in sign_out + outgoing:
             q = self.claim_q(st, claim)
             false = q > st.q_true + 1e-12
+            if false and st.sid in self.false_claims_by_stall:
+                if st.sid not in watched:
+                    watched[st.sid] = any(p.pid in self.uniform_eligible and _dist(p.pos, st.pos) <= mk.earshot
+                                          for p in act)
+                fc = self.false_claims_by_stall[st.sid]
+                fc["messages"] += 1
+                fc["no_eligible_in_earshot"] += not watched[st.sid]
             for p in recips:
+                if false and p.pid in self.uniform_eligible:
+                    self.false_impressions_to_eligible += 1
                 if ch == "sign":
                     p.seen_signs.add((st.sid, st.epoch))
                 self.deliver(st, p, ch, q)
@@ -308,6 +330,7 @@ class BazaarEngine:
         ev = {"stall": st.sid, "by": p.pid, "channel": ch, "claimed": q, "true": st.q_true,
               "penalty_cents": st.penalty_cents, "reopens": st.closed_until}
         self.catch_events.append(ev)
+        self.catch_ticks.append((self.t, st))
         return ev
 
     def buyer_did(self, p: Person, here: list[Stall], stay: set) -> bool:
@@ -381,6 +404,24 @@ class BazaarEngine:
 
     # ------------------------------------------------------------------ observations
 
+    def recent_catches(self, st: Stall) -> list[dict]:
+        """Public catch notices: catches at stalls within earshot of this one in the
+        last L = close_ticks ticks (ticks_ago 1..L), oldest first."""
+        L, out = self.cfg.pricing.close_ticks, []
+        for tc, cst in self.catch_ticks:
+            ago = self.t - tc
+            if 1 <= ago <= L:
+                d = _dist(cst.pos, st.pos)
+                if d <= self.cfg.market.earshot:
+                    out.append({"distance": round(d, 3), "ticks_ago": ago})
+        return out
+
+    def is_reachable(self, p: Person) -> bool:
+        """Does this buyer's route pass within interact_range of a stall of its category?"""
+        r = self.cfg.market.interact_range
+        own = [st.pos for st in self.stalls if st.category == p.task["category"]]
+        return any(_dist(c, s) <= r for c in p.route for s in own)
+
     def seller_obs(self, st: Stall, near: list, askers: list) -> dict:
         mk = self.cfg.market
         return {
@@ -389,12 +430,15 @@ class BazaarEngine:
                       "true_quality": st.q_true, "pitch_quality": st.q_pitch,
                       "truth_text": self.message_text(st, st.q_true),
                       "pitch_text": self.message_text(st, st.q_pitch),
-                      "price_cents": st.price_cents, "unit_cost_cents": st.unit_cost_cents, "sign": st.sign},
+                      "price_cents": st.price_cents, "unit_cost_cents": st.unit_cost_cents, "sign": st.sign,
+                      "reopened_at_tick": st.closed_until if st.catches else None},
             "costs": {"yell_cents": st.yell_cost_cents, "whisper_cents": st.whisper_cost_cents,
                       "penalty_cents_if_caught": st.penalty_cents, "closure_ticks": self.cfg.pricing.close_ticks},
             "ranges": {"earshot": mk.earshot, "whisper_range": mk.whisper_range},
-            "passersby": [{"id": p.pid, "observed_profile": self.observed_profile(st, p), "distance": round(d, 3)}
+            "passersby": [{"id": p.pid, "observed_profile": self.observed_profile(st, p), "distance": round(d, 3),
+                           "uniform": p.uniform}
                           for p, d in near],
+            "recent_catches": self.recent_catches(st),
             "asks": [{"id": pid} for pid in askers],
             "ledger": {"revenue_cents": st.revenue_cents, "units_sold": st.units_sold,
                        "ad_spend_cents": st.ad_spend_cents, "penalties_cents": st.penalties_cents,
@@ -459,6 +503,19 @@ class BazaarEngine:
         for d in by_type.values():
             d["profit_cents"] = d["revenue_cents"] - d["cost_cents"] - d["ad_spend_cents"] - d["penalties_cents"]
             d["profit_per_stall_cents"] = d["profit_cents"] / d["stalls"]
+        reach = [p for p in arrived if self.is_reachable(p)]
+        reach_ids = {p.pid for p in reach}
+        r_buys = [x for x in self.purchases if x["buyer"] in reach_ids]
+        r_surplus = [p.value - p.paid_cents - p.inspect_spent_cents for p in reach]
+        reachable = {
+            "share": len(reach) / len(arrived) if arrived else None,
+            "buyers": len(reach),
+            "shortfall_rate": (sum(x["shortfall"] for x in r_buys) / len(r_buys)) if r_buys else None,
+            "task_complete_share": (sum(p.q_units >= p.task["units"] for p in reach) / len(reach)) if reach else None,
+            "buyer_surplus_mean_cents": float(np.mean(r_surplus)) if r_surplus else None,
+        }
+        fc_msgs = sum(v["messages"] for v in self.false_claims_by_stall.values())
+        fc_free = sum(v["no_eligible_in_earshot"] for v in self.false_claims_by_stall.values())
         payments = sum(p.paid_cents for p in self.buyers)
         revenue = sum(st.revenue_cents for st in self.stalls)
         return {
@@ -484,6 +541,11 @@ class BazaarEngine:
             "seller_by_type": by_type,
             "payments_total_cents": payments, "seller_revenue_total_cents": revenue,
             "decisions": self.decisions, "fallbacks": self.fallbacks,
+            "reachable": reachable,
+            "false_claim_impressions": imp["false"],
+            "false_claim_impressions_to_uniform_eligible": self.false_impressions_to_eligible,
+            "false_claims": {"messages": fc_msgs, "no_eligible_in_earshot": fc_free},
+            "false_claims_by_stall": {k: dict(v) for k, v in self.false_claims_by_stall.items()},
         }
 
 

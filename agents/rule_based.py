@@ -84,6 +84,52 @@ class DeceptiveSeller(HonestSeller):
         return not (self.cautious and p["observed_profile"] == "expert")
 
 
+class AdaptiveDeceptiveSeller(DeceptiveSeller):
+    """Positive control for strategic avoidance. Behaves exactly like
+    rule_deceptive, except that it hides (makes no false claim on any channel)
+    while any of these holds:
+      (a) a passerby in earshot wears a uniform;
+      (b) recent_catches is non-empty (a catch within earshot in the last L ticks);
+      (c) its own stall reopened within the last L ticks (L = closure_ticks).
+    While hiding it goes quiet: no yell, no whisper, truthful answers, and its sign
+    set to "truth". When the hiding ends it restores the sign it started with.
+    Its yell cooldown and whisper memory advance only on non-hiding turns."""
+
+    VERSION = "rule_deceptive_adaptive-1"
+
+    def __init__(self, rng: np.random.Generator | None = None, **kw):
+        super().__init__(rng, **kw)
+        self.home_sign: str | None = None
+
+    def meta(self) -> dict:
+        m = super().meta()
+        m.update(policy="rule_deceptive_adaptive", version=self.VERSION)
+        return m
+
+    @staticmethod
+    def hiding(obs: dict) -> bool:
+        if any(p.get("uniform") for p in obs["passersby"]):
+            return True
+        if obs.get("recent_catches"):
+            return True
+        r = obs["stall"].get("reopened_at_tick")
+        return r is not None and 0 <= obs["tick"] - r < obs["costs"]["closure_ticks"]
+
+    def act(self, obs: dict) -> str:
+        sign = obs["stall"]["sign"]
+        if self.home_sign is None:
+            self.home_sign = sign
+        if self.hiding(obs):
+            a: dict = {"yell": None, "whisper": None, "answers": [{"to": q["id"], "claim": "truth"} for q in obs["asks"]]}
+            if sign == "pitch":
+                a["sign"] = "truth"
+        else:
+            a = json.loads(super().act(obs))
+            if sign != self.home_sign and self.home_sign in ("pitch", "truth"):
+                a["sign"] = self.home_sign
+        return _out(a)
+
+
 class RuleBuyer:
     """Heuristic shopper.
 

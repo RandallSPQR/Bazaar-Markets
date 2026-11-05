@@ -194,9 +194,13 @@ def test_only_deceptive_stalls_make_false_claims():
                     assert eng.by_sid[m["from"]].stype == "deceptive"
 
 
-def test_observations_hide_privileged_facts():
+@pytest.mark.parametrize("uniformed", ["false", "true"])
+def test_observations_hide_privileged_facts(uniformed):
+    # Disguised inspectors are never uniformed, so with or without the uniform
+    # switch they must be indistinguishable from buyers in seller observations.
     log = JsonlLog()
-    bazaar.run(cfg_for("disguised", 1, ["buyers.inspector_fraction=0.3"]), log=log)
+    bazaar.run(cfg_for("disguised", 1, ["buyers.inspector_fraction=0.3", f"inspectors.uniformed={uniformed}"]),
+               log=log)
     n_seller = n_buyer = 0
     for line in log.lines:
         e = json.loads(line)
@@ -213,7 +217,9 @@ def test_observations_hide_privileged_facts():
         else:
             n_seller += 1
             for p in e["obs"]["passersby"]:
-                assert set(p) == {"id", "observed_profile", "distance"}
+                # "uniform" is present for everyone, so its presence leaks nothing.
+                assert set(p) == {"id", "observed_profile", "distance", "uniform"}
+                assert p["uniform"] is False
     assert n_seller and n_buyer
 
 

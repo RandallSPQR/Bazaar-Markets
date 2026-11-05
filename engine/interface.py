@@ -7,7 +7,8 @@ Anything that fails becomes the role's deterministic fallback action, and the
 failure is logged.
 
 Actions can only *select* among options the engine offers: which channel to
-use, which claim from the stall's own menu ("truth" or "pitch"), which stall to
+use, which claim from the stall's own menu ("truth" or "pitch"), what the stall's
+sign shows (from the same menu), which stall to
 ask, inspect or buy from, and how many units. No field sets a price, a
 quality, an outcome or an enforcement result; unknown fields are rejected.
 """
@@ -35,6 +36,9 @@ SELLER_ACTION_SCHEMA: dict = {
         "answers": {"type": "array", "maxItems": 32,
                     "items": {"type": "object", "additionalProperties": False, "required": ["to", "claim"],
                               "properties": {"to": {"type": "string", "maxLength": 16}, "claim": CLAIM}}},
+        # Optional: set the stall's sign. Takes effect in this tick's delivery (seller
+        # decisions precede delivery) and stays until changed.
+        "sign": CLAIM,
     },
 }
 
@@ -84,5 +88,8 @@ def parse(role: str, raw: Any) -> tuple[dict | None, str | None]:
         e = errs[0]
         return None, f"schema: {e.message[:200]} at /{'/'.join(map(str, e.path))}"
     if role == "seller":
+        sign = obj.get("sign")
         obj = {"yell": obj.get("yell"), "whisper": obj.get("whisper"), "answers": obj.get("answers", [])}
+        if sign is not None:   # absent = keep the sign; the key is omitted so old actions log unchanged
+            obj["sign"] = sign
     return obj, None

@@ -68,7 +68,7 @@ sanity check depends on this separation.
 | `unit_cost` | [0.30, 0.50] | | unit cost = base × (c0 + c1·Q_true) |
 | `yell_cost_frac`, `whisper_cost_frac` | 0.002, 0.004 | calibration | ad spend per yell / whisper, as a fraction of base |
 | `penalty_mult` | 1.5 | | P = 1.5 × base ≈ 5× a genuine unit margin (M0's P/m = 5) |
-| `close_ticks` | 40 | | closure after a catch |
+| `close_ticks` | 40 | | closure after a catch; also L, the window for public catch notices (`recent_catches`) |
 
 ### `buyers`
 | key | default | status | meaning |
@@ -92,6 +92,7 @@ sanity check depends on this separation.
 | `placement` | `posts` | calibration | `posts` (spread across aisles), `clustered` (all in one aisle), `patrolling` (serpentine loop), `disguised` (walk buyer routes, ask stalls) |
 | `disguised_ask_prob` | 0.3 | | chance a disguised inspector asks a stall it passes |
 | `feature_correlation` | **0.0** | **PLACEHOLDER** | ρ: with probability ρ an inspector shows as `expert`; otherwise its observable profile comes from the buyer distribution. 0 = no pockets in feature space. |
+| `uniformed` | false | | inspectors on `posts`, `clustered` or `patrolling` wear a visible uniform (`"uniform": true` on sellers' passerby rows). Disguised inspectors are never uniformed |
 
 ### `detection`
 | key | default | status | meaning |
@@ -127,5 +128,12 @@ after the stall reopens).
 | `seller` | genuine/seconds → `rule_honest`, deceptive → `rule_deceptive` | |
 | `buyer` | `rule_buyer` | also `random_reference`, `informed_reference` (comparison points, not bounds; old names `random_buyer`, `perfect_buyer` still accepted), `llm` (stub) |
 | `params` | {} | per-policy keyword arguments, e.g. `{"rule_deceptive": {"cautious": false}}`, `{"llm": {"model_id": "...", "sampling": {...}, "max_calls": 0}}` |
+
+Seller policies: `rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`, `llm`. Set a
+type's policy with e.g. `--set agents.seller.deceptive=rule_deceptive_adaptive`.
+`rule_deceptive_adaptive` (positive control for strategic avoidance) behaves like
+`rule_deceptive`, but goes quiet (no yell or whisper, truthful answers, sign set to
+`truth`) while a uniformed passerby is in earshot, while `recent_catches` is non-empty,
+or for `close_ticks` ticks after its own stall reopens. It then restores its sign.
 
 Policies: `agents/registry.py`.

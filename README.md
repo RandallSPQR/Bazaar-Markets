@@ -20,7 +20,8 @@ engine/    m0.py (prototype port), bazaar.py (engine loop), world.py, detection.
            interface.py (action schemas, parse/fallback), config.py, jsonlog.py, metrics.py, runner.py
 agents/    rule_based.py, reference.py (random and informed reference buyers), llm_stub.py, registry.py
 cli/       run.py, sweep.py, replay.py, m0_regression.py
-tests/     test_m0.py, test_invariants.py, test_bazaar_sanity.py, reference/sim_prototype.py
+tests/     test_m0.py, test_invariants.py, test_bazaar_sanity.py, test_visibility.py, reference/
+analysis/  placement_sweep.py (and later run scripts; outputs in runs/)
 docs/      log_schema.md, config_reference.md
 viewer/    index.html (canvas playback of engine logs, plus a demo mode)
 configs/   m0_baseline.json, m0_redraw.json, bazaar_default.json
@@ -144,13 +145,16 @@ both modes drawn by one renderer.
 - **Messages.** A sign is seen once by passers-by in sight range. A yell is a
   broadcast to everyone in earshot. A whisper is private to one passer-by. An
   answer replies to an ask. A seller picks a channel, a target, and a claim
-  from its own menu (`truth` or `pitch`). It cannot write free text or set a
+  from its own menu (`truth` or `pitch`). It can also set its sign to `truth` or `pitch`.
+  It sees passers-by (a uniform if one is worn, never an inspector flag) and public
+  notices of recent catches nearby. It cannot write free text or set a
   price.
 - **Buyers.** Buyers walk seeded routes with a task (X units at Q ≥ Q_req
   within budget B). At stalls of their category they ask, inspect (costly;
   reveals Q), buy, or move on. Sellers see a noisy profile and never an
   inspector flag.
-- **Inspectors.** Count, placement and feature correlation are dials. When an
+- **Inspectors.** Count, placement, feature correlation and visibility
+  (`inspectors.uniformed`) are dials. When an
   inspector perceives a false claim (including a whisper or answer to a
   disguised inspector or an inspector-buyer), the engine draws detection from
   `detection.form`. A catch charges penalty P and closes the stall for

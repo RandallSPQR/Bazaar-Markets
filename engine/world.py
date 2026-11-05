@@ -39,6 +39,10 @@ def spec_text(category: str, q: float) -> str:
     return f"grade {q:.2f}"
 
 
+# Inspector placements that can wear a uniform (inspectors.uniformed). Disguised never can.
+UNIFORMABLE = ("posts", "clustered", "patrolling")
+
+
 @dataclass
 class Stall:
     sid: str
@@ -82,6 +86,7 @@ class Person:
     is_inspector: bool
     task: dict | None = None
     inspect_cost_cents: int = 0
+    uniform: bool = False  # visible to sellers; only uniformed (non-disguised) inspectors
     # mutable
     step: int = 0
     active: bool = False
@@ -287,7 +292,8 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         else:
             raise ValueError(f"unknown inspector placement {ic.placement!r}")
         people.append(Person(pid="", idx=0, kind="inspector", profile=profile, route=route,
-                             arrive=arrive, is_inspector=True))
+                             arrive=arrive, is_inspector=True,
+                             uniform=bool(ic.uniformed and ic.placement in UNIFORMABLE)))
 
     # Seller-facing ids: stable hashes of (seed, kind, index within kind), in one shared
     # id space, so neither kind nor order can be read from them and buyer ids do not

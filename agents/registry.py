@@ -9,11 +9,12 @@ import numpy as np
 
 from .llm_stub import LLMAgent
 from .reference import InformedReferenceBuyer, RandomReferenceBuyer
-from .rule_based import DeceptiveSeller, HonestSeller, RuleBuyer
+from .rule_based import AdaptiveDeceptiveSeller, DeceptiveSeller, HonestSeller, RuleBuyer
 
 POLICIES = {
     "rule_honest": HonestSeller,
     "rule_deceptive": DeceptiveSeller,
+    "rule_deceptive_adaptive": AdaptiveDeceptiveSeller,
     "rule_buyer": RuleBuyer,
     "random_reference": RandomReferenceBuyer,
     "informed_reference": InformedReferenceBuyer,

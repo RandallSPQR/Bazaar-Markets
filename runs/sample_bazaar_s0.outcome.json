@@ -14,7 +14,75 @@
   "buyer": 0,
   "seller": 0
  },
+ "false_claim_impressions": 3373,
+ "false_claim_impressions_to_uniform_eligible": 58,
  "false_claim_share_impressions": 0.20495837637479491,
+ "false_claims": {
+  "messages": 2500,
+  "no_eligible_in_earshot": 1827
+ },
+ "false_claims_by_stall": {
+  "s03": {
+   "messages": 180,
+   "no_eligible_in_earshot": 180
+  },
+  "s07": {
+   "messages": 161,
+   "no_eligible_in_earshot": 161
+  },
+  "s08": {
+   "messages": 93,
+   "no_eligible_in_earshot": 0
+  },
+  "s10": {
+   "messages": 124,
+   "no_eligible_in_earshot": 0
+  },
+  "s14": {
+   "messages": 194,
+   "no_eligible_in_earshot": 194
+  },
+  "s16": {
+   "messages": 120,
+   "no_eligible_in_earshot": 0
+  },
+  "s19": {
+   "messages": 202,
+   "no_eligible_in_earshot": 202
+  },
+  "s22": {
+   "messages": 198,
+   "no_eligible_in_earshot": 198
+  },
+  "s23": {
+   "messages": 197,
+   "no_eligible_in_earshot": 197
+  },
+  "s24": {
+   "messages": 198,
+   "no_eligible_in_earshot": 0
+  },
+  "s33": {
+   "messages": 138,
+   "no_eligible_in_earshot": 0
+  },
+  "s38": {
+   "messages": 196,
+   "no_eligible_in_earshot": 196
+  },
+  "s39": {
+   "messages": 192,
+   "no_eligible_in_earshot": 192
+  },
+  "s45": {
+   "messages": 160,
+   "no_eligible_in_earshot": 160
+  },
+  "s46": {
+   "messages": 147,
+   "no_eligible_in_earshot": 147
+  }
+ },
  "impressions": 16457,
  "impressions_by_channel": {
   "sign": 5758,
@@ -35,6 +103,13 @@
  "payments_total_cents": 441600,
  "purchases": 78,
  "quantity_fulfilled_share": 0.36,
+ "reachable": {
+  "buyer_surplus_mean_cents": -773.260384578131,
+  "buyers": 90,
+  "share": 0.6,
+  "shortfall_rate": 0.5641025641025641,
+  "task_complete_share": 0.1111111111111111
+ },
  "seller_by_type": {
   "deceptive": {
    "ad_spend_cents": 26883,

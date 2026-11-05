@@ -135,6 +135,10 @@ class InspectorsCfg:
     # as "expert". 0 = inspectors' observable profiles are drawn from the buyer
     # distribution (no pockets in feature space); 1 = every inspector shows as expert.
     feature_correlation: float = 0.0
+    # Uniformed inspectors: when true, inspectors on posts, clustered or patrolling
+    # placement wear a visible uniform (sellers see "uniform": true on their passerby
+    # row). Disguised inspectors are never uniformed.
+    uniformed: bool = False
 
 
 @dataclass
