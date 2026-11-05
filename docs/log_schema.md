@@ -68,8 +68,9 @@ Agents never receive this event. It exists for analysis and the viewer.
   "ranges": {"earshot", "whisper_range"},
   "passersby": [{"id", "observed_profile", "distance", "uniform"}],
       // nearest first; profile is noisy; no inspector flag. "uniform" is present for
-      // everyone and true only for a uniformed inspector (inspectors.uniformed), so
-      // non-uniformed inspectors look exactly like buyers.
+      // everyone and true only for a uniformed inspector (inspectors.uniformed) within
+      // inspectors.recognition_range (default: earshot), so non-uniformed inspectors, and
+      // uniformed ones beyond recognition range, look exactly like buyers.
   "recent_catches": [{"distance", "ticks_ago"}],            // public notices: catches at stalls within
       // earshot of this one in the last L = closure_ticks ticks (ticks_ago 1..L), oldest first
   "asks": [{"id"}],                                         // people who asked last tick
@@ -147,10 +148,10 @@ Bazaar: `buyers_arrived`, `buyer_surplus_mean_cents`, `buyer_surplus_total_cents
 `inspection_spend_cents`, `catches`,
 `seller_by_type.{genuine,seconds,deceptive}.{stalls, revenue_cents, cost_cents, ad_spend_cents, penalties_cents, units_sold, catches, profit_cents, profit_per_stall_cents}`,
 `payments_total_cents`, `seller_revenue_total_cents` (always equal), `decisions`, `fallbacks`,
-`reachable.{share, buyers, shortfall_rate, task_complete_share, buyer_surplus_mean_cents}`
+`reachable.{share, buyers, task_complete_share, buyer_surplus_mean_cents}`
 (the same metrics over reachable buyers: those whose route passes within `interact_range` of a
-stall of their category. Unreachable buyers never buy, so `reachable.shortfall_rate`, a
-per-purchase rate, always equals `shortfall_rate`),
+stall of their category. Unreachable buyers never buy, so a reachable shortfall rate would equal
+`shortfall_rate`; engine 0.3.0 reported it as `reachable.shortfall_rate`, and 0.4.0 drops it),
 `false_claim_impressions`, `false_claim_impressions_to_uniform_eligible`,
 `false_claims.{messages, no_eligible_in_earshot}` and
 `false_claims_by_stall.{sid}.{messages, no_eligible_in_earshot}` (deceptive stalls only).

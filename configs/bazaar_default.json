@@ -90,7 +90,9 @@
   "placement": "posts",
   "disguised_ask_prob": 0.3,
   "feature_correlation": 0.0,
-  "uniformed": false
+  "uniformed": false,
+  "recognition_range": null,
+  "disguised_shift": "single_trip"
  },
  "detection": {
   "form": "graded",

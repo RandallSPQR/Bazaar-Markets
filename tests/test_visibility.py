@@ -247,4 +247,5 @@ def test_unreachable_buyers_never_buy():
     unreachable = {p.pid for p in eng.buyers if (p.active or p.done) and not eng.is_reachable(p)}
     assert unreachable
     assert not any(x["buyer"] in unreachable for x in eng.purchases)
-    assert out["reachable"]["shortfall_rate"] == out["shortfall_rate"]   # per-purchase rate: same purchases
+    # hence a reachable shortfall rate would equal the all-buyer rate; 0.4.0 does not report it
+    assert "shortfall_rate" not in out["reachable"]

@@ -20,8 +20,9 @@ engine/    m0.py (prototype port), bazaar.py (engine loop), world.py, detection.
            interface.py (action schemas, parse/fallback), config.py, jsonlog.py, metrics.py, runner.py
 agents/    rule_based.py, reference.py (random and informed reference buyers), llm_stub.py, registry.py
 cli/       run.py, sweep.py, replay.py, m0_regression.py
-tests/     test_m0.py, test_invariants.py, test_bazaar_sanity.py, test_visibility.py, reference/
-analysis/  placement_sweep.py (and later run scripts; outputs in runs/)
+tests/     test_m0.py, test_invariants.py, test_bazaar_sanity.py, test_visibility.py, test_recognition.py,
+           reference/ (prototype copies, 0.3.0 outcomes)
+analysis/  run scripts (placement_sweep.py, visibility_adaptivity.py, ...); outputs in runs/
 docs/      log_schema.md, config_reference.md
 viewer/    index.html (canvas playback of engine logs, plus a demo mode)
 configs/   m0_baseline.json, m0_redraw.json, bazaar_default.json
@@ -153,8 +154,9 @@ both modes drawn by one renderer.
   within budget B). At stalls of their category they ask, inspect (costly;
   reveals Q), buy, or move on. Sellers see a noisy profile and never an
   inspector flag.
-- **Inspectors.** Count, placement, feature correlation and visibility
-  (`inspectors.uniformed`) are dials. When an
+- **Inspectors.** Count, placement, feature correlation, visibility
+  (`inspectors.uniformed`, `inspectors.recognition_range`) and, for disguised
+  inspectors, shift length (`inspectors.disguised_shift`) are dials. When an
   inspector perceives a false claim (including a whisper or answer to a
   disguised inspector or an inspector-buyer), the engine draws detection from
   `detection.form`. A catch charges penalty P and closes the stall for

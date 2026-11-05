@@ -93,6 +93,8 @@ sanity check depends on this separation.
 | `disguised_ask_prob` | 0.3 | | chance a disguised inspector asks a stall it passes |
 | `feature_correlation` | **0.0** | **PLACEHOLDER** | ρ: with probability ρ an inspector shows as `expert`; otherwise its observable profile comes from the buyer distribution. 0 = no pockets in feature space. |
 | `uniformed` | false | | inspectors on `posts`, `clustered` or `patrolling` wear a visible uniform (`"uniform": true` on sellers' passerby rows). Disguised inspectors are never uniformed |
+| `recognition_range` | null (= `market.earshot`) | | how far away a seller recognizes a uniform, in grid units. Uniformed inspectors farther away show `"uniform": false`, like any passer-by. 0 = never recognized |
+| `disguised_shift` | `single_trip` | | `single_trip`: each disguised inspector walks one buyer-like route at a staggered arrival, then leaves (far fewer active ticks than posts). `full_shift`: present from t=0 to the end, walking random routes back to back (active ticks = count × ticks, as for posts and patrols). Full-shift routes come from inspector j's own stream `[seed, 6, 1, j]`, so buyers and other draws are unchanged |
 
 ### `detection`
 | key | default | status | meaning |

@@ -222,7 +222,13 @@ def _population(overrides):
 @pytest.mark.parametrize("treat", [["buyers.budget_level=mixed"], ["buyers.budget_level=below"],
                                    ["inspectors.count=8"], ["inspectors.count=0"],
                                    ["inspectors.placement=disguised", "inspectors.count=5"],
-                                   ["buyers.inspector_fraction=0.4"], ["inspectors.feature_correlation=1.0"]])
+                                   ["buyers.inspector_fraction=0.4"], ["inspectors.feature_correlation=1.0"],
+                                   ["inspectors.uniformed=true", "inspectors.recognition_range=0"],
+                                   ["inspectors.uniformed=true", "inspectors.recognition_range=2.0"],
+                                   ["inspectors.placement=disguised", "inspectors.count=6",
+                                    "inspectors.disguised_shift=full_shift"],
+                                   ["inspectors.placement=disguised", "inspectors.count=2",
+                                    "inspectors.disguised_shift=full_shift"]])
 def test_treatments_preserve_buyer_population(treat):
     base, _ = _population(["seed=4"])
     other, eng = _population(["seed=4"] + treat)

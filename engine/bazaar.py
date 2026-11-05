@@ -88,6 +88,8 @@ class BazaarEngine:
         self.false_claims_by_stall = {st.sid: {"messages": 0, "no_eligible_in_earshot": 0}
                                       for st in self.stalls if st.stype == "deceptive"}
         self.catch_ticks: list[tuple[int, Stall]] = []   # (tick, stall), for public catch notices
+        rr = cfg.inspectors.recognition_range
+        self.recognition_range = cfg.market.earshot if rr is None else float(rr)
 
     # ------------------------------------------------------------------ helpers
 
@@ -436,7 +438,7 @@ class BazaarEngine:
                       "penalty_cents_if_caught": st.penalty_cents, "closure_ticks": self.cfg.pricing.close_ticks},
             "ranges": {"earshot": mk.earshot, "whisper_range": mk.whisper_range},
             "passersby": [{"id": p.pid, "observed_profile": self.observed_profile(st, p), "distance": round(d, 3),
-                           "uniform": p.uniform}
+                           "uniform": p.uniform and d <= self.recognition_range}
                           for p, d in near],
             "recent_catches": self.recent_catches(st),
             "asks": [{"id": pid} for pid in askers],
@@ -504,13 +506,10 @@ class BazaarEngine:
             d["profit_cents"] = d["revenue_cents"] - d["cost_cents"] - d["ad_spend_cents"] - d["penalties_cents"]
             d["profit_per_stall_cents"] = d["profit_cents"] / d["stalls"]
         reach = [p for p in arrived if self.is_reachable(p)]
-        reach_ids = {p.pid for p in reach}
-        r_buys = [x for x in self.purchases if x["buyer"] in reach_ids]
         r_surplus = [p.value - p.paid_cents - p.inspect_spent_cents for p in reach]
         reachable = {
             "share": len(reach) / len(arrived) if arrived else None,
             "buyers": len(reach),
-            "shortfall_rate": (sum(x["shortfall"] for x in r_buys) / len(r_buys)) if r_buys else None,
             "task_complete_share": (sum(p.q_units >= p.task["units"] for p in reach) / len(reach)) if reach else None,
             "buyer_surplus_mean_cents": float(np.mean(r_surplus)) if r_surplus else None,
         }

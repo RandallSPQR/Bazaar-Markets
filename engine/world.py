@@ -286,7 +286,11 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
             off = (j * len(loop)) // max(1, ic.count)
             reps = mk.ticks // len(loop) + 2
             route, arrive = (loop[off:] + loop * reps)[: mk.ticks + 1], 0
+        elif ic.placement == "disguised" and ic.disguised_shift == "full_shift":
+            route, arrive = _full_shift_route(cfg, layout, j), 0
         elif ic.placement == "disguised":
+            if ic.disguised_shift != "single_trip":
+                raise ValueError(f"unknown inspectors.disguised_shift {ic.disguised_shift!r}")
             route = random_route()
             arrive = int(round((j + 0.5) * last_arrival / max(1, ic.count)))
         else:
@@ -315,6 +319,23 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         used.add(pid)
         p.pid = pid
     return people
+
+
+def _full_shift_route(cfg: BazaarConfig, layout: Layout, j: int) -> list:
+    """Random buyer-like routes back to back, joined through the corridors, long
+    enough to last the whole run. Drawn from inspector j's own stream in the
+    inspector family ([seed, 6, 1, j]), so buyer routes, other inspectors' draws and
+    inspector j's route at a different headcount are all unchanged."""
+    rng = np.random.default_rng([cfg.seed, 6, 1, j])
+    lo, hi = cfg.buyers.aisles_per_route
+    need = cfg.market.ticks + 1
+    path: list = []
+    while len(path) < need:
+        n = int(rng.integers(lo, min(hi, layout.n_aisles) + 1))
+        aisles = [int(a) for a in rng.permutation(layout.n_aisles)[:n]]
+        leg = layout.route_through(aisles, bool(rng.random() < 0.5))
+        path = leg if not path else path + layout.walk(path[-1], leg[0]) + leg[1:]
+    return path[:need]
 
 
 def _inspector_posts(cfg: BazaarConfig, layout: Layout, rng: np.random.Generator) -> list:

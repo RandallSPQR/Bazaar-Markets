@@ -8,4 +8,6 @@ points, through role-specific JSON observations and schema-validated actions.
 # 0.2.0: selection/tie-break/cap options, treatment-stable populations and ids.
 # 0.3.0: uniformed inspectors, seller sign action, public catch notices,
 #        reachable-buyer and false-claim diagnostics in the outcome.
-ENGINE_VERSION = "0.3.0"
+# 0.4.0: inspectors.recognition_range, inspectors.disguised_shift ("full_shift");
+#        reachable.shortfall_rate dropped (equal to shortfall_rate by construction).
+ENGINE_VERSION = "0.4.0"

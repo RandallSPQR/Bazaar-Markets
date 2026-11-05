@@ -139,6 +139,14 @@ class InspectorsCfg:
     # placement wear a visible uniform (sellers see "uniform": true on their passerby
     # row). Disguised inspectors are never uniformed.
     uniformed: bool = False
+    # How far away a seller can recognize a uniform, in grid units. null = market.earshot
+    # (every uniformed inspector in earshot is recognized; engine 0.3.0 behaviour).
+    # Uniformed inspectors farther away show "uniform": false, like any passer-by.
+    recognition_range: float | None = None
+    # Disguised inspectors' presence: "single_trip" (one buyer-like route, then leave;
+    # 0.3.0 behaviour) or "full_shift" (present from t=0 to the end, walking random
+    # routes back to back, so active ticks = count x ticks, as for posts and patrols).
+    disguised_shift: str = "single_trip"
 
 
 @dataclass

@@ -107,7 +107,6 @@
   "buyer_surplus_mean_cents": -773.260384578131,
   "buyers": 90,
   "share": 0.6,
-  "shortfall_rate": 0.5641025641025641,
   "task_complete_share": 0.1111111111111111
  },
  "seller_by_type": {
