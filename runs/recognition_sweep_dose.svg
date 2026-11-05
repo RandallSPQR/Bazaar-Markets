@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 660" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .a{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#333;font-style:italic;font-size:12px} .ax{stroke:#ccc;stroke-width:1} .z{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#555;stroke-width:1.75;fill:none} .ci{stroke:#555;stroke-width:1.25} .pt{fill:#555} .nv{stroke:#e41a1c;stroke-width:1.25;stroke-opacity:.55;stroke-dasharray:6 3} .nvt{fill:#e41a1c;fill-opacity:.8} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .a{fill:#bbb} .ax{stroke:#444} .z{stroke:#555} .ln{stroke:#bbb} .ci{stroke:#bbb} .pt{fill:#bbb} .nv{stroke:#fc8d62} .nvt{fill:#fc8d62}}</style>
+<rect class="bg" x="0" y="0" width="960" height="660"/>
+<title id="t">Patrolling’s edge over fixed posts, by how far sellers can recognize a uniform</title>
+<desc id="d">Small multiples: patrolling minus posts at five recognition ranges, with 95% intervals over 30 paired seeds; the table in the summary gives every value.</desc>
+<text class="t" x="30" y="40" font-size="20">Patrolling’s edge over fixed posts, by how far sellers can recognize a uniform</text>
+<text class="s" x="30" y="64" font-size="14">Adaptive sellers, uniformed inspectors. From r = 0 to r = E the deceptive-profit gap moves by +$170 per stall (2 inspectors) and +$140 (6)</text>
+<text class="s" x="30" y="132" font-size="14">Deceptive profit per stall, patrolling − posts ($)</text>
+<text class="t" x="110" y="94" font-size="15">2 inspectors</text>
+<line class="ax" x1="102" y1="249.7" x2="102" y2="158.8"/>
+<line class="ax" x1="110.0" y1="323" x2="440.0" y2="323"/>
+<text class="k" x="110.0" y="339" text-anchor="middle">0</text>
+<text class="k" x="192.5" y="339" text-anchor="middle">¼E</text>
+<text class="k" x="275.0" y="339" text-anchor="middle">½E</text>
+<text class="k" x="357.5" y="339" text-anchor="middle">¾E</text>
+<text class="k" x="440.0" y="339" text-anchor="middle">E</text>
+<text class="k" x="97" y="253.7" text-anchor="end">−182</text>
+<text class="k" x="97" y="162.8" text-anchor="end">+26</text>
+<text class="k" x="97" y="174.3" text-anchor="end">0</text>
+<line class="z" x1="110.0" y1="170.3" x2="440.0" y2="170.3"/>
+<line class="nv" x1="110.0" y1="249.7" x2="440.0" y2="249.7"/>
+<polyline class="ln" points="110.0,227.3 192.5,224.4 275.0,184.8 357.5,167.7 440.0,163.2"/>
+<line class="ci" x1="110.0" y1="234.7" x2="110.0" y2="219.8"/>
+<circle class="pt" cx="110.0" cy="227.3" r="2.6"/>
+<line class="ci" x1="192.5" y1="231.4" x2="192.5" y2="217.4"/>
+<circle class="pt" cx="192.5" cy="224.4" r="2.6"/>
+<line class="ci" x1="275.0" y1="191.3" x2="275.0" y2="178.3"/>
+<circle class="pt" cx="275.0" cy="184.8" r="2.6"/>
+<line class="ci" x1="357.5" y1="173.2" x2="357.5" y2="162.1"/>
+<circle class="pt" cx="357.5" cy="167.7" r="2.6"/>
+<line class="ci" x1="440.0" y1="167.6" x2="440.0" y2="158.8"/>
+<circle class="pt" cx="440.0" cy="163.2" r="2.6"/>
+<line class="ax" x1="344.6" y1="164.3" x2="344.6" y2="176.3"/>
+<text class="a" x="344.6" y="160.3" text-anchor="middle">equal at 0.71E</text>
+<text class="t" x="520" y="94" font-size="15">6 inspectors</text>
+<line class="ax" x1="512" y1="306.2" x2="512" y2="164.2"/>
+<line class="ax" x1="520.0" y1="323" x2="850.0" y2="323"/>
+<text class="k" x="520.0" y="339" text-anchor="middle">0</text>
+<text class="k" x="602.5" y="339" text-anchor="middle">¼E</text>
+<text class="k" x="685.0" y="339" text-anchor="middle">½E</text>
+<text class="k" x="767.5" y="339" text-anchor="middle">¾E</text>
+<text class="k" x="850.0" y="339" text-anchor="middle">E</text>
+<text class="k" x="507" y="310.2" text-anchor="end">−312</text>
+<text class="k" x="507" y="168.2" text-anchor="end">+14</text>
+<line class="z" x1="520.0" y1="170.3" x2="850.0" y2="170.3"/>
+<line class="nv" x1="520.0" y1="306.2" x2="850.0" y2="306.2"/>
+<text class="k" x="856.0" y="174.3">equal</text>
+<text class="k nvt" x="856.0" y="310.2">naive sellers</text>
+<polyline class="ln" points="520.0,222.8 602.5,219.4 685.0,189.8 767.5,168.8 850.0,171.6"/>
+<line class="ci" x1="520.0" y1="231.9" x2="520.0" y2="213.7"/>
+<circle class="pt" cx="520.0" cy="222.8" r="2.6"/>
+<line class="ci" x1="602.5" y1="228.0" x2="602.5" y2="210.8"/>
+<circle class="pt" cx="602.5" cy="219.4" r="2.6"/>
+<line class="ci" x1="685.0" y1="195.0" x2="685.0" y2="184.7"/>
+<circle class="pt" cx="685.0" cy="189.8" r="2.6"/>
+<line class="ci" x1="767.5" y1="173.3" x2="767.5" y2="164.2"/>
+<circle class="pt" cx="767.5" cy="168.8" r="2.6"/>
+<line class="ci" x1="850.0" y1="176.6" x2="850.0" y2="166.5"/>
+<circle class="pt" cx="850.0" cy="171.6" r="2.6"/>
+<line class="ax" x1="761.4" y1="164.3" x2="761.4" y2="176.3"/>
+<text class="a" x="761.4" y="160.3" text-anchor="middle">equal at 0.73E</text>
+<text class="a" x="110" y="361">Below the gray “equal” line, patrolling does better.</text>
+<text class="s" x="30" y="392" font-size="14">Shortfall rate, all buyers, patrolling − posts (pts)</text>
+<line class="ax" x1="102" y1="561.7" x2="102" y2="418.8"/>
+<line class="ax" x1="110.0" y1="583" x2="440.0" y2="583"/>
+<text class="k" x="110.0" y="599" text-anchor="middle">0</text>
+<text class="k" x="192.5" y="599" text-anchor="middle">¼E</text>
+<text class="k" x="275.0" y="599" text-anchor="middle">½E</text>
+<text class="k" x="357.5" y="599" text-anchor="middle">¾E</text>
+<text class="k" x="440.0" y="599" text-anchor="middle">E</text>
+<text class="k" x="97" y="565.7" text-anchor="end">−21</text>
+<text class="k" x="97" y="422.8" text-anchor="end">+10</text>
+<text class="k" x="97" y="468.7" text-anchor="end">0</text>
+<line class="z" x1="110.0" y1="464.7" x2="440.0" y2="464.7"/>
+<line class="nv" x1="110.0" y1="501.8" x2="440.0" y2="501.8"/>
+<polyline class="ln" points="110.0,541.5 192.5,539.8 275.0,463.6 357.5,432.5 440.0,432.0"/>
+<line class="ci" x1="110.0" y1="561.7" x2="110.0" y2="521.2"/>
+<circle class="pt" cx="110.0" cy="541.5" r="2.6"/>
+<line class="ci" x1="192.5" y1="558.9" x2="192.5" y2="520.7"/>
+<circle class="pt" cx="192.5" cy="539.8" r="2.6"/>
+<line class="ci" x1="275.0" y1="477.7" x2="275.0" y2="449.4"/>
+<circle class="pt" cx="275.0" cy="463.6" r="2.6"/>
+<line class="ci" x1="357.5" y1="445.4" x2="357.5" y2="419.5"/>
+<circle class="pt" cx="357.5" cy="432.5" r="2.6"/>
+<line class="ci" x1="440.0" y1="445.2" x2="440.0" y2="418.8"/>
+<circle class="pt" cx="440.0" cy="432.0" r="2.6"/>
+<line class="ax" x1="273.8" y1="458.7" x2="273.8" y2="470.7"/>
+<text class="a" x="273.8" y="454.7" text-anchor="middle">equal at 0.50E</text>
+<line class="ax" x1="512" y1="566.2" x2="512" y2="441.6"/>
+<line class="ax" x1="520.0" y1="583" x2="850.0" y2="583"/>
+<text class="k" x="520.0" y="599" text-anchor="middle">0</text>
+<text class="k" x="602.5" y="599" text-anchor="middle">¼E</text>
+<text class="k" x="685.0" y="599" text-anchor="middle">½E</text>
+<text class="k" x="767.5" y="599" text-anchor="middle">¾E</text>
+<text class="k" x="850.0" y="599" text-anchor="middle">E</text>
+<text class="k" x="507" y="570.2" text-anchor="end">−22</text>
+<text class="k" x="507" y="445.6" text-anchor="end">+5</text>
+<text class="k" x="507" y="468.7" text-anchor="end">0</text>
+<line class="z" x1="520.0" y1="464.7" x2="850.0" y2="464.7"/>
+<line class="nv" x1="520.0" y1="543.2" x2="850.0" y2="543.2"/>
+<text class="k" x="856.0" y="468.7">equal</text>
+<text class="k nvt" x="856.0" y="547.2">naive sellers</text>
+<polyline class="ln" points="520.0,543.1 602.5,542.4 685.0,462.7 767.5,455.9 850.0,472.8"/>
+<line class="ci" x1="520.0" y1="566.2" x2="520.0" y2="520.1"/>
+<circle class="pt" cx="520.0" cy="543.1" r="2.6"/>
+<line class="ci" x1="602.5" y1="564.2" x2="602.5" y2="520.6"/>
+<circle class="pt" cx="602.5" cy="542.4" r="2.6"/>
+<line class="ci" x1="685.0" y1="477.8" x2="685.0" y2="447.6"/>
+<circle class="pt" cx="685.0" cy="462.7" r="2.6"/>
+<line class="ci" x1="767.5" y1="470.2" x2="767.5" y2="441.6"/>
+<circle class="pt" cx="767.5" cy="455.9" r="2.6"/>
+<line class="ci" x1="850.0" y1="491.3" x2="850.0" y2="454.4"/>
+<circle class="pt" cx="850.0" cy="472.8" r="2.6"/>
+<line class="ax" x1="683.0" y1="458.7" x2="683.0" y2="470.7"/>
+<text class="a" x="683.0" y="454.7" text-anchor="middle">equal at 0.49E</text>
+<text class="k" x="480.0" y="621" text-anchor="middle">recognition range r: how far away a seller recognizes a uniform (E = earshot = 4 cells)</text>
+<text class="n" x="30" y="655">Bazaar engine 0.4.0, default detection. Points: mean over 30 paired seeds; bars: 95% t-interval. Red dashed line: naive (rule_deceptive) sellers, who ignore uniforms.</text>
+</svg>
