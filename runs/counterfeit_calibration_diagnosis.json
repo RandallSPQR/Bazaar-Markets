@@ -1,0 +1,6450 @@
+{
+ "meta": {
+  "command": ".venv/bin/python -m analysis.counterfeit --diagnose --out runs/counterfeit_calibration_diagnosis.json",
+  "condition": "1.25|fresh|t40|honest",
+  "engine_version": "0.9.0",
+  "git": {
+   "commit": "3342f39d8cadd6315bc0fd3d7c80f85249e34249",
+   "status_porcelain": [
+    "?? analysis/counterfeit.py",
+    "?? runs/counterfeit_calibration.json",
+    "?? runs/counterfeit_calibration.log",
+    "?? runs/counterfeit_calibration_diagnosis.json"
+   ]
+  },
+  "script_sha256": "cfc212eb6c00f6e2a2f571e2d5426df6a07e718e3948ccbd8652b69affdcbe01",
+  "seeds": [
+   100,
+   101,
+   102,
+   103,
+   104
+  ]
+ },
+ "runs": [
+  {
+   "count": 150,
+   "day1_reach_while_shopping_all": {
+    "s00": 20,
+    "s01": 1,
+    "s02": 0,
+    "s03": 19,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 31,
+    "s08": 9,
+    "s09": 2,
+    "s10": 11,
+    "s11": 19,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 34,
+    "s16": 28,
+    "s17": 0,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 20,
+    "s23": 26,
+    "s24": 39,
+    "s25": 0,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 16,
+    "s31": 24,
+    "s32": 28,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 32,
+    "s40": 20,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 32
+   },
+   "genuine": {
+    "s03": {
+     "category": "fish",
+     "day1_reach_while_shopping": 19,
+     "pos": [
+      8,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 109
+    },
+    "s04": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 4
+    },
+    "s05": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 2
+    },
+    "s11": {
+     "category": "fish",
+     "day1_reach_while_shopping": 19,
+     "pos": [
+      8,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 17
+    },
+    "s14": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 6
+    },
+    "s15": {
+     "category": "fish",
+     "day1_reach_while_shopping": 34,
+     "pos": [
+      16,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 188
+    },
+    "s17": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      4,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s19": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 4
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 20,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 138
+    },
+    "s24": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 39,
+     "pos": [
+      2,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 185
+    },
+    "s26": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 2
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 28,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 184
+    },
+    "s35": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s38": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s44": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s47": {
+     "category": "designer",
+     "day1_reach_while_shopping": 32,
+     "pos": [
+      16,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 248
+    }
+   },
+   "seed": 100,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "genuine"
+    }
+   }
+  },
+  {
+   "count": 150,
+   "day1_reach_while_shopping_all": {
+    "s00": 17,
+    "s01": 27,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 19,
+    "s08": 17,
+    "s09": 27,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 11,
+    "s16": 16,
+    "s17": 25,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 21,
+    "s23": 13,
+    "s24": 26,
+    "s25": 25,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 21,
+    "s31": 25,
+    "s32": 20,
+    "s33": 18,
+    "s34": 15,
+    "s35": 19,
+    "s36": 0,
+    "s37": 0,
+    "s38": 16,
+    "s39": 13,
+    "s40": 14,
+    "s41": 12,
+    "s42": 10,
+    "s43": 19,
+    "s44": 0,
+    "s45": 0,
+    "s46": 16,
+    "s47": 16
+   },
+   "genuine": {
+    "s01": {
+     "category": "fish",
+     "day1_reach_while_shopping": 27,
+     "pos": [
+      4,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 212
+    },
+    "s04": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s06": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 19,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 172
+    },
+    "s09": {
+     "category": "fish",
+     "day1_reach_while_shopping": 27,
+     "pos": [
+      4,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 34
+    },
+    "s10": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s17": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 25,
+     "pos": [
+      4,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 180
+    },
+    "s19": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 5
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 21,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 137
+    },
+    "s26": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 7
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s30": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 21,
+     "pos": [
+      14,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 13
+    },
+    "s35": {
+     "category": "designer",
+     "day1_reach_while_shopping": 19,
+     "pos": [
+      8,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 121
+    },
+    "s36": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s38": {
+     "category": "designer",
+     "day1_reach_while_shopping": 16,
+     "pos": [
+      14,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 156
+    },
+    "s44": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 5
+    },
+    "s45": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 7
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 16,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 12
+    }
+   },
+   "seed": 101,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "seconds"
+    }
+   }
+  },
+  {
+   "count": 150,
+   "day1_reach_while_shopping_all": {
+    "s00": 28,
+    "s01": 0,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 26,
+    "s08": 28,
+    "s09": 0,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 26,
+    "s16": 29,
+    "s17": 0,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 29,
+    "s23": 37,
+    "s24": 36,
+    "s25": 0,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 29,
+    "s31": 37,
+    "s32": 34,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 34,
+    "s40": 29,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 34
+   },
+   "genuine": {
+    "s00": {
+     "category": "fish",
+     "day1_reach_while_shopping": 28,
+     "pos": [
+      2,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 209
+    },
+    "s02": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s06": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 26,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 241
+    },
+    "s08": {
+     "category": "fish",
+     "day1_reach_while_shopping": 28,
+     "pos": [
+      2,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 25
+    },
+    "s09": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      4,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s21": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 29,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 159
+    },
+    "s24": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 36,
+     "pos": [
+      2,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 187
+    },
+    "s25": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      4,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 5
+    },
+    "s27": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 34,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 201
+    },
+    "s37": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s38": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s43": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s44": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s47": {
+     "category": "designer",
+     "day1_reach_while_shopping": 34,
+     "pos": [
+      16,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 178
+    }
+   },
+   "seed": 102,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "genuine"
+    }
+   }
+  },
+  {
+   "count": 150,
+   "day1_reach_while_shopping_all": {
+    "s00": 26,
+    "s01": 24,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 19,
+    "s08": 23,
+    "s09": 30,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 19,
+    "s16": 10,
+    "s17": 0,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 0,
+    "s23": 34,
+    "s24": 10,
+    "s25": 0,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 0,
+    "s31": 34,
+    "s32": 32,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 33,
+    "s40": 12,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 33
+   },
+   "genuine": {
+    "s05": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 4
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 19,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 239
+    },
+    "s09": {
+     "category": "fish",
+     "day1_reach_while_shopping": 30,
+     "pos": [
+      4,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 141
+    },
+    "s10": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 6
+    },
+    "s12": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s14": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 4
+    },
+    "s16": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 10,
+     "pos": [
+      2,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 249
+    },
+    "s20": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      3
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s23": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 34,
+     "pos": [
+      16,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 248
+    },
+    "s29": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      5
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s30": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      5
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 32,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 197
+    },
+    "s36": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s39": {
+     "category": "designer",
+     "day1_reach_while_shopping": 33,
+     "pos": [
+      16,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 263
+    },
+    "s42": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s45": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    }
+   },
+   "seed": 103,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "seconds"
+    }
+   }
+  },
+  {
+   "count": 150,
+   "day1_reach_while_shopping_all": {
+    "s00": 10,
+    "s01": 0,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 31,
+    "s08": 7,
+    "s09": 0,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 19,
+    "s16": 36,
+    "s17": 34,
+    "s18": 0,
+    "s19": 0,
+    "s20": 21,
+    "s21": 9,
+    "s22": 15,
+    "s23": 23,
+    "s24": 34,
+    "s25": 34,
+    "s26": 0,
+    "s27": 0,
+    "s28": 21,
+    "s29": 18,
+    "s30": 15,
+    "s31": 12,
+    "s32": 18,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 35,
+    "s40": 18,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 8
+   },
+   "genuine": {
+    "s00": {
+     "category": "fish",
+     "day1_reach_while_shopping": 10,
+     "pos": [
+      2,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 174
+    },
+    "s05": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 31,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 193
+    },
+    "s10": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s11": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s13": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s17": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 34,
+     "pos": [
+      4,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 174
+    },
+    "s18": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 2
+    },
+    "s19": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 6
+    },
+    "s20": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 21,
+     "pos": [
+      10,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 115
+    },
+    "s25": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 34,
+     "pos": [
+      4,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 30
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 21,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 16
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 18,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 219
+    },
+    "s35": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s39": {
+     "category": "designer",
+     "day1_reach_while_shopping": 35,
+     "pos": [
+      16,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 188
+    },
+    "s40": {
+     "category": "designer",
+     "day1_reach_while_shopping": 18,
+     "pos": [
+      2,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 29
+    },
+    "s45": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    }
+   },
+   "seed": 104,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "deceptive"
+    }
+   }
+  },
+  {
+   "count": 600,
+   "day1_reach_while_shopping_all": {
+    "s00": 78,
+    "s01": 70,
+    "s02": 37,
+    "s03": 57,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 73,
+    "s08": 51,
+    "s09": 70,
+    "s10": 50,
+    "s11": 57,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 119,
+    "s16": 105,
+    "s17": 0,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 80,
+    "s23": 102,
+    "s24": 123,
+    "s25": 0,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 80,
+    "s31": 89,
+    "s32": 95,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 118,
+    "s40": 50,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 118
+   },
+   "genuine": {
+    "s03": {
+     "category": "fish",
+     "day1_reach_while_shopping": 57,
+     "pos": [
+      8,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 330
+    },
+    "s04": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 11
+    },
+    "s05": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 15
+    },
+    "s11": {
+     "category": "fish",
+     "day1_reach_while_shopping": 57,
+     "pos": [
+      8,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 55
+    },
+    "s14": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 7
+    },
+    "s15": {
+     "category": "fish",
+     "day1_reach_while_shopping": 119,
+     "pos": [
+      16,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 668
+    },
+    "s17": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      4,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 10
+    },
+    "s19": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 3
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 80,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 611
+    },
+    "s24": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 123,
+     "pos": [
+      2,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 646
+    },
+    "s26": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 9
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 7
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 95,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 618
+    },
+    "s35": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s38": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s44": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s47": {
+     "category": "designer",
+     "day1_reach_while_shopping": 118,
+     "pos": [
+      16,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1061
+    }
+   },
+   "seed": 100,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "genuine"
+    }
+   }
+  },
+  {
+   "count": 600,
+   "day1_reach_while_shopping_all": {
+    "s00": 61,
+    "s01": 89,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 94,
+    "s08": 61,
+    "s09": 89,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 80,
+    "s16": 44,
+    "s17": 76,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 84,
+    "s23": 53,
+    "s24": 77,
+    "s25": 76,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 84,
+    "s31": 35,
+    "s32": 97,
+    "s33": 69,
+    "s34": 33,
+    "s35": 59,
+    "s36": 0,
+    "s37": 0,
+    "s38": 52,
+    "s39": 47,
+    "s40": 67,
+    "s41": 39,
+    "s42": 62,
+    "s43": 59,
+    "s44": 0,
+    "s45": 0,
+    "s46": 52,
+    "s47": 61
+   },
+   "genuine": {
+    "s01": {
+     "category": "fish",
+     "day1_reach_while_shopping": 89,
+     "pos": [
+      4,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 897
+    },
+    "s04": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s06": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 94,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 677
+    },
+    "s09": {
+     "category": "fish",
+     "day1_reach_while_shopping": 89,
+     "pos": [
+      4,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 109
+    },
+    "s10": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s17": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 76,
+     "pos": [
+      4,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 613
+    },
+    "s19": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 84,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 479
+    },
+    "s26": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 4
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 5
+    },
+    "s30": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 84,
+     "pos": [
+      14,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 64
+    },
+    "s35": {
+     "category": "designer",
+     "day1_reach_while_shopping": 59,
+     "pos": [
+      8,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 363
+    },
+    "s36": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 8
+    },
+    "s38": {
+     "category": "designer",
+     "day1_reach_while_shopping": 52,
+     "pos": [
+      14,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 540
+    },
+    "s44": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 9
+    },
+    "s45": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 15
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 52,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 53
+    }
+   },
+   "seed": 101,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "seconds"
+    }
+   }
+  },
+  {
+   "count": 600,
+   "day1_reach_while_shopping_all": {
+    "s00": 106,
+    "s01": 0,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 92,
+    "s08": 106,
+    "s09": 0,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 92,
+    "s16": 67,
+    "s17": 0,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 64,
+    "s23": 42,
+    "s24": 113,
+    "s25": 0,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 64,
+    "s31": 85,
+    "s32": 115,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 59,
+    "s40": 93,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 104
+   },
+   "genuine": {
+    "s00": {
+     "category": "fish",
+     "day1_reach_while_shopping": 106,
+     "pos": [
+      2,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 878
+    },
+    "s02": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s06": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 92,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 945
+    },
+    "s08": {
+     "category": "fish",
+     "day1_reach_while_shopping": 106,
+     "pos": [
+      2,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 84
+    },
+    "s09": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      4,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s21": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 17
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 64,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 545
+    },
+    "s24": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 113,
+     "pos": [
+      2,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 737
+    },
+    "s25": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      4,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 12
+    },
+    "s27": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 5
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 115,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 728
+    },
+    "s37": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s38": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s43": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s44": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s47": {
+     "category": "designer",
+     "day1_reach_while_shopping": 104,
+     "pos": [
+      16,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 625
+    }
+   },
+   "seed": 102,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "genuine"
+    }
+   }
+  },
+  {
+   "count": 600,
+   "day1_reach_while_shopping_all": {
+    "s00": 71,
+    "s01": 15,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 93,
+    "s08": 26,
+    "s09": 92,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 93,
+    "s16": 80,
+    "s17": 0,
+    "s18": 0,
+    "s19": 0,
+    "s20": 0,
+    "s21": 0,
+    "s22": 0,
+    "s23": 115,
+    "s24": 80,
+    "s25": 0,
+    "s26": 0,
+    "s27": 0,
+    "s28": 0,
+    "s29": 0,
+    "s30": 0,
+    "s31": 115,
+    "s32": 107,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 112,
+    "s40": 84,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 112
+   },
+   "genuine": {
+    "s05": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 8
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 93,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 993
+    },
+    "s09": {
+     "category": "fish",
+     "day1_reach_while_shopping": 92,
+     "pos": [
+      4,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 431
+    },
+    "s10": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 10
+    },
+    "s12": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1
+    },
+    "s14": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      2
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 12
+    },
+    "s16": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 80,
+     "pos": [
+      2,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 999
+    },
+    "s20": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      3
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s22": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      3
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s23": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 115,
+     "pos": [
+      16,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 954
+    },
+    "s29": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      5
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s30": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      5
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 107,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 766
+    },
+    "s36": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      10,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s39": {
+     "category": "designer",
+     "day1_reach_while_shopping": 112,
+     "pos": [
+      16,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 1016
+    },
+    "s42": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s45": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    }
+   },
+   "seed": 103,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "seconds"
+    }
+   }
+  },
+  {
+   "count": 600,
+   "day1_reach_while_shopping_all": {
+    "s00": 105,
+    "s01": 0,
+    "s02": 0,
+    "s03": 0,
+    "s04": 0,
+    "s05": 0,
+    "s06": 0,
+    "s07": 106,
+    "s08": 84,
+    "s09": 0,
+    "s10": 0,
+    "s11": 0,
+    "s12": 0,
+    "s13": 0,
+    "s14": 0,
+    "s15": 87,
+    "s16": 107,
+    "s17": 82,
+    "s18": 0,
+    "s19": 0,
+    "s20": 83,
+    "s21": 50,
+    "s22": 49,
+    "s23": 110,
+    "s24": 96,
+    "s25": 82,
+    "s26": 0,
+    "s27": 0,
+    "s28": 83,
+    "s29": 62,
+    "s30": 49,
+    "s31": 95,
+    "s32": 90,
+    "s33": 0,
+    "s34": 0,
+    "s35": 0,
+    "s36": 0,
+    "s37": 0,
+    "s38": 0,
+    "s39": 108,
+    "s40": 90,
+    "s41": 0,
+    "s42": 0,
+    "s43": 0,
+    "s44": 0,
+    "s45": 0,
+    "s46": 0,
+    "s47": 64
+   },
+   "genuine": {
+    "s00": {
+     "category": "fish",
+     "day1_reach_while_shopping": 105,
+     "pos": [
+      2,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 682
+    },
+    "s05": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      0
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s07": {
+     "category": "fish",
+     "day1_reach_while_shopping": 106,
+     "pos": [
+      16,
+      0
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 738
+    },
+    "s10": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s11": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s13": {
+     "category": "fish",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      2
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s17": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 82,
+     "pos": [
+      4,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 629
+    },
+    "s18": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      6,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 8
+    },
+    "s19": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 7
+    },
+    "s20": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 83,
+     "pos": [
+      10,
+      3
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 397
+    },
+    "s25": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 82,
+     "pos": [
+      4,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 75
+    },
+    "s28": {
+     "category": "electronics",
+     "day1_reach_while_shopping": 83,
+     "pos": [
+      10,
+      5
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 70
+    },
+    "s32": {
+     "category": "designer",
+     "day1_reach_while_shopping": 90,
+     "pos": [
+      2,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 922
+    },
+    "s35": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      8,
+      6
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s39": {
+     "category": "designer",
+     "day1_reach_while_shopping": 108,
+     "pos": [
+      16,
+      6
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 654
+    },
+    "s40": {
+     "category": "designer",
+     "day1_reach_while_shopping": 90,
+     "pos": [
+      2,
+      8
+     ],
+     "rated_day10": true,
+     "type": "genuine",
+     "units_10d": 86
+    },
+    "s45": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      12,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    },
+    "s46": {
+     "category": "designer",
+     "day1_reach_while_shopping": 0,
+     "pos": [
+      14,
+      8
+     ],
+     "rated_day10": false,
+     "type": "genuine",
+     "units_10d": 0
+    }
+   },
+   "seed": 104,
+   "stalls": {
+    "s00": {
+     "category": "fish",
+     "pos": [
+      2,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s01": {
+     "category": "fish",
+     "pos": [
+      4,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s02": {
+     "category": "fish",
+     "pos": [
+      6,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s03": {
+     "category": "fish",
+     "pos": [
+      8,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s04": {
+     "category": "fish",
+     "pos": [
+      10,
+      0
+     ],
+     "type": "deceptive"
+    },
+    "s05": {
+     "category": "fish",
+     "pos": [
+      12,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s06": {
+     "category": "fish",
+     "pos": [
+      14,
+      0
+     ],
+     "type": "seconds"
+    },
+    "s07": {
+     "category": "fish",
+     "pos": [
+      16,
+      0
+     ],
+     "type": "genuine"
+    },
+    "s08": {
+     "category": "fish",
+     "pos": [
+      2,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s09": {
+     "category": "fish",
+     "pos": [
+      4,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s10": {
+     "category": "fish",
+     "pos": [
+      6,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s11": {
+     "category": "fish",
+     "pos": [
+      8,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s12": {
+     "category": "fish",
+     "pos": [
+      10,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s13": {
+     "category": "fish",
+     "pos": [
+      12,
+      2
+     ],
+     "type": "genuine"
+    },
+    "s14": {
+     "category": "fish",
+     "pos": [
+      14,
+      2
+     ],
+     "type": "seconds"
+    },
+    "s15": {
+     "category": "fish",
+     "pos": [
+      16,
+      2
+     ],
+     "type": "deceptive"
+    },
+    "s16": {
+     "category": "electronics",
+     "pos": [
+      2,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s17": {
+     "category": "electronics",
+     "pos": [
+      4,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s18": {
+     "category": "electronics",
+     "pos": [
+      6,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s19": {
+     "category": "electronics",
+     "pos": [
+      8,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s20": {
+     "category": "electronics",
+     "pos": [
+      10,
+      3
+     ],
+     "type": "genuine"
+    },
+    "s21": {
+     "category": "electronics",
+     "pos": [
+      12,
+      3
+     ],
+     "type": "deceptive"
+    },
+    "s22": {
+     "category": "electronics",
+     "pos": [
+      14,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s23": {
+     "category": "electronics",
+     "pos": [
+      16,
+      3
+     ],
+     "type": "seconds"
+    },
+    "s24": {
+     "category": "electronics",
+     "pos": [
+      2,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s25": {
+     "category": "electronics",
+     "pos": [
+      4,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s26": {
+     "category": "electronics",
+     "pos": [
+      6,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s27": {
+     "category": "electronics",
+     "pos": [
+      8,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s28": {
+     "category": "electronics",
+     "pos": [
+      10,
+      5
+     ],
+     "type": "genuine"
+    },
+    "s29": {
+     "category": "electronics",
+     "pos": [
+      12,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s30": {
+     "category": "electronics",
+     "pos": [
+      14,
+      5
+     ],
+     "type": "seconds"
+    },
+    "s31": {
+     "category": "electronics",
+     "pos": [
+      16,
+      5
+     ],
+     "type": "deceptive"
+    },
+    "s32": {
+     "category": "designer",
+     "pos": [
+      2,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s33": {
+     "category": "designer",
+     "pos": [
+      4,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s34": {
+     "category": "designer",
+     "pos": [
+      6,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s35": {
+     "category": "designer",
+     "pos": [
+      8,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s36": {
+     "category": "designer",
+     "pos": [
+      10,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s37": {
+     "category": "designer",
+     "pos": [
+      12,
+      6
+     ],
+     "type": "deceptive"
+    },
+    "s38": {
+     "category": "designer",
+     "pos": [
+      14,
+      6
+     ],
+     "type": "seconds"
+    },
+    "s39": {
+     "category": "designer",
+     "pos": [
+      16,
+      6
+     ],
+     "type": "genuine"
+    },
+    "s40": {
+     "category": "designer",
+     "pos": [
+      2,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s41": {
+     "category": "designer",
+     "pos": [
+      4,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s42": {
+     "category": "designer",
+     "pos": [
+      6,
+      8
+     ],
+     "type": "seconds"
+    },
+    "s43": {
+     "category": "designer",
+     "pos": [
+      8,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s44": {
+     "category": "designer",
+     "pos": [
+      10,
+      8
+     ],
+     "type": "deceptive"
+    },
+    "s45": {
+     "category": "designer",
+     "pos": [
+      12,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s46": {
+     "category": "designer",
+     "pos": [
+      14,
+      8
+     ],
+     "type": "genuine"
+    },
+    "s47": {
+     "category": "designer",
+     "pos": [
+      16,
+      8
+     ],
+     "type": "deceptive"
+    }
+   }
+  }
+ ],
+ "summary": {
+  "150": {
+   "genuine": 90,
+   "unrated": 28,
+   "unrated_by_category": {
+    "designer": 14,
+    "electronics": 4,
+    "fish": 10
+   },
+   "unrated_never_in_reach_day1": 28,
+   "unrated_with_zero_units": 28
+  },
+  "600": {
+   "genuine": 90,
+   "unrated": 28,
+   "unrated_by_category": {
+    "designer": 15,
+    "electronics": 4,
+    "fish": 9
+   },
+   "unrated_never_in_reach_day1": 28,
+   "unrated_with_zero_units": 28
+  }
+ }
+}
