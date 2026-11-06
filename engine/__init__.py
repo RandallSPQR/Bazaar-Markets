@@ -10,4 +10,5 @@ points, through role-specific JSON observations and schema-validated actions.
 #        reachable-buyer and false-claim diagnostics in the outcome.
 # 0.4.0: inspectors.recognition_range, inspectors.disguised_shift ("full_shift");
 #        reachable.shortfall_rate dropped (equal to shortfall_rate by construction).
-ENGINE_VERSION = "0.4.0"
+# 0.5.0: market.scale (grid refinement); rule sellers' whisper_every cooldown.
+ENGINE_VERSION = "0.5.0"

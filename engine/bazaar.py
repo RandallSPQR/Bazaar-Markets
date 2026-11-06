@@ -26,7 +26,8 @@ from .detection import catch_prob
 from .interface import FALLBACK, Agent, parse
 from .jsonlog import JsonlLog, env_info
 from .valuation import unit_value
-from .world import UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, spec_text
+from .scaling import scaled_config
+from .world import UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text
 
 PROFILES = ("tourist", "local", "expert")
 
@@ -40,7 +41,11 @@ def _dist(a, b) -> float:
 class BazaarEngine:
     def __init__(self, cfg: BazaarConfig, log: JsonlLog | None = None,
                  agent_factory: AgentFactory | None = None):
-        self.cfg = cfg
+        # The world is built from the config as given (real units = k = 1 cells and ticks)
+        # and refined to scale k; the engine then runs on the scaled config. The log
+        # header records the config as given.
+        self.cfg_given = cfg
+        self.k = int(cfg.market.scale)
         self.log = log if log is not None else JsonlLog(keep=False)
         s = cfg.seed
         self.rng_world = np.random.default_rng([s, 0])
@@ -53,6 +58,8 @@ class BazaarEngine:
         self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world)
         self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
                                                  self.rng_treat, self.rng_insp)
+        refine_world(self.layout, self.stalls, self.people, self.k)
+        cfg = self.cfg = scaled_config(cfg)
         self.by_sid = {st.sid: st for st in self.stalls}
         self.by_pid = {p.pid: p for p in self.people}
         self.buyers = [p for p in self.people if p.kind == "buyer"]
@@ -60,7 +67,7 @@ class BazaarEngine:
         self._noise_cache: dict[tuple, str] = {}
         if agent_factory is None:
             from agents.registry import make_factory
-            agent_factory = make_factory(cfg)
+            agent_factory = make_factory(self.cfg_given)
         self.seller_agents = {st.sid: agent_factory("seller", cfg.agents.seller[st.stype], st.sid, st.idx)
                               for st in self.stalls}
         self.buyer_agents = {p.pid: agent_factory("buyer", cfg.agents.buyer, p.pid, p.idx) for p in self.buyers}
@@ -168,7 +175,7 @@ class BazaarEngine:
             metas.setdefault(f"seller:{self.cfg.agents.seller[st.stype]}", self.seller_agents[st.sid].meta())
         for p in self.buyers:
             metas.setdefault(f"buyer:{self.cfg.agents.buyer}", self.buyer_agents[p.pid].meta())
-        self.log.emit("header", mode="bazaar", engine_version=ENGINE_VERSION, config=to_dict(self.cfg),
+        self.log.emit("header", mode="bazaar", engine_version=ENGINE_VERSION, config=to_dict(self.cfg_given),
                       env=env_info(), agents=metas, placeholders=PLACEHOLDERS)
         L = self.layout
         self.log.emit("world", t=0, grid={"W": L.W, "H": L.H, "aisle_y": L.aisle_y,
@@ -273,8 +280,14 @@ class BazaarEngine:
 
         # ---- 4. buyer decisions
         stay: set = set()
+        held: set = set()
         for p in self.buyers:
-            if not p.active or p.units >= p.task["units"]:
+            if not p.active:
+                continue
+            if t < p.hold_until:          # still busy with its last action (scale > 1 only)
+                held.add(p.pid)
+                continue
+            if p.units >= p.task["units"]:
                 continue
             here = [st for st in self.stalls if st.category == p.task["category"] and self.is_open(st)
                     and _dist(p.pos, st.pos) <= mk.interact_range]
@@ -282,6 +295,7 @@ class BazaarEngine:
                 continue
             if self.buyer_did(p, here, stay):
                 stay.add(p.pid)
+                p.hold_until = t + self.k
 
         # ---- 5. movement and engine-driven inspector asks
         positions = {}
@@ -290,6 +304,8 @@ class BazaarEngine:
                 continue
             if p.pid in stay:
                 p.stop_actions += 1
+            elif p.pid in held:
+                pass
             else:
                 p.stop_actions = 0
                 if p.step + 1 < len(p.route):

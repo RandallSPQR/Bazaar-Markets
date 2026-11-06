@@ -22,9 +22,11 @@ class HonestSeller:
     VERSION = "rule_honest-1"
 
     def __init__(self, rng: np.random.Generator | None = None, yell_crowd: int = 3, yell_every: int = 8,
-                 whisper: bool = True):
+                 whisper: bool = True, whisper_every: int = 1):
         self.yell_crowd, self.yell_every, self.whisper = yell_crowd, yell_every, whisper
+        self.whisper_every = whisper_every   # at most one whisper per this many ticks
         self.last_yell = -10**9
+        self.last_whisper = -10**9
         self.whispered: set = set()
 
     def meta(self) -> dict:
@@ -43,12 +45,13 @@ class HonestSeller:
         if len(near) >= self.yell_crowd and t - self.last_yell >= self.yell_every and self.may_yell(obs):
             a["yell"] = {"claim": self.claim_for("crowd")}
             self.last_yell = t
-        if self.whisper:
+        if self.whisper and t - self.last_whisper >= self.whisper_every:
             rng_w = obs["ranges"]["whisper_range"]
             for p in near:  # nearest first
                 if p["distance"] <= rng_w and p["id"] not in self.whispered and self.wants_whisper(p):
                     a["whisper"] = {"to": p["id"], "claim": self.claim_for(p["observed_profile"])}
                     self.whispered.add(p["id"])
+                    self.last_whisper = t
                     break
         prof = {p["id"]: p["observed_profile"] for p in near}
         a["answers"] = [{"to": q["id"], "claim": self.claim_for(prof.get(q["id"], "unknown"))} for q in obs["asks"]]

@@ -99,6 +99,7 @@ class Person:
     value: float = 0.0
     info: dict = field(default_factory=dict)   # sid -> {"claims": [...], "inspected_q": float|None}
     seen_signs: set = field(default_factory=set)
+    hold_until: int = 0    # a buyer action holds the buyer until this tick (market.scale ticks)
 
     @property
     def pos(self) -> tuple:
@@ -108,6 +109,7 @@ class Person:
 class Layout:
     def __init__(self, cfg: BazaarConfig):
         mk = cfg.market
+        self.scale = 1
         self.n_aisles = len(mk.categories)
         self.W = 2 + mk.slot_spacing * mk.slots_per_side + 1
         self.H = 3 * self.n_aisles
@@ -319,6 +321,37 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         used.add(pid)
         p.pid = pid
     return people
+
+
+def refine_route(route: list, k: int) -> list:
+    """Refine a k = 1 route to scale k: coordinates times k, each one-cell step split into
+    k steps, and the last cell held k ticks (it is held one tick at k = 1). Then
+    out[k t] = k route[t] for every t, and len(out) = k len(route)."""
+    if k == 1:
+        return route
+    out = [(k * route[0][0], k * route[0][1])]
+    for a, b in zip(route, route[1:]):
+        if abs(a[0] - b[0]) + abs(a[1] - b[1]) != 1:
+            raise ValueError(f"route step {a} -> {b} is not one cell")
+        for i in range(1, k + 1):
+            out.append((k * a[0] + i * (b[0] - a[0]), k * a[1] + i * (b[1] - a[1])))
+    return out + [out[-1]] * (k - 1)
+
+
+def refine_world(layout: "Layout", stalls: list, people: list, k: int) -> None:
+    """Refine a world built at k = 1 to scale k, in place."""
+    if k == 1:
+        return
+    layout.scale = k
+    layout.W, layout.H = k * (layout.W - 1) + 1, k * (layout.H - 1) + 1
+    layout.aisle_y = [k * y for y in layout.aisle_y]
+    layout.slot_x = [k * x for x in layout.slot_x]
+    layout.slots = [(k * x, k * y) for x, y in layout.slots]
+    for st in stalls:
+        st.pos = (k * st.pos[0], k * st.pos[1])
+    for p in people:
+        p.route = refine_route(p.route, k)
+        p.arrive *= k
 
 
 def _full_shift_route(cfg: BazaarConfig, layout: Layout, j: int) -> list:

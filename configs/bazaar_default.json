@@ -15,7 +15,8 @@
   "earshot": 4.0,
   "whisper_range": 2.0,
   "interact_range": 1.0,
-  "max_actions_per_stop": 4
+  "max_actions_per_stop": 4,
+  "scale": 1
  },
  "stalls": {
   "type_shares": {

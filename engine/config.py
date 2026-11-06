@@ -80,6 +80,10 @@ class MarketCfg:
     whisper_range: float = 2.0    # a whisper target must be within this distance
     interact_range: float = 1.0   # ask / inspect / buy require a stall within this distance
     max_actions_per_stop: int = 4 # stall actions a buyer may take before being moved on
+    # Grid refinement: at scale k a cell is 1/k real units and a tick 1/k real units long.
+    # Every other distance and time value in the config stays in real units (k = 1 cells
+    # and ticks); the engine converts them. See engine/scaling.py and docs/config_reference.md.
+    scale: int = 1
 
 
 @dataclass

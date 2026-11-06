@@ -162,6 +162,9 @@ both modes drawn by one renderer.
   `detection.form`. A catch charges penalty P and closes the stall for
   `close_ticks`.
 - **Money.** Money is integer cents, so Σ payments = Σ seller revenue holds exactly.
+- **Grid scale.** `market.scale = k` refines space and time together (cells and ticks 1/k
+  as large, real speeds unchanged); config values stay in real units. See
+  `docs/config_reference.md` for the list of scaled parameters.
 
 ## Agents and the LLM stub
 

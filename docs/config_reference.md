@@ -46,6 +46,81 @@ Source of truth: `engine/config.py`. Full default configs:
 | `ticks` | 240 | | |
 | `sight_range` / `earshot` / `whisper_range` / `interact_range` | 3 / 4 / 2 / 1 | | channel ranges in grid cells |
 | `max_actions_per_stop` | 4 | | stall actions a buyer may take at one stop before the engine moves it on |
+| `scale` | 1 | | grid refinement k (integer ≥ 1): cells 1/k as large, ticks 1/k as long; every other distance and time value stays in real units (k = 1 cells and ticks). See below |
+
+### Grid refinement (`market.scale` = k)
+
+Config values are in real units: a length of 1 is one cell at k = 1, a duration of 1 is one tick at k = 1. At scale k the engine builds the world at k = 1, then refines it: every coordinate × k, each one-cell route step split into k one-cell steps (a route's last cell held k ticks), every arrival tick × k. People still move one cell per tick, so real speeds are unchanged and `route_k[k·t] = k · route_1[t]`. The engine then runs on a copy of the config in which every field marked distance or time below is multiplied by k. The log header records the config as given; the `world` event's grid is the refined one. Source of truth: `engine/scaling.py`; `tests/test_scale.py` fails if a config field or agent keyword has no rule.
+
+Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, inspect, buy) holds the buyer k ticks, so a stop lasts as long in real time; and rule sellers' cooldowns `yell_every` and `whisper_every` are multiplied by k. Engine rates that are per event, not per tick, need no rule: a sign is perceived once per person per stall epoch, a disguised inspector asks a stall at most once per epoch, each person is whispered to at most once per seller, and detection is drawn per perceived message. Residual differences at k > 1 are the refinement itself: people pass through intermediate cells, so they enter a range at a finer distance and sellers decide on k times as many ticks.
+
+**Multiplied by k (distance, in cells):** `market.slot_spacing`, `market.sight_range`, `market.earshot`, `market.whisper_range`, `market.interact_range`, `inspectors.recognition_range`, `detection.hazard_lam`, plus every hard-coded layout offset (aisle pitch, stall rows, corridor columns, post positions next to stalls), which scale through the coordinate refinement.
+
+**Multiplied by k (time, in ticks):** `market.ticks`, `pricing.close_ticks` (so the closure and the catch-notice window L), arrivals, and the agent keywords `HonestSeller.yell_every`, `HonestSeller.whisper_every`.
+
+**Not scaled:**
+
+| key | why |
+|---|---|
+| `mode` | label |
+| `seed` | label |
+| `market.categories` | labels |
+| `market.slots_per_side` | count |
+| `market.clustering` | probability |
+| `market.max_actions_per_stop` | a count of actions; each action holds the buyer k ticks |
+| `market.scale` | the scale itself |
+| `stalls.type_shares` | shares |
+| `stalls.q_high` | quality |
+| `stalls.q_low` | quality |
+| `stalls.deceptive_sign` | label |
+| `pricing.base_price_cents` | money |
+| `pricing.seconds_price_factor` | ratio |
+| `pricing.deceptive_price_factor` | ratio |
+| `pricing.unit_cost` | money ratio |
+| `pricing.yell_cost_frac` | money per yell; yells per real time are unchanged |
+| `pricing.whisper_cost_frac` | money per whisper |
+| `pricing.penalty_mult` | money ratio |
+| `buyers.count` | count |
+| `buyers.profile_shares` | shares |
+| `buyers.units` | count |
+| `buyers.q_req` | quality |
+| `buyers.budget_level` | label |
+| `buyers.budget_factors` | ratio |
+| `buyers.inspect_cost_frac` | money ratio |
+| `buyers.aisles_per_route` | count; routes are refined after they are drawn |
+| `buyers.profile_noise` | probability per (stall, person) pair |
+| `buyers.inspector_fraction` | share |
+| `buyers.inspector_knowledge` | switch |
+| `buyers.inspector_enforcement` | switch |
+| `inspectors.count` | count |
+| `inspectors.placement` | label; post positions are refined with the layout |
+| `inspectors.disguised_ask_prob` | probability per (inspector, stall, epoch) encounter |
+| `inspectors.feature_correlation` | probability |
+| `inspectors.uniformed` | switch |
+| `inspectors.disguised_shift` | label; full-shift routes are refined |
+| `detection.form` | label |
+| `detection.proximity` | label; proximity is d / range, a ratio of two distances |
+| `detection.channel_weight` | probability weights |
+| `detection.f_scale` | quality |
+| `detection.hazard_k` | rate per unit falsity |
+| `valuation.form` | label |
+| `valuation.value_mult` | ratio |
+| `valuation.salvage` | ratio |
+| `agents.seller` | policy names |
+| `agents.buyer` | policy name |
+| `agents.params` | per-policy keywords; their rules are in AGENT_PARAMS |
+| agent `HonestSeller.yell_crowd` | count |
+| agent `HonestSeller.whisper` | switch |
+| agent `DeceptiveSeller.cautious` | switch |
+| agent `RandomReferenceBuyer.p_buy` | probability per decision; decisions per stop are unchanged |
+| agent `InformedReferenceBuyer.valuation` | engine-supplied |
+| agent `InformedReferenceBuyer.base_price_cents` | engine-supplied |
+| agent `LLMAgent.role` | label |
+| agent `LLMAgent.model_id` | label |
+| agent `LLMAgent.sampling` | sampling settings |
+| agent `LLMAgent.provider` | label |
+| agent `LLMAgent.max_retries` | count per decision |
+| agent `LLMAgent.max_calls` | spend cap; note that at k > 1 sellers get k times as many decision ticks |
 
 ### `stalls`
 | key | default | status | meaning |
@@ -129,7 +204,7 @@ after the stall reopens).
 |---|---|---|
 | `seller` | genuine/seconds → `rule_honest`, deceptive → `rule_deceptive` | |
 | `buyer` | `rule_buyer` | also `random_reference`, `informed_reference` (comparison points, not bounds; old names `random_buyer`, `perfect_buyer` still accepted), `llm` (stub) |
-| `params` | {} | per-policy keyword arguments, e.g. `{"rule_deceptive": {"cautious": false}}`, `{"llm": {"model_id": "...", "sampling": {...}, "max_calls": 0}}` |
+| `params` | {} | per-policy keyword arguments, e.g. `{"rule_deceptive": {"cautious": false}}`, `{"llm": {"model_id": "...", "sampling": {...}, "max_calls": 0}}`. Rule sellers (`rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`) take `yell_crowd` (3), `yell_every` (8 ticks), `whisper` (true), `whisper_every` (1 tick: at most one whisper per this many ticks) |
 
 Seller policies: `rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`, `llm`. Set a
 type's policy with e.g. `--set agents.seller.deceptive=rule_deceptive_adaptive`.

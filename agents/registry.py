@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from engine.scaling import scale_agent_params
+
 from .llm_stub import LLMAgent
 from .reference import InformedReferenceBuyer, RandomReferenceBuyer
 from .rule_based import AdaptiveDeceptiveSeller, DeceptiveSeller, HonestSeller, RuleBuyer
@@ -32,7 +34,8 @@ def make_factory(cfg):
         if policy not in POLICIES:
             raise KeyError(f"unknown policy {policy!r}; known: {sorted(POLICIES)}")
         rng = np.random.default_rng([cfg.seed, 7, ROLE_CODE[role], idx])
-        params = dict(cfg.agents.params.get(policy, {}))
+        params = scale_agent_params(POLICIES[policy], dict(cfg.agents.params.get(policy, {})),
+                                    int(cfg.market.scale))
         if policy in ("informed_reference", "perfect_buyer"):
             params.update(valuation=cfg.valuation, base_price_cents=cfg.pricing.base_price_cents)
         if policy == "llm":

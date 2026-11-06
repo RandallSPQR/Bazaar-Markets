@@ -45,7 +45,7 @@ outcome
 
 | field | meaning |
 |---|---|
-| `grid` | `W`, `H`, `aisle_y` (row of each aisle), `categories` |
+| `grid` | `W`, `H`, `aisle_y` (row of each aisle), `categories`. At `market.scale` = k these are the refined grid (cells 1/k real units); the header's `config` is the config as given, in real units |
 | `stalls[]` | `sid`, `category`, `stype` (`genuine`/`seconds`/`deceptive`), `pos` [x, y], `brand` (fictional), `q_true`, `q_pitch` (the claim the stall makes when it pitches; equals `q_true` unless deceptive), `sign` (`truth`/`pitch`/`none`), `price_cents`, `unit_cost_cents` |
 | `people[]` | `pid`, `kind` (`buyer`/`inspector`), `profile` (true profile for buyers; observable profile for inspectors), `is_inspector` (also true for buyers who are inspectors), `arrive`, `task` (buyers: `category`, `units`, `q_req`, `budget_cents`, `budget_level`) |
 
