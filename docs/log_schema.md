@@ -209,6 +209,13 @@ adds `brands` (`renames`, `renames_by_how`, `bust_outs`, `busted_stalls`, `count
 `profit_by_stall_cents`, `units_by_stall`). Seller actions may carry `rename` and `bust_out`;
 seller observations carry the `brand` block and, with `market.horizon_known`, `horizon` and
 `yesterday`; a privileged seller policy (`rule_genuine_rational_v2`) also gets a `privileged` block.
+With `buyers.search_log` (0.10.0) the outcome adds `search`: `buyers` (buyer id → `profile`, `k`,
+`seen` (stall ids in the order first seen), `chosen` (each `choose`), `bought`, `candidates` (the
+list sent with the last `buy` or `choose`, or null), `walk_ticks`, `skipped_closed`) and
+`exposure` (stall id → `in_reach`: buyers of its category that came within interact range;
+`in_reach_shopping`: those that still needed units then). Searching buyers' observations carry a
+`search` block and their actions may be `choose`.
+
 Engine 0.9.0 renamed "look-alike" to "counterfeit" in all these fields (`how` is `fresh` or
 `counterfeit`); 0.8.0 logs still replay, compared with `lookalike` mapped to `counterfeit`.
 

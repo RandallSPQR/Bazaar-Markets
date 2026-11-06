@@ -48,6 +48,8 @@ SELLER_ACTION_SCHEMA: dict = {
 }
 
 _STALL_REF = {"type": "string", "maxLength": 8}
+# optional, searching buyers: the stalls it considered acceptable when it chose (logged as given)
+_CANDIDATES = {"type": "array", "maxItems": 64, "items": _STALL_REF}
 
 BUYER_ACTION_SCHEMA: dict = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -59,7 +61,12 @@ BUYER_ACTION_SCHEMA: dict = {
          "properties": {"action": {"enum": ["ask", "inspect"]}, "stall": _STALL_REF}},
         {"type": "object", "additionalProperties": False, "required": ["action", "stall", "units"],
          "properties": {"action": {"const": "buy"}, "stall": _STALL_REF,
-                        "units": {"type": "integer", "minimum": 1, "maximum": 100}}},
+                        "units": {"type": "integer", "minimum": 1, "maximum": 100},
+                        "candidates": _CANDIDATES}},
+        # Searching buyers only (engine 0.10.0, buyers.search_depth > 1): walk back along the
+        # route to a stall seen earlier, and decide there.
+        {"type": "object", "additionalProperties": False, "required": ["action", "stall"],
+         "properties": {"action": {"const": "choose"}, "stall": _STALL_REF, "candidates": _CANDIDATES}},
     ],
 }
 

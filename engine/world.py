@@ -109,6 +109,13 @@ class Person:
     info: dict = field(default_factory=dict)   # sid -> {"claims": [...], "inspected_q": float|None}
     seen_signs: set = field(default_factory=set)
     hold_until: int = 0    # a buyer action holds the buyer until this tick (market.scale ticks)
+    # search (engine 0.10.0; buyers.search_depth > 1 for this buyer's profile only)
+    search_k: int = 1
+    seen: dict = field(default_factory=dict)     # sid -> route index where it was last within reach
+    target: str | None = None                    # stall the buyer is walking to
+    skipped: set = field(default_factory=set)    # chosen stalls found closed; not offered again
+    walk_ticks: int = 0                          # ticks spent walking to a chosen stall
+    search_rec: dict | None = None               # per-buyer search record (buyers.search_log)
 
     @property
     def pos(self) -> tuple:

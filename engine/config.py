@@ -131,6 +131,15 @@ class BuyersCfg:
     # Budget as a dial (engine 0.9.0): when set, every buyer's budget = units x base x this factor,
     # whatever budget_level says (the "mixed" draws are still consumed). null = off (0.8.0).
     budget_factor_override: float | None = None
+    # Search depth (engine 0.10.0), per profile. A buyer with depth k > 1 browses: it collects what
+    # it learns at open stalls of its category within reach (asking and inspecting as it goes) and
+    # may buy only once it has seen k of them or reached the end of its route; it then buys here or
+    # walks back along its route to a stall it saw (seller action 'choose'). k = 1 is the 0.9.0
+    # behaviour, byte for byte. See engine/bazaar.py and docs/config_reference.md.
+    search_depth: dict = field(default_factory=lambda: {"tourist": 1, "local": 1, "expert": 1})
+    # Diagnostics (0.10.0): add a `search` block to the outcome (per buyer: stalls seen, choices,
+    # walking ticks; per stall: buyers of its category that came within reach). Off = 0.9.0 bytes.
+    search_log: bool = False
     inspect_cost_frac: dict = field(default_factory=lambda: {"tourist": 0.10, "local": 0.05, "expert": 0.02})
     aisles_per_route: list = field(default_factory=lambda: [1, 3])
     profile_noise: float = 0.3   # chance a seller sees a uniformly random profile instead of the true one
@@ -346,4 +355,4 @@ def _deep_merge(a: dict, b: dict) -> dict:
 
 # Dict-valued fields that are replaced wholesale rather than merged key by key
 # (a partial share table should not silently keep default categories).
-_OPAQUE_DICTS = {"type_shares", "profile_shares"}
+_OPAQUE_DICTS = {"type_shares", "profile_shares", "search_depth"}

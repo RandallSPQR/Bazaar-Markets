@@ -90,6 +90,8 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 | `buyers.budget_level` | label |
 | `buyers.budget_factors` | ratio |
 | `buyers.budget_factor_override` | ratio |
+| `buyers.search_depth` | count |
+| `buyers.search_log` | label |
 | `buyers.inspect_cost_frac` | money ratio |
 | `buyers.aisles_per_route` | count; routes are refined after they are drawn |
 | `buyers.profile_noise` | probability per (stall, person) pair |
@@ -227,6 +229,8 @@ sanity check depends on this separation.
 | `units`, `q_req` | [1, 2], [0.50, 0.70] | | task: acquire X units with Q ≥ Q_req |
 | `budget_level` | `at` | | `above` / `at` / `below` / `mixed`: budget = units × base × factor |
 | `budget_factors` | 1.25 / 1.0 / 0.8 | | |
+| `search_depth` | 1 / 1 / 1 | | 0.10.0: per-profile search depth k (see below); 1 = 0.9.0 behaviour |
+| `search_log` | false | | 0.10.0: adds the outcome's `search` block (per-buyer search records, per-stall exposure) |
 | `budget_factor_override` | null | | 0.9.0: when set, every buyer's budget = units × base × this factor, whatever `budget_level` says (the `mixed` draws are still consumed; the buyer's `task` then carries `budget_factor`) |
 | `inspect_cost_frac` | tourist .10, local .05, expert .02 | | inspection cost, as a fraction of base, paid from the budget |
 | `aisles_per_route` | [1, 3] | | |
@@ -234,6 +238,24 @@ sanity check depends on this separation.
 | `inspector_fraction` | 0.0 | | share of buyers who are also inspectors ("inspector-buyers"; 1.0 for the "every buyer an inspector" check) |
 | `inspector_knowledge` | true | | inspector-buyers see reliable quality (`own_assessment`) and their policy can use it |
 | `inspector_enforcement` | true | | inspector-buyers can trigger catches; set false for knowledge without enforcement |
+
+**Search depth** (0.10.0; decided 2026-11-06). A buyer whose profile has depth k > 1 walks its
+route as before, but at each stop with open stalls of its category in reach it records them as
+seen and may ask and inspect; it may buy only once it has seen k stalls or is at the last cell of
+its route (phase `choose`; buying in phase `browse` is invalid). Then it buys from a stall here or
+sends `{"action": "choose", "stall": id}` for a stall it saw earlier: the engine walks it back (or
+forward) along its route, one cell per tick, to the last cell where that stall was in reach, and
+it decides there. A chosen stall that is closed on arrival is skipped for the rest of the day and
+the buyer chooses again. After buying, a buyer that still needs units chooses again or browses on;
+once done it walks on along its route from where it is, as today. Buyer observations carry a
+`search` block (`depth`, `seen_count`, `phase`, `route_end`, `seen_elsewhere`: rows like
+`stalls_here` for seen stalls not in reach, with the current price, visible rating and
+`steps_away`); `buy` and `choose` may carry `candidates` (stall ids, logged as given). The rule
+buyer browses as the 0.9.0 rule learns (inspecting where that rule would inspect before buying,
+asking silent stalls) and in phase `choose` picks among the stalls it believes meet Q_req, pass
+the rating threshold and fit its budget: highest visible rating (unrated = 0.5), then lowest price;
+tourists (no ratings) lowest price; ties by stall id. With no candidate it moves on (and leaves at
+the end of its route). Depths are fixed by profile, so buyer populations do not depend on them.
 
 ### `inspectors`
 | key | default | status | meaning |

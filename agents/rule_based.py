@@ -270,6 +270,8 @@ class RuleBuyer:
         return {"policy": "rule_buyer", "version": self.VERSION, "model_id": None, "sampling": None}
 
     def act(self, obs: dict) -> str:
+        if "search" in obs:
+            return self.act_search(obs)
         me = obs["you"]
         task = me["task"]
         left, need, q_req = task["budget_left_cents"], task["units_needed"], task["q_req"]
@@ -306,3 +308,75 @@ class RuleBuyer:
                     and s["price_cents"] <= left:
                 return _out({"action": "ask", "stall": s["id"]})
         return _out({"action": "move_on"})
+
+    # ---------------------------------------------------------------- search (engine 0.10.0)
+
+    def _visible_ok(self, s: dict) -> bool:
+        return s.get("rating") is None or s["rating"] >= self.rating_tau
+
+    def _candidate(self, s: dict, me: dict, left: int, q_req: float) -> bool:
+        """Would the 0.9.0 rule buy from this stall now? (Seen stalls are judged on what the buyer
+        learned there.)"""
+        if left // s["price_cents"] < 1 or not self._visible_ok(s):
+            return False
+        known = s.get("own_assessment")
+        if known is None:
+            known = s["inspected_quality"]
+        if known is not None:
+            return known >= q_req
+        if not s["messages"] or s["messages"][-1]["claimed_quality"] < q_req:
+            return False
+        if me["profile"] == "expert":
+            return False                                   # experts buy only what they inspected
+        pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
+        if me["profile"] == "local" and pushy:
+            # a local inspects a pushy stall first; it buys uninspected only if it cannot afford to
+            return me["inspect_cost_cents"] + s["price_cents"] > left
+        return True
+
+    def act_search(self, obs: dict) -> str:
+        """Searching buyer (buyers.search_depth > 1; decided 2026-11-06). At each stop it learns as
+        the 0.9.0 rule would before buying (inspects where that rule inspects, asks stalls it has
+        heard nothing from), but buys only in phase "choose": then, among stalls here and stalls
+        seen earlier that it believes meet Q_req, pass the rating threshold and fit its budget,
+        it picks the highest visible rating (unrated = 0.5), then the lowest price (tourists, who
+        see no ratings: lowest price), ties by stall id; buys if that stall is here, else walks
+        back to it ("choose"). No candidate: move on."""
+        me = obs["you"]
+        task = me["task"]
+        left, need, q_req = task["budget_left_cents"], task["units_needed"], task["q_req"]
+        cost_i = me["inspect_cost_cents"]
+        here = sorted(obs["stalls_here"], key=lambda s: (s["price_cents"], s["id"]))
+        for s in here:                                     # learn first, as the 0.9.0 rule does
+            if not self._visible_ok(s) or left // s["price_cents"] < 1:
+                continue
+            if s.get("own_assessment") is not None or s["inspected_quality"] is not None or not s["messages"]:
+                continue
+            if s["messages"][-1]["claimed_quality"] < q_req:
+                continue
+            pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
+            if (me["profile"] == "expert" or (me["profile"] == "local" and pushy)) and cost_i + s["price_cents"] <= left:
+                return _out({"action": "inspect", "stall": s["id"]})
+        for s in here:
+            if not s["messages"] and not s["ask_pending"] and s["inspected_quality"] is None \
+                    and s.get("own_assessment") is None and s["price_cents"] <= left:
+                return _out({"action": "ask", "stall": s["id"]})
+        if obs["search"]["phase"] != "choose":
+            return _out({"action": "move_on"})
+        pool = [(s, True) for s in here] + [(s, False) for s in obs["search"]["seen_elsewhere"]]
+        cands = [(s, h) for s, h in pool if self._candidate(s, me, left, q_req)]
+        if not cands:
+            return _out({"action": "move_on"})
+
+        def key(x):
+            s = x[0]
+            if "rating" in s:
+                return (-(0.5 if s["rating"] is None else s["rating"]), s["price_cents"], s["id"])
+            return (s["price_cents"], s["id"])
+        cands.sort(key=key)
+        best, is_here = cands[0]
+        ids = [s["id"] for s, _ in cands]
+        if is_here:
+            return _out({"action": "buy", "stall": best["id"], "units": int(min(need, left // best["price_cents"])),
+                         "candidates": ids})
+        return _out({"action": "choose", "stall": best["id"], "candidates": ids})

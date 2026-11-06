@@ -70,6 +70,19 @@ class BazaarEngine:
         self.by_sid = {st.sid: st for st in self.stalls}
         self.by_pid = {p.pid: p for p in self.people}
         self.buyers = [p for p in self.people if p.kind == "buyer"]
+        # Search depth (0.10.0): fixed by profile, so buyer populations do not depend on it.
+        depth = cfg.buyers.search_depth
+        if set(depth) - set(PROFILES) or any(int(v) != v or v < 1 for v in depth.values()):
+            raise ValueError(f"buyers.search_depth must map profiles to integers >= 1, got {depth!r}")
+        for p in self.buyers:
+            p.search_k = int(depth.get(p.profile, 1))
+        self.search_log = bool(cfg.buyers.search_log)
+        if self.search_log:
+            for p in self.buyers:
+                p.search_rec = {"profile": p.profile, "k": p.search_k, "seen": [], "chosen": [], "bought": [],
+                                "candidates": None, "walk_ticks": 0, "skipped_closed": []}
+        self._reach: dict = {}
+        self.exposure: dict = {}
         self.stationary = cfg.inspectors.placement in ("posts", "clustered", "patrolling")
         self._noise_cache: dict[tuple, str] = {}
         if agent_factory is None:
@@ -339,13 +352,25 @@ class BazaarEngine:
         for p in self.buyers:
             if not p.active:
                 continue
+            if self.search_log:
+                self.expose(p)
             if t < p.hold_until:          # still busy with its last action (scale > 1 only)
                 held.add(p.pid)
                 continue
             if p.units >= p.task["units"]:
                 continue
+            if p.search_k > 1:
+                if self.search_decide(p, stay):
+                    stay.add(p.pid)
+                    p.hold_until = t + self.k
+                continue
             here = [st for st in self.stalls if st.category == p.task["category"] and self.is_open(st)
                     and _dist(p.pos, st.pos) <= mk.interact_range]
+            if self.search_log:
+                for st in here:
+                    if st.sid not in p.seen:
+                        p.search_rec["seen"].append(st.sid)
+                    p.seen[st.sid] = p.step
             if not here or p.stop_actions >= mk.max_actions_per_stop:
                 continue
             if self.buyer_did(p, here, stay):
@@ -361,6 +386,14 @@ class BazaarEngine:
                 p.stop_actions += 1
             elif p.pid in held:
                 pass
+            elif p.target is not None:   # a searching buyer walking to the stall it chose
+                p.stop_actions = 0
+                goal = p.seen[p.target]
+                if goal != p.step:
+                    p.step += 1 if goal > p.step else -1
+                    p.walk_ticks += 1
+                    if p.search_rec is not None:
+                        p.search_rec["walk_ticks"] += 1
             else:
                 p.stop_actions = 0
                 if p.step + 1 < len(p.route):
@@ -450,18 +483,85 @@ class BazaarEngine:
         self.bust_log.append(rec)
         self._busts_now.append(rec)
 
-    def buyer_did(self, p: Person, here: list[Stall], stay: set) -> bool:
-        """Run one buyer decision. Returns True if the buyer stays at the stall."""
+    def reach(self, pos: tuple) -> list[Stall]:
+        """Stalls (open or not) within interact range of a cell; cached per cell."""
+        key = tuple(pos)
+        if key not in self._reach:
+            r = self.cfg.market.interact_range
+            self._reach[key] = [st for st in self.stalls if _dist(key, st.pos) <= r]
+        return self._reach[key]
+
+    def expose(self, p: Person) -> None:
+        """Diagnostics (buyers.search_log): which buyers of each stall's category came within
+        reach of it, and which of them still needed units then."""
+        shopping = p.units < p.task["units"]
+        for st in self.reach(p.pos):
+            if st.category != p.task["category"]:
+                continue
+            e = self.exposure.setdefault(st.sid, {"in_reach": set(), "in_reach_shopping": set()})
+            e["in_reach"].add(p.pid)
+            if shopping:
+                e["in_reach_shopping"].add(p.pid)
+
+    def search_decide(self, p: Person, stay: set) -> bool:
+        """One step of a searching buyer (search_k > 1). Records the open stalls of its category
+        within reach as seen; while walking to a chosen stall it decides nothing until it gets
+        there (a closed chosen stall is skipped and the buyer chooses again). It may buy only once
+        it has seen search_k stalls or is at the end of its route (phase "choose"). Returns True
+        if the buyer stays."""
+        mk = self.cfg.market
+        cat = p.task["category"]
+        near = [st for st in self.reach(p.pos) if st.category == cat]
+        here = [st for st in near if self.is_open(st)]
+        for st in here:
+            if st.sid not in p.seen and p.search_rec is not None:
+                p.search_rec["seen"].append(st.sid)
+            p.seen[st.sid] = p.step
+        skipped = False
+        if p.target is not None:
+            tst = self.by_sid[p.target]
+            if tst not in near:
+                return False
+            if not self.is_open(tst):
+                if p.search_rec is not None:
+                    p.search_rec["skipped_closed"].append(tst.sid)
+                p.skipped.add(tst.sid)
+                p.target, skipped = None, True
+        route_end = p.step >= len(p.route) - 1
+        phase = "choose" if (len(p.seen) >= p.search_k or route_end) else "browse"
+        if not here and not (phase == "choose" and (route_end or skipped)):
+            return False
+        if p.stop_actions >= mk.max_actions_per_stop:
+            return False
+        return self.buyer_did(p, here, stay, phase=phase, route_end=route_end)
+
+    def buyer_did(self, p: Person, here: list[Stall], stay: set, phase: str | None = None,
+                  route_end: bool = False) -> bool:
+        """Run one buyer decision. Returns True if the buyer stays at the stall. phase is set for
+        searching buyers only ("browse" or "choose")."""
         task = p.task
         left = task["budget_cents"] - p.paid_cents - p.inspect_spent_cents
         need = task["units"] - p.units
         ids = {st.sid: st for st in here}
         privileged = bool(self.buyer_agents[p.pid].meta().get("privileged"))
         obs = self.buyer_obs(p, here, left, need, privileged)
+        if phase is not None:
+            obs["search"] = self.search_obs(p, here, phase, route_end)
 
         def check(a):
             if a["action"] == "move_on":
                 return None
+            if a["action"] == "choose":
+                if phase != "choose":
+                    return ("choose is only for a searching buyer that has seen enough stalls"
+                            if phase else "choose is only for searching buyers (buyers.search_depth > 1)")
+                if a["stall"] not in p.seen or a["stall"] in p.skipped:
+                    return f"stall {a['stall']!r} has not been seen (or was found closed)"
+                if a["stall"] in ids:
+                    return f"stall {a['stall']!r} is within reach: buy, ask or inspect instead"
+                return None
+            if a["action"] == "buy" and phase == "browse":
+                return f"a searching buyer may buy only after seeing {p.search_k} stalls or at the end of its route"
             st = ids.get(a["stall"])
             if st is None:
                 return f"stall {a['stall']!r} is not within reach"
@@ -483,6 +583,13 @@ class BazaarEngine:
         a = self.decide("buyer", p.pid, self.buyer_agents[p.pid], obs, check)
         if a["action"] == "move_on":
             return False
+        if a["action"] == "choose":
+            p.target = a["stall"]
+            if p.search_rec is not None:
+                p.search_rec["chosen"].append(a["stall"])
+                if "candidates" in a:
+                    p.search_rec["candidates"] = list(a["candidates"])
+            return False
         st = ids[a["stall"]]
         if a["action"] == "ask":
             self.pending_asks.setdefault(st.sid, []).append(p.pid)
@@ -494,6 +601,9 @@ class BazaarEngine:
             self._inspects_now.append({"buyer": p.pid, "stall": st.sid, "cost_cents": p.inspect_cost_cents})
         elif a["action"] == "buy":
             self.purchase(p, st, a["units"])
+            p.target = None
+            if p.search_rec is not None and "candidates" in a:
+                p.search_rec["candidates"] = list(a["candidates"])
         return True
 
     def purchase(self, p: Person, st: Stall, units: int) -> None:
@@ -521,6 +631,8 @@ class BazaarEngine:
             rec["filed_under"] = self.perceived_brand(st, p)   # where the buyer's review goes
         self.purchases.append(rec)
         self._buys_now.append(rec)
+        if p.search_rec is not None:
+            p.search_rec["bought"].append(st.sid)
 
     # ------------------------------------------------------------------ observations
 
@@ -616,6 +728,28 @@ class BazaarEngine:
                              "route_ahead": self.route_ahead(p)}
         return obs
 
+    def search_obs(self, p: Person, here: list[Stall], phase: str, route_end: bool) -> dict:
+        """What a searching buyer remembers: every stall of its category it has seen and is not
+        at now (except chosen stalls it found closed), with what it learned (the stall's current price and, if visible, rating) and how
+        many route steps back it is."""
+        ids = {st.sid for st in here}
+        rows = []
+        for sid, idx in p.seen.items():
+            if sid in ids or sid in p.skipped:
+                continue
+            st = self.by_sid[sid]
+            info = p.info.get(sid, {"claims": [], "inspected_q": None})
+            row = {"id": sid, "brand": self.perceived_brand(st, p), "price_cents": st.price_cents,
+                   "messages": info["claims"], "inspected_quality": info["inspected_q"],
+                   "steps_away": abs(p.step - idx)}
+            if self.knows_quality(p):
+                row["own_assessment"] = st.q_true
+            if self.cfg.ratings.mode == "public" and p.profile in self.cfg.ratings.visible_to:
+                row["rating"] = st.rating
+            rows.append(row)
+        return {"depth": p.search_k, "seen_count": len(p.seen), "phase": phase, "route_end": route_end,
+                "seen_elsewhere": rows}
+
     def route_ahead(self, p: Person) -> list[dict]:
         seen, out = set(), []
         r = self.cfg.market.interact_range
@@ -690,7 +824,14 @@ class BazaarEngine:
             "false_claims": {"messages": fc_msgs, "no_eligible_in_earshot": fc_free},
             "false_claims_by_stall": {k: dict(v) for k, v in self.false_claims_by_stall.items()},
             **({"brands": self.brand_outcome()} if self.brands_on else {}),
+            **({"search": self.search_outcome()} if self.search_log else {}),
         }
+
+    def search_outcome(self) -> dict:
+        exp = {st.sid: {"in_reach": len(self.exposure.get(st.sid, {}).get("in_reach", ())),
+                        "in_reach_shopping": len(self.exposure.get(st.sid, {}).get("in_reach_shopping", ()))}
+               for st in self.stalls}
+        return {"buyers": {p.pid: p.search_rec for p in self.buyers}, "exposure": exp}
 
     def brand_outcome(self) -> dict:
         prof = {st.sid: st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents

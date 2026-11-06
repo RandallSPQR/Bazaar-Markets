@@ -22,4 +22,7 @@ points, through role-specific JSON observations and schema-validated actions.
 #        fields; "lookalike" still accepted, and 0.8.0 logs replay with the word mapped),
 #        buyers.budget_factor_override, rule_genuine_rational_v2 (penalty-aware benchmark with a
 #        privileged catch-rate input). All off by default.
-ENGINE_VERSION = "0.9.0"
+# 0.10.0: buyers.search_depth (per-profile search depth: browse k stalls, then buy here or walk back
+#         to a stall seen; buyer action "choose"; k = 1 is 0.9.0) and buyers.search_log (per-buyer
+#         search records and per-stall exposure in the outcome). Off by default.
+ENGINE_VERSION = "0.10.0"
