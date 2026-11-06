@@ -5,8 +5,8 @@ import json
 from contextlib import nullcontext
 
 from . import bazaar, m0
-from .config import from_dict
-from .jsonlog import JsonlLog
+from .config import from_dict, to_dict
+from .jsonlog import JsonlLog, dumps
 from .metrics import reference_configs, relative_outcomes
 
 
@@ -72,6 +72,10 @@ def replay(lines: list[str]) -> tuple[list[str], JsonlLog]:
     return lines, log
 
 
+# Words renamed between engine versions: {log version: (old word, new word)}.
+VOCAB_RENAMES = {"0.8.0": ("lookalike", "counterfeit")}
+
+
 def compare_logs(old: list[str], new: list[str]) -> dict:
     """Byte comparison, line by line. The header's `env` and `engine_version` are
     compared separately: a difference there is a warning, not a mismatch, and the
@@ -87,6 +91,18 @@ def compare_logs(old: list[str], new: list[str]) -> dict:
         warnings.append(f"log written by engine {v_old}; this is engine {v_new}")
     for h in (o0, n0):
         h.pop("env", None); h.pop("engine_version", None)
+    if version_differs and "config" in o0:
+        # Config keys added since the log was written take their defaults (which reproduce the
+        # old engine), so compare against the old config with those defaults filled in.
+        o0["config"] = to_dict(from_dict(o0["config"]))
+    if v_old in VOCAB_RENAMES:
+        # 0.8.0 called counterfeits "lookalike"; 0.9.0 accepts that name and logs "counterfeit".
+        # Compare with the old name mapped to the new one on both sides (no brand name or other
+        # logged text contains either word), re-serialised because renamed keys sort differently.
+        a, b = VOCAB_RENAMES[v_old]
+        old = [dumps(json.loads(x.replace(a, b))) if a in x else x for x in old]
+        new = [dumps(json.loads(x.replace(a, b))) if a in x else x for x in new]
+        o0, n0 = json.loads(json.dumps(o0).replace(a, b)), json.loads(json.dumps(n0).replace(a, b))
 
     def mismatch(**kw) -> dict:
         res = {"identical": False, "warnings": warnings, **kw}

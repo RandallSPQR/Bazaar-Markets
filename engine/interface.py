@@ -42,7 +42,7 @@ SELLER_ACTION_SCHEMA: dict = {
         # Brands only (engine 0.8.0, brands.enabled): rename on the first decision after a
         # reopening; bust out (genuine stalls, first decision of a day): true quality drops to
         # the stall's low quality for good, name, sign claim and price unchanged.
-        "rename": {"enum": ["fresh", "lookalike"]},
+        "rename": {"enum": ["fresh", "counterfeit", "lookalike"]},   # "lookalike" = 0.8.0 alias
         "bust_out": {"const": True},
     },
 }

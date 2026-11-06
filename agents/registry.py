@@ -11,13 +11,14 @@ from engine.scaling import scale_agent_params
 
 from .llm_stub import LLMAgent
 from .reference import InformedReferenceBuyer, RandomReferenceBuyer
-from .rule_based import AdaptiveDeceptiveSeller, DeceptiveSeller, GenuineRationalSeller, HonestSeller, RuleBuyer
+from .rule_based import AdaptiveDeceptiveSeller, DeceptiveSeller, GenuineRationalSeller, GenuineRationalSellerV2, HonestSeller, RuleBuyer
 
 POLICIES = {
     "rule_honest": HonestSeller,
     "rule_deceptive": DeceptiveSeller,
     "rule_deceptive_adaptive": AdaptiveDeceptiveSeller,
     "rule_genuine_rational": GenuineRationalSeller,
+    "rule_genuine_rational_v2": GenuineRationalSellerV2,
     "rule_buyer": RuleBuyer,
     "random_reference": RandomReferenceBuyer,
     "informed_reference": InformedReferenceBuyer,

@@ -70,11 +70,13 @@ class DeceptiveSeller(HonestSeller):
 
     VERSION = "rule_deceptive-1"
 
-    REOPEN = ("keep", "fresh", "lookalike")
+    REOPEN = ("keep", "fresh", "counterfeit")
+    REOPEN_ALIASES = {"lookalike": "counterfeit"}   # 0.8.0 name
 
     def __init__(self, rng: np.random.Generator | None = None, cautious: bool = True, reopen: str = "keep", **kw):
         super().__init__(rng, **kw)
         self.cautious = cautious
+        reopen = self.REOPEN_ALIASES.get(reopen, reopen)
         if reopen not in self.REOPEN:
             raise ValueError(f"reopen must be one of {self.REOPEN}, got {reopen!r}")
         # Reopen strategy (brands only): what name to put up when the stall reopens after a
@@ -196,6 +198,57 @@ class GenuineRationalSeller(HonestSeller):
         if bust:
             a["bust_out"] = True
         return _out(a)
+
+
+class GenuineRationalSellerV2(GenuineRationalSeller):
+    """Penalty-aware benchmark (engine 0.9.0; not a model of real sellers). As
+    rule_genuine_rational, but on its first decision of each day from day 2 on it compares, over
+    the L days left including today:
+        honest value  = L x yesterday's profit
+        bust-out value = sum over k = 0..L-1 of
+            U x (P_k - c) - A - E x F - min(1, E x close_ticks / ticks) x U x (P_k - c)
+    with U = yesterday's units, c = unit cost at its bust-out quality, A = yesterday's ad spend,
+    F = the penalty per catch, E = expected catches per deceptive stall-day (yesterday's market-wide
+    rate, a privileged input labelled as such in its observation), and P_k the price at the
+    rating r_k it would have after k days of bad reviews: r_0 = today's start-of-day rating, then
+    the engine's update with every rated unit dishonest (share 0): r_{k+1} = 0 if r_k is unrated,
+    else memory x r_k; unchanged when U = 0. P_k = N x (1 + premium x (r_k - 0.5)), unrated = 0.5,
+    rounded to a cent as the engine does. The last term is the margin lost while closed after the
+    expected catches. Busts out if bust-out value > honest value, and claims its old quality on
+    every channel afterwards (as v1). Decided 2026-11-06."""
+
+    VERSION = "rule_genuine_rational_v2-1"
+
+    def meta(self) -> dict:
+        return {"policy": "rule_genuine_rational_v2", "version": self.VERSION, "model_id": None, "sampling": None,
+                "privileged": True}
+
+    @staticmethod
+    def values(obs: dict) -> tuple[float, float] | None:
+        """(honest value, bust-out value) in cents, or None when the rule does not apply today."""
+        b, h, y, pv = obs.get("brand"), obs.get("horizon"), obs.get("yesterday"), obs.get("privileged")
+        if not b or not h or y is None or not pv or not b["first_decision_today"] \
+                or b["bust_out_unit_cost_cents"] is None or pv.get("deceptive_catch_rate_yesterday") is None:
+            return None
+        L = h["days"] - h["day"] + 1
+        U, c, A = y["units_sold"], b["bust_out_unit_cost_cents"], y["ad_spend_cents"]
+        N, F = b["neutral_price_cents"], obs["costs"]["penalty_cents_if_caught"]
+        E = float(pv["deceptive_catch_rate_yesterday"])
+        closed = min(1.0, E * pv["close_ticks"] / pv["ticks_per_day"])
+        honest = L * y["profit_cents"]
+        r, bust = b["rating"], 0.0
+        for _ in range(L):
+            P = int(round(N * (1 + pv["premium"] * ((0.5 if r is None else r) - 0.5))))
+            margin = U * (P - c)
+            bust += margin - A - E * F - closed * margin
+            if U > 0:
+                r = 0.0 if r is None else pv["rating_memory"] * r
+        return float(honest), float(bust)
+
+    @classmethod
+    def should_bust(cls, obs: dict) -> bool:
+        v = cls.values(obs)
+        return v is not None and v[1] > v[0]
 
 
 class RuleBuyer:

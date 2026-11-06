@@ -72,7 +72,7 @@ class Stall:
     switch_cost_due: int = 0       # set by a switch, moved into switch_cost_cents the next day
     rating: float | None = None    # public rating (ratings.mode != "off"); persists across days
     # brands (brands.enabled only; engine/brands.py)
-    lookalike_of: str | None = None  # the original's name, if the current name is a look-alike
+    counterfeit_of: str | None = None  # the original's name, if the current name is a counterfeit
     rename_pending: bool = False     # set by a catch; the first decision after reopening may rename
     busted_day: int | None = None    # day a genuine stall busted out (rule_genuine_rational)
     decided_today: bool = False      # has the stall made a decision yet today
@@ -275,13 +275,15 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         if level == "mixed":
             level = ["above", "at", "below"][u_level]
         # Reference price: what a genuine unit meeting Q_req costs (the genuine posted price).
-        budget = int(round(units * base_cat[cat] * bc.budget_factors[level]))
+        factor = bc.budget_factors[level] if bc.budget_factor_override is None else float(bc.budget_factor_override)
+        budget = int(round(units * base_cat[cat] * factor))
         is_insp = bool(u_insp < bc.inspector_fraction)
         arrive = int(round(i * last_arrival / max(1, bc.count)))
         people.append(Person(
             pid="", idx=0, kind="buyer", profile=profile, route=random_route(), arrive=arrive,
             is_inspector=is_insp,
-            task={"category": cat, "units": units, "q_req": q_req, "budget_cents": budget, "budget_level": level},
+            task={"category": cat, "units": units, "q_req": q_req, "budget_cents": budget, "budget_level": level,
+                  **({} if bc.budget_factor_override is None else {"budget_factor": factor})},
             inspect_cost_cents=int(round(base_cat[cat] * bc.inspect_cost_frac[profile]))))
 
     # Inspectors. Observable profile follows the feature-correlation dial.

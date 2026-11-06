@@ -128,6 +128,9 @@ class BuyersCfg:
     q_req: list = field(default_factory=lambda: [0.50, 0.70])     # kept <= q_high[0]: see docs
     budget_level: str = "at"     # "above" | "at" | "below" | "mixed": budget vs genuine price at Q_req
     budget_factors: dict = field(default_factory=lambda: {"above": 1.25, "at": 1.0, "below": 0.8})
+    # Budget as a dial (engine 0.9.0): when set, every buyer's budget = units x base x this factor,
+    # whatever budget_level says (the "mixed" draws are still consumed). null = off (0.8.0).
+    budget_factor_override: float | None = None
     inspect_cost_frac: dict = field(default_factory=lambda: {"tourist": 0.10, "local": 0.05, "expert": 0.02})
     aisles_per_route: list = field(default_factory=lambda: [1, 3])
     profile_noise: float = 0.3   # chance a seller sees a uniformly random profile instead of the true one
@@ -229,8 +232,8 @@ class RatingsCfg:
 @dataclass
 class BrandsCfg:
     # Brands (engine 0.8.0; see engine/brands.py). When enabled: ratings attach to brand names,
-    # a stall may rename itself when it reopens after a closure ("fresh" or "lookalike"),
-    # tourists cannot tell a look-alike from its original (they see and review the original's
+    # a stall may rename itself when it reopens after a closure ("fresh" or "counterfeit"; 0.9.0
+    # renamed "lookalike", still accepted), tourists cannot tell a counterfeit from its original (they see and review the original's
     # name), and prices carry a reputation premium. Off by default (0.7.0 behaviour).
     enabled: bool = False
     # PLACEHOLDER (0.4 in the 2026-11-06 run): price = base x tier x (1 + premium x (rating - 0.5)),

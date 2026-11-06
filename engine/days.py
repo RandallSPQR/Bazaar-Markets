@@ -28,7 +28,7 @@ Switching costs: pricing.switch_cost_to_genuine / _to_deceptive (0.7.0; default 
 
 Brands (0.8.0, brands.enabled; engine/brands.py): a BrandBook carries ratings by brand name
 across days; each morning prices are set from the brand's start-of-day rating; at the end of the
-day reviews are filed by brand (tourists' reviews of a look-alike go to the original). Brands
+day reviews are filed by brand (tourists' reviews of a counterfeit go to the original). Brands
 cannot be combined with imitation (evolution.revise_prob and mutation_prob must be 0): a type
 switch would rewrite a busted stall's quality and sign, and that combination is untested.
 """
@@ -197,6 +197,9 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
                 st.rating = book.rating(st.brand)
         elif rated:
             update_ratings(eng.stalls, eng.purchases, cfg.ratings.memory)
+        if brands:
+            liars = sum(st.stype == "deceptive" or st.busted_day is not None for st in eng.stalls)
+            book.catch_rate_yesterday = out["catches"] / liars if liars else 0.0
         switches = revise(cfg, eng.stalls, profits, day) if day < D else []
         pbt = {t: d["profit_per_stall_cents"] for t, d in sorted(out["seller_by_type"].items())}
         extra = {}
@@ -206,7 +209,7 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         if brands:
             extra.update(brand_ratings=dict(sorted(book.ratings.items())),
                          brands={st.sid: st.brand for st in eng.stalls},
-                         lookalike_of={st.sid: st.lookalike_of for st in eng.stalls if st.lookalike_of},
+                         counterfeit_of={st.sid: st.counterfeit_of for st in eng.stalls if st.counterfeit_of},
                          prices={st.sid: st.price_cents for st in eng.stalls},
                          renames=eng.rename_log, bust_outs=eng.bust_log,
                          busted={st.sid: st.busted_day for st in eng.stalls if st.busted_day is not None},

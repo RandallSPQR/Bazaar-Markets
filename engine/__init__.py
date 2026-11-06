@@ -18,4 +18,8 @@ points, through role-specific JSON observations and schema-validated actions.
 # 0.8.0: brands (brands.*: ratings by brand name, renames at reopening, look-alikes,
 #        reputation premium), market.horizon_known, bust-out action and
 #        rule_genuine_rational. All off by default.
-ENGINE_VERSION = "0.8.0"
+# 0.9.0: "look-alike" renamed "counterfeit" (rename action, agent parameter, log and outcome
+#        fields; "lookalike" still accepted, and 0.8.0 logs replay with the word mapped),
+#        buyers.budget_factor_override, rule_genuine_rational_v2 (penalty-aware benchmark with a
+#        privileged catch-rate input). All off by default.
+ENGINE_VERSION = "0.9.0"

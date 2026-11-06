@@ -117,6 +117,7 @@ class BazaarEngine:
         self.bust_log: list[dict] = []
         self._renames_now: list[dict] = []
         self._busts_now: list[dict] = []
+        self.seller_privileged = {sid: bool(a.meta().get("privileged")) for sid, a in self.seller_agents.items()}
         if self.brands_on:
             self.book = book if book is not None else B.BrandBook(self.stalls)
             B.morning_prices(cfg, self.stalls, self.book)
@@ -134,10 +135,10 @@ class BazaarEngine:
         return f"{brand}: {spec_text(st.category, q)}. Quality grade {q:.2f}."
 
     def perceived_brand(self, st: Stall, p: Person) -> str:
-        """The name a person reads on the stall: tourists cannot tell a look-alike from its
+        """The name a person reads on the stall: tourists cannot tell a counterfeit from its
         original, so they read the original's name (brands only)."""
-        if st.lookalike_of is not None and p.profile == "tourist":
-            return st.lookalike_of
+        if st.counterfeit_of is not None and p.profile == "tourist":
+            return st.counterfeit_of
         return st.brand
 
     def observed_profile(self, st: Stall, p: Person) -> str:
@@ -416,20 +417,21 @@ class BazaarEngine:
         book.renames[st.sid] = n + 1
         rng = np.random.default_rng([*self.root, 11, st.idx, n])
         old, target = st.brand, None
-        if how == "lookalike":
-            target = B.lookalike_target(self.stalls, st, book, rng)
+        how = B.canonical_reopen(how)
+        if how == "counterfeit":
+            target = B.counterfeit_target(self.stalls, st, book, rng)
         if target is None:
             name = B.fresh_name(st.category, rng, book.used)
-            st.lookalike_of = None
+            st.counterfeit_of = None
             st.price_cents = B.premium_price(self.cfg, st, None)
         else:
-            name = B.lookalike_name(target.brand, rng, book.used)
-            st.lookalike_of = target.brand
+            name = B.counterfeit_name(target.brand, rng, book.used)
+            st.counterfeit_of = target.brand
             st.price_cents = target.price_cents
         book.add(name)
         st.brand, st.rating = name, None
         rec = {"t": self.t, "day": self.day, "stall": st.sid, "how": how, "from": old, "to": name,
-               "lookalike_of": st.lookalike_of, "target_stall": target.sid if target else None,
+               "counterfeit_of": st.counterfeit_of, "target_stall": target.sid if target else None,
                "target_rating": book.rating(target.brand) if target else None, "price_cents": st.price_cents}
         self.rename_log.append(rec)
         self._renames_now.append(rec)
@@ -565,7 +567,7 @@ class BazaarEngine:
         }
         if self.brands_on:
             honest = st.stype == "genuine" and st.busted_day is None
-            obs["brand"] = {"name": st.brand, "lookalike_of": st.lookalike_of, "rating": st.rating,
+            obs["brand"] = {"name": st.brand, "counterfeit_of": st.counterfeit_of, "rating": st.rating,
                             "neutral_price_cents": B.neutral_price(self.cfg, st),
                             "rename_available": st.rename_pending,
                             "first_decision_today": not st.decided_today, "busted_day": st.busted_day,
@@ -574,6 +576,13 @@ class BazaarEngine:
         if mk.horizon_known:
             obs["horizon"] = {"day": self.day, "days": int(mk.days)}
             obs["yesterday"] = st.yesterday
+        if self.brands_on and self.seller_privileged.get(st.sid):
+            # Benchmark-only inputs (0.9.0), labelled as such: not something a real seller knows.
+            obs["privileged"] = {"note": "privileged benchmark input, not observable by a real seller",
+                                 "deceptive_catch_rate_yesterday": self.book.catch_rate_yesterday,
+                                 "premium": float(self.cfg.brands.premium),
+                                 "rating_memory": float(self.cfg.ratings.memory),
+                                 "ticks_per_day": int(mk.ticks), "close_ticks": int(self.cfg.pricing.close_ticks)}
         return obs
 
     def buyer_obs(self, p: Person, here: list[Stall], left: int, need: int, privileged: bool) -> dict:
@@ -687,10 +696,10 @@ class BazaarEngine:
         prof = {st.sid: st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents
                 - st.switch_cost_cents for st in self.stalls}
         return {"renames": len(self.rename_log),
-                "renames_by_how": {h: sum(r["how"] == h for r in self.rename_log) for h in ("fresh", "lookalike")},
+                "renames_by_how": {h: sum(r["how"] == h for r in self.rename_log) for h in ("fresh", "counterfeit")},
                 "bust_outs": len(self.bust_log),
                 "busted_stalls": sum(st.busted_day is not None for st in self.stalls),
-                "lookalike_stalls": sum(st.lookalike_of is not None for st in self.stalls),
+                "counterfeit_stalls": sum(st.counterfeit_of is not None for st in self.stalls),
                 "profit_by_stall_cents": prof,
                 "units_by_stall": {st.sid: st.units_sold for st in self.stalls}}
 

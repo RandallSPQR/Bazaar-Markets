@@ -1,4 +1,5 @@
-"""Engine 0.8.0: brands, renames at reopening, look-alikes, reputation premium, known horizon,
+"""Engine 0.8.0 features, still in 0.9.0 with "look-alike" renamed "counterfeit": brands, renames at
+reopening, counterfeits, reputation premium, known horizon,
 bust-outs (rule_genuine_rational)."""
 import hashlib
 import json
@@ -18,7 +19,7 @@ REF = os.path.join(os.path.dirname(__file__), "reference", "outcomes_v070.json")
 
 BR = ["brands.enabled=true", "brands.premium=0.4", "ratings.mode=public", "inspectors.placement=patrolling",
       "evolution.revise_prob=0", "evolution.mutation_prob=0", "market.horizon_known=true"]
-LOOK = "agents.params.rule_deceptive.reopen=lookalike"
+LOOK = "agents.params.rule_deceptive.reopen=counterfeit"
 FRESH = "agents.params.rule_deceptive.reopen=fresh"
 RATIONAL = "agents.seller.genuine=rule_genuine_rational"
 
@@ -49,18 +50,18 @@ def _events(c):
 
 # ---------------------------------------------------------------- names
 
-def test_lookalike_names_never_equal_the_original():
+def test_counterfeit_names_never_equal_the_original():
     used = {n for ns in BRANDS.values() for n in ns}
     for names in BRANDS.values():
         for n in names:
             for s in range(40):
-                x = B.lookalike_name(n, np.random.default_rng([s, 11]), used)
+                x = B.counterfeit_name(n, np.random.default_rng([s, 11]), used)
                 assert x != n and x not in used
                 assert len(x) >= len(n)
     # many copies of one name stay distinct
     got = set()
     for s in range(60):
-        x = B.lookalike_name("Kelpmoor", np.random.default_rng([s]), used | got)
+        x = B.counterfeit_name("Kelpmoor", np.random.default_rng([s]), used | got)
         assert x not in got
         got.add(x)
 
@@ -75,21 +76,21 @@ def test_fresh_names_are_new():
             used.add(n)
 
 
-def test_renames_in_a_run_are_unique_and_lookalikes_differ():
+def test_renames_in_a_run_are_unique_and_counterfeits_differ():
     out, ev = _events(cfg(*BR, LOOK, "inspectors.count=6", "market.days=4", "market.ticks=160"))
     recs = [r for d in out["days"] for r in d["renames"]]
-    assert len(recs) > 5 and all(r["how"] == "lookalike" for r in recs)
+    assert len(recs) > 5 and all(r["how"] == "counterfeit" for r in recs)
     names = [r["to"] for r in recs]
     assert len(set(names)) == len(names)
     originals = {n for ns in BRANDS.values() for n in ns}
     assert not set(names) & originals
     for r in recs:
-        assert r["lookalike_of"] is not None and r["to"] != r["lookalike_of"]
+        assert r["counterfeit_of"] is not None and r["to"] != r["counterfeit_of"]
 
 
 # ---------------------------------------------------------------- renames only at reopening
 
-@pytest.mark.parametrize("how", ["fresh", "lookalike"])
+@pytest.mark.parametrize("how", ["fresh", "counterfeit"])
 def test_names_change_only_at_reopening(how):
     out, ev = _events(cfg(*BR, f"agents.params.rule_deceptive.reopen={how}", "inspectors.count=6",
                           "market.days=3", "market.ticks=160"))
@@ -152,9 +153,9 @@ def test_rename_without_reopening_is_invalid():
     assert out["brands"]["renames"] == 0
 
 
-# ---------------------------------------------------------------- look-alikes and reviews
+# ---------------------------------------------------------------- counterfeits and reviews
 
-def test_tourist_reviews_of_a_lookalike_land_on_the_original():
+def test_tourist_reviews_of_a_counterfeit_land_on_the_original():
     c = cfg(*BR, LOOK, "inspectors.count=6", "market.days=4", "market.ticks=160")
     out, ev = _events(c)
     by_day: dict = {}
@@ -170,12 +171,12 @@ def test_tourist_reviews_of_a_lookalike_land_on_the_original():
     for d in out["days"]:
         for b in by_day.get(d["day"], []):
             orig = None
-            # the stall's look-alike status at purchase time
+            # the stall's counterfeit status at purchase time
             for r in d["renames"]:
                 if r["stall"] == b["stall"] and r["to"] == b["brand"]:
-                    orig = r["lookalike_of"]
+                    orig = r["counterfeit_of"]
             if orig is None and prev is not None:
-                orig = prev["lookalike_of"].get(b["stall"]) if prev["brands"].get(b["stall"]) == b["brand"] else None
+                orig = prev["counterfeit_of"].get(b["stall"]) if prev["brands"].get(b["stall"]) == b["brand"] else None
             if orig is not None and b["buyer_profile"] == "tourist":
                 assert b["filed_under"] == orig
                 n_tourist_look += 1
@@ -206,19 +207,19 @@ def test_tourists_read_the_original_name_and_others_the_actual():
     day, look0 = 1, {}
 
     def name_at(sid, t):
-        """(actual name, original if a look-alike) at tick t: renames act in the seller step,
+        """(actual name, original if a counterfeit) at tick t: renames act in the seller step,
         before buyers decide in the same tick."""
         cur = (out["days"][day - 1]["brands_start"][sid], look0.get(sid))
         for r in out["days"][day - 1]["renames"]:
             if r["stall"] == sid and r["t"] <= t:
-                cur = (r["to"], r["lookalike_of"])
+                cur = (r["to"], r["counterfeit_of"])
         return cur
     for d, e in enumerate(out["days"]):
         e["brands_start"] = [x for x in ev if x["ev"] == "day_start"][d]["brands"]
     for e in ev:
         if e["ev"] == "day_start":
             day = e["day"]
-            look0 = out["days"][day - 2]["lookalike_of"] if day > 1 else {}
+            look0 = out["days"][day - 2]["counterfeit_of"] if day > 1 else {}
         if e["ev"] == "obs" and e["role"] == "buyer":
             prof = e["obs"]["you"]["profile"]
             for row in e["obs"]["stalls_here"]:
@@ -237,7 +238,7 @@ def test_tourists_read_the_original_name_and_others_the_actual():
     assert seen["tourist"] > 0 and seen["other"] > 0
 
 
-def test_lookalike_copies_the_top_rated_full_price_brand_and_posts_its_price():
+def test_counterfeit_copies_the_top_rated_full_price_brand_and_posts_its_price():
     out, _ = _events(cfg(*BR, LOOK, "inspectors.count=6", "market.days=4", "market.ticks=160"))
     for i, d in enumerate(out["days"]):
         start = out["days"][i - 1]["brand_ratings"] if i else {}
@@ -247,10 +248,10 @@ def test_lookalike_copies_the_top_rated_full_price_brand_and_posts_its_price():
             assert r["target_stall"] is not None
             assert types[r["target_stall"]] != "seconds"
             score = 0.5 if r["target_rating"] is None else r["target_rating"]
-            assert r["target_rating"] == start.get(r["lookalike_of"])
-            if brands is not None:      # no full-price, non-look-alike brand in the category rated higher
+            assert r["target_rating"] == start.get(r["counterfeit_of"])
+            if brands is not None:      # no full-price, non-counterfeit brand in the category rated higher
                 for sid, name in brands.items():
-                    if sid == r["stall"] or types[sid] == "seconds" or sid in out["days"][i - 1]["lookalike_of"]:
+                    if sid == r["stall"] or types[sid] == "seconds" or sid in out["days"][i - 1]["counterfeit_of"]:
                         continue
                     if _cat(sid) == _cat(r["stall"]):
                         v = start.get(name)
@@ -276,9 +277,9 @@ def test_premium_prices_follow_start_of_day_brand_ratings():
             continue
         prev = out["days"][i - 1]
         for sid, name in s["brands"].items():
-            if sid in prev["lookalike_of"]:
-                orig = prev["lookalike_of"][sid]
-                holder = [x for x, n in s["brands"].items() if n == orig and x not in prev["lookalike_of"]]
+            if sid in prev["counterfeit_of"]:
+                orig = prev["counterfeit_of"][sid]
+                holder = [x for x, n in s["brands"].items() if n == orig and x not in prev["counterfeit_of"]]
                 if holder:
                     assert s["prices"][sid] == s["prices"][holder[0]]
                     continue

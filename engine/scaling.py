@@ -71,6 +71,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "buyers.q_req": (NONE, "quality"),
     "buyers.budget_level": (NONE, "label"),
     "buyers.budget_factors": (NONE, "ratio"),
+    "buyers.budget_factor_override": (NONE, "ratio"),
     "buyers.inspect_cost_frac": (NONE, "money ratio"),
     "buyers.aisles_per_route": (NONE, "count; routes are refined after they are drawn"),
     "buyers.profile_noise": (NONE, "probability per (stall, person) pair"),

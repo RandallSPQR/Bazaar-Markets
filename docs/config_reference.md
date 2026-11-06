@@ -89,6 +89,7 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 | `buyers.q_req` | quality |
 | `buyers.budget_level` | label |
 | `buyers.budget_factors` | ratio |
+| `buyers.budget_factor_override` | ratio |
 | `buyers.inspect_cost_frac` | money ratio |
 | `buyers.aisles_per_route` | count; routes are refined after they are drawn |
 | `buyers.profile_noise` | probability per (stall, person) pair |
@@ -164,34 +165,34 @@ revision, and persist across days and type switches (the brand keeps its name).
 ### `brands` (0.8.0; off by default)
 | key | default | status | meaning |
 |---|---|---|---|
-| `enabled` | false | | ratings attach to brand names; renames at reopening; look-alikes; reputation premium; bust-out action. Requires `evolution.revise_prob = mutation_prob = 0` in multi-day runs |
+| `enabled` | false | | ratings attach to brand names; renames at reopening; counterfeits (called look-alikes before 0.9.0); reputation premium; bust-out action. Requires `evolution.revise_prob = mutation_prob = 0` in multi-day runs |
 | `premium` | 0.0 | **PLACEHOLDER** (0.4 in the 2026-11-06 run) | price = base × tier × (1 + premium × (rating − 0.5)) |
 
 With brands on (source: `engine/brands.py`):
 - **Ratings by name.** Reviews are filed by brand name and updated as in `ratings` (same share,
-  blend and first-rating rule). A tourist's review of a look-alike is filed under the original's
+  blend and first-rating rule). A tourist's review of a counterfeit is filed under the original's
   name; locals' and experts' reviews under the actual name. Ratings persist with the name.
 - **Renames only at reopening.** A catch sets the stall's `rename_pending`; its first decision
   after the closure ends (that day, or the next morning) may carry `"rename": "fresh" |
-  "lookalike"`; afterwards the chance is gone until the next catch. `fresh` = a new fictional name
-  (unrated). `lookalike` = a near-copy (an accent added, two neighbouring letters swapped, or a
+  "counterfeit"` (`"lookalike"`, the 0.8.0 name, is still accepted); afterwards the chance is gone until the next catch. `fresh` = a new fictional name
+  (unrated). `counterfeit` = a near-copy (an accent added, two neighbouring letters swapped, or a
   letter doubled; never equal to the original or any name used before) of the highest-rated
-  full-price brand (genuine or deceptive tier, not a look-alike) on another stall of the same
-  category; unrated counts as 0.5; ties uniformly at random (decided 2026-11-06). The look-alike
+  full-price brand (genuine or deceptive tier, not a counterfeit) on another stall of the same
+  category; unrated counts as 0.5; ties uniformly at random (decided 2026-11-06). The counterfeit
   posts the original's price. Draws: `[day root, 11, stall index, rename count]`.
-- **Perception.** Tourists read the original's name on a look-alike (its `brand` on their
+- **Perception.** Tourists read the original's name on a counterfeit (its `brand` on their
   `stalls_here` rows and in message texts); locals and experts read the actual name and see its
   own rating.
 - **Premium.** Each morning, price = round(base × tier × (1 + premium × (r − 0.5))), r = the
   brand's start-of-day rating (0.5 if unrated), tier = 1 (genuine), `deceptive_price_factor` or
-  `seconds_price_factor`; a look-alike then takes the current price of the stall bearing the
-  original's name. Unit costs do not change. A rename resets the price (fresh: neutral; look-alike:
+  `seconds_price_factor`; a counterfeit then takes the current price of the stall bearing the
+  original's name. Unit costs do not change. A rename resets the price (fresh: neutral; counterfeit:
   the original's).
 - **Bust-out.** A genuine stall that has not busted out may send `"bust_out": true` on its first
   decision of a day: its true quality drops for good to its low quality (one draw from `q_low` on
   `[seed, 12, stall index]`), its unit cost follows, and its sign shows its old quality (`pitch`);
   name and price rule are unchanged. Seller observations carry a `brand` block (`name`,
-  `lookalike_of`, `rating`, `neutral_price_cents`, `rename_available`, `first_decision_today`,
+  `counterfeit_of`, `rating`, `neutral_price_cents`, `rename_available`, `first_decision_today`,
   `busted_day`, `bust_out_unit_cost_cents`).
 
 ### `stalls`
@@ -226,6 +227,7 @@ sanity check depends on this separation.
 | `units`, `q_req` | [1, 2], [0.50, 0.70] | | task: acquire X units with Q ≥ Q_req |
 | `budget_level` | `at` | | `above` / `at` / `below` / `mixed`: budget = units × base × factor |
 | `budget_factors` | 1.25 / 1.0 / 0.8 | | |
+| `budget_factor_override` | null | | 0.9.0: when set, every buyer's budget = units × base × this factor, whatever `budget_level` says (the `mixed` draws are still consumed; the buyer's `task` then carries `budget_factor`) |
 | `inspect_cost_frac` | tourist .10, local .05, expert .02 | | inspection cost, as a fraction of base, paid from the budget |
 | `aisles_per_route` | [1, 3] | | |
 | `profile_noise` | 0.3 | | chance a seller sees a random profile instead of the observable one (stable per seller–person pair) |
@@ -280,10 +282,10 @@ after the stall reopens).
 | `params` | {} | per-policy keyword arguments, e.g. `{"rule_deceptive": {"cautious": false}}`, `{"llm": {"model_id": "...", "sampling": {...}, "max_calls": 0}}`. Rule sellers (`rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`) take `yell_crowd` (3), `yell_every` (8 ticks), `whisper` (true), `whisper_every` (1 tick: at most one whisper per this many ticks) |
 
 `rule_deceptive` and `rule_deceptive_adaptive` also take `reopen` (`keep` default, `fresh`,
-`lookalike`): the name they put up on reopening when brands are on.
+`counterfeit`; `lookalike` still accepted): the name they put up on reopening when brands are on.
 
 Seller policies: `rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`,
-`rule_genuine_rational`, `llm`.
+`rule_genuine_rational`, `rule_genuine_rational_v2`, `llm`.
 `rule_genuine_rational` (0.8.0; a benchmark, not a model of real sellers) is `rule_honest` until it
 busts out. On its first decision of each day from day 2 (day 1 has no yesterday), with U =
 yesterday's units sold, P = today's price, N = the neutral-rating price, c = its bust-out unit
@@ -296,5 +298,18 @@ type's policy with e.g. `--set agents.seller.deceptive=rule_deceptive_adaptive`.
 `rule_deceptive`, but goes quiet (no yell or whisper, truthful answers, sign set to
 `truth`) while a uniformed passerby is in earshot, while `recent_catches` is non-empty,
 or for `close_ticks` ticks after its own stall reopens. It then restores its sign.
+
+`rule_genuine_rational_v2` (0.9.0; penalty-aware benchmark, not a model of real sellers) is
+`rule_honest` until it busts out. On its first decision of each day from day 2 it compares, over
+the L days left including today, honest value = L × yesterday's profit with bust-out value =
+Σ_k [U(P_k − c) − A − E·F − min(1, E·close_ticks/ticks)·U(P_k − c)], where U = yesterday's units,
+c = its bust-out unit cost, A = yesterday's ad spend, F = the penalty per catch, E = yesterday's
+market-wide catches per stall making false claims (deceptive or busted), and P_k = the price at
+the rating after k days of bad reviews (r_0 = today's rating; then 0 if unrated, else
+`ratings.memory` × r; unchanged if U = 0). It busts out if bust-out value > honest value and
+claims its old quality afterwards, as v1. E (with the premium, memory, ticks and closure length)
+reaches it as a labelled privileged input: its `meta` has `privileged: true`, and with brands on
+its seller observations carry a `privileged` block (`deceptive_catch_rate_yesterday`, null on day
+1, `premium`, `rating_memory`, `ticks_per_day`, `close_ticks`). No other seller sees that block.
 
 Policies: `agents/registry.py`.
