@@ -45,7 +45,8 @@ class HonestSeller:
         if len(near) >= self.yell_crowd and t - self.last_yell >= self.yell_every and self.may_yell(obs):
             a["yell"] = {"claim": self.claim_for("crowd")}
             self.last_yell = t
-        if self.whisper and t - self.last_whisper >= self.whisper_every:
+        if self.whisper and t - self.last_whisper >= self.whisper_every \
+                and obs["ranges"].get("whispers_allowed", True):
             rng_w = obs["ranges"]["whisper_range"]
             for p in near:  # nearest first
                 if p["distance"] <= rng_w and p["id"] not in self.whispered and self.wants_whisper(p):
@@ -145,8 +146,8 @@ class RuleBuyer:
 
     VERSION = "rule_buyer-1"
 
-    def __init__(self, rng: np.random.Generator | None = None):
-        pass
+    def __init__(self, rng: np.random.Generator | None = None, rating_tau: float = 0.5):
+        self.rating_tau = rating_tau   # skip stalls whose visible rating is below this; unrated = neutral
 
     def meta(self) -> dict:
         return {"policy": "rule_buyer", "version": self.VERSION, "model_id": None, "sampling": None}
@@ -157,6 +158,7 @@ class RuleBuyer:
         left, need, q_req = task["budget_left_cents"], task["units_needed"], task["q_req"]
         cost_i = me["inspect_cost_cents"]
         stalls = sorted(obs["stalls_here"], key=lambda s: (s["price_cents"], s["id"]))
+        stalls = [s for s in stalls if s.get("rating") is None or s["rating"] >= self.rating_tau]
         for s in stalls:
             units = min(need, left // s["price_cents"])
             if units < 1:

@@ -46,6 +46,7 @@ Source of truth: `engine/config.py`. Full default configs:
 | `ticks` | 240 | | |
 | `sight_range` / `earshot` / `whisper_range` / `interact_range` | 3 / 4 / 2 / 1 | | channel ranges in grid cells |
 | `max_actions_per_stop` | 4 | | stall actions a buyer may take at one stop before the engine moves it on |
+| `whispers_allowed` | true | | false = a public medium: sellers can use only signs, yells and answers. Sellers see `ranges.whispers_allowed: false`; a whisper is an invalid action (fallback), so none is ever delivered. Rule sellers do not try |
 | `days` | 1 | | number of days; each day a full run with fresh buyers, and type switches between days (`evolution`, below) |
 | `scale` | 1 | | grid refinement k (integer ≥ 1): cells 1/k as large, ticks 1/k as long; every other distance and time value stays in real units (k = 1 cells and ticks). See below |
 
@@ -128,7 +129,7 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 |---|---|---|---|
 | `revise_prob` | 0.2 | | chance a genuine or deceptive stall revises between days |
 | `mutation_prob` | 0.02 | | chance a genuine or deceptive stall flips type anyway, after imitation |
-| switching cost | **0** | **PLACEHOLDER** | no field yet: a type switch costs nothing |
+| switching cost | 0 | | see `pricing.switch_cost_to_genuine` / `switch_cost_to_deceptive` (0.7.0) |
 
 Each day is a full bazaar run. Stall locations, categories, brands and types persist; buyers,
 inspectors' routes and every other engine draw are fresh, from the single-day streams on day 1
@@ -143,6 +144,21 @@ day. Revision is synchronous (all compare day-d types). Seconds stalls never swi
 partners. A stall whose type changes gets new Q_true, Q_pitch and price by the type rules. All
 revision draws for stall i after day d come from its own stream `[seed, 10, d, i]` (six draws, fixed
 order). Source: `engine/days.py`.
+
+### `ratings` (multi-day runs)
+| key | default | status | meaning |
+|---|---|---|---|
+| `mode` | `off` | | `off`: not computed. `hidden`: computed and logged, shown to no one. `public`: buyers whose profile is in `visible_to` see each stall's rating on their `stalls_here` rows (`rating`, null = unrated) |
+| `memory` | **0.7** | **PLACEHOLDER** | λ: rating = λ · yesterday + (1 − λ) · today's share |
+| `tau` | **0.5** | **PLACEHOLDER** | the rule buyer skips stalls rated below τ; unrated stalls are neutral (not skipped) |
+| `visible_to` | expert, local | | profiles that consult the ratings board (tourists do not) |
+| `rugpull_threshold` | 0.8 | | a genuine → deceptive switch while rated ≥ this is logged as a rugpull |
+
+A day's share is computed from that day's realized purchases only: the share of units whose true
+Q met the latest claim the stall made to the buyer before the sale. Units bought with no claim from
+the stall are not rated. A stall's first rating is that day's share; a day with no rated units
+leaves it unchanged (decided 2026-11-05). Ratings update at the end of each day, before type
+revision, and persist across days and type switches (the brand keeps its name).
 
 ### `stalls`
 | key | default | status | meaning |
@@ -166,6 +182,7 @@ sanity check depends on this separation.
 | `yell_cost_frac`, `whisper_cost_frac` | 0.002, 0.004 | calibration | ad spend per yell / whisper, as a fraction of base |
 | `penalty_mult` | 1.5 | | P = 1.5 × base ≈ 5× a genuine unit margin (M0's P/m = 5) |
 | `close_ticks` | 40 | | closure after a catch; also L, the window for public catch notices (`recent_catches`) |
+| `switch_cost_to_genuine`, `switch_cost_to_deceptive` | 0, 0 | | multi-day: a stall that switches type pays this fraction of its base price once, in its accounts on its first day in the new type (outcome field `switch_cost_cents` per type, shown only when either is non-zero) |
 
 ### `buyers`
 | key | default | status | meaning |

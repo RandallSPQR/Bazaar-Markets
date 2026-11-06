@@ -184,7 +184,8 @@ last `last` generations), `final_dec_pop`.
 
 ## `day_start`, `day_end` (multi-day bazaar only)
 
-`day_start`: `day` (1 … D) and `types` (stall counts by type that day). The day's `world`,
+`day_start`: `day` (1 … D) and `types` (stall counts by type that day); with `ratings.mode` other
+than `off`, also `ratings` (stall id → rating at the start of the day, null = unrated). The day's `world`,
 ticks and `outcome` follow; `t` restarts at 0 each day. Day 1 uses the single-day streams,
 so with the same config and seed its events are the single-day run's events.
 
@@ -192,7 +193,13 @@ so with the same config and seed its events are the single-day run's events.
 `shortfall_rate`, `catches`, and `switches`: the type switches made after this day (empty after
 the last day). Each switch: `stall`, `category`, `from`, `to`, `profit_cents` (its day profit),
 and when it revised: `partner`, `partner_profit_cents`, `p_switch` (when the partner's type
-differed and it earned more), `imitated`, `mutated`.
+differed and it earned more), `imitated`, `mutated`; with switching costs, `switch_cost_cents`
+(charged on the next day); with ratings computed, `rating` and `rugpull`. With ratings computed,
+`day_end` also has `ratings` (after the day's update) and `rugpulls` (count among `switches`).
+
+Ratings also add `rating` to the `stalls_here` rows of buyers who can see them (`ratings.mode =
+public`, profile in `ratings.visible_to`). With `market.whispers_allowed = false`, seller
+observations carry `ranges.whispers_allowed: false`.
 
 ## `generation` (M0)
 

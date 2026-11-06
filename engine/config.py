@@ -87,6 +87,9 @@ class MarketCfg:
     # Number of days. Each day is a full bazaar run with a fresh buyer population; between
     # days genuine and deceptive stalls may switch type (see `evolution`, engine/days.py).
     days: int = 1
+    # Medium restriction: when false, sellers can use only signs, yells and answers (a public
+    # medium). Sellers are told (ranges.whispers_allowed = false) and a whisper is an invalid action.
+    whispers_allowed: bool = True
 
 
 @dataclass
@@ -108,6 +111,10 @@ class PricingCfg:
     whisper_cost_frac: float = 0.004     # ad spend per whisper
     penalty_mult: float = 1.5            # penalty P = penalty_mult * base (~5x genuine margin, as in M0)
     close_ticks: int = 40                # stall closed for this long after a catch
+    # Switching costs (multi-day runs): charged once, as a fraction of base price, in the stall's
+    # accounts on its first day in the new type.
+    switch_cost_to_genuine: float = 0.0
+    switch_cost_to_deceptive: float = 0.0
 
 
 @dataclass
@@ -195,7 +202,25 @@ class EvolutionCfg:
     # Between-day type revision (market.days > 1 only): pairwise proportional imitation.
     revise_prob: float = 0.2     # chance a genuine/deceptive stall compares itself with a partner
     mutation_prob: float = 0.02  # chance a genuine/deceptive stall flips type anyway
-    # Switching cost: none (PLACEHOLDER, 0): a type switch costs nothing.
+    # Switching costs: pricing.switch_cost_to_genuine / switch_cost_to_deceptive (default 0).
+
+
+@dataclass
+class RatingsCfg:
+    # Public stall ratings (multi-day runs). A rating is updated at the end of each day from that
+    # day's purchases: the share of units whose true Q met the latest claim the stall made to the
+    # buyer before the sale, blended with yesterday's rating (memory). A first rating is that day's
+    # share; a day with no claimed units leaves the rating unchanged. Ratings persist across days
+    # and type switches.
+    #   "off"    : not computed (default; engine 0.6.0 behaviour)
+    #   "hidden" : computed and logged, shown to no one (a control that counts rugpulls)
+    #   "public" : buyers whose profile is in visible_to see each stall's rating ("rating" on
+    #              their stalls_here rows; null = unrated)
+    mode: str = "off"
+    memory: float = 0.7            # PLACEHOLDER (lambda)
+    tau: float = 0.5               # PLACEHOLDER: the rule buyer skips stalls rated below this
+    visible_to: list = field(default_factory=lambda: ["expert", "local"])
+    rugpull_threshold: float = 0.8 # genuine -> deceptive while rated >= this is logged as a rugpull
 
 
 @dataclass
@@ -211,13 +236,15 @@ class BazaarConfig:
     valuation: ValuationCfg = field(default_factory=ValuationCfg)
     agents: AgentsCfg = field(default_factory=AgentsCfg)
     evolution: EvolutionCfg = field(default_factory=EvolutionCfg)
+    ratings: RatingsCfg = field(default_factory=RatingsCfg)
 
 
 PLACEHOLDERS = {
     "detection.form": "graded (chosen as placeholder 2026-11-03)",
     "inspectors.feature_correlation": "0.0 (chosen as placeholder 2026-11-03)",
     "valuation.form": "step_salvage (chosen as placeholder 2026-11-03)",
-    "evolution.switching_cost": "0: no cost to switch type (placeholder 2026-11-05; no config field yet)",
+    "ratings.memory": "0.7 (placeholder 2026-11-05)",
+    "ratings.tau": "0.5 (placeholder 2026-11-05)",
 }
 
 
@@ -242,7 +269,7 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "pricing"): PricingCfg, (BazaarConfig, "buyers"): BuyersCfg,
                 (BazaarConfig, "inspectors"): InspectorsCfg, (BazaarConfig, "detection"): DetectionCfg,
                 (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
-                (BazaarConfig, "evolution"): EvolutionCfg}
+                (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg}
 
 
 def from_dict(d: dict):

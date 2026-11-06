@@ -46,6 +46,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "market.max_actions_per_stop": (NONE, "a count of actions; each action holds the buyer k ticks"),
     "market.scale": (NONE, "the scale itself"),
     "market.days": (NONE, "count of whole runs"),
+    "market.whispers_allowed": (NONE, "switch"),
     # stalls
     "stalls.type_shares": (NONE, "shares"),
     "stalls.q_high": (NONE, "quality"),
@@ -60,6 +61,8 @@ FIELDS: dict[str, tuple[str, str]] = {
     "pricing.whisper_cost_frac": (NONE, "money per whisper"),
     "pricing.penalty_mult": (NONE, "money ratio"),
     "pricing.close_ticks": (TIME, "also the catch-notice window L"),
+    "pricing.switch_cost_to_genuine": (NONE, "money ratio, once per switch"),
+    "pricing.switch_cost_to_deceptive": (NONE, "money ratio, once per switch"),
     # buyers
     "buyers.count": (NONE, "count"),
     "buyers.profile_shares": (NONE, "shares"),
@@ -99,6 +102,12 @@ FIELDS: dict[str, tuple[str, str]] = {
     # evolution
     "evolution.revise_prob": (NONE, "probability per stall per day boundary"),
     "evolution.mutation_prob": (NONE, "probability per stall per day boundary"),
+    # ratings
+    "ratings.mode": (NONE, "label"),
+    "ratings.memory": (NONE, "weight per day; ratings update once per day"),
+    "ratings.tau": (NONE, "rating threshold"),
+    "ratings.visible_to": (NONE, "profiles"),
+    "ratings.rugpull_threshold": (NONE, "rating threshold"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
@@ -107,7 +116,7 @@ AGENT_PARAMS: dict[str, dict[str, tuple[str, str]]] = {
                      "whisper": (NONE, "switch"), "whisper_every": (TIME, "whisper cooldown")},
     "DeceptiveSeller": {"cautious": (NONE, "switch")},
     "AdaptiveDeceptiveSeller": {},
-    "RuleBuyer": {},
+    "RuleBuyer": {"rating_tau": (NONE, "rating threshold (set from ratings.tau)")},
     "RandomReferenceBuyer": {"p_buy": (NONE, "probability per decision; decisions per stop are unchanged")},
     "InformedReferenceBuyer": {"valuation": (NONE, "engine-supplied"), "base_price_cents": (NONE, "engine-supplied")},
     "LLMAgent": {"role": (NONE, "label"), "model_id": (NONE, "label"), "sampling": (NONE, "sampling settings"),

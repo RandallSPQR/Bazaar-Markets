@@ -168,6 +168,8 @@ both modes drawn by one renderer.
 - **Days.** `market.days = D` runs D bazaar days with fresh buyers each day; between
   days genuine and deceptive stalls switch type by pairwise proportional imitation
   (`evolution`; `engine/days.py`). Multi-day logs replay like single-day ones.
+- **Reputation and medium.** Optional public ratings (`ratings`), switching costs
+  (`pricing.switch_cost_to_*`) and a whisper ban (`market.whispers_allowed`); all off by default.
 
 ## Agents and the LLM stub
 

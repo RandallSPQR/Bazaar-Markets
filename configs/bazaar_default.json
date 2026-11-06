@@ -17,7 +17,8 @@
   "interact_range": 1.0,
   "max_actions_per_stop": 4,
   "scale": 1,
-  "days": 1
+  "days": 1,
+  "whispers_allowed": true
  },
  "stalls": {
   "type_shares": {
@@ -50,7 +51,9 @@
   "yell_cost_frac": 0.002,
   "whisper_cost_frac": 0.004,
   "penalty_mult": 1.5,
-  "close_ticks": 40
+  "close_ticks": 40,
+  "switch_cost_to_genuine": 0.0,
+  "switch_cost_to_deceptive": 0.0
  },
  "buyers": {
   "count": 150,
@@ -126,5 +129,15 @@
  "evolution": {
   "revise_prob": 0.2,
   "mutation_prob": 0.02
+ },
+ "ratings": {
+  "mode": "off",
+  "memory": 0.7,
+  "tau": 0.5,
+  "visible_to": [
+   "expert",
+   "local"
+  ],
+  "rugpull_threshold": 0.8
  }
 }

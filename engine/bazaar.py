@@ -102,6 +102,11 @@ class BazaarEngine:
         self.catch_ticks: list[tuple[int, Stall]] = []   # (tick, stall), for public catch notices
         rr = cfg.inspectors.recognition_range
         self.recognition_range = cfg.market.earshot if rr is None else float(rr)
+        # 0.7.0 switches. Outcome and observation fields they add appear only when they are on,
+        # so default runs are byte-identical to 0.6.0.
+        self.switch_costs_on = bool(cfg.pricing.switch_cost_to_genuine or cfg.pricing.switch_cost_to_deceptive)
+        if cfg.ratings.mode not in ("off", "hidden", "public"):
+            raise ValueError(f"unknown ratings.mode {cfg.ratings.mode!r}")
 
     # ------------------------------------------------------------------ helpers
 
@@ -236,6 +241,8 @@ class BazaarEngine:
 
             def check(a, askers=askers, whisperable=whisperable):
                 w = a["whisper"]
+                if w is not None and not mk.whispers_allowed:
+                    return "whispers are not allowed in this market"
                 if w is not None and w["to"] not in whisperable:
                     return f"whisper target {w['to']!r} not within whisper range"
                 tos = [x["to"] for x in a["answers"]]
@@ -466,7 +473,8 @@ class BazaarEngine:
                       "reopened_at_tick": st.closed_until if st.catches else None},
             "costs": {"yell_cents": st.yell_cost_cents, "whisper_cents": st.whisper_cost_cents,
                       "penalty_cents_if_caught": st.penalty_cents, "closure_ticks": self.cfg.pricing.close_ticks},
-            "ranges": {"earshot": mk.earshot, "whisper_range": mk.whisper_range},
+            "ranges": {"earshot": mk.earshot, "whisper_range": mk.whisper_range,
+                       **({} if mk.whispers_allowed else {"whispers_allowed": False})},
             "passersby": [{"id": p.pid, "observed_profile": self.observed_profile(st, p), "distance": round(d, 3),
                            "uniform": p.uniform and d <= self.recognition_range}
                           for p, d in near],
@@ -489,6 +497,8 @@ class BazaarEngine:
                 # Reliable quality information from the buyer's own expertise. Only
                 # inspector-buyers with buyers.inspector_knowledge on get this field.
                 row["own_assessment"] = st.q_true
+            if self.cfg.ratings.mode == "public" and p.profile in self.cfg.ratings.visible_to:
+                row["rating"] = st.rating
             stalls.append(row)
         obs = {
             "role": "buyer", "tick": self.t,
@@ -532,8 +542,11 @@ class BazaarEngine:
             d["stalls"] += 1
             for k in ("revenue_cents", "cost_cents", "ad_spend_cents", "penalties_cents", "units_sold", "catches"):
                 d[k] += getattr(st, k)
+            if self.switch_costs_on:
+                d["switch_cost_cents"] = d.get("switch_cost_cents", 0) + st.switch_cost_cents
         for d in by_type.values():
-            d["profit_cents"] = d["revenue_cents"] - d["cost_cents"] - d["ad_spend_cents"] - d["penalties_cents"]
+            d["profit_cents"] = (d["revenue_cents"] - d["cost_cents"] - d["ad_spend_cents"] - d["penalties_cents"]
+                                 - d.get("switch_cost_cents", 0))
             d["profit_per_stall_cents"] = d["profit_cents"] / d["stalls"]
         reach = [p for p in arrived if self.is_reachable(p)]
         r_surplus = [p.value - p.paid_cents - p.inspect_spent_cents for p in reach]

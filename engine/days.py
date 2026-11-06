@@ -43,7 +43,27 @@ def day_root(seed: int, day: int) -> tuple:
 
 
 def stall_profit(st) -> int:
-    return st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents
+    return st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents - st.switch_cost_cents
+
+
+def update_ratings(stalls: list, buys: list[dict], memory: float) -> None:
+    """End-of-day rating update from the day's purchases. A unit is rated when the buyer had
+    received at least one claim from the stall before buying; it is honest when the stall's true Q
+    met the latest such claim. rating = share (first rating) or memory * rating + (1 - memory) *
+    share; a stall with no rated units that day keeps its rating."""
+    claimed: dict = {}
+    honest: dict = {}
+    for b in buys:
+        if not b["known_claims"]:
+            continue
+        sid = b["stall"]
+        claimed[sid] = claimed.get(sid, 0) + b["units"]
+        if b["q_true"] >= b["known_claims"][-1] - 1e-12:
+            honest[sid] = honest.get(sid, 0) + b["units"]
+    for st in stalls:
+        if claimed.get(st.sid):
+            share = honest.get(st.sid, 0) / claimed[st.sid]
+            st.rating = share if st.rating is None else memory * st.rating + (1 - memory) * share
 
 
 def set_type(cfg: BazaarConfig, st, stype: str, hi: float, lo: float) -> None:
@@ -97,6 +117,14 @@ def revise(cfg: BazaarConfig, stalls: list, profits: dict, day: int) -> list[dic
             lo_q, hi_q = cfg.stalls.q_low, cfg.stalls.q_high
             set_type(cfg, st, new, hi_q[0] + (hi_q[1] - hi_q[0]) * hi_u, lo_q[0] + (lo_q[1] - lo_q[0]) * lo_u)
             rec["to"] = new
+            frac = cfg.pricing.switch_cost_to_genuine if new == "genuine" else cfg.pricing.switch_cost_to_deceptive
+            if frac:
+                st.switch_cost_due = int(round(cfg.pricing.base_price_cents[st.category] * frac))
+                rec["switch_cost_cents"] = st.switch_cost_due
+            if cfg.ratings.mode != "off":
+                rec["rating"] = st.rating
+                rec["rugpull"] = bool(old[st.sid] == "genuine" and new == "deceptive" and st.rating is not None
+                                      and st.rating >= cfg.ratings.rugpull_threshold)
             out.append(rec)
     return out
 
@@ -109,6 +137,8 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
         s.closed_until, s.epoch = -1, 0
         s.revenue_cents = s.cost_cents = s.ad_spend_cents = s.penalties_cents = 0
         s.units_sold = s.catches = 0
+        s.switch_cost_cents = st.switch_cost_due   # charged on the first day in the new type
+        s.switch_cost_due = 0
         s.sign = "truth" if s.stype != "deceptive" else cfg.stalls.deceptive_sign
         out.append(s)
     return out
@@ -130,16 +160,27 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         fac = day_factories(day) if day_factories else None
         eng = BazaarEngine(cfg, log=log, agent_factory=fac, root=day_root(cfg.seed, day), stalls=stalls)
         types = _types(eng.stalls)
+        rated = cfg.ratings.mode != "off"
+        stall_types = {st.sid: st.stype for st in eng.stalls}
         if day == 1:
             eng.header_line()
-        log.emit("day_start", day=day, types=types)
+        extra = {"ratings": {st.sid: st.rating for st in eng.stalls}} if rated else {}
+        log.emit("day_start", day=day, types=types, **extra)
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}
+        if rated:
+            update_ratings(eng.stalls, eng.purchases, cfg.ratings.memory)
         switches = revise(cfg, eng.stalls, profits, day) if day < D else []
         pbt = {t: d["profit_per_stall_cents"] for t, d in sorted(out["seller_by_type"].items())}
+        extra = {}
+        if rated:
+            extra = {"ratings": {st.sid: st.rating for st in eng.stalls},
+                     "rugpulls": sum(s["rugpull"] for s in switches)}
         log.emit("day_end", day=day, types=types, profit_by_type=pbt, shortfall_rate=out["shortfall_rate"],
-                 catches=out["catches"], switches=switches)
-        days.append({"day": day, "types": types, "outcome": out, "switches": switches})
+                 catches=out["catches"], switches=switches, **extra)
+        if rated:
+            extra["stall_types"] = stall_types
+        days.append({"day": day, "types": types, "outcome": out, "switches": switches, **extra})
         stalls = reset_for_day(cfg, eng.stalls)
     return {"days": days}
 

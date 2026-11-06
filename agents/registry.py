@@ -40,6 +40,8 @@ def make_factory(cfg, root: tuple | None = None):
                                     int(cfg.market.scale))
         if policy in ("informed_reference", "perfect_buyer"):
             params.update(valuation=cfg.valuation, base_price_cents=cfg.pricing.base_price_cents)
+        if policy == "rule_buyer":
+            params.setdefault("rating_tau", cfg.ratings.tau)
         if policy == "llm":
             params.setdefault("role", role)
         return POLICIES[policy](rng, **params)

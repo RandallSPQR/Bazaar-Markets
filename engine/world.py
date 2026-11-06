@@ -68,6 +68,9 @@ class Stall:
     penalties_cents: int = 0
     units_sold: int = 0
     catches: int = 0
+    switch_cost_cents: int = 0     # charged on the first day in a new type (multi-day runs)
+    switch_cost_due: int = 0       # set by a switch, moved into switch_cost_cents the next day
+    rating: float | None = None    # public rating (ratings.mode != "off"); persists across days
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),

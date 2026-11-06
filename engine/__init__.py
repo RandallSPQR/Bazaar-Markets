@@ -13,4 +13,6 @@ points, through role-specific JSON observations and schema-validated actions.
 # 0.5.0: market.scale (grid refinement); rule sellers' whisper_every cooldown.
 # 0.6.0: market.days (multi-day runs with between-day entry and exit by imitation),
 #        per-day stream roots; discarded logs are no longer serialized (speed only).
-ENGINE_VERSION = "0.6.0"
+# 0.7.0: public ratings (ratings.*), switching costs (pricing.switch_cost_to_*),
+#        market.whispers_allowed, rugpull logging. All off by default.
+ENGINE_VERSION = "0.7.0"
