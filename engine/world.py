@@ -224,7 +224,7 @@ def _choice(rng: np.random.Generator, table: dict) -> str:
 
 def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Generator,
                  rng_people: np.random.Generator, rng_treat: np.random.Generator | None = None,
-                 rng_insp: np.random.Generator | None = None) -> list[Person]:
+                 rng_insp: np.random.Generator | None = None, root: tuple | None = None) -> list[Person]:
     """Build the population in a treatment-stable way.
 
     The buyer population (profile, category, units, Q_req, route, arrival, id) is
@@ -236,10 +236,11 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
     number of inspectors does; kinds share one id space, so ids reveal nothing.
     """
     mk, bc, ic = cfg.market, cfg.buyers, cfg.inspectors
+    root = (cfg.seed,) if root is None else tuple(root)   # stream prefix; per day in multi-day runs
     if rng_treat is None:
-        rng_treat = np.random.default_rng([cfg.seed, 5])
+        rng_treat = np.random.default_rng([*root, 5])
     if rng_insp is None:
-        rng_insp = np.random.default_rng([cfg.seed, 6])
+        rng_insp = np.random.default_rng([*root, 6])
     people: list[Person] = []
     longest = layout.route_through(list(range(layout.n_aisles)), True)
     last_arrival = max(1, mk.ticks - len(longest) - 5)
@@ -289,7 +290,7 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
             reps = mk.ticks // len(loop) + 2
             route, arrive = (loop[off:] + loop * reps)[: mk.ticks + 1], 0
         elif ic.placement == "disguised" and ic.disguised_shift == "full_shift":
-            route, arrive = _full_shift_route(cfg, layout, j), 0
+            route, arrive = _full_shift_route(cfg, layout, j, root), 0
         elif ic.placement == "disguised":
             if ic.disguised_shift != "single_trip":
                 raise ValueError(f"unknown inspectors.disguised_shift {ic.disguised_shift!r}")
@@ -313,7 +314,7 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         code = 0 if p.kind == "buyer" else 1
         attempt = 0
         while True:
-            n = int(np.random.default_rng([cfg.seed, 8, code, k, attempt]).integers(10**6))
+            n = int(np.random.default_rng([*root, 8, code, k, attempt]).integers(10**6))
             pid = f"p{n:06d}"
             if pid not in used:
                 break
@@ -339,7 +340,8 @@ def refine_route(route: list, k: int) -> list:
 
 
 def refine_world(layout: "Layout", stalls: list, people: list, k: int) -> None:
-    """Refine a world built at k = 1 to scale k, in place."""
+    """Refine a world built at k = 1 to scale k, in place. Pass stalls=[] for stalls that
+    are already refined (later days of a multi-day run)."""
     if k == 1:
         return
     layout.scale = k
@@ -354,12 +356,12 @@ def refine_world(layout: "Layout", stalls: list, people: list, k: int) -> None:
         p.arrive *= k
 
 
-def _full_shift_route(cfg: BazaarConfig, layout: Layout, j: int) -> list:
+def _full_shift_route(cfg: BazaarConfig, layout: Layout, j: int, root: tuple | None = None) -> list:
     """Random buyer-like routes back to back, joined through the corridors, long
     enough to last the whole run. Drawn from inspector j's own stream in the
     inspector family ([seed, 6, 1, j]), so buyer routes, other inspectors' draws and
     inspector j's route at a different headcount are all unchanged."""
-    rng = np.random.default_rng([cfg.seed, 6, 1, j])
+    rng = np.random.default_rng([*((cfg.seed,) if root is None else root), 6, 1, j])
     lo, hi = cfg.buyers.aisles_per_route
     need = cfg.market.ticks + 1
     path: list = []

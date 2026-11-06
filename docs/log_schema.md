@@ -20,6 +20,13 @@ world
 outcome
 ```
 
+Bazaar mode with `market.days` = D > 1 (one file for all days):
+
+```
+header
+( day_start  world  (obs, raw, action)* delta ...  outcome  day_end )   # once per day, D times
+```
+
 M0 mode:
 
 ```
@@ -174,6 +181,18 @@ whenever any of the three runs made no purchases) and the raw reference values
 
 M0: `dec_share_imp_last` (mean deceptive share of filled impressions over the
 last `last` generations), `final_dec_pop`.
+
+## `day_start`, `day_end` (multi-day bazaar only)
+
+`day_start`: `day` (1 … D) and `types` (stall counts by type that day). The day's `world`,
+ticks and `outcome` follow; `t` restarts at 0 each day. Day 1 uses the single-day streams,
+so with the same config and seed its events are the single-day run's events.
+
+`day_end`: `day`, `types`, `profit_by_type` (profit per stall in cents, by type),
+`shortfall_rate`, `catches`, and `switches`: the type switches made after this day (empty after
+the last day). Each switch: `stall`, `category`, `from`, `to`, `profit_cents` (its day profit),
+and when it revised: `partner`, `partner_profit_cents`, `p_switch` (when the partner's type
+differed and it earned more), `imitated`, `mutated`.
 
 ## `generation` (M0)
 

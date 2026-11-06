@@ -16,7 +16,8 @@
   "whisper_range": 2.0,
   "interact_range": 1.0,
   "max_actions_per_stop": 4,
-  "scale": 1
+  "scale": 1,
+  "days": 1
  },
  "stalls": {
   "type_shares": {
@@ -121,5 +122,9 @@
   },
   "buyer": "rule_buyer",
   "params": {}
+ },
+ "evolution": {
+  "revise_prob": 0.2,
+  "mutation_prob": 0.02
  }
 }

@@ -45,6 +45,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "market.interact_range": (DISTANCE, ""),
     "market.max_actions_per_stop": (NONE, "a count of actions; each action holds the buyer k ticks"),
     "market.scale": (NONE, "the scale itself"),
+    "market.days": (NONE, "count of whole runs"),
     # stalls
     "stalls.type_shares": (NONE, "shares"),
     "stalls.q_high": (NONE, "quality"),
@@ -95,6 +96,9 @@ FIELDS: dict[str, tuple[str, str]] = {
     "agents.seller": (NONE, "policy names"),
     "agents.buyer": (NONE, "policy name"),
     "agents.params": (NONE, "per-policy keywords; their rules are in AGENT_PARAMS"),
+    # evolution
+    "evolution.revise_prob": (NONE, "probability per stall per day boundary"),
+    "evolution.mutation_prob": (NONE, "probability per stall per day boundary"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).

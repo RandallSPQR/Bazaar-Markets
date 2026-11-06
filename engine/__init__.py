@@ -11,4 +11,6 @@ points, through role-specific JSON observations and schema-validated actions.
 # 0.4.0: inspectors.recognition_range, inspectors.disguised_shift ("full_shift");
 #        reachable.shortfall_rate dropped (equal to shortfall_rate by construction).
 # 0.5.0: market.scale (grid refinement); rule sellers' whisper_every cooldown.
-ENGINE_VERSION = "0.5.0"
+# 0.6.0: market.days (multi-day runs with between-day entry and exit by imitation),
+#        per-day stream roots; discarded logs are no longer serialized (speed only).
+ENGINE_VERSION = "0.6.0"

@@ -84,6 +84,9 @@ class MarketCfg:
     # Every other distance and time value in the config stays in real units (k = 1 cells
     # and ticks); the engine converts them. See engine/scaling.py and docs/config_reference.md.
     scale: int = 1
+    # Number of days. Each day is a full bazaar run with a fresh buyer population; between
+    # days genuine and deceptive stalls may switch type (see `evolution`, engine/days.py).
+    days: int = 1
 
 
 @dataclass
@@ -188,6 +191,14 @@ class AgentsCfg:
 
 
 @dataclass
+class EvolutionCfg:
+    # Between-day type revision (market.days > 1 only): pairwise proportional imitation.
+    revise_prob: float = 0.2     # chance a genuine/deceptive stall compares itself with a partner
+    mutation_prob: float = 0.02  # chance a genuine/deceptive stall flips type anyway
+    # Switching cost: none (PLACEHOLDER, 0): a type switch costs nothing.
+
+
+@dataclass
 class BazaarConfig:
     mode: str = "bazaar"
     seed: int = 0
@@ -199,12 +210,14 @@ class BazaarConfig:
     detection: DetectionCfg = field(default_factory=DetectionCfg)
     valuation: ValuationCfg = field(default_factory=ValuationCfg)
     agents: AgentsCfg = field(default_factory=AgentsCfg)
+    evolution: EvolutionCfg = field(default_factory=EvolutionCfg)
 
 
 PLACEHOLDERS = {
     "detection.form": "graded (chosen as placeholder 2026-11-03)",
     "inspectors.feature_correlation": "0.0 (chosen as placeholder 2026-11-03)",
     "valuation.form": "step_salvage (chosen as placeholder 2026-11-03)",
+    "evolution.switching_cost": "0: no cost to switch type (placeholder 2026-11-05; no config field yet)",
 }
 
 
@@ -228,7 +241,8 @@ def _from_dict(cls, d: dict):
 _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): StallsCfg,
                 (BazaarConfig, "pricing"): PricingCfg, (BazaarConfig, "buyers"): BuyersCfg,
                 (BazaarConfig, "inspectors"): InspectorsCfg, (BazaarConfig, "detection"): DetectionCfg,
-                (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg}
+                (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
+                (BazaarConfig, "evolution"): EvolutionCfg}
 
 
 def from_dict(d: dict):

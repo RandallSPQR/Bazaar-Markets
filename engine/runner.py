@@ -42,21 +42,33 @@ def replay(lines: list[str]) -> tuple[list[str], JsonlLog]:
 
     from agents.registry import ReplayAgent
 
-    raws: dict[str, list] = {}
-    attempts: dict[str, list] = {}
-    errors: dict[str, list] = {}
+    # Raw outputs per (day, agent); single-day logs are all day 1. Multi-day logs mark each
+    # day with a day_start event, and every day has fresh agents.
+    raws: dict[tuple, list] = {}
+    attempts: dict[tuple, list] = {}
+    errors: dict[tuple, list] = {}
+    day = 1
     for e in events:
-        if e["ev"] == "raw":
-            raws.setdefault(e["agent"], []).append(e["raw"])
-            errors.setdefault(e["agent"], []).append(e.get("agent_error"))
+        if e["ev"] == "day_start":
+            day = e["day"]
+        elif e["ev"] == "raw":
+            k = (day, e["agent"])
+            raws.setdefault(k, []).append(e["raw"])
+            errors.setdefault(k, []).append(e.get("agent_error"))
             if "attempts" in e:
-                attempts.setdefault(e["agent"], []).append(e["attempts"])
+                attempts.setdefault(k, []).append(e["attempts"])
     metas = head["agents"]
 
-    def factory(role, policy, key, idx):
-        return ReplayAgent(raws.get(key, []), metas[f"{role}:{policy}"], attempts.get(key), errors.get(key))
+    def day_factory(d):
+        def factory(role, policy, key, idx):
+            k = (d, key)
+            return ReplayAgent(raws.get(k, []), metas[f"{role}:{policy}"], attempts.get(k), errors.get(k))
+        return factory
 
-    bazaar.run(cfg, log=log, agent_factory=factory)
+    if cfg.market.days > 1:
+        bazaar.run(cfg, log=log, day_factories=day_factory)
+    else:
+        bazaar.run(cfg, log=log, agent_factory=day_factory(1))
     return lines, log
 
 

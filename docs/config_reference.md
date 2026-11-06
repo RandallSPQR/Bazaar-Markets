@@ -46,6 +46,7 @@ Source of truth: `engine/config.py`. Full default configs:
 | `ticks` | 240 | | |
 | `sight_range` / `earshot` / `whisper_range` / `interact_range` | 3 / 4 / 2 / 1 | | channel ranges in grid cells |
 | `max_actions_per_stop` | 4 | | stall actions a buyer may take at one stop before the engine moves it on |
+| `days` | 1 | | number of days; each day a full run with fresh buyers, and type switches between days (`evolution`, below) |
 | `scale` | 1 | | grid refinement k (integer ≥ 1): cells 1/k as large, ticks 1/k as long; every other distance and time value stays in real units (k = 1 cells and ticks). See below |
 
 ### Grid refinement (`market.scale` = k)
@@ -121,6 +122,27 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 | agent `LLMAgent.provider` | label |
 | agent `LLMAgent.max_retries` | count per decision |
 | agent `LLMAgent.max_calls` | spend cap; note that at k > 1 sellers get k times as many decision ticks |
+
+### `evolution` (multi-day runs only: `market.days` > 1)
+| key | default | status | meaning |
+|---|---|---|---|
+| `revise_prob` | 0.2 | | chance a genuine or deceptive stall revises between days |
+| `mutation_prob` | 0.02 | | chance a genuine or deceptive stall flips type anyway, after imitation |
+| switching cost | **0** | **PLACEHOLDER** | no field yet: a type switch costs nothing |
+
+Each day is a full bazaar run. Stall locations, categories, brands and types persist; buyers,
+inspectors' routes and every other engine draw are fresh, from the single-day streams on day 1
+and the same streams under the prefix `[seed, 9, day]` on day ≥ 2 (so day-d buyers are identical
+across conditions). Closures, catch notices, accounting, signs and seller agents reset each day.
+
+Between day d and d + 1 (decided 2026-11-05): a revising stall compares its day-d profit with a
+partner drawn uniformly from the other genuine and deceptive stalls of its category; if the
+partner's type differs and it earned more, it switches with probability Δprofit / M, where M is
+the largest absolute profit difference among the genuine and deceptive stalls of its category that
+day. Revision is synchronous (all compare day-d types). Seconds stalls never switch and are never
+partners. A stall whose type changes gets new Q_true, Q_pitch and price by the type rules. All
+revision draws for stall i after day d come from its own stream `[seed, 10, d, i]` (six draws, fixed
+order). Source: `engine/days.py`.
 
 ### `stalls`
 | key | default | status | meaning |

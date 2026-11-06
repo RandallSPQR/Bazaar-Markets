@@ -165,6 +165,9 @@ both modes drawn by one renderer.
 - **Grid scale.** `market.scale = k` refines space and time together (cells and ticks 1/k
   as large, real speeds unchanged); config values stay in real units. See
   `docs/config_reference.md` for the list of scaled parameters.
+- **Days.** `market.days = D` runs D bazaar days with fresh buyers each day; between
+  days genuine and deceptive stalls switch type by pairwise proportional imitation
+  (`evolution`; `engine/days.py`). Multi-day logs replay like single-day ones.
 
 ## Agents and the LLM stub
 

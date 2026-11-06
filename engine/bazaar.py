@@ -40,25 +40,30 @@ def _dist(a, b) -> float:
 
 class BazaarEngine:
     def __init__(self, cfg: BazaarConfig, log: JsonlLog | None = None,
-                 agent_factory: AgentFactory | None = None):
+                 agent_factory: AgentFactory | None = None, root: tuple | None = None,
+                 stalls: list[Stall] | None = None):
+        # root: stream prefix ([seed] by default; [seed, 9, day] on later days of a multi-day
+        # run). stalls: an existing, already-refined stall list to use instead of building one
+        # (later days of a multi-day run).
         # The world is built from the config as given (real units = k = 1 cells and ticks)
         # and refined to scale k; the engine then runs on the scaled config. The log
         # header records the config as given.
         self.cfg_given = cfg
         self.k = int(cfg.market.scale)
         self.log = log if log is not None else JsonlLog(keep=False)
-        s = cfg.seed
-        self.rng_world = np.random.default_rng([s, 0])
-        self.rng_routes = np.random.default_rng([s, 1])
-        self.rng_people = np.random.default_rng([s, 2])
-        self.rng_detect = np.random.default_rng([s, 3])
-        self.rng_treat = np.random.default_rng([s, 5])
-        self.rng_insp = np.random.default_rng([s, 6])
+        self.root = r = (cfg.seed,) if root is None else tuple(root)
+        self.rng_world = np.random.default_rng([*r, 0])
+        self.rng_routes = np.random.default_rng([*r, 1])
+        self.rng_people = np.random.default_rng([*r, 2])
+        self.rng_detect = np.random.default_rng([*r, 3])
+        self.rng_treat = np.random.default_rng([*r, 5])
+        self.rng_insp = np.random.default_rng([*r, 6])
         self.layout = Layout(cfg)
-        self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world)
+        built = stalls is None
+        self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world) if built else stalls
         self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
-                                                 self.rng_treat, self.rng_insp)
-        refine_world(self.layout, self.stalls, self.people, self.k)
+                                                 self.rng_treat, self.rng_insp, root=r)
+        refine_world(self.layout, self.stalls if built else [], self.people, self.k)
         cfg = self.cfg = scaled_config(cfg)
         self.by_sid = {st.sid: st for st in self.stalls}
         self.by_pid = {p.pid: p for p in self.people}
@@ -67,7 +72,7 @@ class BazaarEngine:
         self._noise_cache: dict[tuple, str] = {}
         if agent_factory is None:
             from agents.registry import make_factory
-            agent_factory = make_factory(self.cfg_given)
+            agent_factory = make_factory(self.cfg_given, self.root)
         self.seller_agents = {st.sid: agent_factory("seller", cfg.agents.seller[st.stype], st.sid, st.idx)
                               for st in self.stalls}
         self.buyer_agents = {p.pid: agent_factory("buyer", cfg.agents.buyer, p.pid, p.idx) for p in self.buyers}
@@ -114,7 +119,7 @@ class BazaarEngine:
         uniformly random one with probability profile_noise. Stable per pair."""
         key = (st.idx, p.idx)
         if key not in self._noise_cache:
-            r = np.random.default_rng([self.cfg.seed, 4, st.idx, p.idx])
+            r = np.random.default_rng([*self.root, 4, st.idx, p.idx])
             u, k = r.random(), int(r.integers(3))
             self._noise_cache[key] = PROFILES[k] if u < self.cfg.buyers.profile_noise else p.profile
         return self._noise_cache[key]
@@ -169,6 +174,10 @@ class BazaarEngine:
     # ------------------------------------------------------------------ run
 
     def header(self) -> None:
+        self.header_line()
+        self.world_event()
+
+    def header_line(self) -> None:
         # Keyed by the config's policy name, which is what replay resolves agents by.
         metas = {}
         for st in self.stalls:
@@ -177,6 +186,8 @@ class BazaarEngine:
             metas.setdefault(f"buyer:{self.cfg.agents.buyer}", self.buyer_agents[p.pid].meta())
         self.log.emit("header", mode="bazaar", engine_version=ENGINE_VERSION, config=to_dict(self.cfg_given),
                       env=env_info(), agents=metas, placeholders=PLACEHOLDERS)
+
+    def world_event(self) -> None:
         L = self.layout
         self.log.emit("world", t=0, grid={"W": L.W, "H": L.H, "aisle_y": L.aisle_y,
                                          "categories": self.cfg.market.categories},
@@ -184,8 +195,11 @@ class BazaarEngine:
                       people=[{"pid": p.pid, "kind": p.kind, "profile": p.profile, "is_inspector": p.is_inspector,
                                "arrive": p.arrive, "task": p.task} for p in self.people])
 
-    def run(self) -> dict:
-        self.header()
+    def run(self, header: bool = True) -> dict:
+        if header:
+            self.header()
+        else:
+            self.world_event()
         for t in range(self.cfg.market.ticks):
             self.t = t
             self.step()
@@ -564,6 +578,12 @@ class BazaarEngine:
         }
 
 
-def run(cfg: BazaarConfig, log: JsonlLog | None = None, agent_factory: AgentFactory | None = None) -> dict:
+def run(cfg: BazaarConfig, log: JsonlLog | None = None, agent_factory: AgentFactory | None = None,
+        day_factories: Callable[[int], AgentFactory | None] | None = None) -> dict:
+    """One run; with market.days > 1, the multi-day run (engine/days.py), whose result is
+    {"days": [...]}. day_factories(day) gives a day's agent factory (replay)."""
+    if cfg.market.days > 1:
+        from .days import run_days
+        return run_days(cfg, log=log, day_factories=day_factories)
     eng = BazaarEngine(cfg, log=log, agent_factory=agent_factory)
     return eng.run()

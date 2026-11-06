@@ -29,11 +29,13 @@ POLICIES = {
 ROLE_CODE = {"seller": 0, "buyer": 1}
 
 
-def make_factory(cfg):
+def make_factory(cfg, root: tuple | None = None):
+    root = (cfg.seed,) if root is None else tuple(root)
+
     def factory(role: str, policy: str, key: str, idx: int):
         if policy not in POLICIES:
             raise KeyError(f"unknown policy {policy!r}; known: {sorted(POLICIES)}")
-        rng = np.random.default_rng([cfg.seed, 7, ROLE_CODE[role], idx])
+        rng = np.random.default_rng([*root, 7, ROLE_CODE[role], idx])
         params = scale_agent_params(POLICIES[policy], dict(cfg.agents.params.get(policy, {})),
                                     int(cfg.market.scale))
         if policy in ("informed_reference", "perfect_buyer"):

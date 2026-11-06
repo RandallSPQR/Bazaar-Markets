@@ -51,6 +51,8 @@ class JsonlLog:
         self.lines: list[str] = []
 
     def emit(self, ev: str, **fields: Any) -> None:
+        if not self.keep and self.sink is None:
+            return   # nothing is stored or written, so skip serializing (speed only)
         line = dumps({"ev": ev, **fields})
         if self.keep:
             self.lines.append(line)
