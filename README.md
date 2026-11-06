@@ -170,6 +170,10 @@ both modes drawn by one renderer.
   (`evolution`; `engine/days.py`). Multi-day logs replay like single-day ones.
 - **Reputation and medium.** Optional public ratings (`ratings`), switching costs
   (`pricing.switch_cost_to_*`) and a whisper ban (`market.whispers_allowed`); all off by default.
+- **Brands.** `brands.enabled` (0.8.0): ratings by brand name, renames only at reopening
+  (fresh names or look-alikes that tourists cannot tell from the original), a reputation
+  premium on price (`brands.premium`), a known horizon (`market.horizon_known`) and a bust-out
+  benchmark seller (`rule_genuine_rational`); all off by default (`engine/brands.py`).
 
 ## Agents and the LLM stub
 

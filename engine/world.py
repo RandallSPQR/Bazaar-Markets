@@ -71,6 +71,12 @@ class Stall:
     switch_cost_cents: int = 0     # charged on the first day in a new type (multi-day runs)
     switch_cost_due: int = 0       # set by a switch, moved into switch_cost_cents the next day
     rating: float | None = None    # public rating (ratings.mode != "off"); persists across days
+    # brands (brands.enabled only; engine/brands.py)
+    lookalike_of: str | None = None  # the original's name, if the current name is a look-alike
+    rename_pending: bool = False     # set by a catch; the first decision after reopening may rename
+    busted_day: int | None = None    # day a genuine stall busted out (rule_genuine_rational)
+    decided_today: bool = False      # has the stall made a decision yet today
+    yesterday: dict | None = None    # previous day's ledger (multi-day runs)
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),

@@ -27,6 +27,7 @@ from .interface import FALLBACK, Agent, parse
 from .jsonlog import JsonlLog, env_info
 from .valuation import unit_value
 from .scaling import scaled_config
+from . import brands as B
 from .world import UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text
 
 PROFILES = ("tourist", "local", "expert")
@@ -41,10 +42,11 @@ def _dist(a, b) -> float:
 class BazaarEngine:
     def __init__(self, cfg: BazaarConfig, log: JsonlLog | None = None,
                  agent_factory: AgentFactory | None = None, root: tuple | None = None,
-                 stalls: list[Stall] | None = None):
+                 stalls: list[Stall] | None = None, day: int = 1, book: "B.BrandBook | None" = None):
         # root: stream prefix ([seed] by default; [seed, 9, day] on later days of a multi-day
         # run). stalls: an existing, already-refined stall list to use instead of building one
-        # (later days of a multi-day run).
+        # (later days of a multi-day run). day: the day number (multi-day runs). book: brand state
+        # carried across days (brands.enabled only).
         # The world is built from the config as given (real units = k = 1 cells and ticks)
         # and refined to scale k; the engine then runs on the scaled config. The log
         # header records the config as given.
@@ -107,6 +109,17 @@ class BazaarEngine:
         self.switch_costs_on = bool(cfg.pricing.switch_cost_to_genuine or cfg.pricing.switch_cost_to_deceptive)
         if cfg.ratings.mode not in ("off", "hidden", "public"):
             raise ValueError(f"unknown ratings.mode {cfg.ratings.mode!r}")
+        # 0.8.0 switches (brands, known horizon), also off by default.
+        self.day = int(day)
+        self.brands_on = bool(cfg.brands.enabled)
+        self.book = None
+        self.rename_log: list[dict] = []
+        self.bust_log: list[dict] = []
+        self._renames_now: list[dict] = []
+        self._busts_now: list[dict] = []
+        if self.brands_on:
+            self.book = book if book is not None else B.BrandBook(self.stalls)
+            B.morning_prices(cfg, self.stalls, self.book)
 
     # ------------------------------------------------------------------ helpers
 
@@ -116,8 +129,16 @@ class BazaarEngine:
     def claim_q(self, st: Stall, claim: str) -> float:
         return st.q_pitch if claim == "pitch" else st.q_true
 
-    def message_text(self, st: Stall, q: float) -> str:
-        return f"{st.brand}: {spec_text(st.category, q)}. Quality grade {q:.2f}."
+    def message_text(self, st: Stall, q: float, p: Person | None = None) -> str:
+        brand = st.brand if p is None else self.perceived_brand(st, p)
+        return f"{brand}: {spec_text(st.category, q)}. Quality grade {q:.2f}."
+
+    def perceived_brand(self, st: Stall, p: Person) -> str:
+        """The name a person reads on the stall: tourists cannot tell a look-alike from its
+        original, so they read the original's name (brands only)."""
+        if st.lookalike_of is not None and p.profile == "tourist":
+            return st.lookalike_of
+        return st.brand
 
     def observed_profile(self, st: Stall, p: Person) -> str:
         """What a stall sees of a person: the observable profile, replaced by a
@@ -239,7 +260,12 @@ class BazaarEngine:
             obs = self.seller_obs(st, near, askers)
             whisperable = {p.pid for p, d in near if d <= mk.whisper_range}
 
-            def check(a, askers=askers, whisperable=whisperable):
+            def check(a, askers=askers, whisperable=whisperable, st=st):
+                if "rename" in a and not (self.brands_on and st.rename_pending):
+                    return "rename is allowed only on the first decision after a reopening"
+                if "bust_out" in a and not (self.brands_on and st.stype == "genuine" and st.busted_day is None
+                                            and not st.decided_today):
+                    return "bust_out is allowed only for an honest genuine stall on its first decision of the day"
                 w = a["whisper"]
                 if w is not None and not mk.whispers_allowed:
                     return "whispers are not allowed in this market"
@@ -254,6 +280,13 @@ class BazaarEngine:
                 return None
 
             a = self.decide("seller", st.sid, self.seller_agents[st.sid], obs, check)
+            if self.brands_on:
+                if "rename" in a:
+                    self.rename(st, a["rename"])
+                if a.get("bust_out"):
+                    self.bust_out(st)
+                st.rename_pending = False
+                st.decided_today = True
             if a.get("sign") is not None:   # takes effect in this tick's delivery
                 st.sign = a["sign"]
             if a["yell"] is not None:
@@ -343,10 +376,12 @@ class BazaarEngine:
                         if self.rng_detect.random() < self.cfg.inspectors.disguised_ask_prob:
                             self.pending_asks.setdefault(st.sid, []).append(p.pid)
 
+        extra = {"renames": self._renames_now, "bust_outs": self._busts_now} if self.brands_on else {}
         self.log.emit("delta", t=t, pos=positions, msgs=msgs, buys=self._buys_now, catches=catches,
                       asks={k: v for k, v in self.pending_asks.items()}, inspects=self._inspects_now,
-                      closed=[st.sid for st in self.stalls if t + 1 < st.closed_until])
+                      closed=[st.sid for st in self.stalls if t + 1 < st.closed_until], **extra)
         self._buys_now, self._inspects_now = [], []
+        self._renames_now, self._busts_now = [], []
 
     # ------------------------------------------------------------------ pieces
 
@@ -359,7 +394,7 @@ class BazaarEngine:
             imp["false"] += 1
         rec = p.info.setdefault(st.sid, {"claims": [], "inspected_q": None})
         rec["claims"].append({"tick": self.t, "channel": ch, "claimed_quality": q,
-                              "text": self.message_text(st, q)})
+                              "text": self.message_text(st, q, p)})
 
     def catch(self, st: Stall, p: Person, ch: str, q: float) -> dict:
         st.penalties_cents += st.penalty_cents
@@ -370,7 +405,48 @@ class BazaarEngine:
               "penalty_cents": st.penalty_cents, "reopens": st.closed_until}
         self.catch_events.append(ev)
         self.catch_ticks.append((self.t, st))
+        if self.brands_on:
+            st.rename_pending = True
         return ev
+
+    def rename(self, st: Stall, how: str) -> None:
+        """Rename a reopened stall (brands only). Draws from [day root, 11, stall, rename count]."""
+        book = self.book
+        n = book.renames[st.sid]
+        book.renames[st.sid] = n + 1
+        rng = np.random.default_rng([*self.root, 11, st.idx, n])
+        old, target = st.brand, None
+        if how == "lookalike":
+            target = B.lookalike_target(self.stalls, st, book, rng)
+        if target is None:
+            name = B.fresh_name(st.category, rng, book.used)
+            st.lookalike_of = None
+            st.price_cents = B.premium_price(self.cfg, st, None)
+        else:
+            name = B.lookalike_name(target.brand, rng, book.used)
+            st.lookalike_of = target.brand
+            st.price_cents = target.price_cents
+        book.add(name)
+        st.brand, st.rating = name, None
+        rec = {"t": self.t, "day": self.day, "stall": st.sid, "how": how, "from": old, "to": name,
+               "lookalike_of": st.lookalike_of, "target_stall": target.sid if target else None,
+               "target_rating": book.rating(target.brand) if target else None, "price_cents": st.price_cents}
+        self.rename_log.append(rec)
+        self._renames_now.append(rec)
+
+    def bust_out(self, st: Stall) -> None:
+        """A genuine stall harvests its reputation (brands only): its true quality drops to its
+        low quality for good; name, price and claimed quality (its sign now shows the old quality,
+        "pitch") are unchanged, so its claims become false."""
+        was = st.q_true
+        st.q_true = B.bust_quality(self.cfg, st)
+        st.unit_cost_cents = B.unit_cost(self.cfg, st, st.q_true)
+        st.sign = "pitch"
+        st.busted_day = self.day
+        rec = {"t": self.t, "day": self.day, "stall": st.sid, "brand": st.brand, "q_was": was, "q_true": st.q_true,
+               "rating": st.rating, "price_cents": st.price_cents, "unit_cost_cents": st.unit_cost_cents}
+        self.bust_log.append(rec)
+        self._busts_now.append(rec)
 
     def buyer_did(self, p: Person, here: list[Stall], stay: set) -> bool:
         """Run one buyer decision. Returns True if the buyer stays at the stall."""
@@ -438,6 +514,9 @@ class BazaarEngine:
                "known_claims": claims, "inspected_q": info["inspected_q"],
                "received_false_claim": any(c > st.q_true + 1e-12 for c in claims),
                "buyer_profile": p.profile, "buyer_is_inspector": p.is_inspector}
+        if self.brands_on:
+            rec["brand"] = st.brand
+            rec["filed_under"] = self.perceived_brand(st, p)   # where the buyer's review goes
         self.purchases.append(rec)
         self._buys_now.append(rec)
 
@@ -463,7 +542,7 @@ class BazaarEngine:
 
     def seller_obs(self, st: Stall, near: list, askers: list) -> dict:
         mk = self.cfg.market
-        return {
+        obs = {
             "role": "seller", "tick": self.t,
             "stall": {"id": st.sid, "category": st.category, "brand": st.brand, "stall_type": st.stype,
                       "true_quality": st.q_true, "pitch_quality": st.q_pitch,
@@ -484,13 +563,26 @@ class BazaarEngine:
                        "ad_spend_cents": st.ad_spend_cents, "penalties_cents": st.penalties_cents,
                        "catches": st.catches},
         }
+        if self.brands_on:
+            honest = st.stype == "genuine" and st.busted_day is None
+            obs["brand"] = {"name": st.brand, "lookalike_of": st.lookalike_of, "rating": st.rating,
+                            "neutral_price_cents": B.neutral_price(self.cfg, st),
+                            "rename_available": st.rename_pending,
+                            "first_decision_today": not st.decided_today, "busted_day": st.busted_day,
+                            "bust_out_unit_cost_cents": (B.unit_cost(self.cfg, st, B.bust_quality(self.cfg, st))
+                                                         if honest else None)}
+        if mk.horizon_known:
+            obs["horizon"] = {"day": self.day, "days": int(mk.days)}
+            obs["yesterday"] = st.yesterday
+        return obs
 
     def buyer_obs(self, p: Person, here: list[Stall], left: int, need: int, privileged: bool) -> dict:
         task = p.task
         stalls = []
         for st in here:
             info = p.info.get(st.sid, {"claims": [], "inspected_q": None})
-            row = {"id": st.sid, "brand": st.brand, "category": st.category, "price_cents": st.price_cents,
+            row = {"id": st.sid, "brand": self.perceived_brand(st, p), "category": st.category,
+                   "price_cents": st.price_cents,
                    "messages": info["claims"], "inspected_quality": info["inspected_q"],
                    "ask_pending": p.pid in self.pending_asks.get(st.sid, [])}
             if self.knows_quality(p):
@@ -588,7 +680,19 @@ class BazaarEngine:
             "false_claim_impressions_to_uniform_eligible": self.false_impressions_to_eligible,
             "false_claims": {"messages": fc_msgs, "no_eligible_in_earshot": fc_free},
             "false_claims_by_stall": {k: dict(v) for k, v in self.false_claims_by_stall.items()},
+            **({"brands": self.brand_outcome()} if self.brands_on else {}),
         }
+
+    def brand_outcome(self) -> dict:
+        prof = {st.sid: st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents
+                - st.switch_cost_cents for st in self.stalls}
+        return {"renames": len(self.rename_log),
+                "renames_by_how": {h: sum(r["how"] == h for r in self.rename_log) for h in ("fresh", "lookalike")},
+                "bust_outs": len(self.bust_log),
+                "busted_stalls": sum(st.busted_day is not None for st in self.stalls),
+                "lookalike_stalls": sum(st.lookalike_of is not None for st in self.stalls),
+                "profit_by_stall_cents": prof,
+                "units_by_stall": {st.sid: st.units_sold for st in self.stalls}}
 
 
 def run(cfg: BazaarConfig, log: JsonlLog | None = None, agent_factory: AgentFactory | None = None,

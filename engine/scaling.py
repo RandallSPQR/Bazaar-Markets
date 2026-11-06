@@ -47,6 +47,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "market.scale": (NONE, "the scale itself"),
     "market.days": (NONE, "count of whole runs"),
     "market.whispers_allowed": (NONE, "switch"),
+    "market.horizon_known": (NONE, "switch"),
     # stalls
     "stalls.type_shares": (NONE, "shares"),
     "stalls.q_high": (NONE, "quality"),
@@ -108,13 +109,17 @@ FIELDS: dict[str, tuple[str, str]] = {
     "ratings.tau": (NONE, "rating threshold"),
     "ratings.visible_to": (NONE, "profiles"),
     "ratings.rugpull_threshold": (NONE, "rating threshold"),
+    # brands
+    "brands.enabled": (NONE, "switch"),
+    "brands.premium": (NONE, "price multiplier per unit of rating"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
 AGENT_PARAMS: dict[str, dict[str, tuple[str, str]]] = {
     "HonestSeller": {"yell_crowd": (NONE, "count"), "yell_every": (TIME, "yell cooldown"),
                      "whisper": (NONE, "switch"), "whisper_every": (TIME, "whisper cooldown")},
-    "DeceptiveSeller": {"cautious": (NONE, "switch")},
+    "DeceptiveSeller": {"cautious": (NONE, "switch"), "reopen": (NONE, "label")},
+    "GenuineRationalSeller": {},
     "AdaptiveDeceptiveSeller": {},
     "RuleBuyer": {"rating_tau": (NONE, "rating threshold (set from ratings.tau)")},
     "RandomReferenceBuyer": {"p_buy": (NONE, "probability per decision; decisions per stop are unchanged")},

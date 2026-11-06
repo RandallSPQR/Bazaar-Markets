@@ -39,6 +39,11 @@ SELLER_ACTION_SCHEMA: dict = {
         # Optional: set the stall's sign. Takes effect in this tick's delivery (seller
         # decisions precede delivery) and stays until changed.
         "sign": CLAIM,
+        # Brands only (engine 0.8.0, brands.enabled): rename on the first decision after a
+        # reopening; bust out (genuine stalls, first decision of a day): true quality drops to
+        # the stall's low quality for good, name, sign claim and price unchanged.
+        "rename": {"enum": ["fresh", "lookalike"]},
+        "bust_out": {"const": True},
     },
 }
 
@@ -88,8 +93,7 @@ def parse(role: str, raw: Any) -> tuple[dict | None, str | None]:
         e = errs[0]
         return None, f"schema: {e.message[:200]} at /{'/'.join(map(str, e.path))}"
     if role == "seller":
-        sign = obj.get("sign")
-        obj = {"yell": obj.get("yell"), "whisper": obj.get("whisper"), "answers": obj.get("answers", [])}
-        if sign is not None:   # absent = keep the sign; the key is omitted so old actions log unchanged
-            obj["sign"] = sign
+        # optional keys are omitted when absent, so old actions log unchanged
+        extra = {k: obj[k] for k in ("sign", "rename", "bust_out") if obj.get(k) is not None}
+        obj = {"yell": obj.get("yell"), "whisper": obj.get("whisper"), "answers": obj.get("answers", []), **extra}
     return obj, None

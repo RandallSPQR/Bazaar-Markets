@@ -48,6 +48,7 @@ Source of truth: `engine/config.py`. Full default configs:
 | `max_actions_per_stop` | 4 | | stall actions a buyer may take at one stop before the engine moves it on |
 | `whispers_allowed` | true | | false = a public medium: sellers can use only signs, yells and answers. Sellers see `ranges.whispers_allowed: false`; a whisper is an invalid action (fallback), so none is ever delivered. Rule sellers do not try |
 | `days` | 1 | | number of days; each day a full run with fresh buyers, and type switches between days (`evolution`, below) |
+| `horizon_known` | false | | 0.8.0: seller observations carry `horizon` (`day`, `days`) and `yesterday` (the stall's previous-day ledger; null on day 1) |
 | `scale` | 1 | | grid refinement k (integer ≥ 1): cells 1/k as large, ticks 1/k as long; every other distance and time value stays in real units (k = 1 cells and ticks). See below |
 
 ### Grid refinement (`market.scale` = k)
@@ -160,6 +161,39 @@ the stall are not rated. A stall's first rating is that day's share; a day with 
 leaves it unchanged (decided 2026-11-05). Ratings update at the end of each day, before type
 revision, and persist across days and type switches (the brand keeps its name).
 
+### `brands` (0.8.0; off by default)
+| key | default | status | meaning |
+|---|---|---|---|
+| `enabled` | false | | ratings attach to brand names; renames at reopening; look-alikes; reputation premium; bust-out action. Requires `evolution.revise_prob = mutation_prob = 0` in multi-day runs |
+| `premium` | 0.0 | **PLACEHOLDER** (0.4 in the 2026-11-06 run) | price = base × tier × (1 + premium × (rating − 0.5)) |
+
+With brands on (source: `engine/brands.py`):
+- **Ratings by name.** Reviews are filed by brand name and updated as in `ratings` (same share,
+  blend and first-rating rule). A tourist's review of a look-alike is filed under the original's
+  name; locals' and experts' reviews under the actual name. Ratings persist with the name.
+- **Renames only at reopening.** A catch sets the stall's `rename_pending`; its first decision
+  after the closure ends (that day, or the next morning) may carry `"rename": "fresh" |
+  "lookalike"`; afterwards the chance is gone until the next catch. `fresh` = a new fictional name
+  (unrated). `lookalike` = a near-copy (an accent added, two neighbouring letters swapped, or a
+  letter doubled; never equal to the original or any name used before) of the highest-rated
+  full-price brand (genuine or deceptive tier, not a look-alike) on another stall of the same
+  category; unrated counts as 0.5; ties uniformly at random (decided 2026-11-06). The look-alike
+  posts the original's price. Draws: `[day root, 11, stall index, rename count]`.
+- **Perception.** Tourists read the original's name on a look-alike (its `brand` on their
+  `stalls_here` rows and in message texts); locals and experts read the actual name and see its
+  own rating.
+- **Premium.** Each morning, price = round(base × tier × (1 + premium × (r − 0.5))), r = the
+  brand's start-of-day rating (0.5 if unrated), tier = 1 (genuine), `deceptive_price_factor` or
+  `seconds_price_factor`; a look-alike then takes the current price of the stall bearing the
+  original's name. Unit costs do not change. A rename resets the price (fresh: neutral; look-alike:
+  the original's).
+- **Bust-out.** A genuine stall that has not busted out may send `"bust_out": true` on its first
+  decision of a day: its true quality drops for good to its low quality (one draw from `q_low` on
+  `[seed, 12, stall index]`), its unit cost follows, and its sign shows its old quality (`pitch`);
+  name and price rule are unchanged. Seller observations carry a `brand` block (`name`,
+  `lookalike_of`, `rating`, `neutral_price_cents`, `rename_available`, `first_decision_today`,
+  `busted_day`, `bust_out_unit_cost_cents`).
+
 ### `stalls`
 | key | default | status | meaning |
 |---|---|---|---|
@@ -245,7 +279,18 @@ after the stall reopens).
 | `buyer` | `rule_buyer` | also `random_reference`, `informed_reference` (comparison points, not bounds; old names `random_buyer`, `perfect_buyer` still accepted), `llm` (stub) |
 | `params` | {} | per-policy keyword arguments, e.g. `{"rule_deceptive": {"cautious": false}}`, `{"llm": {"model_id": "...", "sampling": {...}, "max_calls": 0}}`. Rule sellers (`rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`) take `yell_crowd` (3), `yell_every` (8 ticks), `whisper` (true), `whisper_every` (1 tick: at most one whisper per this many ticks) |
 
-Seller policies: `rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`, `llm`. Set a
+`rule_deceptive` and `rule_deceptive_adaptive` also take `reopen` (`keep` default, `fresh`,
+`lookalike`): the name they put up on reopening when brands are on.
+
+Seller policies: `rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`,
+`rule_genuine_rational`, `llm`.
+`rule_genuine_rational` (0.8.0; a benchmark, not a model of real sellers) is `rule_honest` until it
+busts out. On its first decision of each day from day 2 (day 1 has no yesterday), with U =
+yesterday's units sold, P = today's price, N = the neutral-rating price, c = its bust-out unit
+cost and L = days left including today, it busts out if U(P − c) > L·U(P − N): one day's harvest
+against the premium its name would still earn (decided 2026-11-06). After busting out it claims its
+old quality on every channel, with no caution. It needs `brands.enabled` and
+`market.horizon_known`. Set a
 type's policy with e.g. `--set agents.seller.deceptive=rule_deceptive_adaptive`.
 `rule_deceptive_adaptive` (positive control for strategic avoidance) behaves like
 `rule_deceptive`, but goes quiet (no yell or whisper, truthful answers, sign set to

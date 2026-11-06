@@ -24,7 +24,13 @@ pairwise proportional imitation, synchronously (everyone compares against day-d 
 A stall whose type changed gets new Q_true, Q_pitch and price by the type rules (world.py), with
 new draws. All revision draws for stall i after day d come from its own stream
 [seed, 10, d, i], six draws in a fixed order, so they do not depend on any other stream or stall.
-Switching cost: none (PLACEHOLDER, 0).
+Switching costs: pricing.switch_cost_to_genuine / _to_deceptive (0.7.0; default 0).
+
+Brands (0.8.0, brands.enabled; engine/brands.py): a BrandBook carries ratings by brand name
+across days; each morning prices are set from the brand's start-of-day rating; at the end of the
+day reviews are filed by brand (tourists' reviews of a look-alike go to the original). Brands
+cannot be combined with imitation (evolution.revise_prob and mutation_prob must be 0): a type
+switch would rewrite a busted stall's quality and sign, and that combination is untested.
 """
 from __future__ import annotations
 
@@ -32,6 +38,7 @@ import copy
 
 import numpy as np
 
+from . import brands as B
 from .config import BazaarConfig
 
 SWITCHABLE = ("genuine", "deceptive")
@@ -140,6 +147,12 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
         s.switch_cost_cents = st.switch_cost_due   # charged on the first day in the new type
         s.switch_cost_due = 0
         s.sign = "truth" if s.stype != "deceptive" else cfg.stalls.deceptive_sign
+        if s.busted_day is not None:
+            s.sign = "pitch"                       # a busted stall keeps showing its old quality
+        s.decided_today = False
+        s.yesterday = {"units_sold": st.units_sold, "revenue_cents": st.revenue_cents, "cost_cents": st.cost_cents,
+                       "ad_spend_cents": st.ad_spend_cents, "penalties_cents": st.penalties_cents,
+                       "profit_cents": stall_profit(st), "price_cents": st.price_cents, "catches": st.catches}
         out.append(s)
     return out
 
@@ -154,21 +167,35 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
     D = int(cfg.market.days)
     if D < 1:
         raise ValueError(f"market.days must be >= 1, got {D}")
+    brands = bool(cfg.brands.enabled)
+    if brands and (cfg.evolution.revise_prob or cfg.evolution.mutation_prob):
+        raise ValueError("brands.enabled requires evolution.revise_prob = evolution.mutation_prob = 0")
     stalls = None
+    book = None
     days = []
     for day in range(1, D + 1):
         fac = day_factories(day) if day_factories else None
-        eng = BazaarEngine(cfg, log=log, agent_factory=fac, root=day_root(cfg.seed, day), stalls=stalls)
+        eng = BazaarEngine(cfg, log=log, agent_factory=fac, root=day_root(cfg.seed, day), stalls=stalls,
+                           day=day, book=book)
+        book = eng.book
         types = _types(eng.stalls)
         rated = cfg.ratings.mode != "off"
         stall_types = {st.sid: st.stype for st in eng.stalls}
         if day == 1:
             eng.header_line()
         extra = {"ratings": {st.sid: st.rating for st in eng.stalls}} if rated else {}
+        if brands:
+            extra.update(brands={st.sid: st.brand for st in eng.stalls},
+                         prices={st.sid: st.price_cents for st in eng.stalls})
         log.emit("day_start", day=day, types=types, **extra)
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}
-        if rated:
+        reviews = None
+        if rated and brands:
+            reviews = B.update_brand_ratings(book, eng.purchases, cfg.ratings.memory)
+            for st in eng.stalls:
+                st.rating = book.rating(st.brand)
+        elif rated:
             update_ratings(eng.stalls, eng.purchases, cfg.ratings.memory)
         switches = revise(cfg, eng.stalls, profits, day) if day < D else []
         pbt = {t: d["profit_per_stall_cents"] for t, d in sorted(out["seller_by_type"].items())}
@@ -176,6 +203,14 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         if rated:
             extra = {"ratings": {st.sid: st.rating for st in eng.stalls},
                      "rugpulls": sum(s["rugpull"] for s in switches)}
+        if brands:
+            extra.update(brand_ratings=dict(sorted(book.ratings.items())),
+                         brands={st.sid: st.brand for st in eng.stalls},
+                         lookalike_of={st.sid: st.lookalike_of for st in eng.stalls if st.lookalike_of},
+                         prices={st.sid: st.price_cents for st in eng.stalls},
+                         renames=eng.rename_log, bust_outs=eng.bust_log,
+                         busted={st.sid: st.busted_day for st in eng.stalls if st.busted_day is not None},
+                         **({"reviews": {n: list(v) for n, v in reviews.items()}} if reviews is not None else {}))
         log.emit("day_end", day=day, types=types, profit_by_type=pbt, shortfall_rate=out["shortfall_rate"],
                  catches=out["catches"], switches=switches, **extra)
         if rated:

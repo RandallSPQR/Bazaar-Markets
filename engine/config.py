@@ -90,6 +90,9 @@ class MarketCfg:
     # Medium restriction: when false, sellers can use only signs, yells and answers (a public
     # medium). Sellers are told (ranges.whispers_allowed = false) and a whisper is an invalid action.
     whispers_allowed: bool = True
+    # Known horizon (engine 0.8.0): sellers' observations carry the day number and market.days
+    # ("horizon") and their own previous day's ledger ("yesterday").
+    horizon_known: bool = False
 
 
 @dataclass
@@ -224,6 +227,18 @@ class RatingsCfg:
 
 
 @dataclass
+class BrandsCfg:
+    # Brands (engine 0.8.0; see engine/brands.py). When enabled: ratings attach to brand names,
+    # a stall may rename itself when it reopens after a closure ("fresh" or "lookalike"),
+    # tourists cannot tell a look-alike from its original (they see and review the original's
+    # name), and prices carry a reputation premium. Off by default (0.7.0 behaviour).
+    enabled: bool = False
+    # PLACEHOLDER (0.4 in the 2026-11-06 run): price = base x tier x (1 + premium x (rating - 0.5)),
+    # rating = the brand's start-of-day rating, 0.5 if unrated. 0 = no premium.
+    premium: float = 0.0
+
+
+@dataclass
 class BazaarConfig:
     mode: str = "bazaar"
     seed: int = 0
@@ -237,6 +252,7 @@ class BazaarConfig:
     agents: AgentsCfg = field(default_factory=AgentsCfg)
     evolution: EvolutionCfg = field(default_factory=EvolutionCfg)
     ratings: RatingsCfg = field(default_factory=RatingsCfg)
+    brands: BrandsCfg = field(default_factory=BrandsCfg)
 
 
 PLACEHOLDERS = {
@@ -269,7 +285,8 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "pricing"): PricingCfg, (BazaarConfig, "buyers"): BuyersCfg,
                 (BazaarConfig, "inspectors"): InspectorsCfg, (BazaarConfig, "detection"): DetectionCfg,
                 (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
-                (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg}
+                (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg,
+                (BazaarConfig, "brands"): BrandsCfg}
 
 
 def from_dict(d: dict):

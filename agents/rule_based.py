@@ -70,13 +70,31 @@ class DeceptiveSeller(HonestSeller):
 
     VERSION = "rule_deceptive-1"
 
-    def __init__(self, rng: np.random.Generator | None = None, cautious: bool = True, **kw):
+    REOPEN = ("keep", "fresh", "lookalike")
+
+    def __init__(self, rng: np.random.Generator | None = None, cautious: bool = True, reopen: str = "keep", **kw):
         super().__init__(rng, **kw)
         self.cautious = cautious
+        if reopen not in self.REOPEN:
+            raise ValueError(f"reopen must be one of {self.REOPEN}, got {reopen!r}")
+        # Reopen strategy (brands only): what name to put up when the stall reopens after a
+        # closure. "keep" (default) sends no rename.
+        self.reopen = reopen
 
     def meta(self) -> dict:
+        params = {"cautious": self.cautious}
+        if self.reopen != "keep":          # omitted at the default so 0.7.0 headers are unchanged
+            params["reopen"] = self.reopen
         return {"policy": "rule_deceptive", "version": self.VERSION, "model_id": None, "sampling": None,
-                "params": {"cautious": self.cautious}}
+                "params": params}
+
+    def act(self, obs: dict) -> str:
+        out = super().act(obs)
+        if self.reopen != "keep" and obs.get("brand", {}).get("rename_available"):
+            a = json.loads(out)
+            a["rename"] = self.reopen
+            out = _out(a)
+        return out
 
     def claim_for(self, observed_profile: str) -> str:
         return "truth" if (self.cautious and observed_profile == "expert") else "pitch"
@@ -131,6 +149,52 @@ class AdaptiveDeceptiveSeller(DeceptiveSeller):
             a = json.loads(super().act(obs))
             if sign != self.home_sign and self.home_sign in ("pitch", "truth"):
                 a["sign"] = self.home_sign
+        if self.reopen != "keep" and obs.get("brand", {}).get("rename_available"):
+            a["rename"] = self.reopen
+        return _out(a)
+
+
+class GenuineRationalSeller(HonestSeller):
+    """Benchmark genuine seller with a known horizon (not a model of real sellers). Honest, as
+    rule_honest, until it busts out. On its first decision of each day from day 2 on (day 1 has no
+    yesterday), with U = yesterday's units sold, P = today's price, N = the price at a neutral
+    rating, c = the unit cost at its bust-out quality, and L = days left including today:
+        future  = L x U x (P - N)        (the premium the name earns; decided 2026-11-06)
+        harvest = U x (P - c)            (one day's revenue minus low-quality cost)
+    If harvest > future it busts out: true quality drops for good while name, sign and price stay.
+    From then on it claims its old quality on every channel, with no caution (decided 2026-11-06).
+    Needs brands.enabled and market.horizon_known; without them it is rule_honest."""
+
+    VERSION = "rule_genuine_rational-1"
+
+    def __init__(self, rng: np.random.Generator | None = None, **kw):
+        super().__init__(rng, **kw)
+        self.busted = False
+
+    def meta(self) -> dict:
+        return {"policy": "rule_genuine_rational", "version": self.VERSION, "model_id": None, "sampling": None}
+
+    def claim_for(self, observed_profile: str) -> str:
+        return "pitch" if self.busted else "truth"
+
+    @staticmethod
+    def should_bust(obs: dict) -> bool:
+        b, h, y = obs.get("brand"), obs.get("horizon"), obs.get("yesterday")
+        if not b or not h or y is None or not b["first_decision_today"] or b["bust_out_unit_cost_cents"] is None:
+            return False
+        U, P, N = y["units_sold"], obs["stall"]["price_cents"], b["neutral_price_cents"]
+        left = h["days"] - h["day"] + 1
+        return U * (P - b["bust_out_unit_cost_cents"]) > left * U * (P - N)
+
+    def act(self, obs: dict) -> str:
+        b = obs.get("brand") or {}
+        self.busted = b.get("busted_day") is not None
+        bust = not self.busted and self.should_bust(obs)
+        if bust:
+            self.busted = True
+        a = json.loads(super().act(obs))
+        if bust:
+            a["bust_out"] = True
         return _out(a)
 
 

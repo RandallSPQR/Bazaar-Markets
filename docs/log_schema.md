@@ -197,6 +197,19 @@ differed and it earned more), `imitated`, `mutated`; with switching costs, `swit
 (charged on the next day); with ratings computed, `rating` and `rugpull`. With ratings computed,
 `day_end` also has `ratings` (after the day's update) and `rugpulls` (count among `switches`).
 
+With `brands.enabled` (0.8.0): `day_start` adds `brands` (stall id → name) and `prices` (the
+morning prices); `day_end` adds `brand_ratings` (every name ever used → rating after the update),
+`brands`, `lookalike_of` (look-alike stall → original name), `prices`, `renames` and `bust_outs`
+(that day's records, as in `delta`), `busted` (stall → bust-out day) and `reviews` (name →
+[honest units, rated units] filed that day). `delta` adds `renames[]` (`t`, `day`, `stall`, `how`,
+`from`, `to`, `lookalike_of`, `target_stall`, `target_rating`, `price_cents`) and `bust_outs[]`
+(`t`, `day`, `stall`, `brand`, `q_was`, `q_true`, `rating`, `price_cents`, `unit_cost_cents`);
+purchase records add `brand` (actual name) and `filed_under` (where the review goes); the outcome
+adds `brands` (`renames`, `renames_by_how`, `bust_outs`, `busted_stalls`, `lookalike_stalls`,
+`profit_by_stall_cents`, `units_by_stall`). Seller actions may carry `rename` and `bust_out`;
+seller observations carry the `brand` block and, with `market.horizon_known`, `horizon` and
+`yesterday`.
+
 Ratings also add `rating` to the `stalls_here` rows of buyers who can see them (`ratings.mode =
 public`, profile in `ratings.visible_to`). With `market.whispers_allowed = false`, seller
 observations carry `ranges.whispers_allowed: false`.

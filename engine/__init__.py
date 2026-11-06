@@ -15,4 +15,7 @@ points, through role-specific JSON observations and schema-validated actions.
 #        per-day stream roots; discarded logs are no longer serialized (speed only).
 # 0.7.0: public ratings (ratings.*), switching costs (pricing.switch_cost_to_*),
 #        market.whispers_allowed, rugpull logging. All off by default.
-ENGINE_VERSION = "0.7.0"
+# 0.8.0: brands (brands.*: ratings by brand name, renames at reopening, look-alikes,
+#        reputation premium), market.horizon_known, bust-out action and
+#        rule_genuine_rational. All off by default.
+ENGINE_VERSION = "0.8.0"
