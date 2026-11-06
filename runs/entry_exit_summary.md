@@ -122,5 +122,5 @@ This is a weak selection regime. Of about 32 type switches per chain over 29 rev
 - Switching cost is 0 (placeholder). Part D varies it.
 - Recognition range 0: adaptive sellers react only to catch notices and their own reopening. With uniforms recognized at a distance (Part B), adaptive deceivers would earn more and the imitation picture could change.
 - Sellers are memoryless across days (a fresh agent per stall per day), and buyers are new each day, so nothing like reputation operates here; Part D adds ratings.
-- Plot: the first rendering clipped the direct labels and the footnote. The SVG was redrawn from `runs/entry_exit.json` with `--replot` after fixing the canvas size and the footnote's engine version (script sha256 `687ced2b192ce06c…`, committed). No numbers changed; the simulation was not re-run.
+- Plot: the first rendering clipped the direct labels and the footnote. The SVG was redrawn from `runs/entry_exit.json` with `--replot` after fixing the canvas size and the footnote's engine version. The run itself used script sha256 `d401be00…` (recorded above); the committed script differs only in its plotting code. No numbers changed; the simulation was not re-run.
 - Machine load fell from about 270 to about 30 during the run (memory freed partway through); it affects wall clock only.
