@@ -338,3 +338,7 @@ whose catch count reaches its maximum (15 deceptive stalls × 6 catches in 240 t
 - rule_deceptive_adaptive / patrolling2_r1.00: catches = 0 in every seed
 - rule_deceptive_adaptive / posts6_r1.00: catches = 0 in every seed
 - rule_deceptive_adaptive / patrolling6_r1.00: catches = 0 in every seed
+
+## Erratum (2026-11-05, added with the grid-refinement run)
+
+The inspector-to-stall distances within earshot on the default layout are eight, not nine: 1, 1.41, 2, 2.24, 2.83, 3.16, 3.61 and 4. A distance of 3 cannot occur. Counted in `runs/grid_refinement.json` (`geometry`). No result above depends on it.
