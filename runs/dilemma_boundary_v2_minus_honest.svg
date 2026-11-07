@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}}</style>
+<rect class="bg" x="0" y="0" width="900" height="600"/>
+<title id="t">Penalty-aware bust-out (v2) minus always-honest, by number of inspectors</title>
+<desc id="d">Mean paired difference with 95% intervals at 0, 1, 2, 4 and 6 patrolling inspectors. Crossover count below 0, bootstrap interval below 0 to below 0. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">Penalty-aware bust-out (v2) minus always-honest, by number of inspectors</text>
+<text class="s" x="30" y="70" font-size="14">Late days 26–30, genuine profit, $ per stall per day; slope +20.49 [+18.74, +22.24] * per inspector; crossover below 0 [below 0, below 0]</text>
+<line class="zero" x1="110.0" y1="151.1" x2="790.0" y2="151.1"/>
+<text class="an" x="790.0" y="112" text-anchor="end">no crossover in 0–6 (below 0)</text>
+<polyline class="ln" points="110.0,432.0 223.3,279.3 336.7,203.6 563.3,152.2 790.0,151.1"/>
+<line class="ci" x1="110.0" y1="450.0" x2="110.0" y2="414.1"/>
+<circle class="pt" cx="110.0" cy="432.0" r="3.5"/>
+<text class="lb" x="118.0" y="450.0">−138.31</text>
+<line class="ci" x1="223.3" y1="305.1" x2="223.3" y2="253.4"/>
+<circle class="pt" cx="223.3" cy="279.3" r="3.5"/>
+<text class="lb" x="231.3" y="297.3">−63.09</text>
+<line class="ci" x1="336.7" y1="227.9" x2="336.7" y2="179.3"/>
+<circle class="pt" cx="336.7" cy="203.6" r="3.5"/>
+<text class="lb" x="344.7" y="221.6">−25.84</text>
+<line class="ci" x1="563.3" y1="154.4" x2="563.3" y2="150.0"/>
+<circle class="pt" cx="563.3" cy="152.2" r="3.5"/>
+<text class="lb" x="571.3" y="170.2">−0.52</text>
+<line class="ci" x1="790.0" y1="151.1" x2="790.0" y2="151.1"/>
+<circle class="pt" cx="790.0" cy="151.1" r="3.5"/>
+<text class="lb" x="798.0" y="141.1">+0.00</text>
+<line class="ax" x1="96" y1="480.0" x2="96" y2="120.0"/>
+<text class="k" x="90" y="459.8" text-anchor="end">−150</text>
+<text class="k" x="90" y="358.2" text-anchor="end">−100</text>
+<text class="k" x="90" y="256.7" text-anchor="end">−50</text>
+<text class="k" x="90" y="155.1" text-anchor="end">0</text>
+<line class="ax" x1="110.0" y1="494" x2="790.0" y2="494"/>
+<text class="k" x="110.0" y="510" text-anchor="middle">0</text>
+<text class="k" x="223.3" y="510" text-anchor="middle">1</text>
+<text class="k" x="336.7" y="510" text-anchor="middle">2</text>
+<text class="k" x="563.3" y="510" text-anchor="middle">4</text>
+<text class="k" x="790.0" y="510" text-anchor="middle">6</text>
+<text class="k" x="450.0" y="530" text-anchor="middle">patrolling inspectors (not uniformed)</text>
+<text class="k" x="40" y="300.0" text-anchor="middle" transform="rotate(-90 40 300.0)">v2 − honest, $ per stall per day</text>
+<text class="n" x="30" y="560">Bazaar engine 0.10.0. Paired by seed (20 seeds), 95% t-intervals, unadjusted; crossover interval: paired bootstrap, 10,000 resamples. Fresh reopening,</text>
+<text class="n" x="30" y="576">naive deceptive sellers, budget 1.25 × base, tourists 40%, 150 buyers a day, search depth 2, 30 days, premium 0.4 (placeholder); v2 sees the catch rate.</text>
+</svg>
