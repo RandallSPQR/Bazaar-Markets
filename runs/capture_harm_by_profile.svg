@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}}</style>
+<rect class="bg" x="0" y="0" width="900" height="560"/>
+<title id="t">Who pays when a brand cashes out: change by buyer profile</title>
+<desc id="d">Dots with paired intervals per profile and stage. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">Who pays when a brand cashes out: change by buyer profile</text>
+<text class="s" x="30" y="70" font-size="14">Sampled stall busting out at its best day minus nobody busting out, days from the bust-out to 30; pooled over each stage's conditions</text>
+<text class="n" x="30" y="520">Bazaar engine 0.11.0. Seeds 52–66 paired; 95% t-intervals, unadjusted; 3 sampled genuine stalls per seed; bust-out days 10, 20, 27; 30 days.</text>
+<text class="n" x="30" y="536">Surplus = value − price − inspection costs, per buyer of the profile present those days. Gray: stage A; accent: stage B.</text>
+<text class="t" x="150" y="110" font-size="15">shortfall share of purchases, points</text>
+<line class="zero" x1="173.3" y1="130" x2="173.3" y2="400"/>
+<text class="lb" x="138" y="179.0" text-anchor="end">tourists</text>
+<line class="ci" x1="188.2" y1="167.0" x2="406.7" y2="167.0"/>
+<circle class="pt" cx="297.4" cy="167.0" r="3.5"/>
+<text class="k" x="412.7" y="171.0">A +2.2</text>
+<text class="lb" x="138" y="269.0" text-anchor="end">locals</text>
+<line class="ci" x1="192.9" y1="257.0" x2="261.7" y2="257.0"/>
+<circle class="pt" cx="227.3" cy="257.0" r="3.5"/>
+<text class="k" x="267.7" y="261.0">A +1.0</text>
+<text class="lb" x="138" y="359.0" text-anchor="end">experts</text>
+<line class="ci" x1="173.3" y1="347.0" x2="173.3" y2="347.0"/>
+<circle class="pt" cx="173.3" cy="347.0" r="3.5"/>
+<text class="k" x="179.3" y="351.0">A +0.0</text>
+<line class="ax" x1="150" y1="408" x2="430" y2="408"/>
+<text class="k" x="173.3" y="424" text-anchor="middle">0</text>
+<text class="k" x="284.1" y="424" text-anchor="middle">+2</text>
+<text class="k" x="394.8" y="424" text-anchor="middle">+4</text>
+<text class="t" x="540" y="110" font-size="15">surplus per buyer, $</text>
+<line class="zero" x1="777.8" y1="130" x2="777.8" y2="400"/>
+<line class="ci" x1="563.3" y1="167.0" x2="786.6" y2="167.0"/>
+<circle class="pt" cx="675.0" cy="167.0" r="3.5"/>
+<text class="k" x="792.6" y="171.0">A −1.2</text>
+<line class="ci" x1="721.0" y1="257.0" x2="780.6" y2="257.0"/>
+<circle class="pt" cx="750.8" cy="257.0" r="3.5"/>
+<text class="k" x="786.6" y="261.0">A −0.3</text>
+<line class="ci" x1="777.4" y1="347.0" x2="796.7" y2="347.0"/>
+<circle class="pt" cx="787.0" cy="347.0" r="3.5"/>
+<text class="k" x="802.7" y="351.0">A +0.1</text>
+<line class="ax" x1="540" y1="408" x2="820" y2="408"/>
+<text class="k" x="607.8" y="424" text-anchor="middle">−2</text>
+<text class="k" x="692.8" y="424" text-anchor="middle">−1</text>
+<text class="k" x="777.8" y="424" text-anchor="middle">0</text>
+</svg>
