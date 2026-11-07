@@ -1,0 +1,4157 @@
+{
+ "chosen_k": 2,
+ "meta": {
+  "command": ".venv/bin/python -m analysis.search_counterfeit --calibrate --out runs/search_calibration.json",
+  "count": 150,
+  "day": 10,
+  "engine_version": "0.10.0",
+  "git": {
+   "commit": "063aee586c458d739420ae3adeb1d26944951283",
+   "status_porcelain": [
+    "?? analysis/search_counterfeit.py",
+    "?? runs/search_calibration.log"
+   ]
+  },
+  "ks": [
+   1,
+   2,
+   3,
+   4,
+   6,
+   8
+  ],
+  "load_at_end": [
+   323.59,
+   307.79,
+   292.06
+  ],
+  "numpy": "2.5.4",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.7",
+  "script_sha256": "a30840775f4416d299c4e556e00741453fdb98c5b0152560f76362e6cde7f4be",
+  "seeds": [
+   100,
+   101,
+   102,
+   103,
+   104
+  ],
+  "target": 0.8,
+  "wall_clock_s": 307.28716802597046,
+  "workers": 8
+ },
+ "runs": [
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.7716049382716049,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 2.259259259259259,
+     "units_entrance": 125,
+     "units_mid": 37,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7354838709677419,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 2.6019417475728157,
+     "units_entrance": 114,
+     "units_mid": 41,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7777777777777778,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.350515463917526,
+     "units_entrance": 112,
+     "units_mid": 32,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.75,
+     "exposed_entrance": 12,
+     "exposed_mid": 20,
+     "mid_exposed_share": 0.5555555555555556,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 2.673076923076923,
+     "units_entrance": 117,
+     "units_mid": 39,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.6666666666666666,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.7448979591836733,
+     "units_entrance": 96,
+     "units_mid": 48,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8148148148148148,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 3.294642857142857,
+     "units_entrance": 132,
+     "units_mid": 30,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8549618320610687,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.5934065934065935,
+     "units_entrance": 112,
+     "units_mid": 19,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8357142857142857,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 3.4380952380952383,
+     "units_entrance": 117,
+     "units_mid": 23,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8137931034482758,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 3.682242990654206,
+     "units_entrance": 118,
+     "units_mid": 27,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7718120805369127,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 2.480392156862745,
+     "units_entrance": 115,
+     "units_mid": 34,
+     "walk_ticks": 0.0
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "k": 1,
+   "rated": 14,
+   "rated_by_position": {
+    "entrance": 4,
+    "mid": 10
+   },
+   "seed": 100
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.30985915492957744,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 3.2967032967032965,
+     "units_entrance": 44,
+     "units_mid": 98,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.4146341463414634,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.5,
+     "seen_mean": 3.047169811320755,
+     "units_entrance": 68,
+     "units_mid": 96,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.2833333333333333,
+     "exposed_entrance": 12,
+     "exposed_mid": 20,
+     "mid_exposed_share": 0.5555555555555556,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 3.3734939759036147,
+     "units_entrance": 34,
+     "units_mid": 86,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.3270440251572327,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 3.4814814814814814,
+     "units_entrance": 52,
+     "units_mid": 107,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.34285714285714286,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 4.144329896907217,
+     "units_entrance": 48,
+     "units_mid": 92,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.33088235294117646,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.347826086956522,
+     "units_entrance": 45,
+     "units_mid": 91,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.34507042253521125,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.265957446808511,
+     "units_entrance": 49,
+     "units_mid": 93,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.46875,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.8256880733944953,
+     "units_entrance": 75,
+     "units_mid": 85,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.42857142857142855,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.967741935483871,
+     "units_entrance": 60,
+     "units_mid": 80,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.3469387755102041,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.263157894736842,
+     "units_entrance": 51,
+     "units_mid": 96,
+     "walk_ticks": 0.0
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "k": 1,
+   "rated": 15,
+   "rated_by_position": {
+    "entrance": 1,
+    "mid": 14
+   },
+   "seed": 101
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.8536585365853658,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 2.144230769230769,
+     "units_entrance": 140,
+     "units_mid": 24,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8175182481751825,
+     "exposed_entrance": 12,
+     "exposed_mid": 4,
+     "mid_exposed_share": 0.1111111111111111,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 1.9156626506024097,
+     "units_entrance": 112,
+     "units_mid": 25,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.9064748201438849,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 1.946808510638298,
+     "units_entrance": 126,
+     "units_mid": 13,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.832258064516129,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 1.971698113207547,
+     "units_entrance": 129,
+     "units_mid": 26,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8958333333333334,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 1.7171717171717171,
+     "units_entrance": 129,
+     "units_mid": 15,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8834355828220859,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 2.4019607843137254,
+     "units_entrance": 144,
+     "units_mid": 19,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.9261744966442953,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 1.9595959595959596,
+     "units_entrance": 138,
+     "units_mid": 11,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8656716417910447,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 2.241758241758242,
+     "units_entrance": 116,
+     "units_mid": 18,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.9463087248322147,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 1.7171717171717171,
+     "units_entrance": 141,
+     "units_mid": 8,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8676470588235294,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 2.1702127659574466,
+     "units_entrance": 118,
+     "units_mid": 18,
+     "walk_ticks": 0.0
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "k": 1,
+   "rated": 12,
+   "rated_by_position": {
+    "entrance": 6,
+    "mid": 6
+   },
+   "seed": 102
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.9019607843137255,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 2.0297029702970297,
+     "units_entrance": 138,
+     "units_mid": 15,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8048780487804879,
+     "exposed_entrance": 12,
+     "exposed_mid": 4,
+     "mid_exposed_share": 0.1111111111111111,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 2.223529411764706,
+     "units_entrance": 99,
+     "units_mid": 24,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8682634730538922,
+     "exposed_entrance": 12,
+     "exposed_mid": 6,
+     "mid_exposed_share": 0.16666666666666666,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 2.0761904761904764,
+     "units_entrance": 145,
+     "units_mid": 22,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8679245283018868,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 2.2626262626262625,
+     "units_entrance": 138,
+     "units_mid": 21,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8561643835616438,
+     "exposed_entrance": 12,
+     "exposed_mid": 10,
+     "mid_exposed_share": 0.2777777777777778,
+     "rated_share_genuine": 0.5,
+     "seen_mean": 2.316326530612245,
+     "units_entrance": 125,
+     "units_mid": 21,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.9155844155844156,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.37,
+     "units_entrance": 141,
+     "units_mid": 13,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.9803921568627451,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.4056603773584904,
+     "units_entrance": 150,
+     "units_mid": 3,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.87248322147651,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.24,
+     "units_entrance": 130,
+     "units_mid": 19,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.825,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.175925925925926,
+     "units_entrance": 132,
+     "units_mid": 28,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.9256756756756757,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.378640776699029,
+     "units_entrance": 137,
+     "units_mid": 11,
+     "walk_ticks": 0.0
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 1,
+   "rated": 10,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 5
+   },
+   "seed": 103
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.6808510638297872,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 2.6363636363636362,
+     "units_entrance": 96,
+     "units_mid": 45,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7108433734939759,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.5,
+     "seen_mean": 2.4814814814814814,
+     "units_entrance": 118,
+     "units_mid": 48,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.6959459459459459,
+     "exposed_entrance": 12,
+     "exposed_mid": 10,
+     "mid_exposed_share": 0.2777777777777778,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.762376237623762,
+     "units_entrance": 103,
+     "units_mid": 45,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7484276729559748,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.759259259259259,
+     "units_entrance": 119,
+     "units_mid": 40,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7724137931034483,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.276595744680851,
+     "units_entrance": 112,
+     "units_mid": 33,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7214285714285714,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.7938144329896906,
+     "units_entrance": 101,
+     "units_mid": 39,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.75,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.650943396226415,
+     "units_entrance": 111,
+     "units_mid": 37,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8231292517006803,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.484848484848485,
+     "units_entrance": 121,
+     "units_mid": 26,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7741935483870968,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.357142857142857,
+     "units_entrance": 120,
+     "units_mid": 35,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7733333333333333,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.5208333333333335,
+     "units_entrance": 116,
+     "units_mid": 34,
+     "walk_ticks": 0.0
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 1,
+   "rated": 11,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 6
+   },
+   "seed": 104
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.6851851851851852,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 2.490740740740741,
+     "units_entrance": 111,
+     "units_mid": 51,
+     "walk_ticks": 0.09259259259259259
+    },
+    {
+     "entrance_unit_share": 0.6709677419354839,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.9223300970873787,
+     "units_entrance": 104,
+     "units_mid": 51,
+     "walk_ticks": 0.1553398058252427
+    },
+    {
+     "entrance_unit_share": 0.6736111111111112,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 2.6082474226804124,
+     "units_entrance": 97,
+     "units_mid": 47,
+     "walk_ticks": 0.10309278350515463
+    },
+    {
+     "entrance_unit_share": 0.6217948717948718,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 2.9423076923076925,
+     "units_entrance": 97,
+     "units_mid": 59,
+     "walk_ticks": 0.038461538461538464
+    },
+    {
+     "entrance_unit_share": 0.5217391304347826,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 3.5306122448979593,
+     "units_entrance": 72,
+     "units_mid": 66,
+     "walk_ticks": 0.1836734693877551
+    },
+    {
+     "entrance_unit_share": 0.6875,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 3.8482142857142856,
+     "units_entrance": 110,
+     "units_mid": 50,
+     "walk_ticks": 0.03571428571428571
+    },
+    {
+     "entrance_unit_share": 0.48091603053435117,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 3.2857142857142856,
+     "units_entrance": 63,
+     "units_mid": 68,
+     "walk_ticks": 0.02197802197802198
+    },
+    {
+     "entrance_unit_share": 0.7571428571428571,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 3.6095238095238096,
+     "units_entrance": 106,
+     "units_mid": 34,
+     "walk_ticks": 0.0761904761904762
+    },
+    {
+     "entrance_unit_share": 0.7272727272727273,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 4.0,
+     "units_entrance": 104,
+     "units_mid": 39,
+     "walk_ticks": 0.037383177570093455
+    },
+    {
+     "entrance_unit_share": 0.5793103448275863,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 3.2450980392156863,
+     "units_entrance": 84,
+     "units_mid": 61,
+     "walk_ticks": 0.19607843137254902
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "k": 2,
+   "rated": 17,
+   "rated_by_position": {
+    "entrance": 4,
+    "mid": 13
+   },
+   "seed": 100
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.2112676056338028,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 3.4285714285714284,
+     "units_entrance": 30,
+     "units_mid": 112,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.3597560975609756,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 3.19811320754717,
+     "units_entrance": 59,
+     "units_mid": 105,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.21666666666666667,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.6144578313253013,
+     "units_entrance": 26,
+     "units_mid": 94,
+     "walk_ticks": 0.04819277108433735
+    },
+    {
+     "entrance_unit_share": 0.20754716981132076,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 3.490740740740741,
+     "units_entrance": 33,
+     "units_mid": 126,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.2785714285714286,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 4.268041237113402,
+     "units_entrance": 39,
+     "units_mid": 101,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.24812030075187969,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 4.0978260869565215,
+     "units_entrance": 33,
+     "units_mid": 100,
+     "walk_ticks": 0.021739130434782608
+    },
+    {
+     "entrance_unit_share": 0.24475524475524477,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 3.5425531914893615,
+     "units_entrance": 35,
+     "units_mid": 108,
+     "walk_ticks": 0.10638297872340426
+    },
+    {
+     "entrance_unit_share": 0.4713375796178344,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 4.045871559633028,
+     "units_entrance": 74,
+     "units_mid": 83,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.43478260869565216,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 4.21505376344086,
+     "units_entrance": 60,
+     "units_mid": 78,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.2827586206896552,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 3.663157894736842,
+     "units_entrance": 41,
+     "units_mid": 104,
+     "walk_ticks": 0.042105263157894736
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "k": 2,
+   "rated": 16,
+   "rated_by_position": {
+    "entrance": 1,
+    "mid": 15
+   },
+   "seed": 101
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.8536585365853658,
+     "exposed_entrance": 12,
+     "exposed_mid": 6,
+     "mid_exposed_share": 0.16666666666666666,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 2.2788461538461537,
+     "units_entrance": 140,
+     "units_mid": 24,
+     "walk_ticks": 0.1346153846153846
+    },
+    {
+     "entrance_unit_share": 0.6861313868613139,
+     "exposed_entrance": 12,
+     "exposed_mid": 10,
+     "mid_exposed_share": 0.2777777777777778,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.4578313253012047,
+     "units_entrance": 94,
+     "units_mid": 43,
+     "walk_ticks": 0.2891566265060241
+    },
+    {
+     "entrance_unit_share": 0.8345323741007195,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.5425531914893615,
+     "units_entrance": 116,
+     "units_mid": 23,
+     "walk_ticks": 0.3404255319148936
+    },
+    {
+     "entrance_unit_share": 0.7467532467532467,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.5943396226415096,
+     "units_entrance": 115,
+     "units_mid": 39,
+     "walk_ticks": 0.4339622641509434
+    },
+    {
+     "entrance_unit_share": 0.7832167832167832,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 2.3333333333333335,
+     "units_entrance": 112,
+     "units_mid": 31,
+     "walk_ticks": 0.30303030303030304
+    },
+    {
+     "entrance_unit_share": 0.8662420382165605,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.0784313725490198,
+     "units_entrance": 136,
+     "units_mid": 21,
+     "walk_ticks": 0.29411764705882354
+    },
+    {
+     "entrance_unit_share": 0.8445945945945946,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 2.4444444444444446,
+     "units_entrance": 125,
+     "units_mid": 23,
+     "walk_ticks": 0.32323232323232326
+    },
+    {
+     "entrance_unit_share": 0.7862595419847328,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 3.1648351648351647,
+     "units_entrance": 103,
+     "units_mid": 28,
+     "walk_ticks": 0.08791208791208792
+    },
+    {
+     "entrance_unit_share": 0.8243243243243243,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 2.4242424242424243,
+     "units_entrance": 122,
+     "units_mid": 26,
+     "walk_ticks": 0.5252525252525253
+    },
+    {
+     "entrance_unit_share": 0.8444444444444444,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 2.617021276595745,
+     "units_entrance": 114,
+     "units_mid": 21,
+     "walk_ticks": 0.2127659574468085
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "k": 2,
+   "rated": 15,
+   "rated_by_position": {
+    "entrance": 6,
+    "mid": 9
+   },
+   "seed": 102
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.9019607843137255,
+     "exposed_entrance": 12,
+     "exposed_mid": 6,
+     "mid_exposed_share": 0.16666666666666666,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 2.1881188118811883,
+     "units_entrance": 138,
+     "units_mid": 15,
+     "walk_ticks": 0.31683168316831684
+    },
+    {
+     "entrance_unit_share": 0.7723577235772358,
+     "exposed_entrance": 12,
+     "exposed_mid": 8,
+     "mid_exposed_share": 0.2222222222222222,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 2.3058823529411763,
+     "units_entrance": 95,
+     "units_mid": 28,
+     "walk_ticks": 0.07058823529411765
+    },
+    {
+     "entrance_unit_share": 0.8263473053892215,
+     "exposed_entrance": 12,
+     "exposed_mid": 10,
+     "mid_exposed_share": 0.2777777777777778,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 2.123809523809524,
+     "units_entrance": 138,
+     "units_mid": 29,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8553459119496856,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.5,
+     "seen_mean": 2.3333333333333335,
+     "units_entrance": 136,
+     "units_mid": 23,
+     "walk_ticks": 0.20202020202020202
+    },
+    {
+     "entrance_unit_share": 0.8493150684931506,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6111111111111112,
+     "seen_mean": 2.520408163265306,
+     "units_entrance": 124,
+     "units_mid": 22,
+     "walk_ticks": 0.16326530612244897
+    },
+    {
+     "entrance_unit_share": 0.8562091503267973,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.7,
+     "units_entrance": 131,
+     "units_mid": 22,
+     "walk_ticks": 0.16
+    },
+    {
+     "entrance_unit_share": 0.9551282051282052,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.0849056603773586,
+     "units_entrance": 149,
+     "units_mid": 7,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.87248322147651,
+     "exposed_entrance": 12,
+     "exposed_mid": 2,
+     "mid_exposed_share": 0.05555555555555555,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.24,
+     "units_entrance": 130,
+     "units_mid": 19,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.8113207547169812,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.3796296296296298,
+     "units_entrance": 129,
+     "units_mid": 30,
+     "walk_ticks": 0.2777777777777778
+    },
+    {
+     "entrance_unit_share": 0.8918918918918919,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 2.4563106796116503,
+     "units_entrance": 132,
+     "units_mid": 16,
+     "walk_ticks": 0.17475728155339806
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 2,
+   "rated": 13,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 8
+   },
+   "seed": 103
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.6808510638297872,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 3.1414141414141414,
+     "units_entrance": 96,
+     "units_mid": 45,
+     "walk_ticks": 0.5050505050505051
+    },
+    {
+     "entrance_unit_share": 0.6385542168674698,
+     "exposed_entrance": 12,
+     "exposed_mid": 14,
+     "mid_exposed_share": 0.3888888888888889,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 2.990740740740741,
+     "units_entrance": 106,
+     "units_mid": 60,
+     "walk_ticks": 0.3333333333333333
+    },
+    {
+     "entrance_unit_share": 0.6959459459459459,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.267326732673267,
+     "units_entrance": 103,
+     "units_mid": 45,
+     "walk_ticks": 0.49504950495049505
+    },
+    {
+     "entrance_unit_share": 0.7692307692307693,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.0462962962962963,
+     "units_entrance": 120,
+     "units_mid": 36,
+     "walk_ticks": 0.16666666666666666
+    },
+    {
+     "entrance_unit_share": 0.7902097902097902,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.1595744680851063,
+     "units_entrance": 113,
+     "units_mid": 30,
+     "walk_ticks": 0.723404255319149
+    },
+    {
+     "entrance_unit_share": 0.7318840579710145,
+     "exposed_entrance": 12,
+     "exposed_mid": 16,
+     "mid_exposed_share": 0.4444444444444444,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.134020618556701,
+     "units_entrance": 101,
+     "units_mid": 37,
+     "walk_ticks": 0.08247422680412371
+    },
+    {
+     "entrance_unit_share": 0.722972972972973,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.2641509433962264,
+     "units_entrance": 107,
+     "units_mid": 41,
+     "walk_ticks": 0.5849056603773585
+    },
+    {
+     "entrance_unit_share": 0.8356164383561644,
+     "exposed_entrance": 12,
+     "exposed_mid": 12,
+     "mid_exposed_share": 0.3333333333333333,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 2.585858585858586,
+     "units_entrance": 122,
+     "units_mid": 24,
+     "walk_ticks": 0.0
+    },
+    {
+     "entrance_unit_share": 0.7828947368421053,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.2244897959183674,
+     "units_entrance": 119,
+     "units_mid": 33,
+     "walk_ticks": 0.40816326530612246
+    },
+    {
+     "entrance_unit_share": 0.7837837837837838,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.0625,
+     "units_entrance": 116,
+     "units_mid": 32,
+     "walk_ticks": 0.375
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 2,
+   "rated": 12,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 7
+   },
+   "seed": 104
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.21604938271604937,
+     "exposed_entrance": 12,
+     "exposed_mid": 20,
+     "mid_exposed_share": 0.5555555555555556,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 3.7314814814814814,
+     "units_entrance": 35,
+     "units_mid": 127,
+     "walk_ticks": 0.5370370370370371
+    },
+    {
+     "entrance_unit_share": 0.3161290322580645,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.9611650485436893,
+     "units_entrance": 49,
+     "units_mid": 106,
+     "walk_ticks": 0.912621359223301
+    },
+    {
+     "entrance_unit_share": 0.3958333333333333,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 3.845360824742268,
+     "units_entrance": 57,
+     "units_mid": 87,
+     "walk_ticks": 1.1134020618556701
+    },
+    {
+     "entrance_unit_share": 0.26143790849673204,
+     "exposed_entrance": 12,
+     "exposed_mid": 34,
+     "mid_exposed_share": 0.9444444444444444,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.4423076923076925,
+     "units_entrance": 40,
+     "units_mid": 113,
+     "walk_ticks": 0.6730769230769231
+    },
+    {
+     "entrance_unit_share": 0.14615384615384616,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.1938775510204085,
+     "units_entrance": 19,
+     "units_mid": 111,
+     "walk_ticks": 0.4489795918367347
+    },
+    {
+     "entrance_unit_share": 0.2692307692307692,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.714285714285714,
+     "units_entrance": 42,
+     "units_mid": 114,
+     "walk_ticks": 0.5
+    },
+    {
+     "entrance_unit_share": 0.17829457364341086,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.725274725274725,
+     "units_entrance": 23,
+     "units_mid": 106,
+     "walk_ticks": 0.43956043956043955
+    },
+    {
+     "entrance_unit_share": 0.302158273381295,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.533333333333333,
+     "units_entrance": 42,
+     "units_mid": 97,
+     "walk_ticks": 0.5714285714285714
+    },
+    {
+     "entrance_unit_share": 0.26811594202898553,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.4953271028037385,
+     "units_entrance": 37,
+     "units_mid": 101,
+     "walk_ticks": 0.5420560747663551
+    },
+    {
+     "entrance_unit_share": 0.17857142857142858,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.892156862745098,
+     "units_entrance": 25,
+     "units_mid": 115,
+     "walk_ticks": 0.5686274509803921
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "k": 3,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "seed": 100
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.056338028169014086,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 3.769230769230769,
+     "units_entrance": 8,
+     "units_mid": 134,
+     "walk_ticks": 0.17582417582417584
+    },
+    {
+     "entrance_unit_share": 0.3231707317073171,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.5555555555555556,
+     "seen_mean": 3.9622641509433962,
+     "units_entrance": 53,
+     "units_mid": 111,
+     "walk_ticks": 0.7547169811320755
+    },
+    {
+     "entrance_unit_share": 0.13333333333333333,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 4.168674698795181,
+     "units_entrance": 16,
+     "units_mid": 104,
+     "walk_ticks": 0.40963855421686746
+    },
+    {
+     "entrance_unit_share": 0.1320754716981132,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 4.194444444444445,
+     "units_entrance": 21,
+     "units_mid": 138,
+     "walk_ticks": 0.46296296296296297
+    },
+    {
+     "entrance_unit_share": 0.2357142857142857,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 4.88659793814433,
+     "units_entrance": 33,
+     "units_mid": 107,
+     "walk_ticks": 0.4742268041237113
+    },
+    {
+     "entrance_unit_share": 0.25757575757575757,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 4.989130434782608,
+     "units_entrance": 34,
+     "units_mid": 98,
+     "walk_ticks": 0.6304347826086957
+    },
+    {
+     "entrance_unit_share": 0.22857142857142856,
+     "exposed_entrance": 12,
+     "exposed_mid": 34,
+     "mid_exposed_share": 0.9444444444444444,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 4.382978723404255,
+     "units_entrance": 32,
+     "units_mid": 108,
+     "walk_ticks": 0.6595744680851063
+    },
+    {
+     "entrance_unit_share": 0.31875,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.908256880733945,
+     "units_entrance": 51,
+     "units_mid": 109,
+     "walk_ticks": 0.6605504587155964
+    },
+    {
+     "entrance_unit_share": 0.35036496350364965,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.150537634408602,
+     "units_entrance": 48,
+     "units_mid": 89,
+     "walk_ticks": 0.6236559139784946
+    },
+    {
+     "entrance_unit_share": 0.2465753424657534,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.242105263157895,
+     "units_entrance": 36,
+     "units_mid": 110,
+     "walk_ticks": 0.5684210526315789
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "k": 3,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "seed": 101
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.5121951219512195,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 3.8365384615384617,
+     "units_entrance": 84,
+     "units_mid": 80,
+     "walk_ticks": 1.0192307692307692
+    },
+    {
+     "entrance_unit_share": 0.5109489051094891,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 3.710843373493976,
+     "units_entrance": 70,
+     "units_mid": 67,
+     "walk_ticks": 1.036144578313253
+    },
+    {
+     "entrance_unit_share": 0.49640287769784175,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 4.074468085106383,
+     "units_entrance": 69,
+     "units_mid": 70,
+     "walk_ticks": 1.148936170212766
+    },
+    {
+     "entrance_unit_share": 0.543046357615894,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.320754716981132,
+     "units_entrance": 82,
+     "units_mid": 69,
+     "walk_ticks": 1.0754716981132075
+    },
+    {
+     "entrance_unit_share": 0.5182481751824818,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.303030303030303,
+     "units_entrance": 71,
+     "units_mid": 66,
+     "walk_ticks": 1.1313131313131313
+    },
+    {
+     "entrance_unit_share": 0.5657894736842105,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.313725490196078,
+     "units_entrance": 86,
+     "units_mid": 66,
+     "walk_ticks": 1.0784313725490196
+    },
+    {
+     "entrance_unit_share": 0.5035971223021583,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.121212121212121,
+     "units_entrance": 70,
+     "units_mid": 69,
+     "walk_ticks": 1.0303030303030303
+    },
+    {
+     "entrance_unit_share": 0.5426356589147286,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.945054945054945,
+     "units_entrance": 70,
+     "units_mid": 59,
+     "walk_ticks": 1.032967032967033
+    },
+    {
+     "entrance_unit_share": 0.5277777777777778,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.6767676767676765,
+     "units_entrance": 76,
+     "units_mid": 68,
+     "walk_ticks": 1.1111111111111112
+    },
+    {
+     "entrance_unit_share": 0.5555555555555556,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.25531914893617,
+     "units_entrance": 70,
+     "units_mid": 56,
+     "walk_ticks": 1.0851063829787233
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "k": 3,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "seed": 102
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.5359477124183006,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 3.871287128712871,
+     "units_entrance": 82,
+     "units_mid": 71,
+     "walk_ticks": 1.4455445544554455
+    },
+    {
+     "entrance_unit_share": 0.4796747967479675,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.8941176470588235,
+     "units_entrance": 59,
+     "units_mid": 64,
+     "walk_ticks": 1.2
+    },
+    {
+     "entrance_unit_share": 0.49700598802395207,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 4.095238095238095,
+     "units_entrance": 83,
+     "units_mid": 84,
+     "walk_ticks": 1.3333333333333333
+    },
+    {
+     "entrance_unit_share": 0.5844155844155844,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 4.454545454545454,
+     "units_entrance": 90,
+     "units_mid": 64,
+     "walk_ticks": 1.5353535353535352
+    },
+    {
+     "entrance_unit_share": 0.5571428571428572,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.795918367346939,
+     "units_entrance": 78,
+     "units_mid": 62,
+     "walk_ticks": 1.2244897959183674
+    },
+    {
+     "entrance_unit_share": 0.5862068965517241,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.51,
+     "units_entrance": 85,
+     "units_mid": 60,
+     "walk_ticks": 1.3
+    },
+    {
+     "entrance_unit_share": 0.41379310344827586,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.443396226415095,
+     "units_entrance": 60,
+     "units_mid": 85,
+     "walk_ticks": 0.7924528301886793
+    },
+    {
+     "entrance_unit_share": 0.5,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.98,
+     "units_entrance": 70,
+     "units_mid": 70,
+     "walk_ticks": 0.92
+    },
+    {
+     "entrance_unit_share": 0.47058823529411764,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.027777777777778,
+     "units_entrance": 72,
+     "units_mid": 81,
+     "walk_ticks": 1.2592592592592593
+    },
+    {
+     "entrance_unit_share": 0.4825174825174825,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.388349514563107,
+     "units_entrance": 69,
+     "units_mid": 74,
+     "walk_ticks": 1.2621359223300972
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 3,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 103
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.6312056737588653,
+     "exposed_entrance": 12,
+     "exposed_mid": 18,
+     "mid_exposed_share": 0.5,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 4.03030303030303,
+     "units_entrance": 89,
+     "units_mid": 52,
+     "walk_ticks": 1.3131313131313131
+    },
+    {
+     "entrance_unit_share": 0.5481927710843374,
+     "exposed_entrance": 12,
+     "exposed_mid": 22,
+     "mid_exposed_share": 0.6111111111111112,
+     "rated_share_genuine": 0.6666666666666666,
+     "seen_mean": 3.962962962962963,
+     "units_entrance": 91,
+     "units_mid": 75,
+     "walk_ticks": 1.1111111111111112
+    },
+    {
+     "entrance_unit_share": 0.6148648648648649,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 4.425742574257426,
+     "units_entrance": 91,
+     "units_mid": 57,
+     "walk_ticks": 1.2277227722772277
+    },
+    {
+     "entrance_unit_share": 0.609271523178808,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 5.5,
+     "units_entrance": 92,
+     "units_mid": 59,
+     "walk_ticks": 1.1666666666666667
+    },
+    {
+     "entrance_unit_share": 0.7132867132867133,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.446808510638298,
+     "units_entrance": 102,
+     "units_mid": 41,
+     "walk_ticks": 1.5319148936170213
+    },
+    {
+     "entrance_unit_share": 0.6124031007751938,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.298969072164948,
+     "units_entrance": 79,
+     "units_mid": 50,
+     "walk_ticks": 1.1134020618556701
+    },
+    {
+     "entrance_unit_share": 0.6834532374100719,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.462264150943396,
+     "units_entrance": 95,
+     "units_mid": 44,
+     "walk_ticks": 1.320754716981132
+    },
+    {
+     "entrance_unit_share": 0.762589928057554,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.848484848484849,
+     "units_entrance": 106,
+     "units_mid": 33,
+     "walk_ticks": 1.393939393939394
+    },
+    {
+     "entrance_unit_share": 0.7103448275862069,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.918367346938775,
+     "units_entrance": 103,
+     "units_mid": 42,
+     "walk_ticks": 1.4081632653061225
+    },
+    {
+     "entrance_unit_share": 0.7430555555555556,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.729166666666667,
+     "units_entrance": 107,
+     "units_mid": 37,
+     "walk_ticks": 1.5
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 3,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 104
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.2345679012345679,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 4.222222222222222,
+     "units_entrance": 38,
+     "units_mid": 124,
+     "walk_ticks": 1.0185185185185186
+    },
+    {
+     "entrance_unit_share": 0.25161290322580643,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 4.718446601941747,
+     "units_entrance": 39,
+     "units_mid": 116,
+     "walk_ticks": 1.087378640776699
+    },
+    {
+     "entrance_unit_share": 0.2937062937062937,
+     "exposed_entrance": 12,
+     "exposed_mid": 34,
+     "mid_exposed_share": 0.9444444444444444,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.855670103092783,
+     "units_entrance": 42,
+     "units_mid": 101,
+     "walk_ticks": 1.2783505154639174
+    },
+    {
+     "entrance_unit_share": 0.19402985074626866,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.778846153846154,
+     "units_entrance": 26,
+     "units_mid": 108,
+     "walk_ticks": 0.7884615384615384
+    },
+    {
+     "entrance_unit_share": 0.19834710743801653,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.877551020408164,
+     "units_entrance": 24,
+     "units_mid": 97,
+     "walk_ticks": 0.9795918367346939
+    },
+    {
+     "entrance_unit_share": 0.2564102564102564,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.214285714285714,
+     "units_entrance": 40,
+     "units_mid": 116,
+     "walk_ticks": 0.875
+    },
+    {
+     "entrance_unit_share": 0.16535433070866143,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.461538461538462,
+     "units_entrance": 21,
+     "units_mid": 106,
+     "walk_ticks": 1.010989010989011
+    },
+    {
+     "entrance_unit_share": 0.1791044776119403,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.876190476190477,
+     "units_entrance": 24,
+     "units_mid": 110,
+     "walk_ticks": 0.49523809523809526
+    },
+    {
+     "entrance_unit_share": 0.27941176470588236,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.94392523364486,
+     "units_entrance": 38,
+     "units_mid": 98,
+     "walk_ticks": 0.7476635514018691
+    },
+    {
+     "entrance_unit_share": 0.17037037037037037,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.3431372549019605,
+     "units_entrance": 23,
+     "units_mid": 112,
+     "walk_ticks": 1.0980392156862746
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "k": 4,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "seed": 100
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.06338028169014084,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 4.428571428571429,
+     "units_entrance": 9,
+     "units_mid": 133,
+     "walk_ticks": 0.6373626373626373
+    },
+    {
+     "entrance_unit_share": 0.32926829268292684,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 4.320754716981132,
+     "units_entrance": 54,
+     "units_mid": 110,
+     "walk_ticks": 0.9056603773584906
+    },
+    {
+     "entrance_unit_share": 0.175,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 4.759036144578313,
+     "units_entrance": 21,
+     "units_mid": 99,
+     "walk_ticks": 0.963855421686747
+    },
+    {
+     "entrance_unit_share": 0.19078947368421054,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.268518518518518,
+     "units_entrance": 29,
+     "units_mid": 123,
+     "walk_ticks": 1.0185185185185186
+    },
+    {
+     "entrance_unit_share": 0.28225806451612906,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.34020618556701,
+     "units_entrance": 35,
+     "units_mid": 89,
+     "walk_ticks": 0.865979381443299
+    },
+    {
+     "entrance_unit_share": 0.28125,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.869565217391305,
+     "units_entrance": 36,
+     "units_mid": 92,
+     "walk_ticks": 1.326086956521739
+    },
+    {
+     "entrance_unit_share": 0.21897810218978103,
+     "exposed_entrance": 12,
+     "exposed_mid": 34,
+     "mid_exposed_share": 0.9444444444444444,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.127659574468085,
+     "units_entrance": 30,
+     "units_mid": 107,
+     "walk_ticks": 1.1914893617021276
+    },
+    {
+     "entrance_unit_share": 0.3227848101265823,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.26605504587156,
+     "units_entrance": 51,
+     "units_mid": 107,
+     "walk_ticks": 0.7706422018348624
+    },
+    {
+     "entrance_unit_share": 0.35036496350364965,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.150537634408602,
+     "units_entrance": 48,
+     "units_mid": 89,
+     "walk_ticks": 0.6236559139784946
+    },
+    {
+     "entrance_unit_share": 0.2857142857142857,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.852631578947369,
+     "units_entrance": 38,
+     "units_mid": 95,
+     "walk_ticks": 1.3263157894736841
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "k": 4,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "seed": 101
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.5121951219512195,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.5,
+     "seen_mean": 4.1826923076923075,
+     "units_entrance": 84,
+     "units_mid": 80,
+     "walk_ticks": 1.3076923076923077
+    },
+    {
+     "entrance_unit_share": 0.5109489051094891,
+     "exposed_entrance": 12,
+     "exposed_mid": 24,
+     "mid_exposed_share": 0.6666666666666666,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 4.542168674698795,
+     "units_entrance": 70,
+     "units_mid": 67,
+     "walk_ticks": 1.8313253012048192
+    },
+    {
+     "entrance_unit_share": 0.45323741007194246,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 4.8936170212765955,
+     "units_entrance": 63,
+     "units_mid": 76,
+     "walk_ticks": 1.6382978723404256
+    },
+    {
+     "entrance_unit_share": 0.4897959183673469,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.339622641509434,
+     "units_entrance": 72,
+     "units_mid": 75,
+     "walk_ticks": 1.6981132075471699
+    },
+    {
+     "entrance_unit_share": 0.5038167938931297,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.373737373737374,
+     "units_entrance": 66,
+     "units_mid": 65,
+     "walk_ticks": 1.5353535353535352
+    },
+    {
+     "entrance_unit_share": 0.5100671140939598,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.921568627450981,
+     "units_entrance": 76,
+     "units_mid": 73,
+     "walk_ticks": 1.3725490196078431
+    },
+    {
+     "entrance_unit_share": 0.5251798561151079,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.606060606060606,
+     "units_entrance": 73,
+     "units_mid": 66,
+     "walk_ticks": 1.5757575757575757
+    },
+    {
+     "entrance_unit_share": 0.5343511450381679,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.208791208791209,
+     "units_entrance": 70,
+     "units_mid": 61,
+     "walk_ticks": 1.3186813186813187
+    },
+    {
+     "entrance_unit_share": 0.5734265734265734,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.353535353535354,
+     "units_entrance": 82,
+     "units_mid": 61,
+     "walk_ticks": 2.04040404040404
+    },
+    {
+     "entrance_unit_share": 0.5833333333333334,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.617021276595745,
+     "units_entrance": 70,
+     "units_mid": 50,
+     "walk_ticks": 1.5957446808510638
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "k": 4,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "seed": 102
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.49673202614379086,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.3333333333333333,
+     "seen_mean": 4.297029702970297,
+     "units_entrance": 76,
+     "units_mid": 77,
+     "walk_ticks": 2.0594059405940595
+    },
+    {
+     "entrance_unit_share": 0.42276422764227645,
+     "exposed_entrance": 12,
+     "exposed_mid": 28,
+     "mid_exposed_share": 0.7777777777777778,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 4.4,
+     "units_entrance": 52,
+     "units_mid": 71,
+     "walk_ticks": 1.811764705882353
+    },
+    {
+     "entrance_unit_share": 0.47904191616766467,
+     "exposed_entrance": 12,
+     "exposed_mid": 34,
+     "mid_exposed_share": 0.9444444444444444,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 5.038095238095238,
+     "units_entrance": 80,
+     "units_mid": 87,
+     "walk_ticks": 1.8857142857142857
+    },
+    {
+     "entrance_unit_share": 0.5592105263157895,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.606060606060606,
+     "units_entrance": 85,
+     "units_mid": 67,
+     "walk_ticks": 2.505050505050505
+    },
+    {
+     "entrance_unit_share": 0.4846153846153846,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.316326530612245,
+     "units_entrance": 63,
+     "units_mid": 67,
+     "walk_ticks": 1.5714285714285714
+    },
+    {
+     "entrance_unit_share": 0.5255474452554745,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.28,
+     "units_entrance": 72,
+     "units_mid": 65,
+     "walk_ticks": 2.16
+    },
+    {
+     "entrance_unit_share": 0.4027777777777778,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.528301886792453,
+     "units_entrance": 58,
+     "units_mid": 86,
+     "walk_ticks": 0.8679245283018868
+    },
+    {
+     "entrance_unit_share": 0.463768115942029,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.35,
+     "units_entrance": 64,
+     "units_mid": 74,
+     "walk_ticks": 0.98
+    },
+    {
+     "entrance_unit_share": 0.43333333333333335,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.703703703703703,
+     "units_entrance": 65,
+     "units_mid": 85,
+     "walk_ticks": 1.8518518518518519
+    },
+    {
+     "entrance_unit_share": 0.44680851063829785,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.757281553398058,
+     "units_entrance": 63,
+     "units_mid": 78,
+     "walk_ticks": 1.4563106796116505
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 4,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 103
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.49645390070921985,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 4.545454545454546,
+     "units_entrance": 70,
+     "units_mid": 71,
+     "walk_ticks": 1.4141414141414141
+    },
+    {
+     "entrance_unit_share": 0.4939759036144578,
+     "exposed_entrance": 12,
+     "exposed_mid": 26,
+     "mid_exposed_share": 0.7222222222222222,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 4.4907407407407405,
+     "units_entrance": 82,
+     "units_mid": 84,
+     "walk_ticks": 1.4074074074074074
+    },
+    {
+     "entrance_unit_share": 0.5337837837837838,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 5.0594059405940595,
+     "units_entrance": 79,
+     "units_mid": 69,
+     "walk_ticks": 1.4653465346534653
+    },
+    {
+     "entrance_unit_share": 0.5562913907284768,
+     "exposed_entrance": 12,
+     "exposed_mid": 34,
+     "mid_exposed_share": 0.9444444444444444,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.62037037037037,
+     "units_entrance": 84,
+     "units_mid": 67,
+     "walk_ticks": 1.2222222222222223
+    },
+    {
+     "entrance_unit_share": 0.6056338028169014,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.159574468085107,
+     "units_entrance": 86,
+     "units_mid": 56,
+     "walk_ticks": 1.9787234042553192
+    },
+    {
+     "entrance_unit_share": 0.5968992248062015,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.257731958762887,
+     "units_entrance": 77,
+     "units_mid": 52,
+     "walk_ticks": 1.3608247422680413
+    },
+    {
+     "entrance_unit_share": 0.5481481481481482,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 6.2075471698113205,
+     "units_entrance": 74,
+     "units_mid": 61,
+     "walk_ticks": 1.4528301886792452
+    },
+    {
+     "entrance_unit_share": 0.7898550724637681,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.444444444444445,
+     "units_entrance": 109,
+     "units_mid": 29,
+     "walk_ticks": 1.8181818181818181
+    },
+    {
+     "entrance_unit_share": 0.496551724137931,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.561224489795919,
+     "units_entrance": 72,
+     "units_mid": 73,
+     "walk_ticks": 1.816326530612245
+    },
+    {
+     "entrance_unit_share": 0.5957446808510638,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 5.895833333333333,
+     "units_entrance": 84,
+     "units_mid": 57,
+     "walk_ticks": 1.5625
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 4,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 104
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.1728395061728395,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 6.277777777777778,
+     "units_entrance": 28,
+     "units_mid": 134,
+     "walk_ticks": 2.5555555555555554
+    },
+    {
+     "entrance_unit_share": 0.13548387096774195,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 6.553398058252427,
+     "units_entrance": 21,
+     "units_mid": 134,
+     "walk_ticks": 2.7766990291262137
+    },
+    {
+     "entrance_unit_share": 0.3125,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.268041237113402,
+     "units_entrance": 45,
+     "units_mid": 99,
+     "walk_ticks": 2.7010309278350517
+    },
+    {
+     "entrance_unit_share": 0.16666666666666666,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.009615384615385,
+     "units_entrance": 21,
+     "units_mid": 105,
+     "walk_ticks": 1.9038461538461537
+    },
+    {
+     "entrance_unit_share": 0.18421052631578946,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.23469387755102,
+     "units_entrance": 21,
+     "units_mid": 93,
+     "walk_ticks": 2.061224489795918
+    },
+    {
+     "entrance_unit_share": 0.26,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.508928571428571,
+     "units_entrance": 39,
+     "units_mid": 111,
+     "walk_ticks": 2.107142857142857
+    },
+    {
+     "entrance_unit_share": 0.1721311475409836,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.967032967032967,
+     "units_entrance": 21,
+     "units_mid": 101,
+     "walk_ticks": 2.5054945054945055
+    },
+    {
+     "entrance_unit_share": 0.21705426356589147,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.466666666666667,
+     "units_entrance": 28,
+     "units_mid": 101,
+     "walk_ticks": 2.1142857142857143
+    },
+    {
+     "entrance_unit_share": 0.25396825396825395,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.19626168224299,
+     "units_entrance": 32,
+     "units_mid": 94,
+     "walk_ticks": 1.8504672897196262
+    },
+    {
+     "entrance_unit_share": 0.12096774193548387,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.666666666666666,
+     "units_entrance": 15,
+     "units_mid": 109,
+     "walk_ticks": 2.176470588235294
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "k": 6,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "seed": 100
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.04929577464788732,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 6.384615384615385,
+     "units_entrance": 7,
+     "units_mid": 135,
+     "walk_ticks": 2.043956043956044
+    },
+    {
+     "entrance_unit_share": 0.21951219512195122,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 6.30188679245283,
+     "units_entrance": 36,
+     "units_mid": 128,
+     "walk_ticks": 2.4150943396226414
+    },
+    {
+     "entrance_unit_share": 0.1391304347826087,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.313253012048193,
+     "units_entrance": 16,
+     "units_mid": 99,
+     "walk_ticks": 2.144578313253012
+    },
+    {
+     "entrance_unit_share": 0.1527777777777778,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.5,
+     "units_entrance": 22,
+     "units_mid": 122,
+     "walk_ticks": 2.425925925925926
+    },
+    {
+     "entrance_unit_share": 0.17391304347826086,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.0,
+     "units_entrance": 20,
+     "units_mid": 95,
+     "walk_ticks": 1.9175257731958764
+    },
+    {
+     "entrance_unit_share": 0.21008403361344538,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.315217391304348,
+     "units_entrance": 25,
+     "units_mid": 94,
+     "walk_ticks": 1.934782608695652
+    },
+    {
+     "entrance_unit_share": 0.1889763779527559,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.148936170212766,
+     "units_entrance": 24,
+     "units_mid": 103,
+     "walk_ticks": 2.297872340425532
+    },
+    {
+     "entrance_unit_share": 0.267515923566879,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.5963302752293576,
+     "units_entrance": 42,
+     "units_mid": 115,
+     "walk_ticks": 2.36697247706422
+    },
+    {
+     "entrance_unit_share": 0.2878787878787879,
+     "exposed_entrance": 12,
+     "exposed_mid": 32,
+     "mid_exposed_share": 0.8888888888888888,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.634408602150538,
+     "units_entrance": 38,
+     "units_mid": 94,
+     "walk_ticks": 1.935483870967742
+    },
+    {
+     "entrance_unit_share": 0.15789473684210525,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.16842105263158,
+     "units_entrance": 21,
+     "units_mid": 112,
+     "walk_ticks": 1.8105263157894738
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "k": 6,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "seed": 101
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.5121951219512195,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 6.1923076923076925,
+     "units_entrance": 84,
+     "units_mid": 80,
+     "walk_ticks": 2.923076923076923
+    },
+    {
+     "entrance_unit_share": 0.2846715328467153,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 6.409638554216867,
+     "units_entrance": 39,
+     "units_mid": 98,
+     "walk_ticks": 3.5421686746987953
+    },
+    {
+     "entrance_unit_share": 0.4855072463768116,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.042553191489362,
+     "units_entrance": 67,
+     "units_mid": 71,
+     "walk_ticks": 3.595744680851064
+    },
+    {
+     "entrance_unit_share": 0.5036496350364964,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.89622641509434,
+     "units_entrance": 69,
+     "units_mid": 68,
+     "walk_ticks": 3.792452830188679
+    },
+    {
+     "entrance_unit_share": 0.4881889763779528,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.575757575757576,
+     "units_entrance": 62,
+     "units_mid": 65,
+     "walk_ticks": 3.7777777777777777
+    },
+    {
+     "entrance_unit_share": 0.5547945205479452,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.068627450980392,
+     "units_entrance": 81,
+     "units_mid": 65,
+     "walk_ticks": 2.843137254901961
+    },
+    {
+     "entrance_unit_share": 0.5267175572519084,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.717171717171717,
+     "units_entrance": 69,
+     "units_mid": 62,
+     "walk_ticks": 3.6161616161616164
+    },
+    {
+     "entrance_unit_share": 0.4666666666666667,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.637362637362638,
+     "units_entrance": 56,
+     "units_mid": 64,
+     "walk_ticks": 2.681318681318681
+    },
+    {
+     "entrance_unit_share": 0.49230769230769234,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.04040404040404,
+     "units_entrance": 64,
+     "units_mid": 66,
+     "walk_ticks": 3.7373737373737375
+    },
+    {
+     "entrance_unit_share": 0.5221238938053098,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.606382978723405,
+     "units_entrance": 59,
+     "units_mid": 54,
+     "walk_ticks": 2.872340425531915
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "k": 6,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "seed": 102
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.3333333333333333,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 6.445544554455446,
+     "units_entrance": 51,
+     "units_mid": 102,
+     "walk_ticks": 3.4455445544554455
+    },
+    {
+     "entrance_unit_share": 0.2682926829268293,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 6.5058823529411764,
+     "units_entrance": 33,
+     "units_mid": 90,
+     "walk_ticks": 3.5294117647058822
+    },
+    {
+     "entrance_unit_share": 0.1320754716981132,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 7.619047619047619,
+     "units_entrance": 21,
+     "units_mid": 138,
+     "walk_ticks": 3.0095238095238095
+    },
+    {
+     "entrance_unit_share": 0.2896551724137931,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.04040404040404,
+     "units_entrance": 42,
+     "units_mid": 103,
+     "walk_ticks": 3.7373737373737375
+    },
+    {
+     "entrance_unit_share": 0.23622047244094488,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.39795918367347,
+     "units_entrance": 30,
+     "units_mid": 97,
+     "walk_ticks": 2.979591836734694
+    },
+    {
+     "entrance_unit_share": 0.22727272727272727,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.51,
+     "units_entrance": 30,
+     "units_mid": 102,
+     "walk_ticks": 3.12
+    },
+    {
+     "entrance_unit_share": 0.22900763358778625,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.575471698113208,
+     "units_entrance": 30,
+     "units_mid": 101,
+     "walk_ticks": 2.339622641509434
+    },
+    {
+     "entrance_unit_share": 0.28225806451612906,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.97,
+     "units_entrance": 35,
+     "units_mid": 89,
+     "walk_ticks": 2.0
+    },
+    {
+     "entrance_unit_share": 0.23076923076923078,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.25,
+     "units_entrance": 33,
+     "units_mid": 110,
+     "walk_ticks": 2.7037037037037037
+    },
+    {
+     "entrance_unit_share": 0.20588235294117646,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.427184466019417,
+     "units_entrance": 28,
+     "units_mid": 108,
+     "walk_ticks": 2.5825242718446604
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 6,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 103
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.3120567375886525,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 6.282828282828283,
+     "units_entrance": 44,
+     "units_mid": 97,
+     "walk_ticks": 2.282828282828283
+    },
+    {
+     "entrance_unit_share": 0.4036144578313253,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 6.296296296296297,
+     "units_entrance": 67,
+     "units_mid": 99,
+     "walk_ticks": 3.2962962962962963
+    },
+    {
+     "entrance_unit_share": 0.1554054054054054,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.2772277227722775,
+     "units_entrance": 23,
+     "units_mid": 125,
+     "walk_ticks": 1.881188118811881
+    },
+    {
+     "entrance_unit_share": 0.3722627737226277,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.12037037037037,
+     "units_entrance": 51,
+     "units_mid": 86,
+     "walk_ticks": 2.1296296296296298
+    },
+    {
+     "entrance_unit_share": 0.3828125,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.24468085106383,
+     "units_entrance": 49,
+     "units_mid": 79,
+     "walk_ticks": 2.106382978723404
+    },
+    {
+     "entrance_unit_share": 0.4214876033057851,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.804123711340207,
+     "units_entrance": 51,
+     "units_mid": 70,
+     "walk_ticks": 2.3711340206185567
+    },
+    {
+     "entrance_unit_share": 0.40310077519379844,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.226415094339623,
+     "units_entrance": 52,
+     "units_mid": 77,
+     "walk_ticks": 2.509433962264151
+    },
+    {
+     "entrance_unit_share": 0.5153846153846153,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 8.262626262626263,
+     "units_entrance": 67,
+     "units_mid": 63,
+     "walk_ticks": 2.404040404040404
+    },
+    {
+     "entrance_unit_share": 0.45454545454545453,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.23469387755102,
+     "units_entrance": 65,
+     "units_mid": 78,
+     "walk_ticks": 3.0408163265306123
+    },
+    {
+     "entrance_unit_share": 0.42142857142857143,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 7.541666666666667,
+     "units_entrance": 59,
+     "units_mid": 81,
+     "walk_ticks": 2.8958333333333335
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 6,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 104
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.20987654320987653,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.4444444444444444,
+     "seen_mean": 8.36111111111111,
+     "units_entrance": 34,
+     "units_mid": 128,
+     "walk_ticks": 3.8333333333333335
+    },
+    {
+     "entrance_unit_share": 0.0967741935483871,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.7777777777777778,
+     "seen_mean": 8.485436893203884,
+     "units_entrance": 15,
+     "units_mid": 140,
+     "walk_ticks": 2.7766990291262137
+    },
+    {
+     "entrance_unit_share": 0.06766917293233082,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.8888888888888888,
+     "seen_mean": 9.597938144329897,
+     "units_entrance": 9,
+     "units_mid": 124,
+     "walk_ticks": 4.371134020618556
+    },
+    {
+     "entrance_unit_share": 0.3546099290780142,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.317307692307692,
+     "units_entrance": 50,
+     "units_mid": 91,
+     "walk_ticks": 4.153846153846154
+    },
+    {
+     "entrance_unit_share": 0.125,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.755102040816327,
+     "units_entrance": 14,
+     "units_mid": 98,
+     "walk_ticks": 2.693877551020408
+    },
+    {
+     "entrance_unit_share": 0.14285714285714285,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.035714285714286,
+     "units_entrance": 21,
+     "units_mid": 126,
+     "walk_ticks": 2.767857142857143
+    },
+    {
+     "entrance_unit_share": 0.14035087719298245,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.10989010989011,
+     "units_entrance": 16,
+     "units_mid": 98,
+     "walk_ticks": 3.8461538461538463
+    },
+    {
+     "entrance_unit_share": 0.25196850393700787,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.323809523809524,
+     "units_entrance": 32,
+     "units_mid": 95,
+     "walk_ticks": 3.257142857142857
+    },
+    {
+     "entrance_unit_share": 0.25203252032520324,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.69158878504673,
+     "units_entrance": 31,
+     "units_mid": 92,
+     "walk_ticks": 3.046728971962617
+    },
+    {
+     "entrance_unit_share": 0.12605042016806722,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.401960784313726,
+     "units_entrance": 15,
+     "units_mid": 104,
+     "walk_ticks": 2.9215686274509802
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "k": 8,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 4,
+    "mid": 14
+   },
+   "seed": 100
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.035211267605633804,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 8.461538461538462,
+     "units_entrance": 5,
+     "units_mid": 137,
+     "walk_ticks": 3.032967032967033
+    },
+    {
+     "entrance_unit_share": 0.07975460122699386,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 8.358490566037736,
+     "units_entrance": 13,
+     "units_mid": 150,
+     "walk_ticks": 4.0
+    },
+    {
+     "entrance_unit_share": 0.13445378151260504,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 8.963855421686747,
+     "units_entrance": 16,
+     "units_mid": 103,
+     "walk_ticks": 4.144578313253012
+    },
+    {
+     "entrance_unit_share": 0.10738255033557047,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.185185185185185,
+     "units_entrance": 16,
+     "units_mid": 133,
+     "walk_ticks": 4.314814814814815
+    },
+    {
+     "entrance_unit_share": 0.2037037037037037,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.907216494845361,
+     "units_entrance": 22,
+     "units_mid": 86,
+     "walk_ticks": 2.556701030927835
+    },
+    {
+     "entrance_unit_share": 0.20175438596491227,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.141304347826088,
+     "units_entrance": 23,
+     "units_mid": 91,
+     "walk_ticks": 2.9782608695652173
+    },
+    {
+     "entrance_unit_share": 0.18333333333333332,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.872340425531915,
+     "units_entrance": 22,
+     "units_mid": 98,
+     "walk_ticks": 3.9574468085106385
+    },
+    {
+     "entrance_unit_share": 0.22972972972972974,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.81651376146789,
+     "units_entrance": 34,
+     "units_mid": 114,
+     "walk_ticks": 3.0642201834862384
+    },
+    {
+     "entrance_unit_share": 0.17829457364341086,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.698924731182796,
+     "units_entrance": 23,
+     "units_mid": 106,
+     "walk_ticks": 2.5591397849462365
+    },
+    {
+     "entrance_unit_share": 0.13385826771653545,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.68421052631579,
+     "units_entrance": 17,
+     "units_mid": 110,
+     "walk_ticks": 3.1578947368421053
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "k": 8,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 1,
+    "mid": 17
+   },
+   "seed": 101
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.5121951219512195,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 8.307692307692308,
+     "units_entrance": 84,
+     "units_mid": 80,
+     "walk_ticks": 4.9423076923076925
+    },
+    {
+     "entrance_unit_share": 0.2,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 8.674698795180722,
+     "units_entrance": 27,
+     "units_mid": 108,
+     "walk_ticks": 4.771084337349397
+    },
+    {
+     "entrance_unit_share": 0.41911764705882354,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.180851063829786,
+     "units_entrance": 57,
+     "units_mid": 79,
+     "walk_ticks": 5.319148936170213
+    },
+    {
+     "entrance_unit_share": 0.2923076923076923,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.915094339622641,
+     "units_entrance": 38,
+     "units_mid": 92,
+     "walk_ticks": 4.264150943396227
+    },
+    {
+     "entrance_unit_share": 0.35398230088495575,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.06060606060606,
+     "units_entrance": 40,
+     "units_mid": 73,
+     "walk_ticks": 5.03030303030303
+    },
+    {
+     "entrance_unit_share": 0.37404580152671757,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.852941176470589,
+     "units_entrance": 49,
+     "units_mid": 82,
+     "walk_ticks": 3.764705882352941
+    },
+    {
+     "entrance_unit_share": 0.4838709677419355,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.171717171717171,
+     "units_entrance": 60,
+     "units_mid": 64,
+     "walk_ticks": 5.292929292929293
+    },
+    {
+     "entrance_unit_share": 0.4594594594594595,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.241758241758241,
+     "units_entrance": 51,
+     "units_mid": 60,
+     "walk_ticks": 4.241758241758242
+    },
+    {
+     "entrance_unit_share": 0.2857142857142857,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.262626262626263,
+     "units_entrance": 34,
+     "units_mid": 85,
+     "walk_ticks": 3.95959595959596
+    },
+    {
+     "entrance_unit_share": 0.35454545454545455,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.297872340425531,
+     "units_entrance": 39,
+     "units_mid": 71,
+     "walk_ticks": 3.404255319148936
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "k": 8,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 6,
+    "mid": 12
+   },
+   "seed": 102
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.28104575163398693,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.3888888888888889,
+     "seen_mean": 8.584158415841584,
+     "units_entrance": 43,
+     "units_mid": 110,
+     "walk_ticks": 3.782178217821782
+    },
+    {
+     "entrance_unit_share": 0.1652892561983471,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.7222222222222222,
+     "seen_mean": 8.51764705882353,
+     "units_entrance": 20,
+     "units_mid": 101,
+     "walk_ticks": 5.023529411764706
+    },
+    {
+     "entrance_unit_share": 0.1437125748502994,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.9444444444444444,
+     "seen_mean": 8.733333333333333,
+     "units_entrance": 24,
+     "units_mid": 143,
+     "walk_ticks": 3.961904761904762
+    },
+    {
+     "entrance_unit_share": 0.1773049645390071,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.94949494949495,
+     "units_entrance": 25,
+     "units_mid": 116,
+     "walk_ticks": 5.1313131313131315
+    },
+    {
+     "entrance_unit_share": 0.2283464566929134,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.020408163265307,
+     "units_entrance": 29,
+     "units_mid": 98,
+     "walk_ticks": 3.9591836734693877
+    },
+    {
+     "entrance_unit_share": 0.18518518518518517,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.84,
+     "units_entrance": 25,
+     "units_mid": 110,
+     "walk_ticks": 4.18
+    },
+    {
+     "entrance_unit_share": 0.17293233082706766,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.820754716981131,
+     "units_entrance": 23,
+     "units_mid": 110,
+     "walk_ticks": 2.9056603773584904
+    },
+    {
+     "entrance_unit_share": 0.20491803278688525,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.41,
+     "units_entrance": 25,
+     "units_mid": 97,
+     "walk_ticks": 2.74
+    },
+    {
+     "entrance_unit_share": 0.16058394160583941,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.277777777777779,
+     "units_entrance": 22,
+     "units_mid": 115,
+     "walk_ticks": 3.888888888888889
+    },
+    {
+     "entrance_unit_share": 0.13533834586466165,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.96116504854369,
+     "units_entrance": 18,
+     "units_mid": 115,
+     "walk_ticks": 3.3980582524271843
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 8,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 103
+  },
+  {
+   "days": [
+    {
+     "entrance_unit_share": 0.20567375886524822,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.5,
+     "seen_mean": 8.323232323232324,
+     "units_entrance": 29,
+     "units_mid": 112,
+     "walk_ticks": 3.01010101010101
+    },
+    {
+     "entrance_unit_share": 0.3493975903614458,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 0.8333333333333334,
+     "seen_mean": 8.435185185185185,
+     "units_entrance": 58,
+     "units_mid": 108,
+     "walk_ticks": 5.388888888888889
+    },
+    {
+     "entrance_unit_share": 0.15151515151515152,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.96039603960396,
+     "units_entrance": 20,
+     "units_mid": 112,
+     "walk_ticks": 3.00990099009901
+    },
+    {
+     "entrance_unit_share": 0.23076923076923078,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.574074074074074,
+     "units_entrance": 30,
+     "units_mid": 100,
+     "walk_ticks": 3.3703703703703702
+    },
+    {
+     "entrance_unit_share": 0.27350427350427353,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.46808510638298,
+     "units_entrance": 32,
+     "units_mid": 85,
+     "walk_ticks": 3.127659574468085
+    },
+    {
+     "entrance_unit_share": 0.3392857142857143,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.814432989690722,
+     "units_entrance": 38,
+     "units_mid": 74,
+     "walk_ticks": 3.443298969072165
+    },
+    {
+     "entrance_unit_share": 0.27350427350427353,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.556603773584905,
+     "units_entrance": 32,
+     "units_mid": 85,
+     "walk_ticks": 3.4150943396226414
+    },
+    {
+     "entrance_unit_share": 0.272,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.1010101010101,
+     "units_entrance": 34,
+     "units_mid": 91,
+     "walk_ticks": 2.808080808080808
+    },
+    {
+     "entrance_unit_share": 0.26865671641791045,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 9.581632653061224,
+     "units_entrance": 36,
+     "units_mid": 98,
+     "walk_ticks": 3.857142857142857
+    },
+    {
+     "entrance_unit_share": 0.22950819672131148,
+     "exposed_entrance": 12,
+     "exposed_mid": 36,
+     "mid_exposed_share": 1.0,
+     "rated_share_genuine": 1.0,
+     "seen_mean": 10.479166666666666,
+     "units_entrance": 28,
+     "units_mid": 94,
+     "walk_ticks": 3.4791666666666665
+    }
+   ],
+   "fallbacks": 0,
+   "genuine": 18,
+   "genuine_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "k": 8,
+   "rated": 18,
+   "rated_by_position": {
+    "entrance": 5,
+    "mid": 13
+   },
+   "seed": 104
+  }
+ ],
+ "table": [
+  {
+   "buyer_fallbacks": 0,
+   "entrance_unit_share": 0.7290888780378557,
+   "exposed_share": {
+    "entrance": 1.0,
+    "mid": 0.35
+   },
+   "genuine": 90,
+   "k": 1,
+   "per_seed": {
+    "100": [
+     14,
+     18
+    ],
+    "101": [
+     15,
+     18
+    ],
+    "102": [
+     12,
+     18
+    ],
+    "103": [
+     10,
+     18
+    ],
+    "104": [
+     11,
+     18
+    ]
+   },
+   "rated": 62,
+   "rated_by_position": {
+    "entrance": [
+     21,
+     21
+    ],
+    "mid": [
+     41,
+     69
+    ]
+   },
+   "seen_mean": 2.6304110782788044,
+   "share": 0.6888888888888889,
+   "units_per_stall_day": {
+    "entrance": 9.048333333333334,
+    "mid": 1.1055555555555554
+   },
+   "walk_ticks": 0.0
+  },
+  {
+   "buyer_fallbacks": 0,
+   "entrance_unit_share": 0.6691092877469742,
+   "exposed_share": {
+    "entrance": 1.0,
+    "mid": 0.508888888888889
+   },
+   "genuine": 90,
+   "k": 2,
+   "per_seed": {
+    "100": [
+     17,
+     18
+    ],
+    "101": [
+     16,
+     18
+    ],
+    "102": [
+     15,
+     18
+    ],
+    "103": [
+     13,
+     18
+    ],
+    "104": [
+     12,
+     18
+    ]
+   },
+   "rated": 73,
+   "rated_by_position": {
+    "entrance": [
+     21,
+     21
+    ],
+    "mid": [
+     52,
+     69
+    ]
+   },
+   "seen_mean": 3.0038364869300773,
+   "share": 0.8111111111111111,
+   "units_per_stall_day": {
+    "entrance": 8.266666666666667,
+    "mid": 1.338888888888889
+   },
+   "walk_ticks": 0.18285366561724523
+  },
+  {
+   "buyer_fallbacks": 0,
+   "entrance_unit_share": 0.43653203420924713,
+   "exposed_share": {
+    "entrance": 1.0,
+    "mid": 0.84
+   },
+   "genuine": 90,
+   "k": 3,
+   "per_seed": {
+    "100": [
+     18,
+     18
+    ],
+    "101": [
+     18,
+     18
+    ],
+    "102": [
+     18,
+     18
+    ],
+    "103": [
+     18,
+     18
+    ],
+    "104": [
+     18,
+     18
+    ]
+   },
+   "rated": 90,
+   "rated_by_position": {
+    "entrance": [
+     21,
+     21
+    ],
+    "mid": [
+     69,
+     69
+    ]
+   },
+   "seen_mean": 4.6766040994383875,
+   "share": 1.0,
+   "units_per_stall_day": {
+    "entrance": 5.253333333333333,
+    "mid": 2.2555555555555555
+   },
+   "walk_ticks": 0.9567037273372222
+  },
+  {
+   "buyer_fallbacks": 0,
+   "entrance_unit_share": 0.40693985195115623,
+   "exposed_share": {
+    "entrance": 1.0,
+    "mid": 0.9266666666666666
+   },
+   "genuine": 90,
+   "k": 4,
+   "per_seed": {
+    "100": [
+     18,
+     18
+    ],
+    "101": [
+     18,
+     18
+    ],
+    "102": [
+     18,
+     18
+    ],
+    "103": [
+     18,
+     18
+    ],
+    "104": [
+     18,
+     18
+    ]
+   },
+   "rated": 90,
+   "rated_by_position": {
+    "entrance": [
+     21,
+     21
+    ],
+    "mid": [
+     69,
+     69
+    ]
+   },
+   "seen_mean": 5.444665821234992,
+   "share": 1.0,
+   "units_per_stall_day": {
+    "entrance": 4.8116666666666665,
+    "mid": 2.3233333333333333
+   },
+   "walk_ticks": 1.351413433468953
+  },
+  {
+   "buyer_fallbacks": 0,
+   "entrance_unit_share": 0.29912979884542257,
+   "exposed_share": {
+    "entrance": 1.0,
+    "mid": 0.9977777777777779
+   },
+   "genuine": 90,
+   "k": 6,
+   "per_seed": {
+    "100": [
+     18,
+     18
+    ],
+    "101": [
+     18,
+     18
+    ],
+    "102": [
+     18,
+     18
+    ],
+    "103": [
+     18,
+     18
+    ],
+    "104": [
+     18,
+     18
+    ]
+   },
+   "rated": 90,
+   "rated_by_position": {
+    "entrance": [
+     21,
+     21
+    ],
+    "mid": [
+     69,
+     69
+    ]
+   },
+   "seen_mean": 7.774620137480201,
+   "share": 1.0,
+   "units_per_stall_day": {
+    "entrance": 3.3883333333333336,
+    "mid": 2.647777777777778
+   },
+   "walk_ticks": 2.6358273478948417
+  },
+  {
+   "buyer_fallbacks": 0,
+   "entrance_unit_share": 0.22876751950681476,
+   "exposed_share": {
+    "entrance": 1.0,
+    "mid": 1.0
+   },
+   "genuine": 90,
+   "k": 8,
+   "per_seed": {
+    "100": [
+     18,
+     18
+    ],
+    "101": [
+     18,
+     18
+    ],
+    "102": [
+     18,
+     18
+    ],
+    "103": [
+     18,
+     18
+    ],
+    "104": [
+     18,
+     18
+    ]
+   },
+   "rated": 90,
+   "rated_by_position": {
+    "entrance": [
+     21,
+     21
+    ],
+    "mid": [
+     69,
+     69
+    ]
+   },
+   "seen_mean": 9.750877108572881,
+   "share": 1.0,
+   "units_per_stall_day": {
+    "entrance": 2.4966666666666666,
+    "mid": 2.828888888888889
+   },
+   "walk_ticks": 3.7261005186719602
+  }
+ ]
+}

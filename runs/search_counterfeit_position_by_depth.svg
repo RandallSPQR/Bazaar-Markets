@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}}</style>
+<rect class="bg" x="0" y="0" width="900" height="600"/>
+<title id="t">Where buyers buy: share of units sold at aisle-entrance stalls, by search depth</title>
+<desc id="d">Lines: calibration seeds (mean over 10 days) by depth; points: main run, day 1 and days 26–30. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">Where buyers buy: share of units sold at aisle-entrance stalls, by search depth</text>
+<text class="s" x="30" y="70" font-size="14">Entrance = the end stall on each side of an aisle (4 of 16 stalls, 25%); budget 1.25 × base, tourists 40%</text>
+<line class="zero" x1="127.0" y1="390.0" x2="773.0" y2="390.0"/>
+<text class="k" x="127.0" y="384.0">25%: no position rent</text>
+<polyline class="ln" points="152.5,217.5 237.5,239.1 322.5,322.8 407.5,333.5 577.5,372.3 747.5,397.6"/>
+<circle class="pt" cx="152.5" cy="217.5" r="3"/>
+<circle class="pt" cx="237.5" cy="239.1" r="3"/>
+<circle class="pt" cx="322.5" cy="322.8" r="3"/>
+<circle class="pt" cx="407.5" cy="333.5" r="3"/>
+<circle class="pt" cx="577.5" cy="372.3" r="3"/>
+<circle class="pt" cx="747.5" cy="397.6" r="3"/>
+<text class="lb" x="583.5" y="360.3">calibration seeds, days 1–10</text>
+<line class="ci" x1="146.5" y1="248.3" x2="146.5" y2="204.0"/>
+<rect class="pt" x="143.5" y="223.2" width="6" height="6"/>
+<line class="hlc" x1="158.5" y1="243.4" x2="158.5" y2="201.8"/>
+<rect class="hl" x="155.5" y="219.6" width="6" height="6"/>
+<line class="ci" x1="231.5" y1="257.7" x2="231.5" y2="217.0"/>
+<rect class="pt" x="228.5" y="234.4" width="6" height="6"/>
+<line class="hlc" x1="243.5" y1="255.4" x2="243.5" y2="215.7"/>
+<rect class="hl" x="240.5" y="232.5" width="6" height="6"/>
+<line class="ci" x1="401.5" y1="353.0" x2="401.5" y2="309.6"/>
+<rect class="pt" x="398.5" y="328.3" width="6" height="6"/>
+<line class="hlc" x1="413.5" y1="357.4" x2="413.5" y2="324.4"/>
+<rect class="hl" x="410.5" y="337.9" width="6" height="6"/>
+<text class="an" x="743.5" y="136" text-anchor="end">main run, 95% intervals: ■ day 1, <tspan class="hl">■</tspan> days 26–30</text>
+<line class="ax" x1="98" y1="480.0" x2="98" y2="120.0"/>
+<text class="k" x="92" y="484.0" text-anchor="end">0%</text>
+<text class="k" x="92" y="394.0" text-anchor="end">25%</text>
+<text class="k" x="92" y="304.0" text-anchor="end">50%</text>
+<text class="k" x="92" y="214.0" text-anchor="end">75%</text>
+<text class="k" x="92" y="124.0" text-anchor="end">100%</text>
+<line class="ax" x1="152.5" y1="492" x2="747.5" y2="492"/>
+<text class="k" x="152.5" y="508" text-anchor="middle">1</text>
+<text class="k" x="237.5" y="508" text-anchor="middle">2</text>
+<text class="k" x="322.5" y="508" text-anchor="middle">3</text>
+<text class="k" x="407.5" y="508" text-anchor="middle">4</text>
+<text class="k" x="577.5" y="508" text-anchor="middle">6</text>
+<text class="k" x="747.5" y="508" text-anchor="middle">8</text>
+<text class="k" x="450.0" y="528" text-anchor="middle">search depth k (stalls seen before choosing), all profiles</text>
+<text class="n" x="30" y="560">Bazaar engine 0.10.0. Calibration: seeds 100–104, fresh reopening, always-honest originals. Main run: 30 paired seeds, 95% t-intervals, fresh reopening,</text>
+<text class="n" x="30" y="576">always-honest originals; 150 buyers a day, 2 patrolling inspectors, premium 0.4 (placeholder). k* = 2 from calibration.</text>
+</svg>

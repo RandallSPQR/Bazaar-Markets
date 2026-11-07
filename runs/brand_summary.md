@@ -262,6 +262,7 @@ Two of the four predictions are supported. Both predictions about look-alike pro
   - Checked on 4 seeds of keep / tourists 40% / `rule_genuine` at day 8: 39–56% of genuine stalls were rated. Rated stalls sold about 15 units a day; unrated stalls sold none.
   - Rating columns average rated brands only. So a genuine rating of 1.000 there sits beside a genuine premium of 8.5%.
   - At 1.0 × base, every genuine stall in the chain checked was rated by day 6.
+  - **Correction (added 2026-11-06, after the counterfeit calibration; results above unchanged):** the unrated stalls were not thin demand. They were entrance capture. Buyers enter an aisle at one end, need 1–2 units and finish at the first acceptable stall, and stalls never run out, so mid-aisle stalls are never reached by a buyer still shopping. No buyer count from 150 to 1000 changed the rated share (`runs/counterfeit_summary.md`, commit 5641701). Engine 0.10.0 adds buyer search depth to address it (`runs/search_counterfeit_summary.md`).
 - **The day-1 gate passes partly by construction.** On day 1 every brand is unrated, and deceptive stalls price like genuine ones (`deceptive_price_factor` 1.0). A look-alike's copied price therefore equals its own, and rule-based buyers do not read names. The gate shows that 0.8.0 changes nothing else on day 1. It does not test the look-alike path.
 - Premium pi = 0.4, ratings memory 0.7 and the skip threshold of 0.5 are placeholders.
 - The rational rule ignores penalties (see point 5 of the reading).
