@@ -251,6 +251,30 @@ class GenuineRationalSellerV2(GenuineRationalSeller):
         return v is not None and v[1] > v[0]
 
 
+class GenuineBustAtSeller(GenuineRationalSeller):
+    """Benchmark tool (engine 0.11.0), not a model of sellers: honest, as rule_honest, until a
+    scheduled day; it busts out on its first decision of that day (or of the first later day with
+    a decision) and from then on behaves as a busted rule_genuine_rational (claims its old quality
+    on every channel). `schedule` maps stall ids to bust-out days; a stall not listed never busts
+    out. Needs brands.enabled and market.horizon_known; without them it is rule_honest."""
+
+    VERSION = "rule_genuine_bust_at-1"
+
+    def __init__(self, rng: np.random.Generator | None = None, schedule: dict | None = None, **kw):
+        super().__init__(rng, **kw)
+        self.schedule = {str(k): int(v) for k, v in (schedule or {}).items()}
+
+    def meta(self) -> dict:
+        return {"policy": "rule_genuine_bust_at", "version": self.VERSION, "model_id": None, "sampling": None}
+
+    def should_bust(self, obs: dict) -> bool:
+        b, h = obs.get("brand"), obs.get("horizon")
+        if not b or not h or not b["first_decision_today"] or b["bust_out_unit_cost_cents"] is None:
+            return False
+        day = self.schedule.get(obs["stall"]["id"])
+        return day is not None and h["day"] >= day
+
+
 class RuleBuyer:
     """Heuristic shopper.
 

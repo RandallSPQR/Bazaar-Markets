@@ -115,6 +115,17 @@ FIELDS: dict[str, tuple[str, str]] = {
     # brands
     "brands.enabled": (NONE, "switch"),
     "brands.premium": (NONE, "price multiplier per unit of rating"),
+    "buyers.bargain_share": (NONE, "share"),
+    "buyers.bargain_q_req": (NONE, "quality range"),
+    "inspectors.capture": (NONE, "probability per (inspector, brand) pair"),
+    "inspectors.capture_effect": (NONE, "multiplier on catch probability"),
+    "critics.count": (NONE, "count"),
+    "critics.sample": (NONE, "stalls per critic per day; critics act between days"),
+    "critics.weight": (NONE, "rated units per review"),
+    "critics.tie_share": (NONE, "share of pairs"),
+    "critics.tie_delay": (NONE, "days; critics act between days"),
+    "critics.embarrassment": (NONE, "switch"),
+    "critics.emb_max": (NONE, "days"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
@@ -123,6 +134,7 @@ AGENT_PARAMS: dict[str, dict[str, tuple[str, str]]] = {
                      "whisper": (NONE, "switch"), "whisper_every": (TIME, "whisper cooldown")},
     "DeceptiveSeller": {"cautious": (NONE, "switch"), "reopen": (NONE, "label")},
     "GenuineRationalSeller": {},
+    "GenuineBustAtSeller": {"schedule": (NONE, "stall id -> bust-out day")},
     "AdaptiveDeceptiveSeller": {},
     "RuleBuyer": {"rating_tau": (NONE, "rating threshold (set from ratings.tau)")},
     "RandomReferenceBuyer": {"p_buy": (NONE, "probability per decision; decisions per stop are unchanged")},

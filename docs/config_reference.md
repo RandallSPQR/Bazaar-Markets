@@ -92,6 +92,8 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 | `buyers.budget_factor_override` | ratio |
 | `buyers.search_depth` | count |
 | `buyers.search_log` | label |
+| `buyers.bargain_share` | share |
+| `buyers.bargain_q_req` | quality range |
 | `buyers.inspect_cost_frac` | money ratio |
 | `buyers.aisles_per_route` | count; routes are refined after they are drawn |
 | `buyers.profile_noise` | probability per (stall, person) pair |
@@ -104,6 +106,13 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 | `inspectors.feature_correlation` | probability |
 | `inspectors.uniformed` | switch |
 | `inspectors.disguised_shift` | label; full-shift routes are refined |
+| `inspectors.capture` | probability per (inspector, brand) pair |
+| `inspectors.capture_effect` | multiplier on catch probability |
+| `critics.count`, `critics.sample` | count; critics act between days |
+| `critics.weight` | rated units per review |
+| `critics.tie_share` | share of pairs |
+| `critics.tie_delay`, `critics.emb_max` | days; critics act between days |
+| `critics.embarrassment` | switch |
 | `detection.form` | label |
 | `detection.proximity` | label; proximity is d / range, a ratio of two distances |
 | `detection.channel_weight` | probability weights |
@@ -231,6 +240,8 @@ sanity check depends on this separation.
 | `budget_factors` | 1.25 / 1.0 / 0.8 | | |
 | `search_depth` | 1 / 1 / 1 | | 0.10.0: per-profile search depth k (see below); 1 = 0.9.0 behaviour |
 | `search_log` | false | | 0.10.0: adds the outcome's `search` block (per-buyer search records, per-stall exposure) |
+| `bargain_share` | 0.0 | | 0.11.0: this share of buyers ("bargain hunters") draw Q_req from `bargain_q_req` instead of `q_req`; their `task` carries `bargain: true`. Two draws per buyer from `[day root, 16]`, consumed only when the share is > 0 |
+| `bargain_q_req` | [0.30, 0.45] | | 0.11.0: bargain hunters' Q_req range |
 | `budget_factor_override` | null | | 0.9.0: when set, every buyer's budget = units × base × this factor, whatever `budget_level` says (the `mixed` draws are still consumed; the buyer's `task` then carries `budget_factor`) |
 | `inspect_cost_frac` | tourist .10, local .05, expert .02 | | inspection cost, as a fraction of base, paid from the budget |
 | `aisles_per_route` | [1, 3] | | |
@@ -267,6 +278,26 @@ the end of its route). Depths are fixed by profile, so buyer populations do not 
 | `uniformed` | false | | inspectors on `posts`, `clustered` or `patrolling` wear a visible uniform (`"uniform": true` on sellers' passerby rows). Disguised inspectors are never uniformed |
 | `recognition_range` | null (= `market.earshot`) | | how far away a seller recognizes a uniform, in grid units. Uniformed inspectors farther away show `"uniform": false`, like any passer-by. 0 = never recognized |
 | `disguised_shift` | `single_trip` | | `single_trip`: each disguised inspector walks one buyer-like route at a staggered arrival, then leaves (far fewer active ticks than posts). `full_shift`: present from t=0 to the end, walking random routes back to back (active ticks = count × ticks, as for posts and patrols). Full-shift routes come from inspector j's own stream `[seed, 6, 1, j]`, so buyers and other draws are unchanged |
+| `capture` | 0.0 | | 0.11.0 (needs `brands.enabled`): each dedicated inspector j (its order among inspectors) is tied to each genuine-origin brand (a brand on a genuine stall on day 1) with this probability, drawn once per run from `[seed, 15]` |
+| `capture_effect` | 0.8 | **PLACEHOLDER** | a tied inspector's catch probability for a stall bearing that brand is multiplied by (1 − capture_effect). The detection draw is consumed as before, so draws stay aligned across capture settings |
+
+### `critics` (0.11.0; off by default)
+| key | default | status | meaning |
+|---|---|---|---|
+| `count` | 0 | **PLACEHOLDER** (4 in the 2026-11-07 capture run) | number of critics; 0 = off. Needs `brands.enabled` and `ratings.mode` ≠ `off` |
+| `sample` | 6 | **PLACEHOLDER** | stalls each critic visits each day (without replacement, `[day root, 13, critic]`) |
+| `weight` | 5 | **PLACEHOLDER** | a filed review counts as this many rated units in that day's brand rating update |
+| `tie_share` | 0.0 | | share of (critic, genuine-origin brand) pairs that are tied: round-half-up(share × pairs) pairs drawn from `[seed, 14]`, fixed for the run |
+| `tie_delay` | 10 | **PLACEHOLDER** | days a tied critic holds a negative review of that brand |
+| `embarrassment` | false | | when on, a negative review is also held round-half-up(`emb_max` × p) days, p = the share of that critic's earlier reviews of the brand that were positive (0 with none); the hold is the larger of the two delays |
+| `emb_max` | 10 | **PLACEHOLDER** | |
+
+Critics act at the end of each day, after trading and before the rating update. A critic observes
+the true Q of each stall it visits and writes a review: positive when true Q meets the stall's
+posted claim (sign `pitch` → Q_pitch, `truth` → Q_true), negative otherwise; a stall showing no
+sign gets no review (decided 2026-11-07). Reviews are filed under the stall's actual name. Positive
+reviews are filed at once; a review written on day d with delay k is filed at the end of day d + k
+and one due after the last day is never filed. Source: `engine/critics.py`.
 
 ### `detection`
 | key | default | status | meaning |
@@ -307,7 +338,13 @@ after the stall reopens).
 `counterfeit`; `lookalike` still accepted): the name they put up on reopening when brands are on.
 
 Seller policies: `rule_honest`, `rule_deceptive`, `rule_deceptive_adaptive`,
-`rule_genuine_rational`, `rule_genuine_rational_v2`, `llm`.
+`rule_genuine_rational`, `rule_genuine_rational_v2`, `rule_genuine_bust_at`, `llm`.
+`rule_genuine_bust_at` (0.11.0; a benchmark tool, not a model of sellers) takes `schedule`
+({stall id: day}); a listed stall busts out on its first decision of that day (or of the first later
+day with a decision) and then claims its old quality on every channel, as a busted
+`rule_genuine_rational`; any other stall is `rule_honest`. `engine/benchmark.py` uses it for the
+ex-post best bust-out benchmark: the stall's total profit over all days with a bust-out on each
+candidate day, against its total if it never busts out (all other genuine stalls honest).
 `rule_genuine_rational` (0.8.0; a benchmark, not a model of real sellers) is `rule_honest` until it
 busts out. On its first decision of each day from day 2 (day 1 has no yesterday), with U =
 yesterday's units sold, P = today's price, N = the neutral-rating price, c = its bust-out unit

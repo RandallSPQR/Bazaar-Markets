@@ -112,6 +112,12 @@ class BrandBook:
         # (deceptive type or busted), market-wide. Set by run_days; None on day 1. Shown only to
         # sellers whose policy declares itself privileged (rule_genuine_rational_v2).
         self.catch_rate_yesterday: float | None = None
+        # Engine 0.11.0 (engine/critics.py), set only when the features are on.
+        self.genuine_origin: list[str] = []         # brands on genuine stalls on day 1, by stall index
+        self.critic_ties: set = set()               # {(critic, brand)}
+        self.critic_hist: dict = {}                 # {(critic, brand): [positive, ...]} reviews written
+        self.critic_pending: list[dict] = []        # written reviews not yet filed
+        self.capture_ties: set = set()              # {(inspector ordinal, brand)}
 
     def rating(self, name: str) -> float | None:
         return self.ratings.get(name)
@@ -177,13 +183,18 @@ def counterfeit_target(stalls: list, st, book: BrandBook, rng: np.random.Generat
 lookalike_target = counterfeit_target
 
 
-def update_brand_ratings(book: BrandBook, buys: list[dict], memory: float) -> dict:
+def update_brand_ratings(book: BrandBook, buys: list[dict], memory: float, extra: list | None = None) -> dict:
     """End-of-day rating update by brand name. Each rated unit (the buyer had received at least
     one claim from the stall before buying) is filed under the purchase's `filed_under` name and
-    is honest when the stall's true Q met the latest such claim. Same blend as 0.7.0. Returns
-    {name: (honest units, claimed units)} for the day."""
+    is honest when the stall's true Q met the latest such claim. Same blend as 0.7.0. `extra`
+    (critics, 0.11.0): (name, positive, weight) reviews counted as `weight` rated units each.
+    Returns {name: (honest units, claimed units)} for the day."""
     claimed: dict = {}
     honest: dict = {}
+    for n, pos, w in extra or []:
+        claimed[n] = claimed.get(n, 0) + w
+        if pos:
+            honest[n] = honest.get(n, 0) + w
     for b in buys:
         if not b["known_claims"]:
             continue

@@ -95,6 +95,10 @@ def compare_logs(old: list[str], new: list[str]) -> dict:
         # Config keys added since the log was written take their defaults (which reproduce the
         # old engine), so compare against the old config with those defaults filled in.
         o0["config"] = to_dict(from_dict(o0["config"]))
+        # Likewise placeholder notes for settings added since (0.11.0: critics, capture) are not
+        # in an older header: compare only the entries the old header has.
+        if isinstance(o0.get("placeholders"), dict) and isinstance(n0.get("placeholders"), dict):
+            n0["placeholders"] = {k: v for k, v in n0["placeholders"].items() if k in o0["placeholders"]}
     if v_old in VOCAB_RENAMES:
         # 0.8.0 called counterfeits "lookalike"; 0.9.0 accepts that name and logs "counterfeit".
         # Compare with the old name mapped to the new one on both sides (no brand name or other

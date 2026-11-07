@@ -216,6 +216,12 @@ list sent with the last `buy` or `choose`, or null), `walk_ticks`, `skipped_clos
 `in_reach_shopping`: those that still needed units then). Searching buyers' observations carry a
 `search` block and their actions may be `choose`.
 
+With `critics.count` > 0 (0.11.0), `day_end` and the day's record add `critic_reviews`:
+`written` (reviews written that day) and `filed` (reviews entering that day's rating update), each a
+list of {`day` (written), `critic`, `stall`, `brand`, `stype`, `busted`, `q_true`, `claim`,
+`positive`, `delay`, `file_day`, `tied`}; filed reviews are also counted in `reviews`. With
+`buyers.bargain_share` > 0 a bargain hunter's `task` carries `bargain: true`.
+
 Engine 0.9.0 renamed "look-alike" to "counterfeit" in all these fields (`how` is `fresh` or
 `counterfeit`); 0.8.0 logs still replay, compared with `lookalike` mapped to `counterfeit`.
 

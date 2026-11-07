@@ -25,4 +25,8 @@ points, through role-specific JSON observations and schema-validated actions.
 # 0.10.0: buyers.search_depth (per-profile search depth: browse k stalls, then buy here or walk back
 #         to a stall seen; buyer action "choose"; k = 1 is 0.9.0) and buyers.search_log (per-buyer
 #         search records and per-stall exposure in the outcome). Off by default.
-ENGINE_VERSION = "0.10.0"
+# 0.11.0: critics (critics.*: reviewers who file weighted reviews between days, with ties and
+#         embarrassment delays on negative reviews), inspector capture (inspectors.capture,
+#         capture_effect), bargain hunters (buyers.bargain_share, bargain_q_req), benchmark policy
+#         rule_genuine_bust_at and the ex-post best bust-out benchmark (engine/benchmark.py). All off by default (0.10.0 bytes).
+ENGINE_VERSION = "0.11.0"

@@ -268,12 +268,23 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         aisles = [int(a) for a in rng_routes.permutation(layout.n_aisles)[:n]]
         return layout.route_through(aisles, bool(rng_routes.random() < 0.5))
 
+    # Bargain hunters (0.11.0): a dedicated stream, used only when the share is > 0.
+    bargain = float(bc.bargain_share)
+    if not 0 <= bargain <= 1:
+        raise ValueError(f"buyers.bargain_share must be in [0, 1], got {bargain}")
+    rng_bargain = np.random.default_rng([*root, 16]) if bargain > 0 else None
+
     # Buyers.
     for i in range(bc.count):
         profile = _choice(rng_people, bc.profile_shares)
         cat = mk.categories[int(rng_people.integers(len(mk.categories)))]
         units = int(rng_people.integers(bc.units[0], bc.units[1] + 1))
         q_req = round(float(rng_people.uniform(*bc.q_req)), 4)
+        is_bargain = False
+        if rng_bargain is not None:
+            u_b, q_b = float(rng_bargain.random()), float(rng_bargain.uniform(*bc.bargain_q_req))
+            if u_b < bargain:
+                q_req, is_bargain = round(q_b, 4), True
         # Treatment draws: always consumed, so turning a treatment on or off never
         # shifts any other buyer's attributes.
         u_level = int(rng_treat.integers(3))
@@ -290,7 +301,8 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
             pid="", idx=0, kind="buyer", profile=profile, route=random_route(), arrive=arrive,
             is_inspector=is_insp,
             task={"category": cat, "units": units, "q_req": q_req, "budget_cents": budget, "budget_level": level,
-                  **({} if bc.budget_factor_override is None else {"budget_factor": factor})},
+                  **({} if bc.budget_factor_override is None else {"budget_factor": factor}),
+                  **({"bargain": True} if is_bargain else {})},
             inspect_cost_cents=int(round(base_cat[cat] * bc.inspect_cost_frac[profile]))))
 
     # Inspectors. Observable profile follows the feature-correlation dial.

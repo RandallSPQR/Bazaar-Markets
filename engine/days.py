@@ -39,6 +39,7 @@ import copy
 import numpy as np
 
 from . import brands as B
+from . import critics as C
 from .config import BazaarConfig
 
 SWITCHABLE = ("genuine", "deceptive")
@@ -191,8 +192,11 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}
         reviews = None
+        crit = C.critics_day(cfg, book, eng.stalls, day_root(cfg.seed, day), day) if C.critics_on(cfg) else None
         if rated and brands:
-            reviews = B.update_brand_ratings(book, eng.purchases, cfg.ratings.memory)
+            reviews = B.update_brand_ratings(book, eng.purchases, cfg.ratings.memory,
+                                             extra=None if crit is None else
+                                             [(r["brand"], r["positive"], float(cfg.critics.weight)) for r in crit["filed"]])
             for st in eng.stalls:
                 st.rating = book.rating(st.brand)
         elif rated:
@@ -214,6 +218,8 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
                          renames=eng.rename_log, bust_outs=eng.bust_log,
                          busted={st.sid: st.busted_day for st in eng.stalls if st.busted_day is not None},
                          **({"reviews": {n: list(v) for n, v in reviews.items()}} if reviews is not None else {}))
+        if crit is not None:
+            extra["critic_reviews"] = crit
         log.emit("day_end", day=day, types=types, profit_by_type=pbt, shortfall_rate=out["shortfall_rate"],
                  catches=out["catches"], switches=switches, **extra)
         if rated:

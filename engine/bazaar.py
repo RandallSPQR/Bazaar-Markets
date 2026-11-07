@@ -28,6 +28,7 @@ from .jsonlog import JsonlLog, env_info
 from .valuation import unit_value
 from .scaling import scaled_config
 from . import brands as B
+from . import critics as C
 from .world import UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text
 
 PROFILES = ("tourist", "local", "expert")
@@ -131,11 +132,23 @@ class BazaarEngine:
         self._renames_now: list[dict] = []
         self._busts_now: list[dict] = []
         self.seller_privileged = {sid: bool(a.meta().get("privileged")) for sid, a in self.seller_agents.items()}
+        C.validate(cfg)
         if self.brands_on:
             self.book = book if book is not None else B.BrandBook(self.stalls)
+            if book is None and (C.critics_on(cfg) or C.capture_on(cfg)):
+                C.init_ties(cfg, self.book, self.stalls)
             B.morning_prices(cfg, self.stalls, self.book)
+        # Inspector capture (0.11.0): each dedicated inspector's order among inspectors.
+        self.capture_effect = float(cfg.inspectors.capture_effect) if C.capture_on(cfg) else None
+        self.insp_ord = {p.pid: j for j, p in enumerate(x for x in self.people if x.kind == "inspector")}
 
     # ------------------------------------------------------------------ helpers
+
+    def capture_factor(self, p: Person, st: Stall) -> float:
+        """1, or (1 - capture_effect) when a dedicated inspector is tied to the stall's brand."""
+        if self.capture_effect is None or p.kind != "inspector":
+            return 1.0
+        return 1.0 - self.capture_effect if (self.insp_ord[p.pid], st.brand) in self.book.capture_ties else 1.0
 
     def is_open(self, st: Stall) -> bool:
         return self.t >= st.closed_until
@@ -340,7 +353,7 @@ class BazaarEngine:
                 if false and st.sid not in caught_now and self.enforces(p):
                     d = _dist(p.pos, st.pos)
                     pr = catch_prob(self.cfg.detection, q - st.q_true, ch, d, self.channel_range(ch))
-                    if pr > 0 and self.rng_detect.random() < pr:
+                    if pr > 0 and self.rng_detect.random() < pr * self.capture_factor(p, st):
                         caught_now.add(st.sid)
                         catches.append(self.catch(st, p, ch, q))
             msgs.append({"from": st.sid, "ch": ch, "false": false, "q": q,

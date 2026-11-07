@@ -140,6 +140,11 @@ class BuyersCfg:
     # Diagnostics (0.10.0): add a `search` block to the outcome (per buyer: stalls seen, choices,
     # walking ticks; per stall: buyers of its category that came within reach). Off = 0.9.0 bytes.
     search_log: bool = False
+    # Bargain hunters (engine 0.11.0; default 0 = off, 0.10.0 bytes): this share of buyers draw
+    # Q_req from bargain_q_req instead of q_req. Two draws per buyer from the dedicated stream
+    # [day root, 16], consumed only when the share is > 0, so nothing else shifts.
+    bargain_share: float = 0.0
+    bargain_q_req: list = field(default_factory=lambda: [0.30, 0.45])
     inspect_cost_frac: dict = field(default_factory=lambda: {"tourist": 0.10, "local": 0.05, "expert": 0.02})
     aisles_per_route: list = field(default_factory=lambda: [1, 3])
     profile_noise: float = 0.3   # chance a seller sees a uniformly random profile instead of the true one
@@ -176,6 +181,12 @@ class InspectorsCfg:
     # 0.3.0 behaviour) or "full_shift" (present from t=0 to the end, walking random
     # routes back to back, so active ticks = count x ticks, as for posts and patrols).
     disguised_shift: str = "single_trip"
+    # Capture (engine 0.11.0; needs brands.enabled). Each dedicated inspector j is tied to each
+    # genuine-origin brand (a brand on a genuine stall on day 1) with probability `capture`, drawn
+    # once per run from [seed, 15]. A tied inspector's catch probability for a stall bearing that
+    # brand is multiplied by (1 - capture_effect). 0 = off (0.10.0 bytes).
+    capture: float = 0.0
+    capture_effect: float = 0.8    # PLACEHOLDER
 
 
 @dataclass
@@ -251,6 +262,29 @@ class BrandsCfg:
 
 
 @dataclass
+class CriticsCfg:
+    # Critics (engine 0.11.0; needs brands.enabled and ratings.mode != "off"; count 0 = off,
+    # 0.10.0 bytes). At the end of each day each critic visits `sample` stalls (without
+    # replacement, from [day root, 13, critic]), observes true Q, and writes a review: positive
+    # when true Q meets the stall's posted claim (its sign: "pitch" -> Q_pitch, "truth" -> Q_true;
+    # no review of a stall with no sign), negative otherwise (decided 2026-11-07). A filed review
+    # enters that day's rating update of the stall's brand as `weight` rated units. Positive
+    # reviews are filed the day they are written. A negative review is held for
+    #   max(tie_delay if the (critic, brand) pair is tied else 0,
+    #       round_half_up(emb_max x p) if embarrassment else 0)
+    # days, p = the share of that critic's earlier reviews of the brand that were positive (0 with
+    # none). Ties: round_half_up(tie_share x pairs) of the (critic, genuine-origin brand) pairs,
+    # drawn once per run from [seed, 14]. A review due after the last day is never filed.
+    count: int = 0                 # PLACEHOLDER
+    sample: int = 6                # PLACEHOLDER
+    weight: float = 5.0            # PLACEHOLDER
+    tie_share: float = 0.0
+    tie_delay: int = 10            # PLACEHOLDER
+    embarrassment: bool = False
+    emb_max: int = 10              # PLACEHOLDER
+
+
+@dataclass
 class BazaarConfig:
     mode: str = "bazaar"
     seed: int = 0
@@ -265,6 +299,7 @@ class BazaarConfig:
     evolution: EvolutionCfg = field(default_factory=EvolutionCfg)
     ratings: RatingsCfg = field(default_factory=RatingsCfg)
     brands: BrandsCfg = field(default_factory=BrandsCfg)
+    critics: CriticsCfg = field(default_factory=CriticsCfg)
 
 
 PLACEHOLDERS = {
@@ -273,6 +308,12 @@ PLACEHOLDERS = {
     "valuation.form": "step_salvage (chosen as placeholder 2026-11-03)",
     "ratings.memory": "0.7 (placeholder 2026-11-05)",
     "ratings.tau": "0.5 (placeholder 2026-11-05)",
+    "critics.count": "0 off; 4 in the 2026-11-07 capture run (placeholder)",
+    "critics.sample": "6 (placeholder 2026-11-07)",
+    "critics.weight": "5 (placeholder 2026-11-07)",
+    "critics.tie_delay": "10 days (placeholder 2026-11-07)",
+    "critics.emb_max": "10 days (placeholder 2026-11-07)",
+    "inspectors.capture_effect": "0.8 (placeholder 2026-11-07)",
 }
 
 
@@ -298,7 +339,7 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "inspectors"): InspectorsCfg, (BazaarConfig, "detection"): DetectionCfg,
                 (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
                 (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg,
-                (BazaarConfig, "brands"): BrandsCfg}
+                (BazaarConfig, "brands"): BrandsCfg, (BazaarConfig, "critics"): CriticsCfg}
 
 
 def from_dict(d: dict):
