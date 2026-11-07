@@ -47,6 +47,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 
+from analysis.floors import floor_flags, floor_series
 from analysis.counterfeit import (BUDGETS, DAYS, GEN, LATE, LABEL, PROFILES, REOPEN, SHARES, STYLE, TOURIST, Tap,
                                   _ci, _d, _direction, _git, _load, _num, _pct, _t,
                                   _verdict, mean_ci, paired_diff)
@@ -215,7 +216,7 @@ def _job(args) -> dict:
                      "busted": o["brands"]["busted_stalls"], "rating_genuine": float(np.mean(rg)) if rg else None,
                      "genuine_premium": float(np.mean(prem)),
                      **{k: ds[k] for k in ("entrance_unit_share", "mid_exposed_share", "walk_ticks", "seen_mean",
-                                           "rated_share_genuine")}})
+                                           "rated_share_genuine")}, **floor_series(o)})
     # deceptive-type stalls' late profit by buyer profile (per stall-day)
     sd = len(dec) * len(LATE)
     acc = {f"{k}_{p}": 0.0 for k in ("units", "revenue", "cf_units") for p in PROFILES}
@@ -384,6 +385,7 @@ def analyse(v: dict, k: int, rob: list) -> dict:
         fb = sum(r["fallbacks"] for r in v[cond])
         if fb:
             flags.append(f"{cond}: {fb} invalid buyer actions (fallbacks)")
+    flags += floor_flags(v, LATE, list(range(1, DAYS + 1)))
     res["flags"] = flags
     return res
 
