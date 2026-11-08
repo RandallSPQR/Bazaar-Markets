@@ -1,0 +1,124 @@
+Bust-out loss diagnostic, capture Stage A A|lam0.7|t40; bust-out day 27.
+Seed 52 has one sellable sampled stall; the other two are the first sellable sampled stalls of the next seeds: [(52, 's08'), (53, 's01'), (54, 's01')].
+
+=== seed 52, stall s08 (Orrin Bay, genuine)
+log identical (SHA-256 of each day's lines) on days 1-26 (all stalls, every event): True; header identical: False
+end-of-day accounting identical on days 1-26 (all stalls): True
+stall attributes that differ on days 27-30: {'q_true': [(27, 0.753, 0.204), (28, 0.753, 0.204)], 'unit_cost_cents': [(27, 541, 322), (28, 541, 322)], 'sign': [(27, 'truth', 'pitch'), (28, 'truth', 'pitch')]}
+other stalls whose profit differs on days 27-30: 44 ['s01', 's02', 's03', 's04', 's05', 's06', 's07', 's09', 's10', 's11']
+
+day | units h/b | revenue h/b ($) | unit cost h/b | posted price h/b | ad h/b | penalties h/b | catches h/b | rating start h/b | q_true h/b | sign h/b | profit h/b | diff
+  1 | 26/26 | 208/208 | 5.41/5.41 | 8.00/8.00 | 3.95/3.95 | 0/0 | 0/0 | -/- | 0.753/0.753 | truth/truth | 63.39/63.39 | +0.00
+  6 | 13/13 | 125/125 | 5.41/5.41 | 9.60/9.60 | 3.99/3.99 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 50.48/50.48 | +0.00
+ 11 | 10/10 | 96/96 | 5.41/5.41 | 9.60/9.60 | 4.07/4.07 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 37.83/37.83 | +0.00
+ 16 | 15/15 | 144/144 | 5.41/5.41 | 9.60/9.60 | 4.04/4.04 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 58.81/58.81 | +0.00
+ 21 | 18/18 | 173/173 | 5.41/5.41 | 9.60/9.60 | 4.13/4.13 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 71.29/71.29 | +0.00
+ 24 | 14/14 | 134/134 | 5.41/5.41 | 9.60/9.60 | 4.10/4.10 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 54.56/54.56 | +0.00
+ 25 | 19/19 | 182/182 | 5.41/5.41 | 9.60/9.60 | 3.95/3.95 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 75.66/75.66 | +0.00
+ 26 | 16/16 | 154/154 | 5.41/5.41 | 9.60/9.60 | 4.10/4.10 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.753 | truth/truth | 62.94/62.94 | +0.00
+ 27 | 15/0 | 144/0 | 5.41/3.22 | 9.60/9.60 | 4.10/4.10 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.204 | truth/pitch | 58.75/-4.10 | -62.85
+ 28 | 24/0 | 230/0 | 5.41/3.22 | 9.60/9.60 | 4.17/4.17 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.204 | truth/pitch | 96.39/-4.17 | -100.56
+ 29 | 19/0 | 182/0 | 5.41/3.22 | 9.60/9.60 | 4.12/4.12 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.204 | truth/pitch | 75.49/-4.12 | -79.61
+ 30 | 16/0 | 154/0 | 5.41/3.22 | 9.60/9.60 | 3.86/3.86 | 0/0 | 0/0 | 1.00/1.00 | 0.753/0.204 | truth/pitch | 63.18/-3.86 | -67.04
+
+profit difference (bust - honest), $, by component and window
+window | revenue | cost | ad_spend | penalties | switch_cost | total | units h/b
+days 1-26 | +0.00 | +0.00 | +0.00 | +0.00 | +0.00 | +0.00 | 391/391
+days 27-30 | -710.40 | +400.34 | +0.00 | +0.00 | +0.00 | -310.06 | 74/0
+all | -710.40 | +400.34 | +0.00 | +0.00 | +0.00 | -310.06 | 465/391
+30-day totals: honest 1785.59, bust 1475.53, gain -310.06; honest profit per day on days 1-26: 57.38
+
+=== seed 53, stall s01 (Wrackton, genuine)
+log identical (SHA-256 of each day's lines) on days 1-26 (all stalls, every event): True; header identical: False
+end-of-day accounting identical on days 1-26 (all stalls): True
+stall attributes that differ on days 27-30: {'q_true': [(27, 0.7484, 0.2057), (28, 0.7484, 0.2057)], 'unit_cost_cents': [(27, 539, 322), (28, 539, 322)], 'sign': [(27, 'truth', 'pitch'), (28, 'truth', 'pitch')]}
+other stalls whose profit differs on days 27-30: 38 ['s00', 's02', 's03', 's04', 's05', 's06', 's09', 's10', 's11', 's12']
+
+day | units h/b | revenue h/b ($) | unit cost h/b | posted price h/b | ad h/b | penalties h/b | catches h/b | rating start h/b | q_true h/b | sign h/b | profit h/b | diff
+  1 | 13/13 | 104/104 | 5.39/5.39 | 8.00/8.00 | 3.56/3.56 | 0/0 | 0/0 | -/- | 0.748/0.748 | truth/truth | 30.37/30.37 | +0.00
+  6 | 12/12 | 115/115 | 5.39/5.39 | 9.60/9.60 | 3.03/3.03 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 47.49/47.49 | +0.00
+ 11 | 18/18 | 173/173 | 5.39/5.39 | 9.60/9.60 | 3.33/3.33 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 72.45/72.45 | +0.00
+ 16 | 19/19 | 182/182 | 5.39/5.39 | 9.60/9.60 | 3.17/3.17 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 76.82/76.82 | +0.00
+ 21 | 7/7 | 67/67 | 5.39/5.39 | 9.60/9.60 | 3.15/3.15 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 26.32/26.32 | +0.00
+ 24 | 17/17 | 163/163 | 5.39/5.39 | 9.60/9.60 | 3.27/3.27 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 68.30/68.30 | +0.00
+ 25 | 15/15 | 144/144 | 5.39/5.39 | 9.60/9.60 | 3.43/3.43 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 59.72/59.72 | +0.00
+ 26 | 26/26 | 250/250 | 5.39/5.39 | 9.60/9.60 | 3.50/3.50 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.748 | truth/truth | 105.96/105.96 | +0.00
+ 27 | 10/0 | 96/0 | 5.39/3.22 | 9.60/9.60 | 3.37/3.37 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.206 | truth/pitch | 38.73/-3.37 | -42.10
+ 28 | 8/0 | 77/0 | 5.39/3.22 | 9.60/9.60 | 3.47/3.47 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.206 | truth/pitch | 30.21/-3.47 | -33.68
+ 29 | 10/0 | 96/0 | 5.39/3.22 | 9.60/9.60 | 3.20/3.20 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.206 | truth/pitch | 38.90/-3.20 | -42.10
+ 30 | 14/0 | 134/0 | 5.39/3.22 | 9.60/9.60 | 3.62/3.62 | 0/0 | 0/0 | 1.00/1.00 | 0.748/0.206 | truth/pitch | 55.32/-3.62 | -58.94
+
+profit difference (bust - honest), $, by component and window
+window | revenue | cost | ad_spend | penalties | switch_cost | total | units h/b
+days 1-26 | +0.00 | +0.00 | +0.00 | +0.00 | +0.00 | +0.00 | 382/382
+days 27-30 | -403.20 | +226.38 | +0.00 | +0.00 | +0.00 | -176.82 | 42/0
+all | -403.20 | +226.38 | +0.00 | +0.00 | +0.00 | -176.82 | 424/382
+30-day totals: honest 1664.00, bust 1487.18, gain -176.82; honest profit per day on days 1-26: 57.72
+
+=== seed 54, stall s01 (Dunmere, genuine)
+log identical (SHA-256 of each day's lines) on days 1-26 (all stalls, every event): True; header identical: False
+end-of-day accounting identical on days 1-26 (all stalls): True
+stall attributes that differ on days 27-30: {'q_true': [(27, 0.8029, 0.3631), (28, 0.8029, 0.3631)], 'unit_cost_cents': [(27, 561, 385), (28, 561, 385)], 'sign': [(27, 'truth', 'pitch'), (28, 'truth', 'pitch')], 'price_start': [(28, 960, 864), (29, 960, 864)]}
+other stalls whose profit differs on days 27-30: 43 ['s00', 's02', 's04', 's05', 's06', 's07', 's08', 's09', 's10', 's11']
+
+day | units h/b | revenue h/b ($) | unit cost h/b | posted price h/b | ad h/b | penalties h/b | catches h/b | rating start h/b | q_true h/b | sign h/b | profit h/b | diff
+  1 | 15/15 | 120/120 | 5.61/5.61 | 8.00/8.00 | 3.21/3.21 | 0/0 | 0/0 | -/- | 0.803/0.803 | truth/truth | 32.64/32.64 | +0.00
+  6 | 11/11 | 106/106 | 5.61/5.61 | 9.60/9.60 | 2.84/2.84 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 41.05/41.05 | +0.00
+ 11 | 6/6 | 58/58 | 5.61/5.61 | 9.60/9.60 | 3.64/3.64 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 20.30/20.30 | +0.00
+ 16 | 11/11 | 106/106 | 5.61/5.61 | 9.60/9.60 | 3.02/3.02 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 40.87/40.87 | +0.00
+ 21 | 17/17 | 163/163 | 5.61/5.61 | 9.60/9.60 | 3.62/3.62 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 64.21/64.21 | +0.00
+ 24 | 23/23 | 221/221 | 5.61/5.61 | 9.60/9.60 | 3.23/3.23 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 88.54/88.54 | +0.00
+ 25 | 18/18 | 173/173 | 5.61/5.61 | 9.60/9.60 | 3.08/3.08 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 68.74/68.74 | +0.00
+ 26 | 9/9 | 86/86 | 5.61/5.61 | 9.60/9.60 | 3.23/3.23 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.803 | truth/truth | 32.68/32.68 | +0.00
+ 27 | 10/3 | 96/29 | 5.61/3.85 | 9.60/9.60 | 3.42/3.42 | 0/0 | 0/0 | 1.00/1.00 | 0.803/0.363 | truth/pitch | 36.48/13.83 | -22.65
+ 28 | 17/0 | 163/0 | 5.61/3.85 | 9.60/8.64 | 3.29/3.31 | 0/0 | 0/0 | 1.00/0.70 | 0.803/0.363 | truth/pitch | 64.54/-3.31 | -67.85
+ 29 | 11/0 | 106/0 | 5.61/3.85 | 9.60/8.64 | 3.29/3.29 | 0/0 | 0/0 | 1.00/0.70 | 0.803/0.363 | truth/pitch | 40.60/-3.29 | -43.89
+ 30 | 6/0 | 58/0 | 5.61/3.85 | 9.60/8.64 | 3.43/3.43 | 0/0 | 0/0 | 1.00/0.70 | 0.803/0.363 | truth/pitch | 20.51/-3.43 | -23.94
+
+profit difference (bust - honest), $, by component and window
+window | revenue | cost | ad_spend | penalties | switch_cost | total | units h/b
+days 1-26 | +0.00 | +0.00 | +0.00 | +0.00 | +0.00 | +0.00 | 387/387
+days 27-30 | -393.60 | +235.29 | -0.02 | +0.00 | +0.00 | -158.33 | 44/3
+all | -393.60 | +235.29 | -0.02 | +0.00 | +0.00 | -158.33 | 431/390
+30-day totals: honest 1595.79, bust 1437.46, gain -158.33; honest profit per day on days 1-26: 55.14
+
+
+=== All 16 sellable sampled stall-seeds (Stage A, lambda 0.7, tourists 0.4): loss from busting out on day 27
+seed stall cat | loss27 | honest profit d27-30 | honest/day d1-26 | loss / (d1-26 per day) | loss / (d27-30 profit) | units d27-30
+52 s08 fish | 310 | 294 | 57.4 | 5.4 | 1.06 | 74
+53 s01 fish | 177 | 163 | 57.7 | 3.1 | 1.08 | 42
+54 s01 fish | 158 | 162 | 55.1 | 2.9 | 0.98 | 44
+56 s30 electronics | 1274 | 1191 | 252.6 | 5.0 | 1.07 | 67
+57 s18 electronics | 1066 | 1039 | 250.2 | 4.3 | 1.03 | 56
+57 s08 fish | 235 | 435 | 92.1 | 2.6 | 0.54 | 112
+57 s23 electronics | 545 | 1543 | 412.4 | 1.3 | 0.35 | 91
+58 s32 designer | 2774 | 5899 | 1606.1 | 1.7 | 0.47 | 95
+59 s26 electronics | 1107 | 1114 | 290.9 | 3.8 | 0.99 | 57
+60 s33 designer | 4226 | 4060 | 746.1 | 5.7 | 1.04 | 73
+60 s47 designer | 2939 | 2735 | 781.0 | 3.8 | 1.07 | 56
+62 s22 electronics | 1226 | 1226 | 257.5 | 4.8 | 1.00 | 64
+62 s14 fish | 236 | 220 | 53.1 | 4.5 | 1.07 | 62
+63 s07 fish | 148 | 319 | 84.5 | 1.8 | 0.47 | 94
+65 s47 designer | 3120 | 6491 | 1452.3 | 2.1 | 0.48 | 108
+66 s24 electronics | 1236 | 2160 | 473.0 | 2.6 | 0.57 | 104
+
+Who buys on days 27-30 (purchases by profile, inspected or not):
+52 s08 honest: expert inspected 25, local inspected 22 | bust27: none
+57 s08 honest: local inspected 25, tourist 32, expert inspected 15, local uninspected 1 | bust27: tourist 32
+58 s32 honest: tourist 26, expert inspected 17, local inspected 17 | bust27: tourist 26
+
+Reading: no bug. Days 1-26 are identical (every log line and every stall's accounting). The bust-out
+changes only true quality, unit cost and the sign (truth -> pitch, showing the old quality); price,
+name and type are unchanged, and the rating moves only through reviews. The loss is the stall's own
+lost sales: experts always inspect, and locals inspect a stall that yells or whispers (honest stalls
+advertise), so from the first tick after the bust-out every local and expert customer finds the low
+quality and walks away. Only tourists (who trust claims) keep buying. The loss is about the whole
+honest profit of days 27-30 when a stall had no tourist customers (11 of 16), and about half when it
+had some (5 of 16). It is not larger than the honest profit forgone: 1.3-5.7 days of the stall's own
+average day-1-26 profit, which is less than the 4 remaining days at its late-run profit level. The
+"more than 8 days of honest profit (~$142/day)" comparison mixed two populations: $142/day is the
+mean honest 30-day total over all 45 sampled stall-seeds, including the 29 that never sell, while
+the ~$1,200 loss averages over the 16 that sell, whose own honest profit is ~$430/day (designer
+stalls $750-1,600/day). Since the busted stall's rating never falls (inspecting buyers do not buy, so
+they leave no review), the loss does not come through ratings at all, which is also why rating
+memory (lambda) barely mattered in Stage A.
