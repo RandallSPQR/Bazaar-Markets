@@ -330,6 +330,9 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
     bargain = bargain_share(bc)
     if not 0 <= bargain <= 1:
         raise ValueError(f"buyers.bargain_share must be in [0, 1], got {bargain}")
+    lo_b, hi_b = (float(x) for x in bc.bargain_q_req)
+    if not 0.0 <= lo_b <= hi_b <= 1.0:
+        raise ValueError(f"buyers.bargain_q_req must be [lo, hi] with 0 <= lo <= hi <= 1, got {bc.bargain_q_req!r}")
     rng_bargain = np.random.default_rng([*root, 16]) if bargain > 0 else None
 
     # Demand (0.12.0): in "choice_set" mode the random route is still drawn (so every other draw

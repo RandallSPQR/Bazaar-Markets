@@ -398,3 +398,15 @@ bought from it); the world event's buyer `task` adds `consider` (the set in walk
 
 The bust-out benchmark (`engine/benchmark.py`) tries the days {never, 10, 20, 25, 27, 28, 29} by
 default since 0.12.0.
+
+## Verification dial (engine 0.13.0)
+
+`agents.params.rule_buyer.local_inspect_prob` and `expert_inspect_prob` (defaults 1.0 = the rule as
+before): a local inspects an advertising stall (one that yelled or whispered at it) with probability
+`local_inspect_prob`; an expert inspects before buying with probability `expert_inspect_prob`. The
+choice is made once per (buyer, stall), the first time the rule calls for it, by a draw from the
+buyer's own agent stream `[day root, 7, 1, buyer index]`, and only when the probability is strictly
+between 0 and 1, so 0 and 1 use no draws and no engine stream is touched. A buyer who does not
+inspect a stall trusts its latest claim, as a tourist does. `buyers.bargain_q_req` must be [lo, hi]
+with 0 <= lo <= hi <= 1. `engine/benchmark.py` `candidates(days, horizon)` builds a validated
+candidate list (NEVER plus distinct bust-out days in [2, horizon]) for `best_response`.

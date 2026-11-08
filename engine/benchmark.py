@@ -56,8 +56,18 @@ def gain(totals: dict) -> dict:
     return out
 
 
+def candidates(days, horizon: int) -> tuple:
+    """A candidate list (0.13.0): NEVER plus the given bust-out days, which must be distinct
+    integers in [2, horizon] (day 1 has no yesterday). Returned sorted, NEVER first."""
+    ds = [d for d in days if d != NEVER]
+    if any(int(d) != d for d in ds) or len(set(ds)) != len(ds) or any(not 2 <= d <= horizon for d in ds):
+        raise ValueError(f"bust-out days must be distinct integers in [2, {horizon}], got {list(days)!r}")
+    return (NEVER, *sorted(int(d) for d in ds))
+
+
 def best_response(cfg, sid: str, candidates=CANDIDATES, run=bazaar.run) -> dict:
-    """Run every candidate for stall `sid` and return gain(totals)."""
+    """Run every candidate for stall `sid` and return gain(totals). candidates: any list made of
+    NEVER and bust-out days (see candidates())."""
     totals = {}
     for b in candidates:
         out = run(bust_config(cfg, None if b == NEVER else sid, b))

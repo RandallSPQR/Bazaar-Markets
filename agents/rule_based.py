@@ -283,12 +283,37 @@ class RuleBuyer:
     inspection, which override claims. Tourists trust claims. Locals trust a stall's
     sign and answers but inspect a stall that yelled or whispered at them.
     Experts inspect before every purchase. Asks a stall it has heard nothing from.
+
+    Verification dial (engine 0.13.0): a local inspects an advertising stall with probability
+    local_inspect_prob, an expert inspects before buying with probability expert_inspect_prob
+    (defaults 1.0 = the rule above). The choice is drawn once per stall, from the buyer's own agent
+    stream, the first time it matters, and only when the probability is strictly between 0 and 1. A
+    buyer who decides not to inspect a stall trusts its latest claim, as a tourist does.
     """
 
     VERSION = "rule_buyer-1"
 
-    def __init__(self, rng: np.random.Generator | None = None, rating_tau: float = 0.5):
+    def __init__(self, rng: np.random.Generator | None = None, rating_tau: float = 0.5,
+                 local_inspect_prob: float = 1.0, expert_inspect_prob: float = 1.0):
         self.rating_tau = rating_tau   # skip stalls whose visible rating is below this; unrated = neutral
+        for name, v in (("local_inspect_prob", local_inspect_prob), ("expert_inspect_prob", expert_inspect_prob)):
+            if not 0.0 <= float(v) <= 1.0:
+                raise ValueError(f"{name} must be in [0, 1], got {v!r}")
+        self.inspect_prob = {"local": float(local_inspect_prob), "expert": float(expert_inspect_prob)}
+        self.rng = rng
+        self._checks: dict = {}
+
+    def checks(self, profile: str, sid: str) -> bool:
+        """Whether this buyer verifies stall sid when its rule calls for it (locals: an advertising
+        stall; experts: any stall before buying)."""
+        p = self.inspect_prob.get(profile, 1.0)
+        if p >= 1.0:
+            return True
+        if p <= 0.0:
+            return False
+        if sid not in self._checks:
+            self._checks[sid] = bool(self.rng.random() < p)
+        return self._checks[sid]
 
     def meta(self) -> dict:
         return {"policy": "rule_buyer", "version": self.VERSION, "model_id": None, "sampling": None}
@@ -320,7 +345,7 @@ class RuleBuyer:
                 continue
             pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
             wants_check = me["profile"] == "expert" or (me["profile"] == "local" and pushy)
-            if wants_check:
+            if wants_check and self.checks(me["profile"], s["id"]):
                 if cost_i + s["price_cents"] <= left:
                     return _out({"action": "inspect", "stall": s["id"]})
                 if me["profile"] == "expert":
@@ -350,10 +375,10 @@ class RuleBuyer:
             return known >= q_req
         if not s["messages"] or s["messages"][-1]["claimed_quality"] < q_req:
             return False
-        if me["profile"] == "expert":
+        if me["profile"] == "expert" and self.checks("expert", s["id"]):
             return False                                   # experts buy only what they inspected
         pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
-        if me["profile"] == "local" and pushy:
+        if me["profile"] == "local" and pushy and self.checks("local", s["id"]):
             # a local inspects a pushy stall first; it buys uninspected only if it cannot afford to
             return me["inspect_cost_cents"] + s["price_cents"] > left
         return True
@@ -379,7 +404,8 @@ class RuleBuyer:
             if s["messages"][-1]["claimed_quality"] < q_req:
                 continue
             pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
-            if (me["profile"] == "expert" or (me["profile"] == "local" and pushy)) and cost_i + s["price_cents"] <= left:
+            if (me["profile"] == "expert" or (me["profile"] == "local" and pushy)) and cost_i + s["price_cents"] <= left \
+                    and self.checks(me["profile"], s["id"]):
                 return _out({"action": "inspect", "stall": s["id"]})
         for s in here:
             if not s["messages"] and not s["ask_pending"] and s["inspected_quality"] is None \

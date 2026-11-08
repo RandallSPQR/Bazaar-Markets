@@ -34,4 +34,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #         buyers.position_rent, a walk along that category's aisle, choice among the set only;
 #         bargain_share null = 0 in walk, 0.2 in choice_set) and bust-out benchmark candidates
 #         {never, 10, 20, 25, 27, 28, 29}. Walk by default (0.11.0 bytes).
-ENGINE_VERSION = "0.12.0"
+# 0.13.0: verification dial (rule_buyer local_inspect_prob, expert_inspect_prob; draws from the
+#         buyer's own agent stream, only when strictly between 0 and 1), benchmark.candidates()
+#         for a validated candidate list, and a range check on buyers.bargain_q_req. Defaults
+#         reproduce 0.12.0.
+ENGINE_VERSION = "0.13.0"
