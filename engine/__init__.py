@@ -29,4 +29,9 @@ points, through role-specific JSON observations and schema-validated actions.
 #         embarrassment delays on negative reviews), inspector capture (inspectors.capture,
 #         capture_effect), bargain hunters (buyers.bargain_share, bargain_q_req), benchmark policy
 #         rule_genuine_bust_at and the ex-post best bust-out benchmark (engine/benchmark.py). All off by default (0.10.0 bytes).
-ENGINE_VERSION = "0.11.0"
+# 0.12.0: demand (buyers.demand_mode: "walk" = 0.11.0, or "choice_set": a consideration set of
+#         buyers.consider stalls of the buyer's category drawn with position rent
+#         buyers.position_rent, a walk along that category's aisle, choice among the set only;
+#         bargain_share null = 0 in walk, 0.2 in choice_set) and bust-out benchmark candidates
+#         {never, 10, 20, 25, 27, 28, 29}. Walk by default (0.11.0 bytes).
+ENGINE_VERSION = "0.12.0"

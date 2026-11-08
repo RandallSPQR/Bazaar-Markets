@@ -216,6 +216,10 @@ list sent with the last `buy` or `choose`, or null), `walk_ticks`, `skipped_clos
 `in_reach_shopping`: those that still needed units then). Searching buyers' observations carry a
 `search` block and their actions may be `choose`.
 
+With `buyers.demand_mode = "choice_set"` (0.12.0) the outcome adds `demand`: `inclusion` (stall id →
+number of buyers whose consideration set includes it) and `customers` (stall id → distinct buyers who
+bought from it), and each buyer's `task` in the world event adds `consider` (its set, in walking order).
+
 With `critics.count` > 0 (0.11.0), `day_end` and the day's record add `critic_reviews`:
 `written` (reviews written that day) and `filed` (reviews entering that day's rating update), each a
 list of {`day` (written), `critic`, `stall`, `brand`, `stype`, `busted`, `q_true`, `claim`,

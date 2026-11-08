@@ -143,8 +143,22 @@ class BuyersCfg:
     # Bargain hunters (engine 0.11.0; default 0 = off, 0.10.0 bytes): this share of buyers draw
     # Q_req from bargain_q_req instead of q_req. Two draws per buyer from the dedicated stream
     # [day root, 16], consumed only when the share is > 0, so nothing else shifts.
-    bargain_share: float = 0.0
+    # null (default) = the demand mode's default: 0 in "walk" (0.10.0 bytes), 0.2 in "choice_set".
+    bargain_share: float | None = None
     bargain_q_req: list = field(default_factory=lambda: [0.30, 0.45])
+    # Demand (engine 0.12.0). "walk" (default) = 0.11.0 bytes: a buyer considers the stalls of its
+    # category that its random route passes. "choice_set": each buyer draws a consideration set of
+    # `consider` stalls of its category from all of them, without replacement, with weight
+    # exp(-position_rent x position rank), position rank = the stall's order of distance from the
+    # buyer's entrance (0 = nearest; stalls facing each other share a rank). The entrance is one end
+    # of the category's aisle, drawn with the set from the dedicated stream [day root, 18, buyer
+    # index]. The buyer walks that aisle end to end from its entrance (so it passes every set member
+    # in walking order, hears yells and whispers and meets inspectors on the way) and chooses among
+    # its set only, with the search rule at depth = consider (buyers.search_depth is not used).
+    # Needs market.clustering = 1 (one aisle per category).
+    demand_mode: str = "walk"
+    consider: int = 3
+    position_rent: float = 0.0
     inspect_cost_frac: dict = field(default_factory=lambda: {"tourist": 0.10, "local": 0.05, "expert": 0.02})
     aisles_per_route: list = field(default_factory=lambda: [1, 3])
     profile_noise: float = 0.3   # chance a seller sees a uniformly random profile instead of the true one

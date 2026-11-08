@@ -94,6 +94,9 @@ Two per-tick rates scale as well (decided 2026-11-05): a buyer action (ask, insp
 | `buyers.search_log` | label |
 | `buyers.bargain_share` | share |
 | `buyers.bargain_q_req` | quality range |
+| `buyers.demand_mode` | label |
+| `buyers.consider` | stalls per buyer |
+| `buyers.position_rent` | per position rank |
 | `buyers.inspect_cost_frac` | money ratio |
 | `buyers.aisles_per_route` | count; routes are refined after they are drawn |
 | `buyers.profile_noise` | probability per (stall, person) pair |
@@ -240,8 +243,11 @@ sanity check depends on this separation.
 | `budget_factors` | 1.25 / 1.0 / 0.8 | | |
 | `search_depth` | 1 / 1 / 1 | | 0.10.0: per-profile search depth k (see below); 1 = 0.9.0 behaviour |
 | `search_log` | false | | 0.10.0: adds the outcome's `search` block (per-buyer search records, per-stall exposure) |
-| `bargain_share` | 0.0 | | 0.11.0: this share of buyers ("bargain hunters") draw Q_req from `bargain_q_req` instead of `q_req`; their `task` carries `bargain: true`. Two draws per buyer from `[day root, 16]`, consumed only when the share is > 0 |
+| `bargain_share` | null | | null = the demand mode's default (0 in `walk`, 0.11.0 bytes; 0.2 in `choice_set`, 0.12.0). 0.11.0: this share of buyers ("bargain hunters") draw Q_req from `bargain_q_req` instead of `q_req`; their `task` carries `bargain: true`. Two draws per buyer from `[day root, 16]`, consumed only when the share is > 0 |
 | `bargain_q_req` | [0.30, 0.45] | | 0.11.0: bargain hunters' Q_req range |
+| `demand_mode` | "walk" | | 0.12.0: `walk` = 0.11.0 (a buyer considers the stalls of its category its random route passes); `choice_set`: see below |
+| `consider` | 3 | | 0.12.0, `choice_set` only: consideration-set size m (fewer if the category has fewer stalls); also the buyer's search depth |
+| `position_rent` | 0.0 | | 0.12.0, `choice_set` only: gamma; set members drawn with weight exp(-gamma × position rank); 0 = uniform |
 | `budget_factor_override` | null | | 0.9.0: when set, every buyer's budget = units × base × this factor, whatever `budget_level` says (the `mixed` draws are still consumed; the buyer's `task` then carries `budget_factor`) |
 | `inspect_cost_frac` | tourist .10, local .05, expert .02 | | inspection cost, as a fraction of base, paid from the budget |
 | `aisles_per_route` | [1, 3] | | |
@@ -372,3 +378,23 @@ its seller observations carry a `privileged` block (`deceptive_catch_rate_yester
 1, `premium`, `rating_memory`, `ticks_per_day`, `close_ticks`). No other seller sees that block.
 
 Policies: `agents/registry.py`.
+
+## Demand: consideration sets (engine 0.12.0)
+
+`buyers.demand_mode = "choice_set"` separates where a buyer walks (its exposure to yells, whispers
+and inspectors) from which stalls it considers (demand). For each buyer, on the dedicated stream
+`[day root, 18, buyer index]`: one draw picks the entrance (the left or right end of its category's
+aisle, each with probability 1/2), then `buyers.consider` draws (always all consumed) pick its
+consideration set: m = `consider` stalls of its category, from all of them (any type), by successive
+sampling without replacement with weight exp(-`position_rent` × position rank). Position rank is the
+stall's order of distance from the entrance: 0 for the nearest pair of facing stalls, then 1, ...
+(stalls facing each other share a rank). The buyer's random route is still drawn (so every other draw
+on the route stream is unchanged) and then replaced by a walk along its category's aisle from the
+entrance to the other end, which passes every set member in walking order. It buys only from set
+members, with the search rule at depth = m (`buyers.search_depth` is not used). Bargain hunters are on
+by default in this mode (`bargain_share` null = 0.2). Needs `market.clustering = 1`. The outcome adds
+`demand`: per stall, `inclusion` (buyers whose set includes it) and `customers` (distinct buyers who
+bought from it); the world event's buyer `task` adds `consider` (the set in walking order).
+
+The bust-out benchmark (`engine/benchmark.py`) tries the days {never, 10, 20, 25, 27, 28, 29} by
+default since 0.12.0.

@@ -29,7 +29,8 @@ from .valuation import unit_value
 from .scaling import scaled_config
 from . import brands as B
 from . import critics as C
-from .world import UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text
+from .world import (UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text,
+                    validate_demand)
 
 PROFILES = ("tourist", "local", "expert")
 
@@ -64,8 +65,9 @@ class BazaarEngine:
         self.layout = Layout(cfg)
         built = stalls is None
         self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world) if built else stalls
+        validate_demand(cfg)
         self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
-                                                 self.rng_treat, self.rng_insp, root=r)
+                                                 self.rng_treat, self.rng_insp, root=r, stalls=self.stalls)
         refine_world(self.layout, self.stalls if built else [], self.people, self.k)
         cfg = self.cfg = scaled_config(cfg)
         self.by_sid = {st.sid: st for st in self.stalls}
@@ -75,8 +77,10 @@ class BazaarEngine:
         depth = cfg.buyers.search_depth
         if set(depth) - set(PROFILES) or any(int(v) != v or v < 1 for v in depth.values()):
             raise ValueError(f"buyers.search_depth must map profiles to integers >= 1, got {depth!r}")
+        self.choice_set = cfg.buyers.demand_mode == "choice_set"
         for p in self.buyers:
-            p.search_k = int(depth.get(p.profile, 1))
+            # choice_set (0.12.0): search depth = the size of the buyer's consideration set
+            p.search_k = len(p.consider) if self.choice_set else int(depth.get(p.profile, 1))
         self.search_log = bool(cfg.buyers.search_log)
         if self.search_log:
             for p in self.buyers:
@@ -149,6 +153,12 @@ class BazaarEngine:
         if self.capture_effect is None or p.kind != "inspector":
             return 1.0
         return 1.0 - self.capture_effect if (self.insp_ord[p.pid], st.brand) in self.book.capture_ties else 1.0
+
+    @staticmethod
+    def considers(p: Person, st: Stall) -> bool:
+        """Whether a buyer may consider a stall: always in "walk" demand; in "choice_set" demand
+        (0.12.0) only the stalls of its consideration set."""
+        return p.consider is None or st.sid in p.consider
 
     def is_open(self, st: Stall) -> bool:
         return self.t >= st.closed_until
@@ -378,7 +388,7 @@ class BazaarEngine:
                     p.hold_until = t + self.k
                 continue
             here = [st for st in self.stalls if st.category == p.task["category"] and self.is_open(st)
-                    and _dist(p.pos, st.pos) <= mk.interact_range]
+                    and _dist(p.pos, st.pos) <= mk.interact_range and self.considers(p, st)]
             if self.search_log:
                 for st in here:
                     if st.sid not in p.seen:
@@ -524,7 +534,7 @@ class BazaarEngine:
         if the buyer stays."""
         mk = self.cfg.market
         cat = p.task["category"]
-        near = [st for st in self.reach(p.pos) if st.category == cat]
+        near = [st for st in self.reach(p.pos) if st.category == cat and self.considers(p, st)]
         here = [st for st in near if self.is_open(st)]
         for st in here:
             if st.sid not in p.seen and p.search_rec is not None:
@@ -768,7 +778,8 @@ class BazaarEngine:
         r = self.cfg.market.interact_range
         for cell in p.route[p.step + 1:]:
             for st in self.stalls:
-                if st.category == p.task["category"] and st.sid not in seen and _dist(cell, st.pos) <= r:
+                if st.category == p.task["category"] and st.sid not in seen and _dist(cell, st.pos) <= r \
+                        and self.considers(p, st):
                     seen.add(st.sid)
                     out.append({"id": st.sid, "true_quality": st.q_true, "price_cents": st.price_cents})
         return out
@@ -837,6 +848,7 @@ class BazaarEngine:
             "false_claims": {"messages": fc_msgs, "no_eligible_in_earshot": fc_free},
             "false_claims_by_stall": {k: dict(v) for k, v in self.false_claims_by_stall.items()},
             **({"brands": self.brand_outcome()} if self.brands_on else {}),
+            **({"demand": self.demand_outcome()} if self.choice_set else {}),
             **({"search": self.search_outcome()} if self.search_log else {}),
         }
 
@@ -845,6 +857,18 @@ class BazaarEngine:
                         "in_reach_shopping": len(self.exposure.get(st.sid, {}).get("in_reach_shopping", ()))}
                for st in self.stalls}
         return {"buyers": {p.pid: p.search_rec for p in self.buyers}, "exposure": exp}
+
+    def demand_outcome(self) -> dict:
+        """choice_set demand (0.12.0): per stall, how many of the day's buyers had it in their
+        consideration set, and how many distinct buyers bought from it."""
+        inc = {st.sid: 0 for st in self.stalls}
+        for p in self.buyers:
+            for sid in p.consider:
+                inc[sid] += 1
+        cust = {st.sid: set() for st in self.stalls}
+        for b in self.purchases:
+            cust[b["stall"]].add(b["buyer"])
+        return {"inclusion": inc, "customers": {k: len(v) for k, v in cust.items()}}
 
     def brand_outcome(self) -> dict:
         prof = {st.sid: st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents

@@ -13,6 +13,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+import math
+
 import numpy as np
 
 from .config import BazaarConfig
@@ -116,6 +118,7 @@ class Person:
     skipped: set = field(default_factory=set)    # chosen stalls found closed; not offered again
     walk_ticks: int = 0                          # ticks spent walking to a chosen stall
     search_rec: dict | None = None               # per-buyer search record (buyers.search_log)
+    consider: frozenset | None = None            # consideration set (buyers.demand_mode "choice_set")
 
     @property
     def pos(self) -> tuple:
@@ -238,9 +241,64 @@ def _choice(rng: np.random.Generator, table: dict) -> str:
     return keys[int(rng.choice(len(keys), p=p / p.sum()))]
 
 
+DEMAND_MODES = ("walk", "choice_set")
+
+
+def bargain_share(bc) -> float:
+    """buyers.bargain_share, or its demand-mode default when null: 0 ("walk"), 0.2 ("choice_set")."""
+    if bc.bargain_share is None:
+        return 0.2 if bc.demand_mode == "choice_set" else 0.0
+    return float(bc.bargain_share)
+
+
+def validate_demand(cfg: BazaarConfig) -> None:
+    bc = cfg.buyers
+    if bc.demand_mode not in DEMAND_MODES:
+        raise ValueError(f"buyers.demand_mode must be one of {DEMAND_MODES}, got {bc.demand_mode!r}")
+    if int(bc.consider) != bc.consider or bc.consider < 1:
+        raise ValueError(f"buyers.consider must be an integer >= 1, got {bc.consider!r}")
+    g = float(bc.position_rent)
+    if not (g >= 0 and math.isfinite(g)):
+        raise ValueError(f"buyers.position_rent must be a finite number >= 0, got {bc.position_rent!r}")
+    if bc.demand_mode == "choice_set" and float(cfg.market.clustering) != 1.0:
+        raise ValueError("buyers.demand_mode = choice_set needs market.clustering = 1 (one aisle per category)")
+
+
+def position_ranks(cat_stalls: list, from_left: bool) -> dict:
+    """Rank of each stall by distance from an entrance at one end of its aisle: 0 = nearest; stalls
+    at the same distance (facing each other across the aisle) share a rank."""
+    xs = sorted({st.pos[0] for st in cat_stalls}, reverse=not from_left)
+    r = {x: i for i, x in enumerate(xs)}
+    return {st.sid: r[st.pos[0]] for st in cat_stalls}
+
+
+def consideration_set(cfg: BazaarConfig, root: tuple, i: int, cat_stalls: list) -> tuple[bool, list]:
+    """Entrance end and consideration set of buyer i (buyers.demand_mode "choice_set"), from the
+    stream [root, 18, i]: one draw for the entrance (left end with probability 1/2), then
+    buyers.consider draws for the set, always all consumed. Successive sampling without
+    replacement with weight exp(-position_rent x position rank); position_rent = 0 is uniform.
+    Returns (enters from the left, set members in walking order)."""
+    bc = cfg.buyers
+    rng = np.random.default_rng([*root, 18, i])
+    left = bool(rng.random() < 0.5)
+    u = rng.random(int(bc.consider))
+    ranks = position_ranks(cat_stalls, left)
+    g = float(bc.position_rent)
+    pool = sorted(cat_stalls, key=lambda st: st.idx)
+    chosen = []
+    for k in range(min(int(bc.consider), len(pool))):
+        w = np.array([math.exp(-g * ranks[st.sid]) for st in pool])
+        cum = np.cumsum(w) / w.sum()
+        j = min(int(np.searchsorted(cum, u[k], side="right")), len(pool) - 1)
+        chosen.append(pool.pop(j))
+    chosen.sort(key=lambda st: (ranks[st.sid], st.idx))
+    return left, [st.sid for st in chosen]
+
+
 def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Generator,
                  rng_people: np.random.Generator, rng_treat: np.random.Generator | None = None,
-                 rng_insp: np.random.Generator | None = None, root: tuple | None = None) -> list[Person]:
+                 rng_insp: np.random.Generator | None = None, root: tuple | None = None,
+                 stalls: list | None = None) -> list[Person]:
     """Build the population in a treatment-stable way.
 
     The buyer population (profile, category, units, Q_req, route, arrival, id) is
@@ -269,10 +327,18 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         return layout.route_through(aisles, bool(rng_routes.random() < 0.5))
 
     # Bargain hunters (0.11.0): a dedicated stream, used only when the share is > 0.
-    bargain = float(bc.bargain_share)
+    bargain = bargain_share(bc)
     if not 0 <= bargain <= 1:
         raise ValueError(f"buyers.bargain_share must be in [0, 1], got {bargain}")
     rng_bargain = np.random.default_rng([*root, 16]) if bargain > 0 else None
+
+    # Demand (0.12.0): in "choice_set" mode the random route is still drawn (so every other draw
+    # on the route stream is unchanged) and then replaced by a walk along the category's aisle.
+    choice = bc.demand_mode == "choice_set"
+    if choice:
+        if stalls is None:
+            raise ValueError("buyers.demand_mode = choice_set needs the stalls")
+        by_cat = {c: [st for st in stalls if st.category == c] for c in mk.categories}
 
     # Buyers.
     for i in range(bc.count):
@@ -297,13 +363,20 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         budget = int(round(units * base_cat[cat] * factor))
         is_insp = bool(u_insp < bc.inspector_fraction)
         arrive = int(round(i * last_arrival / max(1, bc.count)))
+        route, consider = random_route(), None
+        if choice:
+            left, members = consideration_set(cfg, root, i, by_cat[cat])
+            route = layout.route_through([mk.categories.index(cat)], left)
+            consider = members
         people.append(Person(
-            pid="", idx=0, kind="buyer", profile=profile, route=random_route(), arrive=arrive,
+            pid="", idx=0, kind="buyer", profile=profile, route=route, arrive=arrive,
             is_inspector=is_insp,
             task={"category": cat, "units": units, "q_req": q_req, "budget_cents": budget, "budget_level": level,
                   **({} if bc.budget_factor_override is None else {"budget_factor": factor}),
-                  **({"bargain": True} if is_bargain else {})},
-            inspect_cost_cents=int(round(base_cat[cat] * bc.inspect_cost_frac[profile]))))
+                  **({"bargain": True} if is_bargain else {}),
+                  **({"consider": consider} if choice else {})},
+            inspect_cost_cents=int(round(base_cat[cat] * bc.inspect_cost_frac[profile])),
+            consider=None if consider is None else frozenset(consider)))
 
     # Inspectors. Observable profile follows the feature-correlation dial.
     posts = _inspector_posts(cfg, layout, rng_routes)

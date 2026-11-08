@@ -17,6 +17,8 @@ import copy
 from . import bazaar
 
 NEVER = "never"
+# Candidate bust-out days (0.12.0; was never, 10, 20, 27).
+CANDIDATES = (NEVER, 10, 20, 25, 27, 28, 29)
 POLICY = "rule_genuine_bust_at"
 
 
@@ -54,7 +56,7 @@ def gain(totals: dict) -> dict:
     return out
 
 
-def best_response(cfg, sid: str, candidates=(NEVER, 10, 20, 27), run=bazaar.run) -> dict:
+def best_response(cfg, sid: str, candidates=CANDIDATES, run=bazaar.run) -> dict:
     """Run every candidate for stall `sid` and return gain(totals)."""
     totals = {}
     for b in candidates:
