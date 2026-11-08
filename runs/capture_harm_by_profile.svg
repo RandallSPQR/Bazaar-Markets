@@ -13,14 +13,23 @@
 <line class="ci" x1="188.2" y1="167.0" x2="406.7" y2="167.0"/>
 <circle class="pt" cx="297.4" cy="167.0" r="3.5"/>
 <text class="k" x="412.7" y="171.0">A +2.2</text>
+<line class="hlc" x1="198.6" y1="183.0" x2="338.7" y2="183.0"/>
+<circle class="hl" cx="268.6" cy="183.0" r="3.5"/>
+<text class="k" x="344.7" y="187.0">B +1.7</text>
 <text class="lb" x="138" y="269.0" text-anchor="end">locals</text>
 <line class="ci" x1="192.9" y1="257.0" x2="261.7" y2="257.0"/>
 <circle class="pt" cx="227.3" cy="257.0" r="3.5"/>
 <text class="k" x="267.7" y="261.0">A +1.0</text>
+<line class="hlc" x1="230.5" y1="273.0" x2="349.2" y2="273.0"/>
+<circle class="hl" cx="289.8" cy="273.0" r="3.5"/>
+<text class="k" x="355.2" y="277.0">B +2.1</text>
 <text class="lb" x="138" y="359.0" text-anchor="end">experts</text>
 <line class="ci" x1="173.3" y1="347.0" x2="173.3" y2="347.0"/>
 <circle class="pt" cx="173.3" cy="347.0" r="3.5"/>
 <text class="k" x="179.3" y="351.0">A +0.0</text>
+<line class="hlc" x1="173.3" y1="363.0" x2="173.3" y2="363.0"/>
+<circle class="hl" cx="173.3" cy="363.0" r="3.5"/>
+<text class="k" x="179.3" y="367.0">B +0.0</text>
 <line class="ax" x1="150" y1="408" x2="430" y2="408"/>
 <text class="k" x="173.3" y="424" text-anchor="middle">0</text>
 <text class="k" x="284.1" y="424" text-anchor="middle">+2</text>
@@ -30,12 +39,21 @@
 <line class="ci" x1="563.3" y1="167.0" x2="786.6" y2="167.0"/>
 <circle class="pt" cx="675.0" cy="167.0" r="3.5"/>
 <text class="k" x="792.6" y="171.0">A −1.2</text>
+<line class="hlc" x1="633.2" y1="183.0" x2="795.0" y2="183.0"/>
+<circle class="hl" cx="714.1" cy="183.0" r="3.5"/>
+<text class="k" x="801.0" y="187.0">B −0.7</text>
 <line class="ci" x1="721.0" y1="257.0" x2="780.6" y2="257.0"/>
 <circle class="pt" cx="750.8" cy="257.0" r="3.5"/>
 <text class="k" x="786.6" y="261.0">A −0.3</text>
+<line class="hlc" x1="643.8" y1="273.0" x2="756.7" y2="273.0"/>
+<circle class="hl" cx="700.3" cy="273.0" r="3.5"/>
+<text class="k" x="762.7" y="277.0">B −0.9</text>
 <line class="ci" x1="777.4" y1="347.0" x2="796.7" y2="347.0"/>
 <circle class="pt" cx="787.0" cy="347.0" r="3.5"/>
 <text class="k" x="802.7" y="351.0">A +0.1</text>
+<line class="hlc" x1="761.7" y1="363.0" x2="771.5" y2="363.0"/>
+<circle class="hl" cx="766.6" cy="363.0" r="3.5"/>
+<text class="k" x="777.5" y="367.0">B −0.1</text>
 <line class="ax" x1="540" y1="408" x2="820" y2="408"/>
 <text class="k" x="607.8" y="424" text-anchor="middle">−2</text>
 <text class="k" x="692.8" y="424" text-anchor="middle">−1</text>

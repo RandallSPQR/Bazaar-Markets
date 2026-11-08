@@ -85,6 +85,113 @@ Days from the bust-out (at the best day) to each event; reached = stall-seeds wh
 
 ![gain by rating memory and tourist share](capture_gain_by_lambda.svg)
 
+## Stage B: capture
+
+### Run record
+
+- Engine `0.11.0`; commit `6b286fd94cd1cfd344ef567f1aacdfe4e206fdaa`; uncommitted at run time: ['?? runs/capture_B_run.log', '?? runs/capture_B_stdout.log']
+- Script sha256 `9336648238a64ed76069888d167f68b508559d3dc32eaffa010cf04caea24d5e`
+- Command: `.venv/bin/python -m analysis.capture --stage B --tests full suite at 690f58c: 500 passed (13.8 min), including 58 reference cells from engine 0.10.0 (e5d7818)`
+- Tests: full suite at 690f58c: 500 passed (13.8 min), including 58 reference cells from engine 0.10.0 (e5d7818)
+- Python 3.12.7, numpy 2.5.4, macOS-26.6.2-arm64-arm-64bit
+- 1800 chains × 30 days on 4 workers (nice 19); wall clock 9.34 h; load average [1.93, 4.08, 5.1] at start, [5.29, 5.52, 5.55] at end; memory at start {'free_pct': 82, 'swap_free_mb': 1575.81}, at end {'free_pct': 82, 'swap_free_mb': 1044.56}; memory-guard pauses: 341
+- Seeds 52–66 (15), paired; sampled stalls per seed: 52: s10, s38, s08; 53: s29, s03, s01; 54: s01, s28, s29; 55: s38, s42, s04; 56: s10, s30, s42; 57: s18, s08, s23; 58: s32, s22, s03; 59: s26, s06, s04; 60: s13, s33, s47; 61: s12, s27, s09; 62: s09, s22, s14; 63: s11, s07, s35; 64: s10, s11, s36; 65: s31, s47, s19; 66: s24, s04, s17
+
+### Gate
+
+- tie share 0, embarrassment off, capture 0: no critic review is ever held: **passed** (held reviews: 0 over 150 chains; seed 52 never chain: 0)
+
+### Confirmatory
+
+Prediction > 0 for each. Gain in $ per sampled stall over 30 days.
+
+| Prediction | Unfloored gain (primary) | Verdict | Floored gain (spec) | Verdict |
+|---|---|---|---|---|
+| **PK1**: embarrassment off, capture 0: slope over tie share (per +0.1) | −0.02 [−1.00, +0.97] | not supported (interval includes 0) | +0.00 [+0.00, +0.00] | not supported (interval includes 0) |
+| **PK2**: tie share 0.6, embarrassment off, capture 0: gain | −1,555.51 [−2,090.22, −1,020.80] * | contradicted (interval on the opposite side of 0) | +0.00 [+0.00, +0.00] | not supported (interval includes 0) |
+| **PK3**: tie share 0.3, embarrassment off: capture 0.5 − 0 | +424.46 [+181.79, +667.14] * | supported | +0.00 [+0.00, +0.00] | not supported (interval includes 0) |
+
+### Gain by condition
+
+| Condition | Unfloored gain ($) | Floored gain ($) | Stall-seeds with a positive gain (%) | Never-bust total ($) | Best day 10 / 20 / 27 (count) |
+|---|---|---|---|---|---|
+| B|tie0|emb0|cap0 | −1,555.40 [−2,090.09, −1,020.71] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.3|emb0|cap0 | −1,557.38 [−2,092.17, −1,022.59] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.6|emb0|cap0 | −1,555.51 [−2,090.22, −1,020.80] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0|emb1|cap0 | −1,559.33 [−2,096.01, −1,022.66] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.3|emb1|cap0 | −1,559.33 [−2,096.01, −1,022.66] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.6|emb1|cap0 | −1,559.33 [−2,096.01, −1,022.66] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0|emb0|cap0.5 | −1,130.94 [−1,536.30, −725.58] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.3|emb0|cap0.5 | −1,132.92 [−1,538.72, −727.11] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.6|emb0|cap0.5 | −1,132.65 [−1,537.76, −727.53] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0|emb1|cap0.5 | −1,145.30 [−1,553.15, −737.45] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.3|emb1|cap0.5 | −1,145.30 [−1,553.15, −737.45] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+| B|tie0.6|emb1|cap0.5 | −1,145.30 [−1,553.15, −737.45] * | 0.00 [0.00, 0.00] | 0 | 4,432.19 [1,405.32, 7,459.07] | 0 / 0 / 45 |
+
+Embarrassment's added effect (exploratory), on − off, unfloored gain ($):
+
+| Tie share | Capture 0 | Capture 0.5 |
+|---|---|---|
+| 0 | −3.93 [−10.00, +2.14] | −14.36 [−31.14, +2.41] |
+| 0.3 | −1.95 [−7.23, +3.32] | −12.39 [−29.29, +4.52] |
+| 0.6 | −3.83 [−9.38, +1.73] | −12.65 [−29.62, +4.31] |
+
+### Harm by buyer profile at the best bust-out day (exploratory)
+
+Bust chain at the stall's best day minus the never chain, days from the bust-out to 30; per seed the mean over the 3 stalls. Shortfall in points of purchases; surplus in $ per buyer of the profile.
+
+| Condition | tourist: shortfall (pts) | local: shortfall (pts) | expert: shortfall (pts) | tourist: surplus ($) | local: surplus ($) | expert: surplus ($) |
+|---|---|---|---|---|---|---|
+| B|tie0|emb0|cap0 | +1.5 [−0.1, +3.1] | +2.1 [+1.1, +3.2] * | +0.0 [+0.0, +0.0] | −0.63 [−1.57, +0.31] | −0.87 [−1.52, −0.22] * | −0.13 [−0.19, −0.07] * |
+| B|tie0.3|emb0|cap0 | +1.5 [−0.1, +3.1] | +2.1 [+1.1, +3.2] * | +0.0 [+0.0, +0.0] | −0.63 [−1.57, +0.31] | −0.85 [−1.51, −0.20] * | −0.13 [−0.19, −0.07] * |
+| B|tie0.6|emb0|cap0 | +1.5 [−0.1, +3.1] | +2.2 [+1.2, +3.2] * | +0.0 [+0.0, +0.0] | −0.64 [−1.57, +0.30] | −0.86 [−1.52, −0.21] * | −0.13 [−0.19, −0.07] * |
+| B|tie0|emb1|cap0 | +1.5 [−0.1, +3.1] | +2.1 [+1.0, +3.2] * | +0.0 [+0.0, +0.0] | −0.62 [−1.54, +0.30] | −0.86 [−1.52, −0.20] * | −0.13 [−0.19, −0.07] * |
+| B|tie0.3|emb1|cap0 | +1.5 [−0.1, +3.1] | +2.1 [+1.0, +3.2] * | +0.0 [+0.0, +0.0] | −0.62 [−1.54, +0.30] | −0.86 [−1.52, −0.20] * | −0.13 [−0.19, −0.07] * |
+| B|tie0.6|emb1|cap0 | +1.5 [−0.1, +3.1] | +2.1 [+1.0, +3.2] * | +0.0 [+0.0, +0.0] | −0.62 [−1.54, +0.30] | −0.86 [−1.52, −0.20] * | −0.13 [−0.19, −0.07] * |
+| B|tie0|emb0|cap0.5 | +1.9 [+0.8, +3.1] * | +2.2 [+1.0, +3.3] * | +0.0 [+0.0, +0.0] | −0.86 [−1.99, +0.26] | −0.97 [−1.63, −0.31] * | −0.13 [−0.18, −0.07] * |
+| B|tie0.3|emb0|cap0.5 | +1.9 [+0.8, +3.1] * | +2.2 [+1.0, +3.3] * | +0.0 [+0.0, +0.0] | −0.86 [−1.99, +0.26] | −0.96 [−1.63, −0.29] * | −0.13 [−0.18, −0.07] * |
+| B|tie0.6|emb0|cap0.5 | +1.9 [+0.8, +3.1] * | +2.2 [+1.0, +3.3] * | +0.0 [+0.0, +0.0] | −0.86 [−1.99, +0.26] | −0.98 [−1.66, −0.31] * | −0.13 [−0.19, −0.07] * |
+| B|tie0|emb1|cap0.5 | +1.9 [+0.8, +3.0] * | +2.0 [+0.8, +3.2] * | +0.0 [+0.0, +0.0] | −0.88 [−1.95, +0.19] | −0.96 [−1.64, −0.27] * | −0.14 [−0.19, −0.08] * |
+| B|tie0.3|emb1|cap0.5 | +1.9 [+0.8, +3.0] * | +2.0 [+0.8, +3.2] * | +0.0 [+0.0, +0.0] | −0.88 [−1.95, +0.19] | −0.96 [−1.64, −0.27] * | −0.14 [−0.19, −0.08] * |
+| B|tie0.6|emb1|cap0.5 | +1.9 [+0.8, +3.0] * | +2.0 [+0.8, +3.2] * | +0.0 [+0.0, +0.0] | −0.88 [−1.95, +0.19] | −0.96 [−1.64, −0.27] * | −0.14 [−0.19, −0.08] * |
+| pooled | +1.7 [+0.5, +3.0] * | +2.1 [+1.0, +3.2] * | +0.0 [+0.0, +0.0] | −0.75 [−1.70, +0.20] | −0.91 [−1.58, −0.25] * | −0.13 [−0.19, −0.07] * |
+
+### How long bad news stays semi-private (exploratory)
+
+Days from the bust-out (at the best day) to each event; reached = stall-seeds where it happened by day 30, of 45.
+
+| Condition | first negative critic review written: median (reached) | … filed: median (reached) | rating below τ = 0.5: median (reached) | tourist units below half the pre-bust mean: median (reached) |
+|---|---|---|---|---|
+| B|tie0|emb0|cap0 | 1 (36) | 1 (36) | 2 (31) | 0 (17) |
+| B|tie0.3|emb0|cap0 | 1 (36) | 1 (34) | 2 (24) | 0 (17) |
+| B|tie0.6|emb0|cap0 | 1 (36) | 1 (21) | 2 (17) | 0 (17) |
+| B|tie0|emb1|cap0 | 1 (36) | 0.5 (2) | 1 (8) | 0 (17) |
+| B|tie0.3|emb1|cap0 | 1 (36) | 0 (1) | 1 (8) | 0 (17) |
+| B|tie0.6|emb1|cap0 | 1 (36) | 0 (1) | 1 (8) | 0 (17) |
+| B|tie0|emb0|cap0.5 | 1 (36) | 1 (36) | 1 (35) | 0 (16) |
+| B|tie0.3|emb0|cap0.5 | 1 (36) | 1 (34) | 1.5 (28) | 0 (16) |
+| B|tie0.6|emb0|cap0.5 | 1 (36) | 1 (21) | 1.5 (22) | 0 (16) |
+| B|tie0|emb1|cap0.5 | 1 (36) | 0.5 (2) | 1 (14) | 0 (16) |
+| B|tie0.3|emb1|cap0.5 | 1 (36) | 0 (1) | 1 (14) | 0 (16) |
+| B|tie0.6|emb1|cap0.5 | 1 (36) | 0 (1) | 1 (14) | 0 (16) |
+
+### Floors, invalid actions and schedule checks
+
+- B|tie0|emb0|cap0: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.3|emb0|cap0: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.6|emb0|cap0: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0|emb1|cap0: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.3|emb1|cap0: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.6|emb1|cap0: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0|emb0|cap0.5: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.3|emb0|cap0.5: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.6|emb0|cap0.5: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0|emb1|cap0.5: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.3|emb1|cap0.5: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+- B|tie0.6|emb1|cap0.5: units sold by seconds stalls is 0 in every seed (15) over days 26–30; also 0 on every day
+
+![gain by critic ties, embarrassment and capture](capture_gain_by_ties.svg)
+
 ![harm by buyer profile](capture_harm_by_profile.svg)
 
 ## Reading (written after the results)
@@ -100,6 +207,21 @@ Days from the bust-out (at the best day) to each event; reached = stall-seeds wh
 
 **Not a reading of the confirmatory numbers but a fact about them (post-hoc):** 29 of the 45 sampled stall-seeds (64%) have the same 30-day total, to the cent, in every chain, so they sold nothing on or after day 10 under any condition. Their gain is exactly 0 in every condition, and every mean above is diluted by them. Restricted to the 16 stall-seeds that sell, the 40%-tourist gain is about −$1,170 to −$1,300 and positive for none. With 80% tourists it is −$296, −$120 and +$95 by λ, positive for 3, 5 and 5 of 16. This split is post-hoc and has no interval. The prespecified sampling is unchanged, and Stage B uses the same stalls.
 
+### Stage B (written 2026-11-08 after the Stage B results)
+
+- **Gate passed.** With tie share 0, embarrassment off and capture 0, no critic review was held in any of the 150 chains.
+- **Busting out loses money in every Stage B condition.** All 45 stall-seeds lose by busting out in all 12 conditions. The best of the three candidate days is always day 27, the latest. The loss is about $1,555 per stall over 30 days with capture 0, and $1,131–1,145 with capture 0.5. These are the costs of busting out once 2 patrolling inspectors and 4 critics are in the market.
+- **PK1 (ties make busting out more profitable) is not supported.** The slope is −$0.02 per +0.1 of tie share [−1.00, +0.97].
+- **PK2 (busting out pays at tie share 0.6) is contradicted.** The gain is −$1,556 [−2,090, −1,021].
+- **Ties work on the information but not on profit.** At tie share 0.6, a negative critic review reached the brand's rating in 21 of 45 stall-seeds, against 36 with no ties. The rating fell below τ in 17, against 31. Yet the gain moved by less than $3. The critic channel does not carry the cost of busting out here.
+- **PK3 (capture makes busting out more profitable) is supported:** +$424 at tie share 0.3 [+182, +667]. Inspectors are the channel that matters. Capturing half the inspector–brand pairs cuts the loss by about a quarter, but busting out still loses $1,133.
+- **Embarrassment (exploratory) almost silences critics without changing profit.** A critic whose earlier reviews of a brand were all positive holds a negative one for emb_max = 10 days. Bust-outs happen on day 27 at the latest, so held reviews filed in only 1–2 of 36 stall-seeds, and the rating fell below τ in 8–14 rather than 17–35. Its effect on the gain is −$2 to −$14, with every interval including 0.
+- **Harm (exploratory).** With inspectors present, locals bear about as much as tourists: shortfall +2.1 points [+1.0, +3.2] against +1.7 [+0.5, +3.0]. Locals lose $0.91 of surplus per buyer [−1.58, −0.25]. Experts lose $0.13 [−0.19, −0.07].
+
+### Across both stages
+
+Busting out did not pay on average in any of the 18 conditions. The only places near break-even are markets with 80% tourists and slow ratings and no inspectors (Stage A, λ 0.97: +$34 [−132, +200]). By size of effect, the boundary of the brand dilemma is set first by how many buyers cannot see reputation (tourists), then by inspectors and their capture. Rating speed and critics' ties come last. The Stage A and Stage B levels are not directly comparable. In Stage B every sampled stall sells, while in Stage A 29 of 45 sell nothing (see caveats), so the larger Stage B loss is partly a different set of stalls that matter.
+
 ## Caveats
 
 ### Stage A
@@ -113,3 +235,12 @@ Days from the bust-out (at the best day) to each event; reached = stall-seeds wh
 - **Tests:** full suite at 690f58c, 500 passed.
 - **Machine:** 4 workers at nice 19 with a memory guard (pause if free swap < 1 GB or memory-pressure free < 15%). It never paused.
 - **Intervals** are 95% t-intervals over 15 seeds, unadjusted. Everything outside PS1/PS2 (and PK1–PK3 in Stage B) is exploratory.
+
+### Stage B
+
+- **Every sampled stall sells in Stage B.** None of the 45 stall-seeds has identical totals across chains, so the Stage A dilution does not apply here. The never-bust totals differ from Stage A's because inspectors change the market.
+- **Best day 27 is the latest candidate in all 45 stall-seeds and all 12 conditions.** A later bust-out (day 28–30) might lose less. The benchmark only bounds the best response from below.
+- **The tie-delay and embarrassment settings are placeholders.** tie_delay 10 and emb_max 10 against bust-outs on day 27 mean held reviews mostly never file before day 30. The embarrassment result is in large part a horizon effect.
+- **The other critic and capture settings are placeholders too:** 6 stalls a day, weight 5, and capture effect 0.8.
+- **Run time.** Stage B took 9.34 h, not the expected ~4 h. Free swap fell to about 1.04 GB, and the memory guard paused 341 times. The pauses only delay chains, and every chain is deterministic and paired, so results are unaffected.
+- The same pipeline check, frozen script (same sha256 as Stage A), test suite and interval conventions as Stage A apply.

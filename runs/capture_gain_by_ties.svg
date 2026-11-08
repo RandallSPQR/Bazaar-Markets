@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}}</style>
+<rect class="bg" x="0" y="0" width="900" height="600"/>
+<title id="t">Best bust-out gain against critics' ties, with and without embarrassment</title>
+<desc id="d">Mean gain with paired intervals at tie shares 0, 0.3, 0.6, embarrassment off and on, for inspector capture 0 and 0.5. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">Best bust-out gain against critics' ties, with and without embarrassment</text>
+<text class="s" x="30" y="70" font-size="14">Stage B: 2 patrolling inspectors, 4 critics; panels by inspector capture; PK1 slope −0.02 [−1.00, +0.97] per +0.1 tie share</text>
+<text class="n" x="30" y="560">Bazaar engine 0.11.0. Seeds 52–66 paired; 95% t-intervals, unadjusted; 3 sampled genuine stalls per seed; bust-out days 10, 20, 27; 30 days.</text>
+<text class="n" x="30" y="576">Critics: 6 stalls a day, weight 5, tie delay 10, emb_max 10; capture effect 0.8 (placeholders). λ 0.7, tourists 40%, budget 1.25 × base.</text>
+<text class="t" x="140" y="104" font-size="15">inspector capture 0</text>
+<line class="zero" x1="140.0" y1="148.3" x2="440.0" y2="148.3"/>
+<polyline class="ln" fill="none" points="136.0,358.6 286.0,358.9 436.0,358.6"/>
+<line class="ci" x1="136.0" y1="430.9" x2="136.0" y2="286.3"/>
+<circle class="pt" cx="136.0" cy="358.6" r="3.5"/>
+<line class="ci" x1="286.0" y1="431.1" x2="286.0" y2="286.6"/>
+<circle class="pt" cx="286.0" cy="358.9" r="3.5"/>
+<line class="ci" x1="436.0" y1="430.9" x2="436.0" y2="286.3"/>
+<circle class="pt" cx="436.0" cy="358.6" r="3.5"/>
+<text class="lb" x="426.0" y="346.6" text-anchor="end">embarrassment off</text>
+<polyline class="hlc" fill="none" points="144.0,359.1 294.0,359.1 444.0,359.1"/>
+<line class="hlc" x1="144.0" y1="431.7" x2="144.0" y2="286.6"/>
+<circle class="hl" cx="144.0" cy="359.1" r="3.5"/>
+<line class="hlc" x1="294.0" y1="431.7" x2="294.0" y2="286.6"/>
+<circle class="hl" cx="294.0" cy="359.1" r="3.5"/>
+<line class="hlc" x1="444.0" y1="431.7" x2="444.0" y2="286.6"/>
+<circle class="hl" cx="444.0" cy="359.1" r="3.5"/>
+<text class="lb" x="434.0" y="379.1" text-anchor="end">embarrassment on</text>
+<line class="ax" x1="140.0" y1="474" x2="440.0" y2="474"/>
+<text class="k" x="140.0" y="490" text-anchor="middle">0</text>
+<text class="k" x="290.0" y="490" text-anchor="middle">0.3</text>
+<text class="k" x="440.0" y="490" text-anchor="middle">0.6</text>
+<text class="k" x="290.0" y="510" text-anchor="middle">critic tie share</text>
+<text class="t" x="540" y="104" font-size="15">inspector capture 0.5</text>
+<line class="zero" x1="540.0" y1="148.3" x2="840.0" y2="148.3"/>
+<polyline class="ln" fill="none" points="536.0,301.2 686.0,301.5 836.0,301.4"/>
+<line class="ci" x1="536.0" y1="356.0" x2="536.0" y2="246.4"/>
+<circle class="pt" cx="536.0" cy="301.2" r="3.5"/>
+<line class="ci" x1="686.0" y1="356.3" x2="686.0" y2="246.6"/>
+<circle class="pt" cx="686.0" cy="301.5" r="3.5"/>
+<line class="ci" x1="836.0" y1="356.2" x2="836.0" y2="246.7"/>
+<circle class="pt" cx="836.0" cy="301.4" r="3.5"/>
+<polyline class="hlc" fill="none" points="544.0,303.2 694.0,303.2 844.0,303.2"/>
+<line class="hlc" x1="544.0" y1="358.3" x2="544.0" y2="248.0"/>
+<circle class="hl" cx="544.0" cy="303.2" r="3.5"/>
+<line class="hlc" x1="694.0" y1="358.3" x2="694.0" y2="248.0"/>
+<circle class="hl" cx="694.0" cy="303.2" r="3.5"/>
+<line class="hlc" x1="844.0" y1="358.3" x2="844.0" y2="248.0"/>
+<circle class="hl" cx="844.0" cy="303.2" r="3.5"/>
+<line class="ax" x1="540.0" y1="474" x2="840.0" y2="474"/>
+<text class="k" x="540.0" y="490" text-anchor="middle">0</text>
+<text class="k" x="690.0" y="490" text-anchor="middle">0.3</text>
+<text class="k" x="840.0" y="490" text-anchor="middle">0.6</text>
+<text class="k" x="690.0" y="510" text-anchor="middle">critic tie share</text>
+<line class="ax" x1="126" y1="460.0" x2="126" y2="120.0"/>
+<text class="k" x="120" y="422.7" text-anchor="end">−2,000</text>
+<text class="k" x="120" y="287.5" text-anchor="end">−1,000</text>
+<text class="k" x="120" y="152.3" text-anchor="end">0</text>
+<text class="k" x="66" y="290.0" text-anchor="middle" transform="rotate(-90 66 290.0)">gain, $ per stall over 30 days</text>
+</svg>
