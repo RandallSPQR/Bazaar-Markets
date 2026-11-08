@@ -1,0 +1,20 @@
+2026-11-08 12:25:29 pilot start; engine 0.12.0, commit 6fb75b7, seeds [900, 901, 902, 903, 904]
+2026-11-08 12:25:29 P0 at 150 buyers
+2026-11-08 12:26:08   5/5 chains, 39 s, memory {'swap_free_mb': 1590.88, 'free_pct': 87}
+2026-11-08 12:26:08 P0 at 150: 1.000 / 1.000 -> pass
+2026-11-08 12:26:08 P1: samples {900: ['s14', 's27', 's41'], 901: ['s33', 's32', 's09'], 902: ['s29', 's45', 's44'], 903: ['s28', 's04', 's06'], 904: ['s18', 's25', 's11']}
+2026-11-08 12:27:15   10/90 chains, 68 s, memory {'swap_free_mb': 1598.88, 'free_pct': 86}
+2026-11-08 12:28:04   20/90 chains, 116 s, memory {'swap_free_mb': 1598.88, 'free_pct': 87}
+2026-11-08 12:29:15   30/90 chains, 187 s, memory {'swap_free_mb': 1606.88, 'free_pct': 87}
+2026-11-08 12:30:05   40/90 chains, 238 s, memory {'swap_free_mb': 1606.88, 'free_pct': 86}
+2026-11-08 12:31:18   50/90 chains, 310 s, memory {'swap_free_mb': 1630.88, 'free_pct': 86}
+2026-11-08 12:32:11   60/90 chains, 363 s, memory {'swap_free_mb': 1630.88, 'free_pct': 87}
+2026-11-08 12:33:22   70/90 chains, 435 s, memory {'swap_free_mb': 1630.88, 'free_pct': 87}
+2026-11-08 12:34:17   80/90 chains, 489 s, memory {'swap_free_mb': 1646.88, 'free_pct': 87}
+2026-11-08 12:35:23   90/90 chains, 555 s, memory {'swap_free_mb': 1678.88, 'free_pct': 87}
+2026-11-08 12:35:23 P1: pass
+2026-11-08 12:35:26   10/10 chains, 3 s, memory {'swap_free_mb': 1678.88, 'free_pct': 86}
+2026-11-08 12:35:26 P2: pass
+2026-11-08 12:37:07   10/10 chains, 101 s, memory {'swap_free_mb': 1686.88, 'free_pct': 85}
+2026-11-08 12:37:07 P3: pass
+2026-11-08 12:37:07 pilot done
