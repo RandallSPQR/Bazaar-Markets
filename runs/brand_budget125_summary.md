@@ -1,5 +1,7 @@
 # Brands, look-alikes and bust-out — budgets 1.25 × base (exploratory)
 
+> **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
+
 Run spec "brands, look-alikes and bust-out (rule-based only)", predictions written 2026-11-06 before any run.
 
 **Exploratory run.** Identical to the prespecified run (`runs/brand_summary.md`) except buyers' budgets: `buyers.budget_level=above`, 1.25 × base price per unit instead of 1.0 ×. Added 2026-11-06, before either full run, because the 2-seed smoke test showed that with budgets at base price the reputation premium (up to 1.2 × base) prices buyers out instead of earning a margin. The PE labels below mark the same contrasts as the prespecified run, but nothing in this run is confirmatory.

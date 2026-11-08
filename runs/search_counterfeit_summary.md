@@ -1,5 +1,7 @@
 # Search depth, then counterfeits and bust-outs
 
+> **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
+
 Run spec "search depth, then counterfeits and bust-outs (rule-based only)"; predictions written 2026-11-06, before any run.
 
 ## Run record

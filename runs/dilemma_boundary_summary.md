@@ -1,5 +1,7 @@
 # Where does the brand dilemma appear?
 
+> **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
+
 Run spec "where does the brand dilemma appear? (no engine change; rule-based)"; predictions written 2026-11-07, before any run.
 
 ## Run record

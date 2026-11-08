@@ -1,5 +1,7 @@
 # Reputation speed and capture: the brand dilemma's boundary
 
+> **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
+
 Run spec "reputation speed and capture, the brand dilemma's real boundary (rule-based only)"; predictions written 2026-11-07, before any run.
 
 ## Design (prespecified)

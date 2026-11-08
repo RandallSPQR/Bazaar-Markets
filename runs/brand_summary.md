@@ -1,5 +1,7 @@
 # Brands, look-alikes and bust-out
 
+> **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
+
 Run spec "brands, look-alikes and bust-out (rule-based only)", predictions written 2026-11-06 before any run.
 
 Prespecified, confirmatory run (buyers' budgets at the default, 1.0 × base price per unit). A companion exploratory run with budgets at 1.25 × base is in `runs/brand_budget125_summary.md`.
