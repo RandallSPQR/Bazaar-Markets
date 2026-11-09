@@ -38,4 +38,12 @@ points, through role-specific JSON observations and schema-validated actions.
 #         buyer's own agent stream, only when strictly between 0 and 1), benchmark.candidates()
 #         for a validated candidate list, and a range check on buyers.bargain_q_req. Defaults
 #         reproduce 0.12.0.
-ENGINE_VERSION = "0.13.0"
+# 0.14.0: two search fixes and a guard. (1) Trapped buyers: a searching buyer stays in the "choose"
+#         phase once there; before, one that chose at its route end with fewer than search_k stalls
+#         seen (a stall closed when passed) reverted to "browse" on walking back and could not buy.
+#         (2) Parked buyers: a searching buyer that decides not to buy at the stall it chose drops
+#         the target and carries on; before, it stood at that stall for the rest of the day.
+#         Guard: outcome stuck_buyers and idle_choosers at the end of each day (multi-day results
+#         add per-day and total counts). Runs where neither case occurs reproduce 0.13.0, apart
+#         from the two new outcome keys.
+ENGINE_VERSION = "0.14.0"

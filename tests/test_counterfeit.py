@@ -15,6 +15,7 @@ from engine.config import load
 from engine.interface import parse
 from engine.jsonlog import JsonlLog, dumps
 from engine.runner import compare_logs, replay
+from tests.guard_strip import changed_in_0140, strip_lines, strip_out
 
 HERE = os.path.dirname(__file__)
 REF = os.path.join(HERE, "reference", "outcomes_v080.json")
@@ -47,12 +48,14 @@ def _ref_cells():
 def test_defaults_reproduce_engine_080(key, cell):
     """Every 0.8.0 reference cell, outcome and log body (header aside). Brands cells differ only
     in the renamed word, so they are compared with "counterfeit" mapped back to "lookalike"."""
+    if changed_in_0140(cell):
+        pytest.skip("changed on purpose by engine 0.14.0; checked in tests/test_trapped_buyers.py")
     out, lines = _run(cfg(*cell["overrides"], seed=cell["seed"]))
-    o, body = dumps(out), "\n".join(lines[1:])
+    o, body = dumps(strip_out(out)), "\n".join(strip_lines(lines[1:]))
     if "brands.enabled=true" in cell["overrides"]:
         assert "lookalike" not in o and "lookalike" not in body
         back = lambda x: dumps(json.loads(x.replace("counterfeit", "lookalike"))) if "counterfeit" in x else x
-        o, body = back(o), "\n".join(back(x) for x in lines[1:])
+        o, body = back(o), "\n".join(back(x) for x in strip_lines(lines[1:]))
     else:
         assert "counterfeit" not in body
     assert o == cell["outcome"]

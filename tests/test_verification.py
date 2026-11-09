@@ -11,6 +11,7 @@ from agents.rule_based import RuleBuyer
 from engine import bazaar, benchmark
 from engine.config import load
 from engine.jsonlog import JsonlLog, dumps
+from tests.guard_strip import changed_in_0140, strip_lines, strip_out
 
 REF = os.path.join(os.path.dirname(__file__), "reference", "outcomes_v0120.json")
 CS = ["buyers.demand_mode=choice_set"]
@@ -35,10 +36,12 @@ def _ref_cells():
 
 @pytest.mark.parametrize("key,cell", _ref_cells())
 def test_defaults_reproduce_engine_0120(key, cell):
+    if changed_in_0140(cell):
+        pytest.skip("changed on purpose by engine 0.14.0; checked in tests/test_trapped_buyers.py")
     out, lines = _run(cfg(*cell["overrides"], seed=cell["seed"]))
-    assert dumps(out) == cell["outcome"]
+    assert dumps(strip_out(out)) == cell["outcome"]
     assert len(lines) == cell["log_lines"]
-    assert hashlib.sha256("\n".join(lines[1:]).encode()).hexdigest() == cell["log_body_sha256"]
+    assert hashlib.sha256("\n".join(strip_lines(lines[1:])).encode()).hexdigest() == cell["log_body_sha256"]
 
 
 def P(local=None, expert=None):

@@ -13,6 +13,7 @@ from engine.config import load
 from engine.days import SWITCHABLE, day_root, reset_for_day, revise
 from engine.jsonlog import JsonlLog, dumps
 from engine.runner import compare_logs, replay
+from tests.guard_strip import changed_in_0140, strip_lines, strip_out
 
 REF = os.path.join(os.path.dirname(__file__), "reference", "outcomes_v050.json")
 ADAPTIVE = "agents.seller.deceptive=rule_deceptive_adaptive"
@@ -30,11 +31,13 @@ def _ref_cells():
 @pytest.mark.parametrize("key,cell", _ref_cells())
 def test_one_day_reproduces_engine_050(key, cell):
     """Outcome and every log line after the header byte-identical to 0.5.0."""
+    if changed_in_0140(cell):
+        pytest.skip("changed on purpose by engine 0.14.0; checked in tests/test_trapped_buyers.py")
     log = JsonlLog(keep=True)
     out = bazaar.run(cfg(*cell["overrides"], seed=cell["seed"]), log=log)
-    assert dumps(out) == cell["outcome"]
+    assert dumps(strip_out(out)) == cell["outcome"]
     assert len(log.lines) == cell["log_lines"]
-    assert hashlib.sha256("\n".join(log.lines[1:]).encode()).hexdigest() == cell["log_body_sha256"]
+    assert hashlib.sha256("\n".join(strip_lines(log.lines[1:])).encode()).hexdigest() == cell["log_body_sha256"]
 
 
 def test_day_one_equals_single_day_run():

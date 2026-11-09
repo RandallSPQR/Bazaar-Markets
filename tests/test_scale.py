@@ -12,6 +12,7 @@ from engine import bazaar
 from engine.config import BazaarConfig, load
 from engine.jsonlog import JsonlLog, dumps
 from engine.scaling import AGENT_PARAMS, DISTANCE, FIELDS, NONE, TIME, all_config_fields, scaled_config
+from tests.guard_strip import changed_in_0140, strip_lines, strip_out
 
 REF = os.path.join(os.path.dirname(__file__), "reference", "outcomes_v040.json")
 ADAPTIVE = "agents.seller.deceptive=rule_deceptive_adaptive"
@@ -32,11 +33,13 @@ def _ref_cells():
 def test_scale_one_reproduces_engine_040(key, cell):
     """Outcome and every log line after the header byte-identical to 0.4.0 (commit 3feebcf).
     The header differs only by engine_version and the new market.scale key."""
+    if changed_in_0140(cell):
+        pytest.skip("changed on purpose by engine 0.14.0; checked in tests/test_trapped_buyers.py")
     log = JsonlLog(keep=True)
     out = bazaar.run(cfg(*cell["overrides"], seed=cell["seed"]), log=log)
-    assert dumps(out) == cell["outcome"]
+    assert dumps(strip_out(out)) == cell["outcome"]
     assert len(log.lines) == cell["log_lines"]
-    assert hashlib.sha256("\n".join(log.lines[1:]).encode()).hexdigest() == cell["log_body_sha256"]
+    assert hashlib.sha256("\n".join(strip_lines(log.lines[1:])).encode()).hexdigest() == cell["log_body_sha256"]
 
 
 def test_explicit_scale_one_equals_default():

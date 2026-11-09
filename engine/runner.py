@@ -76,6 +76,23 @@ def replay(lines: list[str]) -> tuple[list[str], JsonlLog]:
 VOCAB_RENAMES = {"0.8.0": ("lookalike", "counterfeit")}
 
 
+GUARD_KEYS = ("stuck_buyers", "idle_choosers")
+
+
+def _before(v: str | None, ref: tuple) -> bool:
+    try:
+        return tuple(int(x) for x in str(v).split(".")) < ref
+    except ValueError:
+        return False
+
+
+def _strip_guard(line: str) -> str:
+    if '"ev":"outcome"' not in line:
+        return line
+    e = json.loads(line)
+    return dumps({k: v for k, v in e.items() if k not in GUARD_KEYS})
+
+
 def compare_logs(old: list[str], new: list[str]) -> dict:
     """Byte comparison, line by line. The header's `env` and `engine_version` are
     compared separately: a difference there is a warning, not a mismatch, and the
@@ -107,6 +124,11 @@ def compare_logs(old: list[str], new: list[str]) -> dict:
         old = [dumps(json.loads(x.replace(a, b))) if a in x else x for x in old]
         new = [dumps(json.loads(x.replace(a, b))) if a in x else x for x in new]
         o0, n0 = json.loads(json.dumps(o0).replace(a, b)), json.loads(json.dumps(n0).replace(a, b))
+    if version_differs and _before(v_old, (0, 14, 0)):
+        # 0.14.0 added the stuck-buyer guard (stuck_buyers, idle_choosers) to every outcome event;
+        # an older log has no such keys, so compare without them (on both sides; a no-op on old lines).
+        old = [_strip_guard(x) for x in old]
+        new = [_strip_guard(x) for x in new]
 
     def mismatch(**kw) -> dict:
         res = {"identical": False, "warnings": warnings, **kw}

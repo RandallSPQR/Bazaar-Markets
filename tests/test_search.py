@@ -9,6 +9,7 @@ from engine import bazaar
 from engine.config import load
 from engine.jsonlog import JsonlLog, dumps
 from engine.runner import compare_logs, replay
+from tests.guard_strip import changed_in_0140, strip_lines, strip_out
 
 REF = os.path.join(os.path.dirname(__file__), "reference", "outcomes_v090.json")
 BR = ["brands.enabled=true", "brands.premium=0.4", "ratings.mode=public", "inspectors.placement=patrolling",
@@ -37,10 +38,12 @@ def _ref_cells():
 
 @pytest.mark.parametrize("key,cell", _ref_cells())
 def test_depth_1_reproduces_engine_090(key, cell):
+    if changed_in_0140(cell):
+        pytest.skip("changed on purpose by engine 0.14.0; checked in tests/test_trapped_buyers.py")
     out, lines = _run(cfg(*cell["overrides"], seed=cell["seed"]))
-    assert dumps(out) == cell["outcome"]
+    assert dumps(strip_out(out)) == cell["outcome"]
     assert len(lines) == cell["log_lines"]
-    assert hashlib.sha256("\n".join(lines[1:]).encode()).hexdigest() == cell["log_body_sha256"]
+    assert hashlib.sha256("\n".join(strip_lines(lines[1:])).encode()).hexdigest() == cell["log_body_sha256"]
 
 
 def test_explicit_depth_1_and_search_log_change_nothing_but_the_search_block():

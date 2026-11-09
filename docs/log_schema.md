@@ -216,6 +216,13 @@ list sent with the last `buy` or `choose`, or null), `walk_ticks`, `skipped_clos
 `in_reach_shopping`: those that still needed units then). Searching buyers' observations carry a
 `search` block and their actions may be `choose`.
 
+Every outcome (0.14.0) carries the end-of-day stuck-buyer guard: `stuck_buyers` (buyers still in the
+market within reach of the open stall they chose, with units still needed and budget for one unit
+there) and `idle_choosers` (searching buyers still in the market in phase `choose`, with units still
+needed and an open, affordable stall of their category and consideration set in reach, not bought
+from). Both should be 0. A multi-day result adds `stuck_buyers` and `idle_choosers` at the top level,
+each `{"by_day": [...], "total": n}`.
+
 With `buyers.demand_mode = "choice_set"` (0.12.0) the outcome adds `demand`: `inclusion` (stall id →
 number of buyers whose consideration set includes it) and `customers` (stall id → distinct buyers who
 bought from it), and each buyer's `task` in the world event adds `consider` (its set, in walking order).

@@ -551,7 +551,11 @@ class BazaarEngine:
                 p.skipped.add(tst.sid)
                 p.target, skipped = None, True
         route_end = p.step >= len(p.route) - 1
-        phase = "choose" if (len(p.seen) >= p.search_k or route_end) else "browse"
+        phase = "choose" if (p.choosing or len(p.seen) >= p.search_k or route_end) else "browse"
+        # 0.14.0: once in "choose" a buyer stays there. Before, a buyer that chose at its route end
+        # with fewer than search_k stalls seen (a stall closed when passed) and walked back reverted
+        # to "browse" one step later and could not buy at the stall it chose (trapped-buyer bug).
+        p.choosing = phase == "choose"
         if not here and not (phase == "choose" and (route_end or skipped)):
             return False
         if p.stop_actions >= mk.max_actions_per_stop:
@@ -605,6 +609,12 @@ class BazaarEngine:
 
         a = self.decide("buyer", p.pid, self.buyer_agents[p.pid], obs, check)
         if a["action"] == "move_on":
+            if phase is not None and p.target is not None and p.target in ids:
+                # 0.14.0: a searching buyer that decides not to buy at the stall it chose (it learned
+                # more there, or can no longer afford it) drops the target and carries on, as when it
+                # finds the target closed. Before, it kept the target and stood there all day
+                # (parked-buyer bug, since 0.10.0).
+                p.target = None
             return False
         if a["action"] == "choose":
             p.target = a["stall"]
@@ -850,7 +860,30 @@ class BazaarEngine:
             **({"brands": self.brand_outcome()} if self.brands_on else {}),
             **({"demand": self.demand_outcome()} if self.choice_set else {}),
             **({"search": self.search_outcome()} if self.search_log else {}),
+            **self.stuck_guard(),
         }
+
+    def stuck_guard(self) -> dict:
+        """End-of-day stuck-buyer guard (0.14.0), an observer only. stuck_buyers: buyers still in the
+        market within reach of the open stall they chose (p.target), with units still needed and
+        budget for one unit there. idle_choosers: searching buyers still in the market in the
+        "choose" phase with units still needed and an open, affordable stall of their consideration
+        set (their category) within reach, which they did not buy from."""
+        stuck = idle = 0
+        r = self.cfg.market.interact_range
+        for p in self.buyers:
+            if not p.active or p.done or p.units >= p.task["units"]:
+                continue
+            left = p.task["budget_cents"] - p.paid_cents - p.inspect_spent_cents
+            if p.target is not None:
+                tst = self.by_sid[p.target]
+                if self.is_open(tst) and _dist(p.pos, tst.pos) <= r and tst.price_cents <= left:
+                    stuck += 1
+            if p.search_k > 1 and (p.choosing or len(p.seen) >= p.search_k or p.step >= len(p.route) - 1):
+                if any(st.category == p.task["category"] and self.considers(p, st) and self.is_open(st)
+                       and st.price_cents <= left for st in self.reach(p.pos)):
+                    idle += 1
+        return {"stuck_buyers": stuck, "idle_choosers": idle}
 
     def search_outcome(self) -> dict:
         exp = {st.sid: {"in_reach": len(self.exposure.get(st.sid, {}).get("in_reach", ())),

@@ -119,6 +119,7 @@ class Person:
     walk_ticks: int = 0                          # ticks spent walking to a chosen stall
     search_rec: dict | None = None               # per-buyer search record (buyers.search_log)
     consider: frozenset | None = None            # consideration set (buyers.demand_mode "choice_set")
+    choosing: bool = False                       # in the "choose" phase for good (0.14.0)
 
     @property
     def pos(self) -> tuple:

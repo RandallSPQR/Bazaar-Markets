@@ -263,7 +263,12 @@ its route (phase `choose`; buying in phase `browse` is invalid). Then it buys fr
 sends `{"action": "choose", "stall": id}` for a stall it saw earlier: the engine walks it back (or
 forward) along its route, one cell per tick, to the last cell where that stall was in reach, and
 it decides there. A chosen stall that is closed on arrival is skipped for the rest of the day and
-the buyer chooses again. After buying, a buyer that still needs units chooses again or browses on;
+the buyer chooses again. Once in phase `choose` a buyer stays there for the rest of the day (0.14.0;
+before, a buyer that reached `choose` only at its route end, with fewer than k open stalls seen, went
+back to `browse` on walking back and could not buy: the trapped-buyer bug). A buyer that moves on
+at the stall it chose (it learned more there, or can no longer afford it) drops the choice and walks
+on along its route, choosing again where it can (0.14.0; before, it stood at that stall for the rest
+of the day: the parked-buyer bug). After buying, a buyer that still needs units chooses again or browses on;
 once done it walks on along its route from where it is, as today. Buyer observations carry a
 `search` block (`depth`, `seen_count`, `phase`, `route_end`, `seen_elsewhere`: rows like
 `stalls_here` for seen stalls not in reach, with the current price, visible rating and

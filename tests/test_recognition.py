@@ -8,6 +8,7 @@ import pytest
 from engine import bazaar
 from engine.config import load
 from engine.jsonlog import JsonlLog, dumps
+from tests.guard_strip import changed_in_0140, strip_lines, strip_out
 
 ADAPTIVE = "agents.seller.deceptive=rule_deceptive_adaptive"
 REF = os.path.join(os.path.dirname(__file__), "reference", "outcomes_v030.json")
@@ -26,10 +27,12 @@ def _ref_cells():
 def test_default_config_reproduces_engine_030(key, cell):
     """Byte-identical to 0.3.0 outcomes (written at c7cf7fe), except the one field
     0.4.0 drops on purpose: reachable.shortfall_rate."""
+    if changed_in_0140(cell):
+        pytest.skip("changed on purpose by engine 0.14.0; checked in tests/test_trapped_buyers.py")
     old = json.loads(cell["outcome"])
     del old["reachable"]["shortfall_rate"]
     new = bazaar.run(cfg(*cell["overrides"], seed=cell["seed"]))
-    assert dumps(new) == dumps(old)
+    assert dumps(strip_out(new)) == dumps(old)
 
 
 def test_reachable_shortfall_rate_is_gone():

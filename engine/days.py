@@ -226,7 +226,9 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
             extra["stall_types"] = stall_types
         days.append({"day": day, "types": types, "outcome": out, "switches": switches, **extra})
         stalls = reset_for_day(cfg, eng.stalls)
-    return {"days": days}
+    guard = {k: {"by_day": [d["outcome"][k] for d in days], "total": sum(d["outcome"][k] for d in days)}
+             for k in ("stuck_buyers", "idle_choosers")}
+    return {"days": days, **guard}
 
 
 def _types(stalls) -> dict:
