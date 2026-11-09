@@ -13,64 +13,125 @@
 <text class="k" x="220.0" y="168.0" text-anchor="middle">0</text>
 <rect class="bar" x="252" y="172.0" width="40" height="0.0"/>
 <text class="k" x="272.0" y="168.0" text-anchor="middle">0</text>
-<rect class="bar" x="304" y="171.1" width="40" height="0.9"/>
-<text class="k" x="324.0" y="167.1" text-anchor="middle">1</text>
-<rect class="bar" x="356" y="167.4" width="40" height="4.6"/>
-<text class="k" x="376.0" y="163.4" text-anchor="middle">5</text>
-<rect class="bar" x="408" y="122.0" width="40" height="50.0"/>
-<text class="k" x="428.0" y="118.0" text-anchor="middle">54</text>
+<rect class="bar" x="304" y="171.2" width="40" height="0.8"/>
+<text class="k" x="324.0" y="167.2" text-anchor="middle">1</text>
+<rect class="bar" x="356" y="167.8" width="40" height="4.2"/>
+<text class="k" x="376.0" y="163.8" text-anchor="middle">5</text>
+<rect class="bar" x="408" y="127.0" width="40" height="45.0"/>
+<text class="k" x="428.0" y="123.0" text-anchor="middle">54</text>
 <text class="k" x="464" y="168">never: 56</text>
 <text class="lb" x="186" y="236" text-anchor="end">tourists 0.4, locals don't</text>
 <rect class="bar" x="200" y="254.0" width="40" height="0.0"/>
 <text class="k" x="220.0" y="250.0" text-anchor="middle">0</text>
 <rect class="bar" x="252" y="254.0" width="40" height="0.0"/>
 <text class="k" x="272.0" y="250.0" text-anchor="middle">0</text>
-<rect class="bar" x="304" y="252.1" width="40" height="1.9"/>
-<text class="k" x="324.0" y="248.1" text-anchor="middle">2</text>
-<rect class="bar" x="356" y="229.9" width="40" height="24.1"/>
-<text class="k" x="376.0" y="225.9" text-anchor="middle">26</text>
-<rect class="bar" x="408" y="224.4" width="40" height="29.6"/>
-<text class="k" x="428.0" y="220.4" text-anchor="middle">32</text>
+<rect class="bar" x="304" y="252.3" width="40" height="1.7"/>
+<text class="k" x="324.0" y="248.3" text-anchor="middle">2</text>
+<rect class="bar" x="356" y="232.3" width="40" height="21.7"/>
+<text class="k" x="376.0" y="228.3" text-anchor="middle">26</text>
+<rect class="bar" x="408" y="227.3" width="40" height="26.7"/>
+<text class="k" x="428.0" y="223.3" text-anchor="middle">32</text>
 <text class="k" x="464" y="250">never: 26</text>
 <text class="lb" x="186" y="318" text-anchor="end">tourists 0.7, locals inspect</text>
-<rect class="bar" x="200" y="330.4" width="40" height="5.6"/>
-<text class="k" x="220.0" y="326.4" text-anchor="middle">6</text>
-<rect class="bar" x="252" y="327.7" width="40" height="8.3"/>
-<text class="k" x="272.0" y="323.7" text-anchor="middle">9</text>
-<rect class="bar" x="304" y="328.6" width="40" height="7.4"/>
-<text class="k" x="324.0" y="324.6" text-anchor="middle">8</text>
-<rect class="bar" x="356" y="323.0" width="40" height="13.0"/>
-<text class="k" x="376.0" y="319.0" text-anchor="middle">14</text>
-<rect class="bar" x="408" y="314.7" width="40" height="21.3"/>
-<text class="k" x="428.0" y="310.7" text-anchor="middle">23</text>
+<rect class="bar" x="200" y="331.0" width="40" height="5.0"/>
+<text class="k" x="220.0" y="327.0" text-anchor="middle">6</text>
+<rect class="bar" x="252" y="328.5" width="40" height="7.5"/>
+<text class="k" x="272.0" y="324.5" text-anchor="middle">9</text>
+<rect class="bar" x="304" y="329.3" width="40" height="6.7"/>
+<text class="k" x="324.0" y="325.3" text-anchor="middle">8</text>
+<rect class="bar" x="356" y="324.3" width="40" height="11.7"/>
+<text class="k" x="376.0" y="320.3" text-anchor="middle">14</text>
+<rect class="bar" x="408" y="316.8" width="40" height="19.2"/>
+<text class="k" x="428.0" y="312.8" text-anchor="middle">23</text>
 <text class="k" x="464" y="332">never: 25</text>
 <text class="lb" x="186" y="400" text-anchor="end">tourists 0.7, locals don't</text>
-<rect class="bar" x="200" y="411.5" width="40" height="6.5"/>
-<text class="k" x="220.0" y="407.5" text-anchor="middle">7</text>
-<rect class="bar" x="252" y="409.7" width="40" height="8.3"/>
-<text class="k" x="272.0" y="405.7" text-anchor="middle">9</text>
-<rect class="bar" x="304" y="408.7" width="40" height="9.3"/>
-<text class="k" x="324.0" y="404.7" text-anchor="middle">10</text>
-<rect class="bar" x="356" y="404.1" width="40" height="13.9"/>
-<text class="k" x="376.0" y="400.1" text-anchor="middle">15</text>
-<rect class="bar" x="408" y="400.4" width="40" height="17.6"/>
-<text class="k" x="428.0" y="396.4" text-anchor="middle">19</text>
+<rect class="bar" x="200" y="412.2" width="40" height="5.8"/>
+<text class="k" x="220.0" y="408.2" text-anchor="middle">7</text>
+<rect class="bar" x="252" y="410.5" width="40" height="7.5"/>
+<text class="k" x="272.0" y="406.5" text-anchor="middle">9</text>
+<rect class="bar" x="304" y="409.7" width="40" height="8.3"/>
+<text class="k" x="324.0" y="405.7" text-anchor="middle">10</text>
+<rect class="bar" x="356" y="405.5" width="40" height="12.5"/>
+<text class="k" x="376.0" y="401.5" text-anchor="middle">15</text>
+<rect class="bar" x="408" y="402.2" width="40" height="15.8"/>
+<text class="k" x="428.0" y="398.2" text-anchor="middle">19</text>
 <text class="k" x="464" y="414">never: 8</text>
 <text class="lb" x="186" y="482" text-anchor="end">tourists 1</text>
-<rect class="bar" x="200" y="458.3" width="40" height="41.7"/>
-<text class="k" x="220.0" y="454.3" text-anchor="middle">45</text>
+<rect class="bar" x="200" y="462.5" width="40" height="37.5"/>
+<text class="k" x="220.0" y="458.5" text-anchor="middle">45</text>
 <text class="k" x="220.0" y="516" text-anchor="middle">day 20</text>
-<rect class="bar" x="252" y="493.5" width="40" height="6.5"/>
-<text class="k" x="272.0" y="489.5" text-anchor="middle">7</text>
+<rect class="bar" x="252" y="494.2" width="40" height="5.8"/>
+<text class="k" x="272.0" y="490.2" text-anchor="middle">7</text>
 <text class="k" x="272.0" y="516" text-anchor="middle">day 25</text>
-<rect class="bar" x="304" y="495.4" width="40" height="4.6"/>
-<text class="k" x="324.0" y="491.4" text-anchor="middle">5</text>
+<rect class="bar" x="304" y="495.8" width="40" height="4.2"/>
+<text class="k" x="324.0" y="491.8" text-anchor="middle">5</text>
 <text class="k" x="324.0" y="516" text-anchor="middle">day 28</text>
-<rect class="bar" x="356" y="497.2" width="40" height="2.8"/>
-<text class="k" x="376.0" y="493.2" text-anchor="middle">3</text>
+<rect class="bar" x="356" y="497.5" width="40" height="2.5"/>
+<text class="k" x="376.0" y="493.5" text-anchor="middle">3</text>
 <text class="k" x="376.0" y="516" text-anchor="middle">day 29</text>
 <rect class="bar" x="408" y="500.0" width="40" height="0.0"/>
 <text class="k" x="428.0" y="496.0" text-anchor="middle">0</text>
 <text class="k" x="428.0" y="516" text-anchor="middle">day 30</text>
 <text class="k" x="464" y="496">never: 0</text>
+<text class="lb" x="530" y="106">stage B</text>
+<rect class="bar" x="530" y="172.0" width="40" height="0.0"/>
+<text class="k" x="550.0" y="168.0" text-anchor="middle">0</text>
+<rect class="bar" x="582" y="172.0" width="40" height="0.0"/>
+<text class="k" x="602.0" y="168.0" text-anchor="middle">0</text>
+<rect class="bar" x="634" y="172.0" width="40" height="0.0"/>
+<text class="k" x="654.0" y="168.0" text-anchor="middle">0</text>
+<rect class="bar" x="686" y="172.0" width="40" height="0.0"/>
+<text class="k" x="706.0" y="168.0" text-anchor="middle">0</text>
+<rect class="bar" x="738" y="122.0" width="40" height="50.0"/>
+<text class="k" x="758.0" y="118.0" text-anchor="middle">60</text>
+<text class="k" x="794" y="168">never: 60</text>
+<rect class="bar" x="530" y="254.0" width="40" height="0.0"/>
+<text class="k" x="550.0" y="250.0" text-anchor="middle">0</text>
+<rect class="bar" x="582" y="254.0" width="40" height="0.0"/>
+<text class="k" x="602.0" y="250.0" text-anchor="middle">0</text>
+<rect class="bar" x="634" y="254.0" width="40" height="0.0"/>
+<text class="k" x="654.0" y="250.0" text-anchor="middle">0</text>
+<rect class="bar" x="686" y="254.0" width="40" height="0.0"/>
+<text class="k" x="706.0" y="250.0" text-anchor="middle">0</text>
+<rect class="bar" x="738" y="204.0" width="40" height="50.0"/>
+<text class="k" x="758.0" y="200.0" text-anchor="middle">60</text>
+<text class="k" x="794" y="250">never: 60</text>
+<rect class="bar" x="530" y="336.0" width="40" height="0.0"/>
+<text class="k" x="550.0" y="332.0" text-anchor="middle">0</text>
+<rect class="bar" x="582" y="336.0" width="40" height="0.0"/>
+<text class="k" x="602.0" y="332.0" text-anchor="middle">0</text>
+<rect class="bar" x="634" y="336.0" width="40" height="0.0"/>
+<text class="k" x="654.0" y="332.0" text-anchor="middle">0</text>
+<rect class="bar" x="686" y="336.0" width="40" height="0.0"/>
+<text class="k" x="706.0" y="332.0" text-anchor="middle">0</text>
+<rect class="bar" x="738" y="286.0" width="40" height="50.0"/>
+<text class="k" x="758.0" y="282.0" text-anchor="middle">60</text>
+<text class="k" x="794" y="332">never: 60</text>
+<rect class="bar" x="530" y="418.0" width="40" height="0.0"/>
+<text class="k" x="550.0" y="414.0" text-anchor="middle">0</text>
+<rect class="bar" x="582" y="418.0" width="40" height="0.0"/>
+<text class="k" x="602.0" y="414.0" text-anchor="middle">0</text>
+<rect class="bar" x="634" y="418.0" width="40" height="0.0"/>
+<text class="k" x="654.0" y="414.0" text-anchor="middle">0</text>
+<rect class="bar" x="686" y="418.0" width="40" height="0.0"/>
+<text class="k" x="706.0" y="414.0" text-anchor="middle">0</text>
+<rect class="bar" x="738" y="368.0" width="40" height="50.0"/>
+<text class="k" x="758.0" y="364.0" text-anchor="middle">60</text>
+<text class="k" x="794" y="414">never: 60</text>
+<rect class="bar" x="530" y="500.0" width="40" height="0.0"/>
+<text class="k" x="550.0" y="496.0" text-anchor="middle">0</text>
+<text class="k" x="550.0" y="516" text-anchor="middle">day 20</text>
+<rect class="bar" x="582" y="500.0" width="40" height="0.0"/>
+<text class="k" x="602.0" y="496.0" text-anchor="middle">0</text>
+<text class="k" x="602.0" y="516" text-anchor="middle">day 25</text>
+<rect class="bar" x="634" y="500.0" width="40" height="0.0"/>
+<text class="k" x="654.0" y="496.0" text-anchor="middle">0</text>
+<text class="k" x="654.0" y="516" text-anchor="middle">day 28</text>
+<rect class="bar" x="686" y="500.0" width="40" height="0.0"/>
+<text class="k" x="706.0" y="496.0" text-anchor="middle">0</text>
+<text class="k" x="706.0" y="516" text-anchor="middle">day 29</text>
+<rect class="bar" x="738" y="450.0" width="40" height="50.0"/>
+<text class="k" x="758.0" y="446.0" text-anchor="middle">60</text>
+<text class="k" x="758.0" y="516" text-anchor="middle">day 30</text>
+<text class="k" x="794" y="496">never: 60</text>
 </svg>
