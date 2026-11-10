@@ -5,7 +5,7 @@
 <desc id="d">Counts of best bust-out days per condition and stage. The summary gives every value.</desc>
 <text class="t" x="30" y="44" font-size="20">Which bust-out day is best, by condition</text>
 <text class="s" x="30" y="70" font-size="14">Stall-seeds whose best bust-out day (unfloored) is each candidate; “never” = how many would rather not bust out</text>
-<text class="n" x="30" y="600">Bazaar engine 0.13.0. Seeds 200-219 paired; 95% t-intervals, unadjusted; 3 sampled genuine stalls per seed; bust-out days 20, 25, 28, 29, 30; 30 days.</text>
+<text class="n" x="30" y="600">Bazaar engine 0.14.0. Seeds 200-219 paired; 95% t-intervals, unadjusted; 3 sampled genuine stalls per seed; bust-out days 20, 25, 28, 29, 30; 30 days.</text>
 <text class="n" x="30" y="616">Bars count stall-seeds (3 per seed). The grey count is the floored best response (never) among them.</text>
 <text class="lb" x="200" y="106">stage A</text>
 <text class="lb" x="186" y="154" text-anchor="end">tourists 0.4, locals inspect</text>
