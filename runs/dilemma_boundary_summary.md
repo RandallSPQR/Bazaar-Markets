@@ -2,6 +2,8 @@
 
 > **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
 
+> **Certified 2026-11-09: parked-buyer exposure 0.064% of buyer-days (3 seeds); trapped-buyer bug not possible in this run's design; no rerun.** See `runs/certification_stuck.md`.
+
 Run spec "where does the brand dilemma appear? (no engine change; rule-based)"; predictions written 2026-11-07, before any run.
 
 ## Run record

@@ -2,6 +2,8 @@
 
 > **Provisional: demand design flaw (most stalls unreachable) and an unexplained bust-out loss size; see the redesign run.** (Note added 2026-11-08.)
 
+> **Certified 2026-11-09: parked-buyer exposure 0.012% of buyer-days (3 seeds); trapped-buyer bug not possible in this run's design; no rerun.** The stop rule (stuck buyers > 0) was triggered by 2 stuck buyer-days of 243,900; the PI waived it as negligible. See `runs/certification_stuck.md`.
+
 Run spec "search depth, then counterfeits and bust-outs (rule-based only)"; predictions written 2026-11-06, before any run.
 
 ## Run record
