@@ -241,3 +241,119 @@ The harm by profile is small and mostly indistinguishable from 0 in Stage B. Sta
 - **G4 timing method.** G4 timed one condition per stage (A|t40|l1 and B|t40|l1) instead of a single mixed sample, because Stage B chains are about 1.5× slower. The projection rule is unchanged.
 - **Memory-guard swap floor lowered to 512 MB** (from 1,024 MB). macOS had shrunk total swap to 2 GB, with about 1 GB of stale pages, while memory stayed over 80% free. The free-memory floor (15%) is unchanged. No pauses occurred in Stage A.
 - **First Stage B launch failed before any chain ran.** It was wrapped in `nice -n 19`, so the script's own `os.nice(19)` raised a permission error at startup. It was relaunched at 17:23 with the same command as Stage A (no cache, no partial results). The failed attempt's stdout was overwritten.
+
+## Superseded (trapped-buyer bug)
+
+The first Stage B run (engine 0.13.0, 2026-11-08, `runs/verification_B_run_v0130.log`, data `runs/verification_B_v0130.json.gz`) is superseded. Under choice-set demand, a buyer whose chosen set stall was closed by a catch stayed in the market and could not buy (the trapped-buyer bug; `runs/honest_profit_diagnostic.md`, fixed in engine 0.14.0, `runs/bugfix_trapped_buyers.md`). Stage A had no closures and is unaffected. The old numbers are kept below unchanged, with their reading.
+
+### Stage B: 2 patrolling inspectors
+
+#### Run record
+
+- Engine `0.13.0`; commit `c8c04074676c069f72421a83b538cc993cdecd15`; uncommitted at run time: ['?? runs/verification_B_run.log', '?? runs/verification_B_stdout.log']
+- Script sha256 `fcf2193baccc12f63142069dcef3410859dc300c9d1e12cab650e1b76a245822`
+- Command: `python -m analysis.verification --stage B --seeds 200-219 --seed-note 20 seeds (200-219) per the G4 rule: 10.2 h projected at 30 seeds (runs/pilot_verification.md) --tests full suite at 64dd293: 678 passed (19.2 min), including 76 reference cells from engine 0.12.0 (5ea5f24)`
+- Tests: full suite at 64dd293: 678 passed (19.2 min), including 76 reference cells from engine 0.12.0 (5ea5f24)
+- Python 3.12.7, numpy 2.5.4, macOS-26.6.2-arm64-arm-64bit
+- 1600 chains × 30 days on 4 workers (nice 19); wall clock 4.20 h; load average [2.49, 4.37, 5.13] at start, [5.34, 5.66, 5.63] at end; memory at start {'swap_free_mb': 1105.69, 'free_pct': 83}, at end {'swap_free_mb': 1217.75, 'free_pct': 82}; memory-guard pauses: 0
+- Seeds 200-219 (20), paired; 20 seeds (200-219) per the G4 rule: 10.2 h projected at 30 seeds (runs/pilot_verification.md)
+- Sampled stalls per seed: 200: s42, s41, s01; 201: s30, s14, s19; 202: s31, s38, s06; 203: s37, s15, s28; 204: s22, s37, s38; 205: s38, s08, s06; 206: s25, s43, s13; 207: s15, s32, s37; 208: s08, s17, s19; 209: s07, s03, s06; 210: s23, s38, s31; 211: s27, s28, s15; 212: s26, s11, s29; 213: s42, s09, s00; 214: s42, s07, s15; 215: s12, s42, s35; 216: s03, s40, s00; 217: s20, s37, s44; 218: s11, s39, s32; 219: s02, s38, s22
+
+#### Gain by condition
+
+| Condition | Verifying share | Unfloored gain ($) | Floored gain ($) | Stall-seeds with a positive gain | Never-bust total ($) |
+|---|---|---|---|---|---|
+| t40|l1 | 0.60 | −426.26 [−525.21, −327.30] * | +0.00 [+0.00, +0.00] | 0% | 3,255.11 [2,454.17, 4,056.04] |
+| t40|l0 | 0.30 | −412.53 [−508.71, −316.35] * | +0.00 [+0.00, +0.00] | 0% | 3,464.92 [2,623.72, 4,306.12] |
+| t70|l1 | 0.30 | −439.13 [−542.54, −335.73] * | +0.00 [+0.00, +0.00] | 0% | 2,445.87 [1,798.24, 3,093.50] |
+| t70|l0 | 0.15 | −407.06 [−506.32, −307.80] * | +0.00 [+0.00, +0.00] | 0% | 2,566.20 [1,872.96, 3,259.44] |
+| t100 | 0.00 | −376.89 [−473.84, −279.95] * | +0.00 [+0.00, +0.00] | 0% | 1,901.91 [1,360.54, 2,443.29] |
+
+#### Predictions (stage B analogues: exploratory)
+
+Gain in $ per sampled stall over 30 days (per-seed mean of 3 stalls).
+
+| Prediction | Unfloored gain (primary) | Verdict | Floored gain | Verdict |
+|---|---|---|---|---|
+| **PV1b**: local 1.0: slope of the gain over tourist share (stage B analogue, exploratory) (per +0.1 of tourist share) | +8.23 [+0.15, +16.30] * | supported | +0.00 [+0.00, +0.00] | not supported (interval includes 0) |
+| **PV2b**: tourists 0.4: local inspection off − on (stage B analogue, exploratory) | +13.73 [−13.67, +41.12] | not supported (interval includes 0) | +0.00 [+0.00, +0.00] | not supported (interval includes 0) |
+| **PV3b**: tourists 1.0: gain (stage B analogue, exploratory) | −376.89 [−473.84, −279.95] * | contradicted (interval on the opposite side of 0) | +0.00 [+0.00, +0.00] | not supported (interval includes 0) |
+
+#### Where the gain crosses 0 (exploratory)
+
+The mean unfloored gain does not change sign across the verifying shares tested (0.00: −376.89, 0.15: −407.06, 0.30: −425.83, 0.60: −426.26).
+
+#### Best bust-out day (exploratory)
+
+| Condition | day 20 | day 25 | day 28 | day 29 | day 30 | never best (floored) |
+|---|---|---|---|---|---|---|
+| t40|l1 | 0 | 0 | 0 | 0 | 60 | 60 |
+| t40|l0 | 0 | 0 | 0 | 0 | 60 | 60 |
+| t70|l1 | 0 | 0 | 0 | 0 | 60 | 60 |
+| t70|l0 | 0 | 0 | 0 | 0 | 60 | 60 |
+| t100 | 0 | 0 | 0 | 0 | 60 | 60 |
+
+#### Harvest and ratings after a bust-out (exploratory)
+
+From the chain where each sampled stall busts out on day 20 (the longest harvest window). Collapse = the stall's daily units first below half its mean over the 5 days before; 0 days = on the bust-out day. Rating moved = its brand rating fell below its pre-bust value at some point by day 30.
+
+| Condition | Collapsed by day 30 | Same day | Median days to collapse | Rating moved | Rating below τ | Rating at day 30 (bust) | Rating at day 30 (never) |
+|---|---|---|---|---|---|---|---|
+| t40|l1 | 60/60 | 58 | 0 | 55/60 | 51/60 | 0.30 [0.23, 0.37] | 1.00 [1.00, 1.00] |
+| t40|l0 | 60/60 | 52 | 0 | 59/60 | 57/60 | 0.20 [0.15, 0.24] | 1.00 [1.00, 1.00] |
+| t70|l1 | 59/60 | 50 | 0 | 57/60 | 52/60 | 0.21 [0.14, 0.27] | 1.00 [1.00, 1.00] |
+| t70|l0 | 59/60 | 46 | 0 | 58/60 | 56/60 | 0.16 [0.11, 0.21] | 1.00 [1.00, 1.00] |
+| t100 | 58/60 | 41 | 0 | 59/60 | 58/60 | 0.13 [0.09, 0.17] | 1.00 [1.00, 1.00] |
+
+#### Harm by buyer profile at the best bust-out day (exploratory)
+
+Bust chain at the stall's best day minus the never chain, days from the bust-out to 30; per seed the mean over the 3 stalls. Shortfall in points of purchases; surplus in $ per buyer of the profile.
+
+| Condition | tourist: shortfall (pts) | local: shortfall (pts) | expert: shortfall (pts) | tourist: surplus ($) | local: surplus ($) | expert: surplus ($) |
+|---|---|---|---|---|---|---|
+| t40|l1 | +0.5 [−1.8, +2.8] | +0.4 [−0.8, +1.6] | +0.0 [+0.0, +0.0] | −0.18 [−1.62, +1.26] | +0.11 [−0.73, +0.96] | −0.63 [−1.23, −0.04] * |
+| t40|l0 | +0.4 [−1.2, +2.0] | +2.9 [+0.8, +4.9] * | +0.0 [+0.0, +0.0] | −0.46 [−1.65, +0.74] | −0.92 [−2.45, +0.60] | −0.32 [−0.74, +0.10] |
+| t70|l1 | +1.0 [−0.7, +2.7] | +0.3 [−0.7, +1.3] | +0.0 [+0.0, +0.0] | −0.00 [−0.85, +0.85] | −0.86 [−1.56, −0.16] * | +0.30 [−0.57, +1.17] |
+| t70|l0 | +1.3 [−0.2, +2.7] | +0.1 [−3.1, +3.3] | +0.0 [+0.0, +0.0] | +0.16 [−0.76, +1.08] | −0.56 [−2.76, +1.64] | +0.18 [−0.68, +1.04] |
+| t100 | +1.2 [−0.4, +2.8] | – | – | −0.06 [−0.96, +0.84] | – | – |
+
+#### Floors, invalid actions and schedule checks
+
+- none
+
+### Stage B − stage A
+
+**PV4** (confirmatory): tourists 1.0: stage B − stage A: −942.17 [−1,147.28, −737.06] * — supported.
+
+Gap by condition (exploratory): does enforcement matter more when verification is low?
+
+| Condition | Verifying share | Stage B − stage A, unfloored gain ($) |
+|---|---|---|
+| t40|l1 | 0.60 | −315.27 [−394.35, −236.19] * |
+| t40|l0 | 0.30 | −413.92 [−516.77, −311.08] * |
+| t70|l1 | 0.30 | −475.74 [−605.42, −346.06] * |
+| t70|l0 | 0.15 | −513.03 [−653.83, −372.23] * |
+| t100 | 0.00 | −942.17 [−1,147.28, −737.06] * |
+
+![gain against tourist share by local inspection](verification_gain_v0130.svg)
+
+![best bust-out day by condition](verification_best_day_v0130.svg)
+
+### Stage B reading at engine 0.13.0 (superseded)
+
+**PV4 is supported.** In the tourist-only market, two patrolling inspectors change the bust-out gain by −$942 [−1,147, −737]: from +$565 in Stage A to −$377.
+
+With inspectors, a bust-out loses money in every condition and every one of the 60 stall-seeds per condition, at every candidate day:
+- The least bad bust-out day is always day 30, and the floored gain is exactly $0 everywhere: never busting out is always best.
+- Even a single day of busting out (day 30) costs $377–439. A bust-out on day 20 costs $3,850–4,710.
+- The likely mechanism is the catch penalty: 1.5 × base price per catch, plus a 40-tick closure. Patrolling inspectors make 28–43 catches a day across the market. I did not decompose the loss into penalties, closure and lost sales, since that would be a post-hoc analysis.
+
+Enforcement makes the verification gradient almost disappear:
+- The Stage B gains run from −$377 to −$439. The slope over tourist share is +$8 per 0.1 [+0.2, +16], against +$113 in Stage A.
+- Local inspection off − on at tourist share 0.4 is +$14 [−14, +41].
+- These Stage B analogues are exploratory.
+- The Stage B − Stage A gap grows as verification falls: −$315 at a verifying share of 0.60, −$414 and −$476 at 0.30, −$513 at 0.15 and −$942 at 0. Inspectors matter most where buyers verify least. This is exploratory and was not prespecified as a test.
+
+The harm by profile is small and mostly indistinguishable from 0 in Stage B. Stalls bust out only on day 30, so there is one day of exposure.
+
+**Unexplained, flagged for follow-up.** Inspectors also lower the honest stall's own never-bust profit where locals and experts are present: from $4,652 to $3,255 at tourist share 0.4, and from $3,227 to $2,446 at 0.7 (locals inspecting). In the tourist-only market it is unchanged ($1,818 against $1,902). Total sales per day fall from about 198 to 140 at tourist share 0.4. The deceptive sellers' share of sales falls too, from 29% to 25%. This run does not show why genuine stalls sell less when inspectors patrol; it changes the baseline against which the Stage B − Stage A gap is read. A diagnostic would be needed, for example per-stall sales and penalties in the never chains of both stages.

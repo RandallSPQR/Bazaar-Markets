@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}}</style>
+<rect class="bg" x="0" y="0" width="900" height="620"/>
+<title id="t">Best bust-out gain against tourist share, with and without local inspection</title>
+<desc id="d">Mean gain with intervals at tourist shares 0.4, 0.7 and 1.0, local inspection on and off. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">Best bust-out gain against tourist share, with and without local inspection</text>
+<text class="s" x="30" y="70" font-size="14">Stage A: no inspectors; stage B: 2 patrolling inspectors. Experts always inspect.</text>
+<text class="n" x="30" y="564">Bazaar engine 0.13.0. Seeds 200-219 paired; 95% t-intervals, unadjusted; 3 sampled genuine stalls per seed; bust-out days 20, 25, 28, 29, 30; 30 days.</text>
+<text class="n" x="30" y="580">Gain = the sampled stall's 30-day profit at its best bust-out day minus never busting out. Choice-set demand (m 3, gamma 0), 150 buyers, budget 1.25 × base,</text>
+<text class="n" x="30" y="596">bargain hunters 0.2 (Q_req 0.15–0.40), naive deceptive sellers, fresh reopening, premium 0.4 (placeholder). Locals and experts split the non-tourists evenly.</text>
+<text class="lb" x="130" y="108">stage A: no inspectors</text>
+<line class="zero" x1="130.0" y1="307.7" x2="430.0" y2="307.7"/>
+<polyline class="ln" fill="none" points="126.0,333.0 276.0,299.3 426.0,178.4"/>
+<line class="ci" x1="126.0" y1="341.3" x2="126.0" y2="324.7"/>
+<circle class="pt" cx="126.0" cy="333.0" r="3.5"/>
+<line class="ci" x1="276.0" y1="311.4" x2="276.0" y2="287.2"/>
+<circle class="pt" cx="276.0" cy="299.3" r="3.5"/>
+<line class="ci" x1="426.0" y1="208.6" x2="426.0" y2="148.3"/>
+<circle class="pt" cx="426.0" cy="178.4" r="3.5"/>
+<text class="lb" x="436.0" y="170.4" text-anchor="start">locals inspect</text>
+<polyline class="hlc" fill="none" points="134.0,307.3 284.0,283.4 434.0,178.4"/>
+<line class="hlc" x1="134.0" y1="313.6" x2="134.0" y2="301.1"/>
+<circle class="hl" cx="134.0" cy="307.3" r="3.5"/>
+<line class="hlc" x1="284.0" y1="295.6" x2="284.0" y2="271.3"/>
+<circle class="hl" cx="284.0" cy="283.4" r="3.5"/>
+<line class="hlc" x1="434.0" y1="208.6" x2="434.0" y2="148.3"/>
+<circle class="hl" cx="434.0" cy="178.4" r="3.5"/>
+<text class="lb" x="444.0" y="192.4" text-anchor="start">locals don't</text>
+<line class="ax" x1="130.0" y1="474" x2="430.0" y2="474"/>
+<text class="k" x="130.0" y="490" text-anchor="middle">0.4</text>
+<text class="k" x="280.0" y="490" text-anchor="middle">0.7</text>
+<text class="k" x="430.0" y="490" text-anchor="middle">1</text>
+<text class="k" x="280.0" y="510" text-anchor="middle">tourist share</text>
+<line class="ax" x1="116" y1="460.0" x2="116" y2="120.0"/>
+<text class="k" x="110" y="425.9" text-anchor="end">−500</text>
+<text class="k" x="110" y="311.7" text-anchor="end">0</text>
+<text class="k" x="110" y="197.4" text-anchor="end">+500</text>
+<text class="k" x="56" y="290.0" text-anchor="middle" transform="rotate(-90 56 290.0)">gain, $ per stall over 30 days</text>
+<text class="lb" x="520" y="108">stage B: 2 patrolling inspectors</text>
+<line class="zero" x1="520.0" y1="307.7" x2="820.0" y2="307.7"/>
+<polyline class="ln" fill="none" points="516.0,405.1 666.0,408.0 816.0,393.8"/>
+<line class="ci" x1="516.0" y1="427.7" x2="516.0" y2="382.5"/>
+<circle class="pt" cx="516.0" cy="405.1" r="3.5"/>
+<line class="ci" x1="666.0" y1="431.7" x2="666.0" y2="384.4"/>
+<circle class="pt" cx="666.0" cy="408.0" r="3.5"/>
+<line class="ci" x1="816.0" y1="416.0" x2="816.0" y2="371.6"/>
+<circle class="pt" cx="816.0" cy="393.8" r="3.5"/>
+<polyline class="hlc" fill="none" points="524.0,401.9 674.0,400.7 824.0,393.8"/>
+<line class="hlc" x1="524.0" y1="423.9" x2="524.0" y2="380.0"/>
+<circle class="hl" cx="524.0" cy="401.9" r="3.5"/>
+<line class="hlc" x1="674.0" y1="423.4" x2="674.0" y2="378.0"/>
+<circle class="hl" cx="674.0" cy="400.7" r="3.5"/>
+<line class="hlc" x1="824.0" y1="416.0" x2="824.0" y2="371.6"/>
+<circle class="hl" cx="824.0" cy="393.8" r="3.5"/>
+<line class="ax" x1="520.0" y1="474" x2="820.0" y2="474"/>
+<text class="k" x="520.0" y="490" text-anchor="middle">0.4</text>
+<text class="k" x="670.0" y="490" text-anchor="middle">0.7</text>
+<text class="k" x="820.0" y="490" text-anchor="middle">1</text>
+<text class="k" x="670.0" y="510" text-anchor="middle">tourist share</text>
+</svg>

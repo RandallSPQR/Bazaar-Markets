@@ -41,6 +41,16 @@ RUNS = {   # name: (commit the run was made at, module, seeds: the first 3 the r
     "capture_B": ("b833b2f", "capture", [52, 53, 54]),
     "verification_A": ("c8c0407", "verification", [200, 201, 202]),
 }
+# --here (2026-11-09, PI decision 2): the same observer on the current working tree, to check whether
+# the parked-buyer behaviour survives engine 0.14.0. The three flagged runs, the pilot recheck, and
+# the Stage B design (3 seeds) before the Stage B rerun.
+HERE_RUNS = {
+    "search_counterfeit": ("search_counterfeit", [2, 3, 4]),
+    "dilemma_boundary": ("dilemma_boundary", [32, 33, 34]),
+    "capture_B": ("capture", [52]),
+    "pilot_recheck": ("pilot_choice_set", [900, 901, 902, 903, 904]),
+    "verification_B": ("verification", [200, 201, 202]),
+}
 
 _COUNTS: list = []
 
@@ -106,7 +116,7 @@ def _call(args):
 
 def worker_jobs(name: str, seeds: list[int]) -> list[tuple]:
     import importlib
-    commit, modname, _ = RUNS[name]
+    modname = RUNS[name][1] if name in RUNS else HERE_RUNS[name][0]
     M = importlib.import_module(f"analysis.{modname}")
     fn = f"analysis.{modname}._job"
     if name == "placement_sweep":
@@ -126,16 +136,19 @@ def worker_jobs(name: str, seeds: list[int]) -> list[tuple]:
     if name in ("capture_A", "capture_B"):
         samples = {s: M.sample_stalls(s) for s in seeds}
         return [(fn, j) for j in M.jobs_for(name[-1], seeds, samples)]
-    if name == "verification_A":
+    if name in ("verification_A", "verification_B"):
         samples = {s: M.sample_stalls(s) for s in seeds}
-        return [(fn, j) for j in M.jobs_for(M.CONDS["A"], seeds, samples)]
+        return [(fn, j) for j in M.jobs_for(M.CONDS[name[-1]], seeds, samples)]
+    if name == "pilot_recheck":
+        return [(fn, ("p2", 150, s, pl)) for s in seeds for pl in ("posts", "patrolling")] + \
+               [(fn, ("p3", 150, s, ro)) for s in seeds for ro in ("fresh", "counterfeit")]
     raise ValueError(name)
 
 
-def worker(name: str, out: str, workers: int) -> None:
+def worker(name: str, out: str, workers: int, here: bool = False) -> None:
     sys.path.insert(0, os.getcwd())
     from engine import ENGINE_VERSION
-    seeds = RUNS[name][2]
+    seeds = HERE_RUNS[name][1] if here else RUNS[name][2]
     jobs = worker_jobs(name, seeds)
     t0 = time.time()
     with ProcessPoolExecutor(workers, initializer=_init) as ex:
@@ -143,7 +156,9 @@ def worker(name: str, out: str, workers: int) -> None:
     tot = {k: sum(r[k] for r in res) for k in ("buyer_days", "searching_buyer_days", "stuck_buyers", "parked",
                                                  "idle_choosers")}
     with open(out, "w", encoding="utf-8") as f:
-        json.dump({"run": name, "commit": RUNS[name][0], "engine_version": ENGINE_VERSION, "seeds": seeds,
+        commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip() \
+            if here else RUNS[name][0]
+        json.dump({"run": name, "commit": commit, "engine_version": ENGINE_VERSION, "seeds": seeds,
                    "jobs": len(jobs), "wall_s": round(time.time() - t0, 1), "totals": tot,
                    "jobs_with_stuck": sum(r["stuck_buyers"] > 0 for r in res),
                    "jobs_with_parked": sum(r["parked"] > 0 for r in res),
@@ -158,9 +173,34 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default="runs/certification_stuck.json")
     ap.add_argument("--scratch", required=False)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--here", action="store_true", help="observe HERE_RUNS on the current working tree")
     a = ap.parse_args(argv)
     if a.worker:
         worker(a.worker[0], a.worker[1], a.workers)
+        return 0
+    if a.here:
+        _init()   # the parent too: nice 19
+        results = {}
+        if os.path.exists(a.out):
+            with open(a.out, encoding="utf-8") as f:
+                results = json.load(f).get("runs", {})
+        names = a.runs.split(",") if a.runs != ",".join(RUNS) else list(HERE_RUNS)
+        for name in names:
+            if name in results:
+                continue
+            part = a.out + f".{name}.part"
+            t0 = time.time()
+            print(time.strftime("%H:%M:%S"), "start", name, flush=True)
+            worker(name, part, a.workers, here=True)
+            with open(part, encoding="utf-8") as f:
+                results[name] = json.load(f)
+            os.remove(part)
+            r = results[name]
+            print(time.strftime("%H:%M:%S"), "done", name, r["engine_version"], r["jobs"], "jobs", r["totals"],
+                  f"{time.time() - t0:.0f} s", flush=True)
+            with open(a.out, "w", encoding="utf-8") as f:
+                json.dump({"meta": {"python": platform.python_version(), "platform": platform.platform(),
+                                    "script": "analysis/certify_stuck.py --here"}, "runs": results}, f, indent=1)
         return 0
     repo = os.getcwd()
     scratch = a.scratch or os.path.join(repo, ".certify_tmp")
