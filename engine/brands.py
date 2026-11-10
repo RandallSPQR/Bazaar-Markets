@@ -171,7 +171,7 @@ def counterfeit_target(stalls: list, st, book: BrandBook, rng: np.random.Generat
     """The highest-rated full-price brand on another stall of st's category (counterfeits
     excluded; unrated = 0.5); ties uniformly at random. None if there is no candidate."""
     cands = [s for s in stalls if s.sid != st.sid and s.category == st.category and s.stype != "seconds"
-             and s.counterfeit_of is None]
+             and s.counterfeit_of is None and s.exited_day is None]
     if not cands:
         return None
     score = {s.sid: (0.5 if book.rating(s.brand) is None else book.rating(s.brand)) for s in cands}

@@ -145,6 +145,21 @@ class BazaarEngine:
         # Inspector capture (0.11.0): each dedicated inspector's order among inspectors.
         self.capture_effect = float(cfg.inspectors.capture_effect) if C.capture_on(cfg) else None
         self.insp_ord = {p.pid: j for j, p in enumerate(x for x in self.people if x.kind == "inspector")}
+        # Liability (0.15.0): enforcement intensity, penalty lag, exit.
+        ds, lag = cfg.inspectors.detect_scale, cfg.pricing.penalty_lag_days
+        if isinstance(ds, bool) or not isinstance(ds, (int, float)) or not math.isfinite(ds) or ds < 0:
+            raise ValueError(f"inspectors.detect_scale must be a finite number >= 0, got {ds!r}")
+        if isinstance(lag, bool) or int(lag) != lag or lag < 0:
+            raise ValueError(f"pricing.penalty_lag_days must be an integer >= 0, got {lag!r}")
+        self.detect_scale, self.lag = float(ds), int(lag)
+        self.fines = {"charged": [], "deferred": [], "uncollectible": []}   # today's fines: (sid, cents)
+        for st in self.stalls:                    # lagged fines falling due today are charged today
+            if st.fines_pending and st.exited_day is None:
+                due = [f for f in st.fines_pending if f["due_day"] <= self.day]
+                st.fines_pending = [f for f in st.fines_pending if f["due_day"] > self.day]
+                for f in due:
+                    st.penalties_cents += f["cents"]
+                    self.fines["charged"].append((st.sid, f["cents"]))
 
     # ------------------------------------------------------------------ helpers
 
@@ -266,6 +281,7 @@ class BazaarEngine:
         for t in range(self.cfg.market.ticks):
             self.t = t
             self.step()
+        self.close_day()
         out = self.outcome()
         self.log.emit("outcome", t=self.cfg.market.ticks, **out)
         return out
@@ -303,6 +319,8 @@ class BazaarEngine:
                 if "bust_out" in a and not (self.brands_on and st.stype == "genuine" and st.busted_day is None
                                             and not st.decided_today):
                     return "bust_out is allowed only for an honest genuine stall on its first decision of the day"
+                if "exit" in a and st.exit_pending:
+                    return "the stall is already leaving at the end of today"
                 w = a["whisper"]
                 if w is not None and not mk.whispers_allowed:
                     return "whispers are not allowed in this market"
@@ -324,6 +342,8 @@ class BazaarEngine:
                     self.bust_out(st)
                 st.rename_pending = False
                 st.decided_today = True
+            if a.get("exit"):              # 0.15.0: leaves at the end of today
+                st.exit_pending = True
             if a.get("sign") is not None:   # takes effect in this tick's delivery
                 st.sign = a["sign"]
             if a["yell"] is not None:
@@ -363,7 +383,7 @@ class BazaarEngine:
                 if false and st.sid not in caught_now and self.enforces(p):
                     d = _dist(p.pos, st.pos)
                     pr = catch_prob(self.cfg.detection, q - st.q_true, ch, d, self.channel_range(ch))
-                    if pr > 0 and self.rng_detect.random() < pr * self.capture_factor(p, st):
+                    if pr > 0 and self.rng_detect.random() < pr * self.capture_factor(p, st) * self.detect_scale:
                         caught_now.add(st.sid)
                         catches.append(self.catch(st, p, ch, q))
             msgs.append({"from": st.sid, "ch": ch, "false": false, "q": q,
@@ -454,12 +474,20 @@ class BazaarEngine:
                               "text": self.message_text(st, q, p)})
 
     def catch(self, st: Stall, p: Person, ch: str, q: float) -> dict:
-        st.penalties_cents += st.penalty_cents
+        if self.lag:                    # 0.15.0: the fine falls due lag days later
+            due = self.day + self.lag
+            st.fines_pending.append({"catch_day": self.day, "due_day": due, "cents": st.penalty_cents})
+            self.fines["deferred"].append((st.sid, st.penalty_cents))
+        else:
+            st.penalties_cents += st.penalty_cents
+            self.fines["charged"].append((st.sid, st.penalty_cents))
         st.catches += 1
         st.closed_until = self.t + 1 + self.cfg.pricing.close_ticks
         st.epoch += 1
         ev = {"stall": st.sid, "by": p.pid, "channel": ch, "claimed": q, "true": st.q_true,
               "penalty_cents": st.penalty_cents, "reopens": st.closed_until}
+        if self.lag:
+            ev["due_day"] = due
         self.catch_events.append(ev)
         self.catch_ticks.append((self.t, st))
         if self.brands_on:
@@ -861,7 +889,43 @@ class BazaarEngine:
             **({"demand": self.demand_outcome()} if self.choice_set else {}),
             **({"search": self.search_outcome()} if self.search_log else {}),
             **self.stuck_guard(),
+            "liability": self.liability_outcome(),
         }
+
+    def close_day(self) -> None:
+        """End of the day (0.15.0): stalls that chose to exit leave the market; their fines not yet
+        due are uncollectible (logged in the outcome, never charged)."""
+        for st in self.stalls:
+            if st.exit_pending and st.exited_day is None:
+                st.exited_day, st.exit_pending = self.day, False
+                self.fines["uncollectible"] += [(st.sid, f["cents"]) for f in st.fines_pending]
+                st.fines_pending = []
+
+    def liability_outcome(self) -> dict:
+        """Fines and enforcement intensity today (0.15.0). charged: fines charged in today's accounts
+        (today's catches at lag 0, earlier catches falling due today otherwise); deferred: today's
+        catches whose fine falls due later; uncollectible: fines not yet due of stalls that left the
+        market at the end of today; outstanding: fines not yet due of stalls still in the market.
+        Catches per deceptive stall: catches at deceptive-type stalls / deceptive stalls (busted
+        genuine stalls are not deceptive-type)."""
+        f = self.fines
+        by: dict = {}
+        for k in ("charged", "deferred", "uncollectible"):
+            for sid, c in f[k]:
+                d = by.setdefault(sid, {"charged_cents": 0, "deferred_cents": 0, "uncollectible_cents": 0})
+                d[f"{k}_cents"] += c
+        dec = [st for st in self.stalls if st.stype == "deceptive" and st.exited_day in (None, self.day)]
+        n_c = sum(st.catches for st in dec)
+        pend = [x for st in self.stalls for x in st.fines_pending]
+        return {"fines_charged": len(f["charged"]), "fines_charged_cents": sum(c for _, c in f["charged"]),
+                "fines_deferred": len(f["deferred"]), "fines_deferred_cents": sum(c for _, c in f["deferred"]),
+                "fines_uncollectible": len(f["uncollectible"]),
+                "fines_uncollectible_cents": sum(c for _, c in f["uncollectible"]),
+                "fines_outstanding": len(pend), "fines_outstanding_cents": sum(x["cents"] for x in pend),
+                "by_stall": dict(sorted(by.items())),
+                "exits": sorted(st.sid for st in self.stalls if st.exited_day == self.day),
+                "deceptive_stalls": len(dec), "deceptive_catches": n_c,
+                "catches_per_deceptive_stall": n_c / len(dec) if dec else None}
 
     def stuck_guard(self) -> dict:
         """End-of-day stuck-buyer guard (0.14.0), an observer only. stuck_buyers: buyers still in the

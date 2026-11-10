@@ -24,15 +24,26 @@ POLICY = "rule_genuine_bust_at"
 
 def bust_config(cfg, sid: str | None, day):
     """A copy of cfg in which genuine stalls run rule_genuine_bust_at, stall `sid` scheduled to
-    bust out on `day` (None or NEVER: nobody busts out)."""
+    bust out on `day` (None or NEVER: nobody busts out). day may be an exit candidate (b, h) (0.15.0):
+    bust out on day b and leave the market at the end of day b + h - 1."""
     if not cfg.brands.enabled or not cfg.market.horizon_known or int(cfg.market.days) < 2:
         raise ValueError("the bust-out benchmark needs brands.enabled, market.horizon_known and market.days >= 2")
     if cfg.agents.seller.get("genuine") not in ("rule_honest", POLICY):
         raise ValueError("the bust-out benchmark compares against always-honest genuine stalls")
     c = copy.deepcopy(cfg)
     c.agents.seller = {**c.agents.seller, "genuine": POLICY}
-    sched = {} if sid is None or day in (None, NEVER) else {sid: int(day)}
-    c.agents.params = {**c.agents.params, POLICY: {**c.agents.params.get(POLICY, {}), "schedule": sched}}
+    exit_at = {}
+    if isinstance(day, (tuple, list)):
+        b, h = (int(x) for x in day)
+        if h < 1 or b + h - 1 > int(cfg.market.days):
+            raise ValueError(f"exit candidate {tuple(day)!r} must have h >= 1 and b + h - 1 <= market.days")
+        sched, exit_at = ({}, {}) if sid is None else ({sid: b}, {sid: b + h - 1})
+    else:
+        sched = {} if sid is None or day in (None, NEVER) else {sid: int(day)}
+    p = {**c.agents.params.get(POLICY, {}), "schedule": sched}
+    if exit_at:
+        p["exit_at"] = exit_at
+    c.agents.params = {**c.agents.params, POLICY: p}
     return c
 
 
@@ -63,6 +74,18 @@ def candidates(days, horizon: int) -> tuple:
     if any(int(d) != d for d in ds) or len(set(ds)) != len(ds) or any(not 2 <= d <= horizon for d in ds):
         raise ValueError(f"bust-out days must be distinct integers in [2, {horizon}], got {list(days)!r}")
     return (NEVER, *sorted(int(d) for d in ds))
+
+
+def exit_candidates(bs, hs, horizon: int) -> tuple:
+    """Bust-out-and-exit candidates (0.15.0): NEVER plus (b, h) for every b in bs and h in hs: bust
+    out on day b, leave at the end of day b + h - 1. Needs 2 <= b and b + h - 1 <= horizon, h >= 1."""
+    out = []
+    for b in sorted(set(int(x) for x in bs)):
+        for h in sorted(set(int(x) for x in hs)):
+            if not 2 <= b or h < 1 or b + h - 1 > horizon:
+                raise ValueError(f"exit candidate ({b}, {h}) does not fit a {horizon}-day horizon")
+            out.append((b, h))
+    return (NEVER, *out)
 
 
 def best_response(cfg, sid: str, candidates=CANDIDATES, run=bazaar.run) -> dict:

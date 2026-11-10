@@ -77,6 +77,7 @@ VOCAB_RENAMES = {"0.8.0": ("lookalike", "counterfeit")}
 
 
 GUARD_KEYS = ("stuck_buyers", "idle_choosers")
+LIABILITY_KEYS = ("liability",)     # 0.15.0 outcome key
 
 
 def _before(v: str | None, ref: tuple) -> bool:
@@ -86,11 +87,11 @@ def _before(v: str | None, ref: tuple) -> bool:
         return False
 
 
-def _strip_guard(line: str) -> str:
+def _strip_guard(line: str, keys=GUARD_KEYS) -> str:
     if '"ev":"outcome"' not in line:
         return line
     e = json.loads(line)
-    return dumps({k: v for k, v in e.items() if k not in GUARD_KEYS})
+    return dumps({k: v for k, v in e.items() if k not in keys})
 
 
 def compare_logs(old: list[str], new: list[str]) -> dict:
@@ -129,6 +130,10 @@ def compare_logs(old: list[str], new: list[str]) -> dict:
         # an older log has no such keys, so compare without them (on both sides; a no-op on old lines).
         old = [_strip_guard(x) for x in old]
         new = [_strip_guard(x) for x in new]
+    if version_differs and _before(v_old, (0, 15, 0)):
+        # 0.15.0 added the outcome key "liability" (fines and enforcement intensity); likewise.
+        old = [_strip_guard(x, LIABILITY_KEYS) for x in old]
+        new = [_strip_guard(x, LIABILITY_KEYS) for x in new]
 
     def mismatch(**kw) -> dict:
         res = {"identical": False, "warnings": warnings, **kw}

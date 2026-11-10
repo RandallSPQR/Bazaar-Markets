@@ -208,6 +208,12 @@ With brands on (source: `engine/brands.py`):
   name and price rule are unchanged. Seller observations carry a `brand` block (`name`,
   `counterfeit_of`, `rating`, `neutral_price_cents`, `rename_available`, `first_decision_today`,
   `busted_day`, `bust_out_unit_cost_cents`).
+- **Exit** (0.15.0). Any stall may send `"exit": true` (once a day): it leaves the market for good at
+  the end of that day. On every later day it is closed, in no consideration set and no counterfeit
+  target, and sells, spends and is fined nothing; its fines not yet due become uncollectible. Every
+  outcome carries `liability`: fines charged, deferred, uncollectible and outstanding (counts and
+  cents, by stall), the day's exits, and catches at deceptive-type stalls per deceptive stall;
+  multi-day results add run totals (`catches_per_deceptive_stall_day`, `exited`, `by_stall`).
 
 ### `stalls`
 | key | default | status | meaning |
@@ -231,6 +237,7 @@ sanity check depends on this separation.
 | `yell_cost_frac`, `whisper_cost_frac` | 0.002, 0.004 | calibration | ad spend per yell / whisper, as a fraction of base |
 | `penalty_mult` | 1.5 | | P = 1.5 × base ≈ 5× a genuine unit margin (M0's P/m = 5) |
 | `close_ticks` | 40 | | closure after a catch; also L, the window for public catch notices (`recent_catches`) |
+| `penalty_lag_days` | 0 | | 0.15.0: 0 = the fine is charged at the catch. L > 0: the catch still closes the stall at once, but the fine falls due L days later and is charged in the stall's accounts that day; a fine falling due after the stall has exited is uncollectible (outcome `liability`, never charged); one falling due after the last day at a stall still in the market is outstanding at close |
 | `switch_cost_to_genuine`, `switch_cost_to_deceptive` | 0, 0 | | multi-day: a stall that switches type pays this fraction of its base price once, in its accounts on its first day in the new type (outcome field `switch_cost_cents` per type, shown only when either is non-zero) |
 
 ### `buyers`
@@ -291,6 +298,7 @@ the end of its route). Depths are fixed by profile, so buyer populations do not 
 | `disguised_shift` | `single_trip` | | `single_trip`: each disguised inspector walks one buyer-like route at a staggered arrival, then leaves (far fewer active ticks than posts). `full_shift`: present from t=0 to the end, walking random routes back to back (active ticks = count × ticks, as for posts and patrols). Full-shift routes come from inspector j's own stream `[seed, 6, 1, j]`, so buyers and other draws are unchanged |
 | `capture` | 0.0 | | 0.11.0 (needs `brands.enabled`): each dedicated inspector j (its order among inspectors) is tied to each genuine-origin brand (a brand on a genuine stall on day 1) with this probability, drawn once per run from `[seed, 15]` |
 | `capture_effect` | 0.8 | **PLACEHOLDER** | a tied inspector's catch probability for a stall bearing that brand is multiplied by (1 − capture_effect). The detection draw is consumed as before, so draws stay aligned across capture settings |
+| `detect_scale` | 1.0 | | 0.15.0, enforcement intensity: multiplies every catch probability (dedicated inspectors and inspector-buyers); 0 = inspectors present but never catch. The detection draw is consumed whenever the unscaled probability is > 0, so draws stay aligned across levels |
 
 ### `critics` (0.11.0; off by default)
 | key | default | status | meaning |
@@ -356,6 +364,9 @@ day with a decision) and then claims its old quality on every channel, as a bust
 `rule_genuine_rational`; any other stall is `rule_honest`. `engine/benchmark.py` uses it for the
 ex-post best bust-out benchmark: the stall's total profit over all days with a bust-out on each
 candidate day, against its total if it never busts out (all other genuine stalls honest).
+0.15.0: `rule_genuine_bust_at` also takes `exit_at` ({stall id: day}; the stall sends `exit` on its
+first decision of that day or a later one), and `benchmark.exit_candidates(bs, hs, D)` gives (b, h)
+candidates: bust out on day b and exit at the end of day b + h − 1.
 `rule_genuine_rational` (0.8.0; a benchmark, not a model of real sellers) is `rule_honest` until it
 busts out. On its first decision of each day from day 2 (day 1 has no yesterday), with U =
 yesterday's units sold, P = today's price, N = the neutral-rating price, c = its bust-out unit

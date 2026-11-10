@@ -46,4 +46,13 @@ points, through role-specific JSON observations and schema-validated actions.
 #         Guard: outcome stuck_buyers and idle_choosers at the end of each day (multi-day results
 #         add per-day and total counts). Runs where neither case occurs reproduce 0.13.0, apart
 #         from the two new outcome keys.
-ENGINE_VERSION = "0.14.0"
+# 0.15.0: liability dials. inspectors.detect_scale multiplies every catch probability (the detection
+#         draw is consumed whenever the unscaled probability is > 0); pricing.penalty_lag_days: a catch
+#         still closes the stall at once, its fine falls due L days later, uncollectible if the stall
+#         has exited by then, outstanding at close if due after the last day; seller action "exit"
+#         (leave the market for good at the end of the day: closed every later day, in no consideration
+#         set, no counterfeit target); rule_genuine_bust_at exit_at; benchmark.exit_candidates.
+#         Outcome "liability" (fines charged, deferred, uncollectible, outstanding; exits; catches per
+#         deceptive stall), and its run totals in multi-day results. Defaults reproduce 0.14.0, apart
+#         from the new outcome key.
+ENGINE_VERSION = "0.15.0"

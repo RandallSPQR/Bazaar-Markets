@@ -43,6 +43,7 @@ from . import critics as C
 from .config import BazaarConfig
 
 SWITCHABLE = ("genuine", "deceptive")
+EXITED = 1 << 40        # closed_until of a stall that has left the market (0.15.0)
 
 
 def day_root(seed: int, day: int) -> tuple:
@@ -151,6 +152,9 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
         if s.busted_day is not None:
             s.sign = "pitch"                       # a busted stall keeps showing its old quality
         s.decided_today = False
+        s.fines_pending = list(st.fines_pending)   # 0.15.0: lagged fines carry over
+        if s.exited_day is not None:               # 0.15.0: a stall that left never reopens
+            s.closed_until = EXITED
         s.yesterday = {"units_sold": st.units_sold, "revenue_cents": st.revenue_cents, "cost_cents": st.cost_cents,
                        "ad_spend_cents": st.ad_spend_cents, "penalties_cents": st.penalties_cents,
                        "profit_cents": stall_profit(st), "price_cents": st.price_cents, "catches": st.catches}
@@ -228,7 +232,34 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         stalls = reset_for_day(cfg, eng.stalls)
     guard = {k: {"by_day": [d["outcome"][k] for d in days], "total": sum(d["outcome"][k] for d in days)}
              for k in ("stuck_buyers", "idle_choosers")}
-    return {"days": days, **guard}
+    return {"days": days, **guard, "liability": liability_total(days, stalls)}
+
+
+def liability_total(days: list, stalls: list) -> dict:
+    """Run totals of the daily liability outcomes (0.15.0). Outstanding = fines not yet due at the
+    end of the last day, of stalls still in the market (due after the horizon: never charged).
+    exited: {stall: the day at whose end it left}."""
+    L = [d["outcome"]["liability"] for d in days]
+    out = {k: sum(x[k] for x in L) for k in ("fines_charged", "fines_charged_cents", "fines_uncollectible",
+                                             "fines_uncollectible_cents", "deceptive_catches")}
+    out["fines_outstanding"] = L[-1]["fines_outstanding"]
+    out["fines_outstanding_cents"] = L[-1]["fines_outstanding_cents"]
+    out["deceptive_stall_days"] = sum(x["deceptive_stalls"] for x in L)
+    out["catches_per_deceptive_stall_day"] = (out["deceptive_catches"] / out["deceptive_stall_days"]
+                                              if out["deceptive_stall_days"] else None)
+    by: dict = {}
+    for x in L:
+        for sid, v in x["by_stall"].items():
+            d = by.setdefault(sid, {"charged_cents": 0, "uncollectible_cents": 0, "outstanding_cents": 0})
+            d["charged_cents"] += v["charged_cents"]
+            d["uncollectible_cents"] += v["uncollectible_cents"]
+    for st in stalls:
+        if st.fines_pending:
+            by.setdefault(st.sid, {"charged_cents": 0, "uncollectible_cents": 0, "outstanding_cents": 0})
+            by[st.sid]["outstanding_cents"] = sum(f["cents"] for f in st.fines_pending)
+    out["by_stall"] = dict(sorted(by.items()))
+    out["exited"] = {st.sid: st.exited_day for st in sorted(stalls, key=lambda s: s.idx) if st.exited_day is not None}
+    return out
 
 
 def _types(stalls) -> dict:

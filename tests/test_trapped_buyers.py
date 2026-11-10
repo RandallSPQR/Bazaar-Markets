@@ -19,7 +19,7 @@ from engine import bazaar
 from engine.bazaar import BazaarEngine, _dist
 from engine.config import load
 from engine.jsonlog import JsonlLog, dumps
-from tests.guard_strip import strip_lines, strip_out
+from tests.guard_strip import strip_liability, strip_liability_lines, strip_lines, strip_out
 
 HERE = os.path.join(os.path.dirname(__file__), "reference")
 with open(os.path.join(HERE, "outcomes_v0130.json"), encoding="utf-8") as f:
@@ -40,8 +40,9 @@ def test_reproduces_0130_except_on_purpose(key):
     assert _total(o, "stuck_buyers") == 0 and _total(o, "idle_choosers") == 0
     if key in V0140:
         r = V0140[key]
-        assert dumps(o) == r["outcome"] and len(log.lines) == r["log_lines"]
-        assert hashlib.sha256("\n".join(log.lines[1:]).encode()).hexdigest() == r["log_body_sha256"]
+        # engine 0.15.0 adds the outcome key "liability"; compare without it
+        assert dumps(strip_liability(o)) == r["outcome"] and len(log.lines) == r["log_lines"]
+        assert hashlib.sha256("\n".join(strip_liability_lines(log.lines[1:])).encode()).hexdigest() == r["log_body_sha256"]
         assert dumps(strip_out(o)) != c["outcome"]                      # it did change
         searching = "buyers.demand_mode=choice_set" in c["overrides"] or \
             any(x.startswith("buyers.search_depth=") for x in c["overrides"])

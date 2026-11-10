@@ -79,6 +79,10 @@ class Stall:
     busted_day: int | None = None    # day a genuine stall busted out (rule_genuine_rational)
     decided_today: bool = False      # has the stall made a decision yet today
     yesterday: dict | None = None    # previous day's ledger (multi-day runs)
+    # liability (engine 0.15.0)
+    fines_pending: list = field(default_factory=list)  # lagged fines not yet due: {catch_day, due_day, cents}
+    exit_pending: bool = False       # the stall chose to exit at the end of today
+    exited_day: int | None = None    # the day at whose end the stall left the market
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),
@@ -342,7 +346,8 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
     if choice:
         if stalls is None:
             raise ValueError("buyers.demand_mode = choice_set needs the stalls")
-        by_cat = {c: [st for st in stalls if st.category == c] for c in mk.categories}
+        # 0.15.0: a stall that has left the market is in no consideration set
+        by_cat = {c: [st for st in stalls if st.category == c and st.exited_day is None] for c in mk.categories}
 
     # Buyers.
     for i in range(bc.count):

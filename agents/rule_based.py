@@ -256,13 +256,28 @@ class GenuineBustAtSeller(GenuineRationalSeller):
     scheduled day; it busts out on its first decision of that day (or of the first later day with
     a decision) and from then on behaves as a busted rule_genuine_rational (claims its old quality
     on every channel). `schedule` maps stall ids to bust-out days; a stall not listed never busts
-    out. Needs brands.enabled and market.horizon_known; without them it is rule_honest."""
+    out. Needs brands.enabled and market.horizon_known; without them it is rule_honest.
+
+    Exit (engine 0.15.0): `exit_at` maps stall ids to a day; on its first decision of that day (or of
+    the first later day with a decision) the stall asks to leave the market at the end of the day
+    (seller action "exit"). Empty by default, which is the 0.14.0 behaviour."""
 
     VERSION = "rule_genuine_bust_at-1"
 
-    def __init__(self, rng: np.random.Generator | None = None, schedule: dict | None = None, **kw):
+    def __init__(self, rng: np.random.Generator | None = None, schedule: dict | None = None,
+                 exit_at: dict | None = None, **kw):
         super().__init__(rng, **kw)
         self.schedule = {str(k): int(v) for k, v in (schedule or {}).items()}
+        self.exit_at = {str(k): int(v) for k, v in (exit_at or {}).items()}
+        self.exit_sent = False          # agents are fresh each day, so this is per day
+
+    def act(self, obs: dict) -> str:
+        a = json.loads(super().act(obs))
+        day, h = self.exit_at.get(obs["stall"]["id"]), obs.get("horizon")
+        if day is not None and h and h["day"] >= day and not self.exit_sent:
+            self.exit_sent = True
+            a["exit"] = True
+        return _out(a)
 
     def meta(self) -> dict:
         return {"policy": "rule_genuine_bust_at", "version": self.VERSION, "model_id": None, "sampling": None}

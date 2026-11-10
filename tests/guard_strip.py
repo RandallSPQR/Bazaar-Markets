@@ -1,4 +1,7 @@
-"""Engine 0.14.0 adds the stuck-buyer guard to every outcome (stuck_buyers, idle_choosers; multi-day
+"""Engine 0.15.0 adds the outcome key "liability" (fines, exits, catches per deceptive stall; also a run
+total in multi-day results); it is stripped below too, with the guard keys.
+
+Engine 0.14.0 adds the stuck-buyer guard to every outcome (stuck_buyers, idle_choosers; multi-day
 results add per-day and total counts). Reference tests written for earlier engines compare outcomes
 and logs with these keys removed; everything else must match byte for byte."""
 import json
@@ -6,7 +9,7 @@ import os
 
 from engine.jsonlog import dumps
 
-GUARD = ("stuck_buyers", "idle_choosers")
+GUARD = ("stuck_buyers", "idle_choosers", "liability")   # + engine 0.15.0's outcome key
 
 
 def strip_out(out: dict) -> dict:
@@ -32,6 +35,24 @@ CHANGED_0140 = set()
 if os.path.exists(_V0140):
     with open(_V0140, encoding="utf-8") as f:
         CHANGED_0140 = {(tuple(c["overrides"]), c["seed"]) for c in json.load(f)["cells"].values()}
+
+
+def strip_liability(out: dict) -> dict:
+    """Remove only the 0.15.0 key (for comparisons with 0.14.0 outputs, which have the guard keys)."""
+    o = {k: v for k, v in out.items() if k != "liability"}
+    if "days" in o:
+        o["days"] = [{**d, "outcome": {k: v for k, v in d["outcome"].items() if k != "liability"}} for d in o["days"]]
+    return o
+
+
+def strip_liability_lines(lines) -> list:
+    out = []
+    for x in lines:
+        if '"ev":"outcome"' in x:
+            e = json.loads(x)
+            x = dumps({k: v for k, v in e.items() if k != "liability"})
+        out.append(x)
+    return out
 
 
 def changed_in_0140(cell: dict) -> bool:

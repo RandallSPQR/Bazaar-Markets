@@ -44,6 +44,9 @@ SELLER_ACTION_SCHEMA: dict = {
         # the stall's low quality for good, name, sign claim and price unchanged.
         "rename": {"enum": ["fresh", "counterfeit", "lookalike"]},   # "lookalike" = 0.8.0 alias
         "bust_out": {"const": True},
+        # Engine 0.15.0: leave the market for good at the end of today (multi-day runs): no further
+        # sales, costs or fines collected; fines falling due later are uncollectible.
+        "exit": {"const": True},
     },
 }
 
@@ -101,6 +104,6 @@ def parse(role: str, raw: Any) -> tuple[dict | None, str | None]:
         return None, f"schema: {e.message[:200]} at /{'/'.join(map(str, e.path))}"
     if role == "seller":
         # optional keys are omitted when absent, so old actions log unchanged
-        extra = {k: obj[k] for k in ("sign", "rename", "bust_out") if obj.get(k) is not None}
+        extra = {k: obj[k] for k in ("sign", "rename", "bust_out", "exit") if obj.get(k) is not None}
         obj = {"yell": obj.get("yell"), "whisper": obj.get("whisper"), "answers": obj.get("answers", []), **extra}
     return obj, None

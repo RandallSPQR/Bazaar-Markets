@@ -114,6 +114,11 @@ class PricingCfg:
     whisper_cost_frac: float = 0.004     # ad spend per whisper
     penalty_mult: float = 1.5            # penalty P = penalty_mult * base (~5x genuine margin, as in M0)
     close_ticks: int = 40                # stall closed for this long after a catch
+    # Penalty lag (engine 0.15.0), in days. 0 = the fine is charged at the catch (0.14.0). L > 0: a
+    # catch still closes the stall at once, but its fine falls due L days later and is charged in the
+    # stall's accounts that day; a fine falling due after the stall has exited is uncollectible
+    # (logged, never charged); one falling due after the last day is outstanding at close.
+    penalty_lag_days: int = 0
     # Switching costs (multi-day runs): charged once, as a fraction of base price, in the stall's
     # accounts on its first day in the new type.
     switch_cost_to_genuine: float = 0.0
@@ -201,6 +206,10 @@ class InspectorsCfg:
     # brand is multiplied by (1 - capture_effect). 0 = off (0.10.0 bytes).
     capture: float = 0.0
     capture_effect: float = 0.8    # PLACEHOLDER
+    # Enforcement intensity (engine 0.15.0): multiplies every catch probability (dedicated
+    # inspectors and inspector-buyers). 1.0 = 0.14.0; 0 = inspectors present but never catch. The
+    # detection draw is consumed whenever the unscaled probability is > 0, so levels share draws.
+    detect_scale: float = 1.0
 
 
 @dataclass
