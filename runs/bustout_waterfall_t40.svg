@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 935 674" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}} .barp{fill:#7a7a7a} .barn{fill:#bbb} .hlb{fill:#e15759} @media (prefers-color-scheme: dark){.barp{fill:#999} .barn{fill:#555} .hlb{fill:#fc8d62}}</style>
+<rect class="bg" x="0" y="0" width="935" height="674"/>
+<title id="t">Where the bust-out's gain goes: tourist share 0.4, locals inspect</title>
+<desc id="d">Waterfall of the bust-out gain's components by liability arm and detect_scale. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">Where the bust-out's gain goes: tourist share 0.4, locals inspect</text>
+<text class="s" x="30" y="70" font-size="14">Mean over stall-seeds at each stall's best candidate, $ per stall over 30 days; bars run from the running total</text>
+<text class="n" x="30" y="634">Bazaar engine 0.15.0 (the liability run, 5b60720, replayed with an observer). Seeds 230–249, 3 sampled stalls per seed; exploratory, written after the results.</text>
+<text class="n" x="30" y="650">Lost sales at the honest margin (never chain's price − honest unit cost); causes per buyer-day in the order exit, closed, inspected, rating below τ, outranked, other.</text>
+<text class="lb" x="150" y="122">collectible, scale 0</text>
+<line class="zero" x1="326.7" y1="132" x2="326.7" y2="312"/>
+<text class="k" x="142" y="143" text-anchor="end">cost saved</text>
+<rect class="barp" x="326.7" y="135" width="15.2" height="9"/>
+<text class="k" x="142" y="158" text-anchor="end">lost: after exit</text>
+<rect class="barp" x="341.9" y="150" width="0.6" height="9"/>
+<text class="k" x="142" y="173" text-anchor="end">lost: closed</text>
+<rect class="barp" x="341.9" y="165" width="0.6" height="9"/>
+<text class="k" x="142" y="188" text-anchor="end">lost: inspected</text>
+<rect class="barn" x="295.3" y="180" width="46.6" height="9"/>
+<text class="k" x="142" y="203" text-anchor="end">lost: rating &lt; τ</text>
+<rect class="barn" x="290.3" y="195" width="5.1" height="9"/>
+<text class="k" x="142" y="218" text-anchor="end">lost: outranked</text>
+<rect class="barp" x="290.3" y="210" width="0.6" height="9"/>
+<text class="k" x="142" y="233" text-anchor="end">lost: other</text>
+<rect class="barp" x="290.3" y="225" width="0.6" height="9"/>
+<text class="k" x="142" y="248" text-anchor="end">buyers gained</text>
+<rect class="barp" x="290.3" y="240" width="7.3" height="9"/>
+<text class="k" x="142" y="263" text-anchor="end">premium lost</text>
+<rect class="barn" x="293.6" y="255" width="4.0" height="9"/>
+<text class="k" x="142" y="278" text-anchor="end">ad spend</text>
+<rect class="barp" x="293.6" y="270" width="0.6" height="9"/>
+<text class="k" x="142" y="293" text-anchor="end">fines</text>
+<rect class="barp" x="293.6" y="285" width="0.6" height="9"/>
+<text class="k" x="142" y="308" text-anchor="end">= gain</text>
+<rect class="hlb" x="293.6" y="299" width="33.1" height="11"/>
+<text class="k" x="289.6" y="308" text-anchor="end">−93.57</text>
+<line class="ax" x1="150" y1="318" x2="365" y2="318"/>
+<text class="k" x="185.4" y="332" text-anchor="middle">−400</text>
+<text class="k" x="256.0" y="332" text-anchor="middle">−200</text>
+<text class="k" x="326.7" y="332" text-anchor="middle">0</text>
+<text class="lb" x="405" y="122">collectible, scale 0.1</text>
+<line class="zero" x1="581.7" y1="132" x2="581.7" y2="312"/>
+<rect class="barp" x="581.7" y="135" width="12.9" height="9"/>
+<rect class="barp" x="594.6" y="150" width="0.6" height="9"/>
+<rect class="barn" x="591.6" y="165" width="3.0" height="9"/>
+<rect class="barn" x="547.0" y="180" width="44.5" height="9"/>
+<rect class="barn" x="545.1" y="195" width="1.9" height="9"/>
+<rect class="barn" x="544.5" y="210" width="0.6" height="9"/>
+<rect class="barp" x="544.5" y="225" width="0.6" height="9"/>
+<rect class="barp" x="544.5" y="240" width="6.7" height="9"/>
+<rect class="barn" x="548.6" y="255" width="2.6" height="9"/>
+<rect class="barp" x="548.6" y="270" width="0.6" height="9"/>
+<rect class="barn" x="541.7" y="285" width="7.2" height="9"/>
+<rect class="hlb" x="541.7" y="299" width="40.0" height="11"/>
+<text class="k" x="537.7" y="308" text-anchor="end">−113.16</text>
+<line class="ax" x1="405" y1="318" x2="620" y2="318"/>
+<text class="k" x="440.4" y="332" text-anchor="middle">−400</text>
+<text class="k" x="511.0" y="332" text-anchor="middle">−200</text>
+<text class="k" x="581.7" y="332" text-anchor="middle">0</text>
+<text class="lb" x="660" y="122">collectible, scale 1</text>
+<line class="zero" x1="836.7" y1="132" x2="836.7" y2="312"/>
+<rect class="barp" x="836.7" y="135" width="2.8" height="9"/>
+<rect class="barp" x="839.5" y="150" width="0.6" height="9"/>
+<rect class="barn" x="790.0" y="165" width="49.5" height="9"/>
+<rect class="barn" x="779.2" y="180" width="10.8" height="9"/>
+<rect class="barp" x="779.2" y="195" width="0.6" height="9"/>
+<rect class="barn" x="779.1" y="210" width="0.6" height="9"/>
+<rect class="barn" x="779.1" y="225" width="0.6" height="9"/>
+<rect class="barp" x="779.1" y="240" width="0.7" height="9"/>
+<rect class="barp" x="779.8" y="255" width="0.6" height="9"/>
+<rect class="barp" x="779.8" y="270" width="3.8" height="9"/>
+<rect class="barn" x="688.5" y="285" width="95.1" height="9"/>
+<rect class="hlb" x="688.5" y="299" width="148.2" height="11"/>
+<text class="k" x="684.5" y="308" text-anchor="end">−419.41</text>
+<line class="ax" x1="660" y1="318" x2="875" y2="318"/>
+<text class="k" x="695.4" y="332" text-anchor="middle">−400</text>
+<text class="k" x="766.0" y="332" text-anchor="middle">−200</text>
+<text class="k" x="836.7" y="332" text-anchor="middle">0</text>
+<text class="lb" x="150" y="358">judgment-proof, scale 0</text>
+<line class="zero" x1="326.7" y1="368" x2="326.7" y2="548"/>
+<text class="k" x="142" y="379" text-anchor="end">cost saved</text>
+<rect class="barp" x="326.7" y="371" width="23.6" height="9"/>
+<text class="k" x="142" y="394" text-anchor="end">lost: after exit</text>
+<rect class="barn" x="337.3" y="386" width="13.0" height="9"/>
+<text class="k" x="142" y="409" text-anchor="end">lost: closed</text>
+<rect class="barp" x="337.3" y="401" width="0.6" height="9"/>
+<text class="k" x="142" y="424" text-anchor="end">lost: inspected</text>
+<rect class="barn" x="250.6" y="416" width="86.7" height="9"/>
+<text class="k" x="142" y="439" text-anchor="end">lost: rating &lt; τ</text>
+<rect class="barn" x="224.7" y="431" width="25.9" height="9"/>
+<text class="k" x="142" y="454" text-anchor="end">lost: outranked</text>
+<rect class="barn" x="221.6" y="446" width="3.1" height="9"/>
+<text class="k" x="142" y="469" text-anchor="end">lost: other</text>
+<rect class="barp" x="221.6" y="461" width="0.6" height="9"/>
+<text class="k" x="142" y="484" text-anchor="end">buyers gained</text>
+<rect class="barp" x="221.6" y="476" width="7.7" height="9"/>
+<text class="k" x="142" y="499" text-anchor="end">premium lost</text>
+<rect class="barn" x="222.0" y="491" width="7.2" height="9"/>
+<text class="k" x="142" y="514" text-anchor="end">ad spend</text>
+<rect class="barp" x="222.0" y="506" width="2.4" height="9"/>
+<text class="k" x="142" y="529" text-anchor="end">fines</text>
+<rect class="barp" x="224.5" y="521" width="0.6" height="9"/>
+<text class="k" x="142" y="544" text-anchor="end">= gain</text>
+<rect class="hlb" x="224.5" y="535" width="102.2" height="11"/>
+<text class="k" x="220.5" y="544" text-anchor="end">−289.38</text>
+<line class="ax" x1="150" y1="554" x2="365" y2="554"/>
+<text class="k" x="185.4" y="568" text-anchor="middle">−400</text>
+<text class="k" x="256.0" y="568" text-anchor="middle">−200</text>
+<text class="k" x="326.7" y="568" text-anchor="middle">0</text>
+<text class="lb" x="405" y="358">judgment-proof, scale 0.1</text>
+<line class="zero" x1="581.7" y1="368" x2="581.7" y2="548"/>
+<rect class="barp" x="581.7" y="371" width="26.8" height="9"/>
+<rect class="barn" x="595.0" y="386" width="13.5" height="9"/>
+<rect class="barn" x="578.0" y="401" width="16.9" height="9"/>
+<rect class="barn" x="502.1" y="416" width="76.0" height="9"/>
+<rect class="barn" x="481.4" y="431" width="20.7" height="9"/>
+<rect class="barn" x="477.1" y="446" width="4.3" height="9"/>
+<rect class="barn" x="477.0" y="461" width="0.6" height="9"/>
+<rect class="barp" x="477.0" y="476" width="14.6" height="9"/>
+<rect class="barn" x="482.4" y="491" width="9.1" height="9"/>
+<rect class="barp" x="482.4" y="506" width="3.9" height="9"/>
+<rect class="barp" x="486.3" y="521" width="0.6" height="9"/>
+<rect class="hlb" x="486.3" y="535" width="95.4" height="11"/>
+<text class="k" x="482.3" y="544" text-anchor="end">−269.99</text>
+<line class="ax" x1="405" y1="554" x2="620" y2="554"/>
+<text class="k" x="440.4" y="568" text-anchor="middle">−400</text>
+<text class="k" x="511.0" y="568" text-anchor="middle">−200</text>
+<text class="k" x="581.7" y="568" text-anchor="middle">0</text>
+<text class="lb" x="660" y="358">judgment-proof, scale 1</text>
+<line class="zero" x1="836.7" y1="368" x2="836.7" y2="548"/>
+<rect class="barp" x="836.7" y="371" width="8.3" height="9"/>
+<rect class="barn" x="787.1" y="386" width="57.9" height="9"/>
+<rect class="barn" x="688.4" y="401" width="98.7" height="9"/>
+<rect class="barn" x="672.7" y="416" width="15.6" height="9"/>
+<rect class="barn" x="672.0" y="431" width="0.7" height="9"/>
+<rect class="barn" x="671.7" y="446" width="0.6" height="9"/>
+<rect class="barn" x="671.5" y="461" width="0.6" height="9"/>
+<rect class="barp" x="671.5" y="476" width="2.1" height="9"/>
+<rect class="barn" x="672.3" y="491" width="1.3" height="9"/>
+<rect class="barp" x="672.3" y="506" width="14.1" height="9"/>
+<rect class="barp" x="686.3" y="521" width="0.6" height="9"/>
+<rect class="hlb" x="686.3" y="535" width="150.4" height="11"/>
+<text class="k" x="682.3" y="544" text-anchor="end">−425.65</text>
+<line class="ax" x1="660" y1="554" x2="875" y2="554"/>
+<text class="k" x="695.4" y="568" text-anchor="middle">−400</text>
+<text class="k" x="766.0" y="568" text-anchor="middle">−200</text>
+<text class="k" x="836.7" y="568" text-anchor="middle">0</text>
+</svg>

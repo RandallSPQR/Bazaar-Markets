@@ -1,0 +1,27 @@
+2026-11-11 08:59:04 bustout_decomp collect: engine 0.15.0, commit {'commit': '5b6072005abbdc7f322141b373cceece0d625766', 'status_porcelain': ['?? analysis/bustout_decomp.py', '?? runs/bustout_stdout.log']}, numpy 2.5.4, macOS-26.6.2-arm64-arm-64bit, python 3.12.7; load [2.77, 2.82, 2.95], memory {'swap_free_mb': 1606.56, 'free_pct': 75}
+2026-11-11 08:59:04 960 chains, 0 cached, 960 to run; workers 4
+2026-11-11 09:03:36 40/960 chains, 271 s, load [7.29, 5.4, 4.07], memory {'swap_free_mb': 1606.56, 'free_pct': 75}
+2026-11-11 09:09:19 80/960 chains, 614 s, load [8.75, 7.69, 5.59], memory {'swap_free_mb': 1606.56, 'free_pct': 65}
+2026-11-11 09:14:29 120/960 chains, 925 s, load [8.09, 8.12, 6.4], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:20:05 160/960 chains, 1260 s, load [8.87, 8.08, 6.91], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:25:57 200/960 chains, 1613 s, load [8.66, 8.62, 7.58], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:31:54 240/960 chains, 1969 s, load [8.48, 8.72, 7.95], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:37:40 280/960 chains, 2316 s, load [7.09, 7.71, 7.73], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:43:15 320/960 chains, 2651 s, load [6.66, 7.19, 7.48], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:48:53 360/960 chains, 2989 s, load [7.07, 7.17, 7.38], memory {'swap_free_mb': 1606.56, 'free_pct': 66}
+2026-11-11 09:54:32 400/960 chains, 3328 s, load [7.39, 7.21, 7.32], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 09:59:43 440/960 chains, 3639 s, load [6.93, 7.13, 7.26], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 10:04:57 480/960 chains, 3952 s, load [8.27, 8.7, 7.98], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 10:10:39 520/960 chains, 4295 s, load [7.12, 7.65, 7.7], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 10:16:43 560/960 chains, 4658 s, load [8.75, 8.31, 7.97], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 10:22:59 600/960 chains, 5035 s, load [8.2, 8.44, 8.16], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 10:28:24 640/960 chains, 5359 s, load [6.32, 7.71, 7.98], memory {'swap_free_mb': 1606.56, 'free_pct': 67}
+2026-11-11 10:33:03 680/960 chains, 5638 s, load [6.79, 7.39, 7.75], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 10:37:34 720/960 chains, 5910 s, load [5.79, 6.38, 7.18], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 10:42:24 760/960 chains, 6200 s, load [6.17, 6.09, 6.79], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 10:47:14 800/960 chains, 6489 s, load [5.49, 5.82, 6.46], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 10:52:02 840/960 chains, 6777 s, load [6.31, 5.93, 6.3], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 10:56:56 880/960 chains, 7072 s, load [5.55, 5.71, 6.09], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 11:01:42 920/960 chains, 7357 s, load [6.11, 6.03, 6.13], memory {'swap_free_mb': 1606.56, 'free_pct': 70}
+2026-11-11 11:06:24 960/960 chains, 7639 s, load [5.52, 6.05, 6.13], memory {'swap_free_mb': 1606.56, 'free_pct': 71}
+2026-11-11 11:06:24 done; wall 2.12 h; load [5.52, 6.05, 6.13]
