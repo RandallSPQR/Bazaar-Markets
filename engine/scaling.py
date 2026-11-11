@@ -131,6 +131,10 @@ FIELDS: dict[str, tuple[str, str]] = {
     "critics.tie_delay": (NONE, "days; critics act between days"),
     "critics.embarrassment": (NONE, "switch"),
     "critics.emb_max": (NONE, "days"),
+    "licensing.schedule": (NONE, "owner stall id -> licence day and count"),
+    "licensing.quality": (NONE, "label"),
+    "licensing.royalty": (NONE, "money ratio per unit"),
+    "licensing.owner_liable": (NONE, "switch"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).

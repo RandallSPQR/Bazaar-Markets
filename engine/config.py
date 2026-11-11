@@ -308,6 +308,24 @@ class CriticsCfg:
 
 
 @dataclass
+class LicensingCfg:
+    # Licensing (engine 0.16.0; engine/licensing.py; needs brands.enabled and market.days > 1). Off while
+    # `schedule` is empty (0.15.0 bytes). schedule: {owner stall id: {"day": b, "n": N}}: at the start of
+    # day b (before prices are set) the genuine owner licenses its brand to N non-genuine stalls of its
+    # category, drawn from the dedicated stream [seed, 19, owner index]. From then to the last day each
+    # licensee bears the brand's name, posts its price and claims its quality, never renames, and pays
+    # the owner `royalty` x price per unit sold.
+    schedule: dict = field(default_factory=dict)
+    # "cheap": licensee true quality drawn from stalls.q_low (as for deceptive stalls), sign "pitch",
+    # run by agents.seller.deceptive's policy. "contract": the owner's true quality, sign "truth",
+    # run by rule_honest (honest licensing).
+    quality: str = "cheap"
+    royalty: float = 0.15          # PLACEHOLDER (rho)
+    # Fines from catches at a licensee are charged to the owner instead of the licensee.
+    owner_liable: bool = False
+
+
+@dataclass
 class BazaarConfig:
     mode: str = "bazaar"
     seed: int = 0
@@ -323,6 +341,7 @@ class BazaarConfig:
     ratings: RatingsCfg = field(default_factory=RatingsCfg)
     brands: BrandsCfg = field(default_factory=BrandsCfg)
     critics: CriticsCfg = field(default_factory=CriticsCfg)
+    licensing: LicensingCfg = field(default_factory=LicensingCfg)
 
 
 PLACEHOLDERS = {
@@ -337,6 +356,7 @@ PLACEHOLDERS = {
     "critics.tie_delay": "10 days (placeholder 2026-11-07)",
     "critics.emb_max": "10 days (placeholder 2026-11-07)",
     "inspectors.capture_effect": "0.8 (placeholder 2026-11-07)",
+    "licensing.royalty": "0.15 (placeholder 2026-11-11)",
 }
 
 
@@ -362,7 +382,8 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "inspectors"): InspectorsCfg, (BazaarConfig, "detection"): DetectionCfg,
                 (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
                 (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg,
-                (BazaarConfig, "brands"): BrandsCfg, (BazaarConfig, "critics"): CriticsCfg}
+                (BazaarConfig, "brands"): BrandsCfg, (BazaarConfig, "critics"): CriticsCfg,
+                (BazaarConfig, "licensing"): LicensingCfg}
 
 
 def from_dict(d: dict):

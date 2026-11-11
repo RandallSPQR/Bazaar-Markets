@@ -40,6 +40,7 @@ import numpy as np
 
 from . import brands as B
 from . import critics as C
+from . import licensing as LIC
 from .config import BazaarConfig
 
 SWITCHABLE = ("genuine", "deceptive")
@@ -52,7 +53,8 @@ def day_root(seed: int, day: int) -> tuple:
 
 
 def stall_profit(st) -> int:
-    return st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents - st.switch_cost_cents
+    return (st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents - st.switch_cost_cents
+            - st.royalty_paid_cents + st.royalty_received_cents)
 
 
 def update_ratings(stalls: list, buys: list[dict], memory: float) -> None:
@@ -151,6 +153,9 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
         s.sign = "truth" if s.stype != "deceptive" else cfg.stalls.deceptive_sign
         if s.busted_day is not None:
             s.sign = "pitch"                       # a busted stall keeps showing its old quality
+        if s.licensed_from is not None:            # 0.16.0: a licensee shows the licence's sign
+            s.sign = LIC.sign(cfg, s)
+        s.royalty_paid_cents = s.royalty_received_cents = 0
         s.decided_today = False
         s.fines_pending = list(st.fines_pending)   # 0.15.0: lagged fines carry over
         if s.exited_day is not None:               # 0.15.0: a stall that left never reopens
@@ -192,6 +197,8 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         if brands:
             extra.update(brands={st.sid: st.brand for st in eng.stalls},
                          prices={st.sid: st.price_cents for st in eng.stalls})
+        if eng.licensing_on:
+            extra["licences"] = eng.licence_log
         log.emit("day_start", day=day, types=types, **extra)
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}

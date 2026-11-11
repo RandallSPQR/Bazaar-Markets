@@ -161,7 +161,7 @@ def morning_prices(cfg, stalls: list, book: BrandBook) -> None:
     for st in stalls:
         st.rating = book.rating(st.brand)
         st.price_cents = premium_price(cfg, st, st.rating)
-    holder = {st.brand: st for st in stalls if st.counterfeit_of is None}
+    holder = {st.brand: st for st in stalls if st.counterfeit_of is None and st.licensed_from is None}
     for st in stalls:
         if st.counterfeit_of is not None and st.counterfeit_of in holder:
             st.price_cents = holder[st.counterfeit_of].price_cents

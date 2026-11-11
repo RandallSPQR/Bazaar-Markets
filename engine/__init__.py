@@ -55,4 +55,11 @@ points, through role-specific JSON observations and schema-validated actions.
 #         Outcome "liability" (fines charged, deferred, uncollectible, outstanding; exits; catches per
 #         deceptive stall), and its run totals in multi-day results. Defaults reproduce 0.14.0, apart
 #         from the new outcome key.
-ENGINE_VERSION = "0.15.0"
+# 0.16.0: licensing (licensing.*; engine/licensing.py): at the start of a scheduled day a genuine owner
+#         licenses its brand to N non-genuine stalls of its category (dedicated stream [seed, 19, owner
+#         index]); licensees bear the name, post the owner's price, claim its quality ("cheap": low true
+#         quality, deceptive policy; "contract": the owner's quality, rule_honest), never rename, pay a
+#         royalty per unit; reviews of their sales go to the brand; licensing.owner_liable moves fines
+#         from catches at licensees to the owner. Outcome "licensing" and royalties in the profit
+#         identity, only when on. Defaults reproduce 0.15.0 byte for byte.
+ENGINE_VERSION = "0.16.0"

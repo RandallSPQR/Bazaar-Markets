@@ -88,6 +88,31 @@ def exit_candidates(bs, hs, horizon: int) -> tuple:
     return (NEVER, *out)
 
 
+def licence_config(cfg, sid: str | None, option):
+    """Licensing benchmark (0.16.0): a copy of cfg in which every genuine stall is honest
+    (rule_genuine_bust_at with nothing scheduled) and, unless option is None or NEVER, stall `sid`
+    licenses its brand on day b to N stalls: option = (N, b). licensing.quality, royalty and
+    owner_liable are taken from cfg."""
+    c = bust_config(cfg, None, NEVER)
+    if sid is not None and option not in (None, NEVER):
+        n, b = (int(x) for x in option)
+        c.licensing.schedule = {sid: {"day": b, "n": n}}
+    else:
+        c.licensing.schedule = {}
+    return c
+
+
+def licence_options(ns, bs, horizon: int) -> tuple:
+    """NEVER plus (N, b) for every licensee count N >= 1 and licence day b in [2, horizon]."""
+    out = []
+    for n in sorted(set(int(x) for x in ns)):
+        for b in sorted(set(int(x) for x in bs)):
+            if n < 1 or not 2 <= b <= horizon:
+                raise ValueError(f"licence option ({n}, {b}) does not fit a {horizon}-day horizon")
+            out.append((n, b))
+    return (NEVER, *out)
+
+
 def best_response(cfg, sid: str, candidates=CANDIDATES, run=bazaar.run) -> dict:
     """Run every candidate for stall `sid` and return gain(totals). candidates: any list made of
     NEVER and bust-out days (see candidates())."""

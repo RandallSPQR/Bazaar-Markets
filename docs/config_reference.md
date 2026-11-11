@@ -318,6 +318,26 @@ sign gets no review (decided 2026-11-07). Reviews are filed under the stall's ac
 reviews are filed at once; a review written on day d with delay k is filed at the end of day d + k
 and one due after the last day is never filed. Source: `engine/critics.py`.
 
+### `licensing` (0.16.0; off while `schedule` is empty)
+| key | default | status | meaning |
+|---|---|---|---|
+| `schedule` | {} | | `{owner stall id: {"day": b, "n": N}}`: at the start of day b (2 ≤ b ≤ `market.days`) the genuine owner licenses its brand to N non-genuine stalls (seconds or deceptive) of its category. Needs `brands.enabled` and `market.days` > 1 |
+| `quality` | "cheap" | | `cheap`: licensee true quality drawn from `stalls.q_low`, sign shows the brand's quality (`stalls.deceptive_sign`), run by `agents.seller.deceptive`'s policy. `contract`: the owner's true quality, sign `truth`, run by `rule_honest` |
+| `royalty` | 0.15 | **PLACEHOLDER** | the licensee pays the owner round(royalty × price) per unit sold |
+| `owner_liable` | false | | fines from catches at a licensee are charged to its owner instead (the licensee is still closed) |
+
+Licensees are drawn from `[seed, 19, owner index]`: a permutation of the category's non-genuine stalls in
+stall order (the first 2 of 6 are the 2 of 2), then one quality draw per candidate. From day b a licensee
+bears the brand's name, posts the owner's price (after morning prices) and claims the owner's true quality
+until the last day; it is never offered a rename after a catch (decided 2026-11-11), and its type (`stype`)
+does not change. Buyers file reviews of licensee sales under the brand, so licensee sales move the brand's
+rating; inspection reveals the licensee's true quality. Stall profit becomes revenue − cost − ad spend −
+penalties − switch cost − royalties paid + royalties received. With a schedule the outcome adds
+`licensing` (per owner: licensees, their quality, royalties, licensee and owner sales, catches at
+licensees, fines by payer), `seller_by_type` adds royalty fields, and `day_start` logs the day's
+licences. `benchmark.licence_config(cfg, sid, (N, b))` and `benchmark.licence_options(ns, bs, D)` build
+the licensing benchmark. Source: `engine/licensing.py`.
+
 ### `detection`
 | key | default | status | meaning |
 |---|---|---|---|

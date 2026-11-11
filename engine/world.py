@@ -83,6 +83,11 @@ class Stall:
     fines_pending: list = field(default_factory=list)  # lagged fines not yet due: {catch_day, due_day, cents}
     exit_pending: bool = False       # the stall chose to exit at the end of today
     exited_day: int | None = None    # the day at whose end the stall left the market
+    # licensing (engine 0.16.0; engine/licensing.py)
+    licensed_from: str | None = None  # the owner's stall id, for a licensee
+    licence: str | None = None        # "cheap" | "contract", for a licensee
+    royalty_paid_cents: int = 0       # today's royalties paid (licensee) ...
+    royalty_received_cents: int = 0   # ... and received (owner)
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),

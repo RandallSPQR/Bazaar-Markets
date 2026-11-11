@@ -29,6 +29,7 @@ from .valuation import unit_value
 from .scaling import scaled_config
 from . import brands as B
 from . import critics as C
+from . import licensing as LIC
 from .world import (UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text,
                     validate_demand)
 
@@ -65,6 +66,12 @@ class BazaarEngine:
         self.layout = Layout(cfg)
         built = stalls is None
         self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world) if built else stalls
+        # Licensing (0.16.0): licences scheduled for today take effect before agents and prices.
+        self.licensing_on = LIC.on(cfg)
+        self.licence_log: list[dict] = []
+        if self.licensing_on:
+            LIC.validate(cfg, self.stalls)
+            self.licence_log = LIC.apply(cfg, self.stalls, int(day))
         validate_demand(cfg)
         self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
                                                  self.rng_treat, self.rng_insp, root=r, stalls=self.stalls)
@@ -93,7 +100,8 @@ class BazaarEngine:
         if agent_factory is None:
             from agents.registry import make_factory
             agent_factory = make_factory(self.cfg_given, self.root)
-        self.seller_agents = {st.sid: agent_factory("seller", cfg.agents.seller[st.stype], st.sid, st.idx)
+        self.agent_factory = agent_factory
+        self.seller_agents = {st.sid: agent_factory("seller", LIC.policy(cfg, st), st.sid, st.idx)
                               for st in self.stalls}
         self.buyer_agents = {p.pid: agent_factory("buyer", cfg.agents.buyer, p.pid, p.idx) for p in self.buyers}
         self.pending_asks: dict[str, list[str]] = {}
@@ -142,6 +150,8 @@ class BazaarEngine:
             if book is None and (C.critics_on(cfg) or C.capture_on(cfg)):
                 C.init_ties(cfg, self.book, self.stalls)
             B.morning_prices(cfg, self.stalls, self.book)
+            if self.licensing_on:
+                LIC.prices(self.stalls)
         # Inspector capture (0.11.0): each dedicated inspector's order among inspectors.
         self.capture_effect = float(cfg.inspectors.capture_effect) if C.capture_on(cfg) else None
         self.insp_ord = {p.pid: j for j, p in enumerate(x for x in self.people if x.kind == "inspector")}
@@ -259,7 +269,10 @@ class BazaarEngine:
         # Keyed by the config's policy name, which is what replay resolves agents by.
         metas = {}
         for st in self.stalls:
-            metas.setdefault(f"seller:{self.cfg.agents.seller[st.stype]}", self.seller_agents[st.sid].meta())
+            metas.setdefault(f"seller:{LIC.policy(self.cfg, st)}", self.seller_agents[st.sid].meta())
+        for pol in LIC.policies(self.cfg):      # licences granted on later days (0.16.0)
+            if f"seller:{pol}" not in metas:
+                metas[f"seller:{pol}"] = self.agent_factory("seller", pol, "_licence", 0).meta()
         for p in self.buyers:
             metas.setdefault(f"buyer:{self.cfg.agents.buyer}", self.buyer_agents[p.pid].meta())
         self.log.emit("header", mode="bazaar", engine_version=ENGINE_VERSION, config=to_dict(self.cfg_given),
@@ -474,13 +487,17 @@ class BazaarEngine:
                               "text": self.message_text(st, q, p)})
 
     def catch(self, st: Stall, p: Person, ch: str, q: float) -> dict:
+        # 0.16.0: a licensee's fine goes to its owner when licensing.owner_liable
+        payer = st
+        if st.licensed_from is not None and self.cfg.licensing.owner_liable:
+            payer = self.by_sid[st.licensed_from]
         if self.lag:                    # 0.15.0: the fine falls due lag days later
             due = self.day + self.lag
-            st.fines_pending.append({"catch_day": self.day, "due_day": due, "cents": st.penalty_cents})
-            self.fines["deferred"].append((st.sid, st.penalty_cents))
+            payer.fines_pending.append({"catch_day": self.day, "due_day": due, "cents": st.penalty_cents})
+            self.fines["deferred"].append((payer.sid, st.penalty_cents))
         else:
-            st.penalties_cents += st.penalty_cents
-            self.fines["charged"].append((st.sid, st.penalty_cents))
+            payer.penalties_cents += st.penalty_cents
+            self.fines["charged"].append((payer.sid, st.penalty_cents))
         st.catches += 1
         st.closed_until = self.t + 1 + self.cfg.pricing.close_ticks
         st.epoch += 1
@@ -488,9 +505,11 @@ class BazaarEngine:
               "penalty_cents": st.penalty_cents, "reopens": st.closed_until}
         if self.lag:
             ev["due_day"] = due
+        if st.licensed_from is not None:
+            ev["licensee_of"], ev["fined"] = st.licensed_from, payer.sid
         self.catch_events.append(ev)
         self.catch_ticks.append((self.t, st))
-        if self.brands_on:
+        if self.brands_on and st.licensed_from is None:   # 0.16.0: a licensee never renames
             st.rename_pending = True
         return ev
 
@@ -676,6 +695,10 @@ class BazaarEngine:
         st.revenue_cents += amount
         st.cost_cents += units * st.unit_cost_cents
         st.units_sold += units
+        if st.licensed_from is not None:   # 0.16.0: royalty to the owner
+            r = LIC.royalty_cents(self.cfg, st, units)
+            st.royalty_paid_cents += r
+            self.by_sid[st.licensed_from].royalty_received_cents += r
         v = units * unit_value(self.cfg.valuation, st.q_true, p.task["q_req"],
                                self.cfg.pricing.base_price_cents[st.category])
         p.value += v
@@ -841,9 +864,13 @@ class BazaarEngine:
                 d[k] += getattr(st, k)
             if self.switch_costs_on:
                 d["switch_cost_cents"] = d.get("switch_cost_cents", 0) + st.switch_cost_cents
+            if self.licensing_on:
+                d["royalty_paid_cents"] = d.get("royalty_paid_cents", 0) + st.royalty_paid_cents
+                d["royalty_received_cents"] = d.get("royalty_received_cents", 0) + st.royalty_received_cents
         for d in by_type.values():
             d["profit_cents"] = (d["revenue_cents"] - d["cost_cents"] - d["ad_spend_cents"] - d["penalties_cents"]
-                                 - d.get("switch_cost_cents", 0))
+                                 - d.get("switch_cost_cents", 0) - d.get("royalty_paid_cents", 0)
+                                 + d.get("royalty_received_cents", 0))
             d["profit_per_stall_cents"] = d["profit_cents"] / d["stalls"]
         reach = [p for p in arrived if self.is_reachable(p)]
         r_surplus = [p.value - p.paid_cents - p.inspect_spent_cents for p in reach]
@@ -890,6 +917,7 @@ class BazaarEngine:
             **({"search": self.search_outcome()} if self.search_log else {}),
             **self.stuck_guard(),
             "liability": self.liability_outcome(),
+            **({"licensing": LIC.outcome(self)} if self.licensing_on else {}),
         }
 
     def close_day(self) -> None:
@@ -969,7 +997,7 @@ class BazaarEngine:
 
     def brand_outcome(self) -> dict:
         prof = {st.sid: st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents
-                - st.switch_cost_cents for st in self.stalls}
+                - st.switch_cost_cents - st.royalty_paid_cents + st.royalty_received_cents for st in self.stalls}
         return {"renames": len(self.rename_log),
                 "renames_by_how": {h: sum(r["how"] == h for r in self.rename_log) for h in ("fresh", "counterfeit")},
                 "bust_outs": len(self.bust_log),
