@@ -1,0 +1,230 @@
+{
+ "engine_version": "0.16.0",
+ "g1": {
+  "cases": {
+   "bust30|t100|ds1.0|915|s40": {
+    "identical": true,
+    "lines": 805420,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": 716417
+   },
+   "never|t100|ds0.0|915": {
+    "identical": true,
+    "lines": 946882,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t100|ds0.0|916": {
+    "identical": true,
+    "lines": 949102,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t100|ds1.0|915": {
+    "identical": true,
+    "lines": 806035,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t100|ds1.0|916": {
+    "identical": true,
+    "lines": 799630,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t40|ds0.0|915": {
+    "identical": true,
+    "lines": 955132,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t40|ds0.0|916": {
+    "identical": true,
+    "lines": 959572,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t40|ds1.0|915": {
+    "identical": true,
+    "lines": 864430,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   },
+   "never|t40|ds1.0|916": {
+    "identical": true,
+    "lines": 859099,
+    "new_engine": "0.16.0",
+    "old_engine": "0.15.0",
+    "total": null
+   }
+  },
+  "old_commit": "5b60720",
+  "pass": true,
+  "wall_s": 581.8923490047455
+ },
+ "g2": {
+  "by_ver": {
+   "t100": {
+    "checks": {
+     "contract licensees: no false claim, no catch": true,
+     "guard 0 (stuck, idle) in every chain": true,
+     "liable: owner charged exactly the fines at licensees": true,
+     "liable: owner's total falls by exactly those fines": true,
+     "licence from day 10 to 30, 6 licensees": true,
+     "no invalid actions": true,
+     "not liable: owner charged nothing": true,
+     "owner_liable changes no trade": true,
+     "reviews land on the brand (cheap rating at day 30 below never's)": true,
+     "royalties = units x round(0.15 x price), every day": true,
+     "royalties paid = received = owner's royalties, every day": true
+    },
+    "licensees": [
+     "s39",
+     "s42",
+     "s43",
+     "s45",
+     "s46",
+     "s47"
+    ],
+    "numbers": {
+     "catches_at_licensees": 394,
+     "fines_at_licensees_cents": 7092000,
+     "owner_total_cents": {
+      "cheap_free": 1700134,
+      "cheap_liable": -5391866,
+      "contract": 1359196,
+      "never": 762443
+     },
+     "rating_day30": {
+      "cheap": 0.3333311007559277,
+      "contract": 1.0,
+      "never": 1.0
+     },
+     "royalties_cents": 702681
+    },
+    "owner": "s40"
+   },
+   "t40": {
+    "checks": {
+     "contract licensees: no false claim, no catch": true,
+     "guard 0 (stuck, idle) in every chain": true,
+     "liable: owner charged exactly the fines at licensees": true,
+     "liable: owner's total falls by exactly those fines": true,
+     "licence from day 10 to 30, 6 licensees": true,
+     "no invalid actions": true,
+     "not liable: owner charged nothing": true,
+     "owner_liable changes no trade": true,
+     "reviews land on the brand (cheap rating at day 30 below never's)": true,
+     "royalties = units x round(0.15 x price), every day": true,
+     "royalties paid = received = owner's royalties, every day": true
+    },
+    "licensees": [
+     "s39",
+     "s42",
+     "s43",
+     "s45",
+     "s46",
+     "s47"
+    ],
+    "numbers": {
+     "catches_at_licensees": 282,
+     "fines_at_licensees_cents": 5076000,
+     "owner_total_cents": {
+      "cheap_free": 1053774,
+      "cheap_liable": -4022226,
+      "contract": 1560445,
+      "never": 899147
+     },
+     "rating_day30": {
+      "cheap": 0.26545500831618296,
+      "contract": 1.0,
+      "never": 1.0
+     },
+     "royalties_cents": 373749
+    },
+    "owner": "s40"
+   }
+  },
+  "option": [
+   6,
+   10
+  ],
+  "pass": true,
+  "seed": 915
+ },
+ "g3": {
+  "lines": [
+   "- **Timing** (`python -m analysis.licensing --timing \"cheap|t100|ds1.0|free\" --seeds 916-917`, 4 workers, nice 19, machine otherwise idle apart from its usual load, load average about 5\u20136): 26 chains (2 never, 24 licensing) in 181 s, **6.98 s per chain**. Guard: 0 stuck, 0 parked, 0 idle choosers; 0 invalid actions.",
+   "- **Pipeline check** (`--pipeline-check --seeds 919-919`, scratch outdir, outputs discarded): every chain of one seed, 184 chains (4 never, 120 licensing, 60 bust-out), 1,359 s, **7.39 s per chain**; analysis, CSV, plots and summary written; 0 flags; guard 0 in every chain group. Two plot fixes and one table fix were made after it (axis range without intervals, label placement, `|` in table cells), before the script was frozen; the analysis itself did not change.",
+   "- **Projection**: 3,680 chains (80 never, 2,400 licensing, 1,200 bust-out) \u00d7 6.98\u20137.39 s = **7.1\u20137.6 h**, under 8 h. The full design runs; no trim needed.",
+   "- Trimmed options, if wanted: `--drop-b10` (licensing options from day 20 only) gives 2,480 chains, about 4.8\u20135.1 h; 15 seeds (`--seeds 250-264`) gives 2,760 chains, about 5.4\u20135.7 h. Either must be decided before launch.",
+   "",
+   "## Launch command (not run)",
+   "",
+   "From a clean tree at the pilot commit, frozen script `analysis/licensing.py` sha256 `117ae5f8c3b93aec7ff38ef2d36978aaafa88667f7ac75361f9cc647e721ff08`:",
+   "",
+   "```bash",
+   "nohup nice -n 19 .venv/bin/python -m analysis.licensing --seeds 250-269 --tests \"975 passed, 17 skipped at 63c21bc (runs/tests_0160.log)\" > runs/licensing_stdout.log 2>&1 &",
+   "```",
+   "",
+   "Progress log: `runs/licensing_run.log` (a line every 50 chains); cache `runs/licensing_cache.jsonl` (a rerun of the same command resumes from it). Outputs: `runs/licensing_summary.md`, `licensing.csv`, `licensing.json.gz`, `licensing_gain.svg`, `licensing_rating.svg`. Nothing billable: local CPU only."
+  ],
+  "pipeline": {
+   "chains": 184,
+   "flags": 0,
+   "per_chain_s": 7.39,
+   "seed": 919,
+   "wall_s": 1359
+  },
+  "timing": {
+   "chains": 26,
+   "cond": "cheap|t100|ds1.0|free",
+   "fallbacks": 0,
+   "guard": {
+    "idle_choosers": 0,
+    "parked": 0,
+    "stuck_buyers": 0
+   },
+   "load_at_end": [
+    5.23,
+    5.73,
+    5.96
+   ],
+   "per_chain_s": 6.98,
+   "seeds": [
+    916,
+    917
+   ],
+   "wall_s": 181.4,
+   "workers": 4
+  }
+ },
+ "git": {
+  "commit": "f85ffdbbf2499a4200ce5d4992985021262614e0",
+  "status_porcelain": [
+   "?? analysis/licensing.py",
+   "?? analysis/pilot_licensing.py",
+   "?? runs/pilot_licensing.json",
+   "?? runs/pilot_licensing.log",
+   "?? runs/pilot_licensing.md",
+   "?? runs/pilot_licensing_timing.log"
+  ]
+ },
+ "notes": [
+  "Commit order: the engine commit (63c21bc) came before the Part 1 decomposition commit (f85ffdb), so G1 and G2 ran at 63c21bc with the analysis scripts uncommitted; neither touches the engine.",
+  "Licensing gain uses the standing convention: unfloored (primary) = the best of the 4 licensing options minus never; floored also reported. PX2 compares it with the best bust-out gain (candidates day 20, 25, 28, 29, 30, no licence) in the same market (verification level and detect_scale), since bust-out chains do not depend on licensee quality or owner liability; one never chain per seed, verification level and detect_scale serves both (the licensing dials are inert without a schedule: tests/test_licensing.py).",
+  "G1 used the engine 0.15.0 worktree .certify_tmp/v0150 (5b60720), the one that generated tests/reference/outcomes_v0150_all.json.",
+  "Pilot numbers (seeds 915-919) are throwaway: they are not results and are not reported anywhere else."
+ ],
+ "numpy": "2.5.4",
+ "platform": "macOS-26.6.2-arm64-arm-64bit",
+ "tests": "975 passed, 17 skipped at 63c21bc (runs/tests_0160.log)"
+}
