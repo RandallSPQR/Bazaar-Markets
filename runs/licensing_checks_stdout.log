@@ -1,0 +1,42 @@
+2026-11-12 12:10:31 licensing_checks royalty check: engine 0.16.0, commit 35614d1, load [3.48, 3.9, 3.28], memory {'swap_free_mb': 848.31, 'free_pct': 48}
+2026-11-12 12:10:31 36 chains, 0 cached, 36 to run; workers 4
+2026-11-12 12:15:23 36/36 chains, 292 s, load [8.09, 6.86, 4.85], memory {'swap_free_mb': 848.31, 'free_pct': 50}
+2026-11-12 12:15:23 royalty check: pass
+2026-11-12 12:15:23 done; wall 0.08 h; load [8.09, 6.86, 4.85]; memory {'swap_free_mb': 848.31, 'free_pct': 50}
+2026-11-12 12:15:23 licensing_checks collect: engine 0.16.0, commit 35614d1, load [8.09, 6.86, 4.85], memory {'swap_free_mb': 848.31, 'free_pct': 50}
+2026-11-12 12:15:24 1640 chains, 36 cached, 1604 to run; workers 4
+2026-11-12 12:25:22 50/1604 chains, 598 s, load [15.09, 10.9, 7.73], memory {'swap_free_mb': 848.31, 'free_pct': 50}
+2026-11-12 12:35:47 100/1604 chains, 1223 s, load [9.84, 13.0, 11.18], memory {'swap_free_mb': 848.31, 'free_pct': 50}
+2026-11-12 12:45:32 150/1604 chains, 1809 s, load [8.59, 9.38, 9.97], memory {'swap_free_mb': 848.31, 'free_pct': 50}
+2026-11-12 12:54:52 200/1604 chains, 2368 s, load [7.86, 8.49, 9.24], memory {'swap_free_mb': 848.31, 'free_pct': 48}
+2026-11-12 13:04:28 250/1604 chains, 2944 s, load [8.45, 8.64, 8.99], memory {'swap_free_mb': 848.31, 'free_pct': 47}
+2026-11-12 13:13:03 300/1604 chains, 3460 s, load [6.89, 8.4, 8.86], memory {'swap_free_mb': 848.31, 'free_pct': 53}
+2026-11-12 13:19:17 350/1604 chains, 3833 s, load [6.74, 7.24, 8.11], memory {'swap_free_mb': 848.31, 'free_pct': 54}
+2026-11-12 13:25:14 400/1604 chains, 4191 s, load [6.7, 6.69, 7.53], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 13:31:28 450/1604 chains, 4565 s, load [6.0, 6.35, 7.07], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 13:37:31 500/1604 chains, 4928 s, load [6.9, 6.83, 7.05], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 13:43:40 550/1604 chains, 5297 s, load [6.56, 6.98, 7.04], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 13:49:41 600/1604 chains, 5657 s, load [6.42, 6.46, 6.76], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 13:55:53 650/1604 chains, 6029 s, load [6.44, 6.41, 6.66], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 14:01:47 700/1604 chains, 6383 s, load [10.41, 7.82, 7.11], memory {'swap_free_mb': 848.31, 'free_pct': 51}
+2026-11-12 14:07:58 750/1604 chains, 6755 s, load [6.94, 7.71, 7.27], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 14:13:55 800/1604 chains, 7111 s, load [6.3, 6.74, 6.94], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 14:19:58 850/1604 chains, 7474 s, load [6.08, 6.49, 6.75], memory {'swap_free_mb': 848.31, 'free_pct': 51}
+2026-11-12 14:25:57 900/1604 chains, 7834 s, load [6.19, 6.25, 6.53], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 14:32:11 950/1604 chains, 8207 s, load [7.08, 7.06, 6.87], memory {'swap_free_mb': 848.31, 'free_pct': 53}
+2026-11-12 14:37:48 1000/1604 chains, 8544 s, load [6.08, 6.56, 6.7], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 14:43:38 1050/1604 chains, 8894 s, load [6.47, 6.45, 6.58], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 14:49:32 1100/1604 chains, 9248 s, load [6.11, 6.3, 6.46], memory {'swap_free_mb': 848.31, 'free_pct': 49}
+2026-11-12 14:55:38 1150/1604 chains, 9615 s, load [6.4, 6.37, 6.44], memory {'swap_free_mb': 848.31, 'free_pct': 51}
+2026-11-12 15:01:39 1200/1604 chains, 9975 s, load [5.88, 6.12, 6.29], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 15:07:48 1250/1604 chains, 10345 s, load [6.26, 6.39, 6.35], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 15:13:45 1300/1604 chains, 10701 s, load [6.16, 6.25, 6.29], memory {'swap_free_mb': 848.31, 'free_pct': 51}
+2026-11-12 15:20:01 1350/1604 chains, 11077 s, load [6.19, 7.0, 6.81], memory {'swap_free_mb': 848.31, 'free_pct': 51}
+2026-11-12 15:25:58 1400/1604 chains, 11434 s, load [6.43, 6.59, 6.66], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 15:32:04 1450/1604 chains, 11800 s, load [6.22, 6.38, 6.53], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 15:38:08 1500/1604 chains, 12165 s, load [6.21, 6.5, 6.55], memory {'swap_free_mb': 848.31, 'free_pct': 52}
+2026-11-12 15:44:18 1550/1604 chains, 12534 s, load [6.43, 6.36, 6.45], memory {'swap_free_mb': 848.31, 'free_pct': 53}
+2026-11-12 15:50:15 1600/1604 chains, 12891 s, load [6.15, 6.17, 6.32], memory {'swap_free_mb': 848.31, 'free_pct': 53}
+2026-11-12 15:50:40 1604/1604 chains, 12916 s, load [5.96, 6.13, 6.3], memory {'swap_free_mb': 848.31, 'free_pct': 53}
+2026-11-12 15:50:40 royalty check: pass
+2026-11-12 15:50:40 done; wall 3.59 h; load [5.96, 6.13, 6.3]; memory {'swap_free_mb': 848.31, 'free_pct': 53}

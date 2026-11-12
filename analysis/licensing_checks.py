@@ -397,7 +397,9 @@ def analyse(data) -> dict:
                         per[o]["grp"][sd].append(grp)
                         tot[(sd, s, o)] = (tr, all(x["accept"] for x in lic))
                         for x in lic:
-                            res["rows"].append({"royalty": r, "cond": cond, "seed": sd, "owner": s, "option": o, **x})
+                            res["rows"].append({"rate": r, "cond": cond, "seed": sd, "owner": s, "option": o,
+                                                **{("royalty_paid" if k == "royalty" else k): v
+                                                   for k, v in x.items()}})
             # check (a) and (b) per option
             for o in opts:
                 A = {}
@@ -478,9 +480,13 @@ def _pct(x):
     return f"{100 * x:.0f}%"
 
 
+def _o(o: str) -> str:
+    return o.replace("x", "×")
+
+
 def _best(d: dict) -> str:
     keys = [L.ok(o) for o in L.LIC_OPTS] + [NEVER]
-    return ", ".join(f"{k}: {d.get(k, 0)}" for k in keys if d.get(k, 0))
+    return ", ".join(f"{_o(k)}: {d.get(k, 0)}" for k in keys if d.get(k, 0))
 
 
 def report(res, rcheck, rep, meta) -> str:
@@ -541,7 +547,7 @@ def report(res, rcheck, rep, meta) -> str:
              "| Window ledgers identical except royalties and profit | Same licensees | Royalties differ |")
     o.append("|---|---|---|---|---|---|---|")
     for r in rows:
-        o.append(f"| {r['owner']} | {r['option']} | {r['royalty']:.2f} | {r['days_identical']}/{L.DAYS} | "
+        o.append(f"| {r['owner']} | {_o(r['option'])} | {r['royalty']:.2f} | {r['days_identical']}/{L.DAYS} | "
                  f"{'yes' if r['ledger_identical_except_royalty'] else 'NO'} | {'yes' if r['licensees_same'] else 'NO'} "
                  f"| {'yes' if r['royalties_differ'] else 'no'} |")
     o.append(f"\nResult: **{'pass' if rcheck['pass'] else 'FAIL'}**.\n")
@@ -569,7 +575,7 @@ def report(res, rcheck, rep, meta) -> str:
     for cond in L.LIC_CONDS:
         for op in opts:
             A = res["a"][(hk, cond, op)]
-            o.append(f"| {lab(cond)} | {op} | {_ci(A['units'], u1, False)} | {_ci(A['units_never'], u1, False)} | "
+            o.append(f"| {lab(cond)} | {_o(op)} | {_ci(A['units'], u1, False)} | {_ci(A['units_never'], u1, False)} | "
                      f"{_ci(A['d_units'], u1)} | {_ci(A['royalty'], _d, False)} | {_ci(A['royalty_extra'], _d, False)} "
                      f"| {_ci(A['share_anyway'], pc, False)} |")
     o.append("\nShare of royalties earned on sales the licensees would have made anyway, at each royalty "
@@ -578,7 +584,7 @@ def report(res, rcheck, rep, meta) -> str:
     o.append("|---|---|" + "---|" * len(RATES))
     for cond in L.LIC_CONDS:
         for op in opts:
-            o.append(f"| {lab(cond)} | {op} | " + " | ".join(f"{res['a'][(_rk(r), cond, op)]['share_anyway']['mean']:.3f}"
+            o.append(f"| {lab(cond)} | {_o(op)} | " + " | ".join(f"{res['a'][(_rk(r), cond, op)]['share_anyway']['mean']:.3f}"
                                                            for r in RATES) + " |")
     o.append("\nPer licensee, licensed − never, licence day to day 30 (mean over the licensees of the 3 owners per "
              f"seed); profit at royalty {HEADLINE:.2f}.\n")
@@ -588,7 +594,7 @@ def report(res, rcheck, rep, meta) -> str:
     for cond in L.LIC_CONDS:
         for op in opts:
             A = res["a"][(hk, cond, op)]
-            o.append(f"| {lab(cond)} | {op} | {_ci(A['lic_d_units'], u1)} | {_ci(A['lic_d_revenue'], _d)} | "
+            o.append(f"| {lab(cond)} | {_o(op)} | {_ci(A['lic_d_units'], u1)} | {_ci(A['lic_d_revenue'], _d)} | "
                      f"{_d(A['lic_unit_cost']['mean'])} / {_d(A['lic_unit_cost_never']['mean'])} | "
                      f"{_ci(A['lic_d_ad'], _d)} | {_ci(A['lic_d_fines'], _d)} | {_ci(A['lic_d_catches'], u1)} | "
                      f"{_ci(A['lic_d_profit'], _d)} |")
@@ -601,7 +607,7 @@ def report(res, rcheck, rep, meta) -> str:
     for cond in L.LIC_CONDS:
         for op in opts:
             A = res["a"][(hk, cond, op)]
-            o.append(f"| {lab(cond)} | {op} | {_ci(A['d_units'], u1)} | {_ci(A['grp_owner'], u1)} | "
+            o.append(f"| {lab(cond)} | {_o(op)} | {_ci(A['d_units'], u1)} | {_ci(A['grp_owner'], u1)} | "
                      f"{_ci(A['grp_same_genuine'], u1)} | {_ci(A['grp_same_other'], u1)} | "
                      f"{_ci(A['grp_other_categories'], u1)} |")
 
@@ -614,21 +620,21 @@ def report(res, rcheck, rep, meta) -> str:
     for cond in L.LIC_CONDS:
         for op in opts:
             A = res["a"][(hk, cond, op)]
-            o.append(f"| {lab(cond)} | {op} | {_pct(A['accept_share'])} of {A['n_licensees']} | "
+            o.append(f"| {lab(cond)} | {_o(op)} | {_pct(A['accept_share'])} of {A['n_licensees']} | "
                      f"{A['owners_all_accept']}/60 | {_ci(A['lic_d_profit'], _d)} |")
     o.append("\nShare of licensees accepting at each royalty:\n")
     o.append("| Condition | Option | " + " | ".join(f"{r:.2f}" for r in RATES) + " |")
     o.append("|---|---|" + "---|" * len(RATES))
     for cond in L.LIC_CONDS:
         for op in opts:
-            o.append(f"| {lab(cond)} | {op} | " + " | ".join(_pct(res["a"][(_rk(r), cond, op)]["accept_share"])
+            o.append(f"| {lab(cond)} | {_o(op)} | " + " | ".join(_pct(res["a"][(_rk(r), cond, op)]["accept_share"])
                                                            for r in RATES) + " |")
     o.append("\nLicensee profit − never per licensee ($) at each royalty:\n")
     o.append("| Condition | Option | " + " | ".join(f"{r:.2f}" for r in RATES) + " |")
     o.append("|---|---|" + "---|" * len(RATES))
     for cond in L.LIC_CONDS:
         for op in opts:
-            o.append(f"| {lab(cond)} | {op} | " + " | ".join(_ci(res["a"][(_rk(r), cond, op)]["lic_d_profit"], _d)
+            o.append(f"| {lab(cond)} | {_o(op)} | " + " | ".join(_ci(res["a"][(_rk(r), cond, op)]["lic_d_profit"], _d)
                                                            for r in RATES) + " |")
 
     o.append("\n## Owner's gain with and without the licensee's consent\n")
@@ -720,7 +726,9 @@ def main(argv=None) -> int:
                             "then `--analyse`",
                 "python": platform.python_version(), "numpy": np.__version__, "platform": platform.platform(),
                 "workers": a.workers, "chains": f"{len(done)} replayed",
-                "wall": "; ".join(l.split(" ", 2)[2] for l in runlog.splitlines() if " done; wall" in l),
+                "wall": "; ".join(f"{n}: {l.split('done; ', 1)[1]}" for n, l in zip(
+                    ("royalty check", "collection"),
+                    [l for l in runlog.splitlines() if " done; wall" in l][-2:])),
                 "load": "start/end lines in runs/licensing_checks_run.log"}
         sp = "runs/licensing_checks.md"
         txt = report(res, rc, rep, meta)
