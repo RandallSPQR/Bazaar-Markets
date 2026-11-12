@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" role="img" aria-labelledby="t d">
+<style>.bg{fill:#fffff8} .t{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#111} .s{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;fill:#666} .k{font-family:system-ui,-apple-system,sans-serif;fill:#999;font-size:11px} .n{font-family:system-ui,-apple-system,sans-serif;fill:#aaa;font-size:10.5px} .lb{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-size:12.5px;fill:#333} .ax{stroke:#ccc;stroke-width:1} .zero{stroke:#bbb;stroke-width:1;stroke-dasharray:3 3} .ln{stroke:#666;stroke-width:1.6;fill:none} .ci{stroke:#666;stroke-width:1.2} .pt{fill:#666} .hl{fill:#e15759} .hlc{stroke:#e15759;stroke-width:1.4} .bar{fill:#7a7a7a} .bar31{fill:#bbb} .med{stroke:#e15759;stroke-width:1.4} .medt{fill:#e15759} .an{font-family:"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;font-style:italic;font-size:12px;fill:#333} @media (prefers-color-scheme: dark){.bg{fill:#151515} .t{fill:#ddd} .s{fill:#999} .k{fill:#888} .n{fill:#666} .lb{fill:#bbb} .ax{stroke:#444} .zero{stroke:#555} .ln{stroke:#aaa} .ci{stroke:#aaa} .pt{fill:#aaa} .hl{fill:#fc8d62} .hlc{stroke:#fc8d62} .bar{fill:#999} .bar31{fill:#555} .med{stroke:#fc8d62} .medt{fill:#fc8d62} .an{fill:#bbb}} .hl2{stroke:#e15759;stroke-width:1.6} .nev{stroke:#bbb;stroke-width:1.2} .dash{stroke:#666;stroke-width:1.2;stroke-dasharray:4 3} @media (prefers-color-scheme: dark){.hl2{stroke:#fc8d62} .nev{stroke:#555} .dash{stroke:#aaa}}</style>
+<rect class="bg" x="0" y="0" width="960" height="620"/>
+<title id="t">How fast the brand's rating falls after licensing</title>
+<desc id="d">Brand rating by day, by licensing option and verification level. The summary gives every value.</desc>
+<text class="t" x="30" y="44" font-size="20">How fast the brand's rating falls after licensing</text>
+<text class="s" x="30" y="70" font-size="14">Mean brand rating by day over the sampled owners; cheap licensees, detect_scale 1, owner not liable</text>
+<text class="n" x="30" y="564">Bazaar engine 0.16.0. Seeds 250-269 paired; 95% t-intervals, unadjusted; 3 sampled genuine owners per seed; 30 days; 2 patrolling inspectors; royalty 0.15.</text>
+<text class="n" x="30" y="580">Rating = memory-weighted share of rated units whose true quality met the claim (memory 0.7); unrated drawn at 0.5.</text>
+<text class="n" x="30" y="596">Grey: never licensing. Dashed: contract licensees (6 from day 10). N×b = N licensees from day b.</text>
+<text class="lb" x="110" y="108">tourist share 0.4, locals inspect</text>
+<polyline class="nev" fill="none" points="110.0,120.0 120.0,120.0 130.0,120.0 140.0,120.0 150.0,120.0 160.0,120.0 170.0,120.0 180.0,120.0 190.0,120.0 200.0,120.0 210.0,120.0 220.0,120.0 230.0,120.0 240.0,120.0 250.0,120.0 260.0,120.0 270.0,120.0 280.0,120.0 290.0,120.0 300.0,120.0 310.0,120.0 320.0,120.0 330.0,120.0 340.0,120.0 350.0,120.0 360.0,120.0 370.0,120.0 380.0,120.0 390.0,120.0 400.0,120.0"/>
+<polyline class="ln" fill="none" points="110.0,120.0 120.0,120.0 130.0,120.0 140.0,120.0 150.0,120.0 160.0,120.0 170.0,120.0 180.0,120.0 190.0,120.0 200.0,151.8 210.0,177.3 220.0,193.5 230.0,205.9 240.0,211.9 250.0,213.6 260.0,220.7 270.0,221.9 280.0,225.5 290.0,224.3 300.0,226.9 310.0,229.8 320.0,227.2 330.0,231.0 340.0,229.8 350.0,232.1 360.0,231.6 370.0,234.5 380.0,233.9 390.0,231.7 400.0,234.6"/>
+<polyline class="ln" fill="none" points="110.0,120.0 120.0,120.0 130.0,120.0 140.0,120.0 150.0,120.0 160.0,120.0 170.0,120.0 180.0,120.0 190.0,120.0 200.0,120.0 210.0,120.0 220.0,120.0 230.0,120.0 240.0,120.0 250.0,120.0 260.0,120.0 270.0,120.0 280.0,120.0 290.0,120.0 300.0,150.6 310.0,173.8 320.0,188.0 330.0,203.8 340.0,209.5 350.0,217.2 360.0,219.8 370.0,224.9 380.0,226.6 390.0,224.6 400.0,227.9"/>
+<polyline class="hl2" fill="none" points="110.0,120.0 120.0,120.0 130.0,120.0 140.0,120.0 150.0,120.0 160.0,120.0 170.0,120.0 180.0,120.0 190.0,120.0 200.0,179.6 210.0,223.2 220.0,252.1 230.0,275.4 240.0,292.1 250.0,303.9 260.0,316.5 270.0,327.5 280.0,332.9 290.0,339.7 300.0,348.0 310.0,353.7 320.0,355.2 330.0,356.4 340.0,360.1 350.0,360.9 360.0,364.8 370.0,363.4 380.0,364.7 390.0,361.5 400.0,365.0"/>
+<polyline class="hl2" fill="none" points="110.0,120.0 120.0,120.0 130.0,120.0 140.0,120.0 150.0,120.0 160.0,120.0 170.0,120.0 180.0,120.0 190.0,120.0 200.0,120.0 210.0,120.0 220.0,120.0 230.0,120.0 240.0,120.0 250.0,120.0 260.0,120.0 270.0,120.0 280.0,120.0 290.0,120.0 300.0,176.6 310.0,219.6 320.0,245.4 330.0,269.0 340.0,288.4 350.0,305.5 360.0,320.2 370.0,331.1 380.0,341.1 390.0,344.7 400.0,352.8"/>
+<polyline class="dash" fill="none" points="110.0,120.0 120.0,120.0 130.0,120.0 140.0,120.0 150.0,120.0 160.0,120.0 170.0,120.0 180.0,120.0 190.0,120.0 200.0,120.0 210.0,120.0 220.0,120.0 230.0,120.0 240.0,120.0 250.0,120.0 260.0,120.0 270.0,120.0 280.0,120.0 290.0,120.0 300.0,120.0 310.0,120.0 320.0,120.0 330.0,120.0 340.0,120.0 350.0,120.0 360.0,120.0 370.0,120.0 380.0,120.0 390.0,120.0 400.0,120.0"/>
+<text class="k" x="408.0" y="124.0">contract</text>
+<text class="k" x="408.0" y="137.0">never</text>
+<text class="k" x="408.0" y="231.9">2×20</text>
+<text class="k" x="408.0" y="244.9">2×10</text>
+<text class="k" x="408.0" y="356.8">6×20</text>
+<text class="k" x="408.0" y="369.8">6×10</text>
+<line class="ax" x1="110.0" y1="460" x2="400.0" y2="460"/>
+<text class="k" x="110.0" y="476" text-anchor="middle">1</text>
+<text class="k" x="200.0" y="476" text-anchor="middle">10</text>
+<text class="k" x="300.0" y="476" text-anchor="middle">20</text>
+<text class="k" x="400.0" y="476" text-anchor="middle">30</text>
+<text class="k" x="255.0" y="494" text-anchor="middle">day</text>
+<line class="ax" x1="98" y1="450.0" x2="98" y2="120.0"/>
+<text class="k" x="92" y="454.0" text-anchor="end">0</text>
+<text class="k" x="92" y="289.0" text-anchor="end">0.5</text>
+<text class="k" x="92" y="124.0" text-anchor="end">1</text>
+<text class="lb" x="560" y="108">tourist share 1.0</text>
+<polyline class="nev" fill="none" points="560.0,122.8 570.0,120.0 580.0,120.0 590.0,120.0 600.0,120.0 610.0,120.0 620.0,120.0 630.0,120.0 640.0,120.0 650.0,120.0 660.0,120.0 670.0,120.0 680.0,120.0 690.0,120.0 700.0,120.0 710.0,120.0 720.0,120.0 730.0,120.0 740.0,120.0 750.0,120.0 760.0,120.0 770.0,120.0 780.0,120.0 790.0,120.0 800.0,120.0 810.0,120.0 820.0,120.0 830.0,120.0 840.0,120.0 850.0,120.0"/>
+<polyline class="ln" fill="none" points="560.0,122.8 570.0,120.0 580.0,120.0 590.0,120.0 600.0,120.0 610.0,120.0 620.0,120.0 630.0,120.0 640.0,120.0 650.0,155.2 660.0,179.2 670.0,194.6 680.0,209.2 690.0,217.6 700.0,222.2 710.0,226.2 720.0,229.8 730.0,228.8 740.0,231.2 750.0,232.0 760.0,233.9 770.0,226.4 780.0,230.5 790.0,234.1 800.0,238.7 810.0,241.6 820.0,243.0 830.0,239.3 840.0,237.2 850.0,237.9"/>
+<polyline class="ln" fill="none" points="560.0,122.8 570.0,120.0 580.0,120.0 590.0,120.0 600.0,120.0 610.0,120.0 620.0,120.0 630.0,120.0 640.0,120.0 650.0,120.0 660.0,120.0 670.0,120.0 680.0,120.0 690.0,120.0 700.0,120.0 710.0,120.0 720.0,120.0 730.0,120.0 740.0,120.0 750.0,157.1 760.0,178.6 770.0,188.0 780.0,203.2 790.0,215.2 800.0,225.4 810.0,231.6 820.0,235.5 830.0,234.1 840.0,233.5 850.0,235.3"/>
+<polyline class="hl2" fill="none" points="560.0,122.8 570.0,120.0 580.0,120.0 590.0,120.0 600.0,120.0 610.0,120.0 620.0,120.0 630.0,120.0 640.0,120.0 650.0,184.1 660.0,229.3 670.0,258.3 680.0,283.1 690.0,296.6 700.0,305.9 710.0,315.9 720.0,322.1 730.0,324.9 740.0,324.4 750.0,326.6 760.0,329.1 770.0,326.8 780.0,327.9 790.0,327.4 800.0,328.6 810.0,329.7 820.0,332.6 830.0,334.5 840.0,332.5 850.0,333.8"/>
+<polyline class="hl2" fill="none" points="560.0,122.8 570.0,120.0 580.0,120.0 590.0,120.0 600.0,120.0 610.0,120.0 620.0,120.0 630.0,120.0 640.0,120.0 650.0,120.0 660.0,120.0 670.0,120.0 680.0,120.0 690.0,120.0 700.0,120.0 710.0,120.0 720.0,120.0 730.0,120.0 740.0,120.0 750.0,184.7 760.0,229.7 770.0,256.2 780.0,278.5 790.0,291.9 800.0,303.5 810.0,311.8 820.0,320.1 830.0,325.7 840.0,326.3 850.0,329.5"/>
+<polyline class="dash" fill="none" points="560.0,122.8 570.0,120.0 580.0,120.0 590.0,120.0 600.0,120.0 610.0,120.0 620.0,120.0 630.0,120.0 640.0,120.0 650.0,120.0 660.0,120.0 670.0,120.0 680.0,120.0 690.0,120.0 700.0,120.0 710.0,120.0 720.0,120.0 730.0,120.0 740.0,120.0 750.0,120.0 760.0,120.0 770.0,120.0 780.0,120.0 790.0,120.0 800.0,120.0 810.0,120.0 820.0,120.0 830.0,120.0 840.0,120.0 850.0,120.0"/>
+<text class="k" x="858.0" y="124.0">contract</text>
+<text class="k" x="858.0" y="137.0">never</text>
+<text class="k" x="858.0" y="239.3">2×20</text>
+<text class="k" x="858.0" y="252.3">2×10</text>
+<text class="k" x="858.0" y="333.5">6×20</text>
+<text class="k" x="858.0" y="346.5">6×10</text>
+<line class="ax" x1="560.0" y1="460" x2="850.0" y2="460"/>
+<text class="k" x="560.0" y="476" text-anchor="middle">1</text>
+<text class="k" x="650.0" y="476" text-anchor="middle">10</text>
+<text class="k" x="750.0" y="476" text-anchor="middle">20</text>
+<text class="k" x="850.0" y="476" text-anchor="middle">30</text>
+<text class="k" x="705.0" y="494" text-anchor="middle">day</text>
+<line class="ax" x1="548" y1="450.0" x2="548" y2="120.0"/>
+<text class="k" x="542" y="454.0" text-anchor="end">0</text>
+<text class="k" x="542" y="289.0" text-anchor="end">0.5</text>
+<text class="k" x="542" y="124.0" text-anchor="end">1</text>
+</svg>
