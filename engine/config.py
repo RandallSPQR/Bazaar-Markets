@@ -282,6 +282,17 @@ class BrandsCfg:
     # PLACEHOLDER (0.4 in the 2026-11-06 run): price = base x tier x (1 + premium x (rating - 0.5)),
     # rating = the brand's start-of-day rating, 0.5 if unrated. 0 = no premium.
     premium: float = 0.0
+    # Counterfeit entry (engine 0.17.0). "reopen" (default): a stall can take a counterfeit name only when
+    # it reopens after a closure (seller action rename, as before). "day": at the start of day
+    # counterfeit_day every deceptive stall copies the name of the top-rated genuine brand of its category
+    # (ratings at the end of the previous day, unrated = 0.5; ties and name edits drawn from
+    # default_rng([seed, 23])), claims that brand's true quality, keeps the name to the last day and is
+    # never offered a rename.
+    counterfeit_entry: str = "reopen"
+    counterfeit_day: int = 2
+    # A counterfeit posts round(counterfeit_price_factor x the original's posted price) each day (both entry
+    # modes). It still claims the original's quality; its unit cost is unchanged. 1.0 = the original's price.
+    counterfeit_price_factor: float = 1.0
 
 
 @dataclass
@@ -323,6 +334,12 @@ class LicensingCfg:
     royalty: float = 0.15          # PLACEHOLDER (rho)
     # Fines from catches at a licensee are charged to the owner instead of the licensee.
     owner_liable: bool = False
+    # Engine 0.17.0. "owner" (default): licensees bear the owner's brand, as above. "white_label": the
+    # licensees switch to the licence quality, sign and policy on day b exactly as above, but each under
+    # one fresh unrated brand of its own (names from default_rng([seed, 24, owner index])): no tie to the
+    # owner, no royalty, owner_liable does not apply, reviews are filed under the fresh brand, and its
+    # price follows that brand's own rating by the morning rule (base x its type's tier x premium).
+    brand: str = "owner"
 
 
 @dataclass

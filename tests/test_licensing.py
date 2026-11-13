@@ -219,7 +219,8 @@ def test_guard_reads_zero(quality, cond):
     assert sum(d["outcome"]["fallbacks"]["seller"] + d["outcome"]["fallbacks"]["buyer"] for d in o["days"]) == 0
 
 
-@pytest.mark.parametrize("bad", [{"day": 1, "n": 2}, {"day": 2, "n": 11}, {"day": 2, "n": 0}, {"day": 5, "n": 2},
+# n = 0 is allowed from engine 0.17.0 (a schedule with no licensee equals never; tests/test_v0170.py).
+@pytest.mark.parametrize("bad", [{"day": 1, "n": 2}, {"day": 2, "n": 11}, {"day": 2, "n": -1}, {"day": 5, "n": 2},
                                  {"day": 2}])
 def test_bad_schedules_rejected(bad):
     cfg = _base()

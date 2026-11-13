@@ -199,6 +199,8 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
                          prices={st.sid: st.price_cents for st in eng.stalls})
         if eng.licensing_on:
             extra["licences"] = eng.licence_log
+        if eng.counterfeit_entry_log:             # 0.17.0: counterfeit entry on brands.counterfeit_day
+            extra["counterfeit_entry"] = eng.counterfeit_entry_log
         log.emit("day_start", day=day, types=types, **extra)
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}
@@ -229,6 +231,11 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
                          renames=eng.rename_log, bust_outs=eng.bust_log,
                          busted={st.sid: st.busted_day for st in eng.stalls if st.busted_day is not None},
                          **({"reviews": {n: list(v) for n, v in reviews.items()}} if reviews is not None else {}))
+            if B.counterfeit_logging(cfg):        # 0.17.0: counterfeit prices and unit costs, below-cost flag
+                cp = B.counterfeit_prices(eng.stalls)
+                extra.update(counterfeit_prices=cp, counterfeit_below_cost=sum(v["below_cost"] for v in cp.values()))
+                if eng.counterfeit_entry_log:
+                    extra["counterfeit_entry"] = eng.counterfeit_entry_log
         if crit is not None:
             extra["critic_reviews"] = crit
         log.emit("day_end", day=day, types=types, profit_by_type=pbt, shortfall_rate=out["shortfall_rate"],

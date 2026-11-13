@@ -88,6 +88,9 @@ class Stall:
     licence: str | None = None        # "cheap" | "contract", for a licensee
     royalty_paid_cents: int = 0       # today's royalties paid (licensee) ...
     royalty_received_cents: int = 0   # ... and received (owner)
+    # engine 0.17.0
+    counterfeit_fixed: bool = False   # took a counterfeit name by brands.counterfeit_entry "day": never renames
+    white_label: bool = False         # a licensee under its own fresh brand (licensing.brand "white_label")
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),

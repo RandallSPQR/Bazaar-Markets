@@ -164,7 +164,75 @@ def morning_prices(cfg, stalls: list, book: BrandBook) -> None:
     holder = {st.brand: st for st in stalls if st.counterfeit_of is None and st.licensed_from is None}
     for st in stalls:
         if st.counterfeit_of is not None and st.counterfeit_of in holder:
-            st.price_cents = holder[st.counterfeit_of].price_cents
+            st.price_cents = counterfeit_price(cfg, holder[st.counterfeit_of].price_cents)
+
+
+# ------------------------------------------------------------------ engine 0.17.0
+
+ENTRIES = ("reopen", "day")
+ENTRY_STREAM = 23
+
+
+def counterfeit_price(cfg, original_cents: int) -> int:
+    """A counterfeit's posted price: round(brands.counterfeit_price_factor x the original's price)."""
+    phi = float(cfg.brands.counterfeit_price_factor)
+    return int(original_cents) if phi == 1.0 else int(round(phi * int(original_cents)))
+
+
+def validate_counterfeits(cfg) -> None:
+    b = cfg.brands
+    if b.counterfeit_entry not in ENTRIES:
+        raise ValueError(f"brands.counterfeit_entry must be one of {ENTRIES}, got {b.counterfeit_entry!r}")
+    phi = b.counterfeit_price_factor
+    if isinstance(phi, bool) or not isinstance(phi, (int, float)) or not 0 < phi <= 10:
+        raise ValueError(f"brands.counterfeit_price_factor must be in (0, 10], got {phi!r}")
+    d = b.counterfeit_day
+    if b.counterfeit_entry == "day":
+        if isinstance(d, bool) or int(d) != d or not 2 <= d <= int(cfg.market.days):
+            raise ValueError(f"brands.counterfeit_day must be an integer in [2, market.days], got {d!r}")
+
+
+def counterfeit_logging(cfg) -> bool:
+    """Whether the day log reports counterfeit prices (only with a 0.17.0 dial off its default)."""
+    return cfg.brands.counterfeit_entry == "day" or float(cfg.brands.counterfeit_price_factor) != 1.0
+
+
+def enter_counterfeits(cfg, stalls: list, book: BrandBook) -> list[dict]:
+    """brands.counterfeit_entry "day": every deceptive stall still in the market (licensees excluded)
+    copies the name of the top-rated genuine brand of its category (book ratings, i.e. at the end of the
+    previous day; unrated = 0.5), in stall order. Ties and the name edits come from default_rng([seed, 23]).
+    The stall claims the original's true quality from now on and is never offered a rename."""
+    rng = np.random.default_rng([cfg.seed, ENTRY_STREAM])
+    out = []
+    for st in sorted(stalls, key=lambda s: s.idx):
+        if st.stype != "deceptive" or st.exited_day is not None or st.licensed_from is not None:
+            continue
+        cands = [s for s in stalls if s.category == st.category and s.stype == "genuine" and s.exited_day is None
+                 and s.counterfeit_of is None and s.licensed_from is None]
+        if not cands:
+            out.append({"stall": st.sid, "from": st.brand, "to": None, "counterfeit_of": None})
+            continue
+        score = {s.sid: (0.5 if book.rating(s.brand) is None else book.rating(s.brand)) for s in cands}
+        best = max(score.values())
+        top = sorted((s for s in cands if score[s.sid] == best), key=lambda s: s.idx)
+        target = top[int(rng.integers(len(top)))] if len(top) > 1 else top[0]
+        name = counterfeit_name(target.brand, rng, book.used)
+        book.add(name)
+        rec = {"stall": st.sid, "from": st.brand, "to": name, "counterfeit_of": target.brand,
+               "target_stall": target.sid, "target_rating": book.rating(target.brand), "q_pitch_was": st.q_pitch,
+               "q_pitch": target.q_true}
+        st.brand, st.rating, st.counterfeit_of = name, None, target.brand
+        st.q_pitch = target.q_true
+        st.rename_pending, st.counterfeit_fixed = False, True
+        out.append(rec)
+    return out
+
+
+def counterfeit_prices(stalls: list) -> dict:
+    """Today's counterfeit prices and unit costs, with a flag for a price below unit cost."""
+    return {st.sid: {"counterfeit_of": st.counterfeit_of, "price_cents": st.price_cents,
+                     "unit_cost_cents": st.unit_cost_cents, "below_cost": st.price_cents < st.unit_cost_cents}
+            for st in sorted(stalls, key=lambda s: s.idx) if st.counterfeit_of is not None}
 
 
 def counterfeit_target(stalls: list, st, book: BrandBook, rng: np.random.Generator):

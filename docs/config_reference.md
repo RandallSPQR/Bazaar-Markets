@@ -181,6 +181,9 @@ revision, and persist across days and type switches (the brand keeps its name).
 |---|---|---|---|
 | `enabled` | false | | ratings attach to brand names; renames at reopening; counterfeits (called look-alikes before 0.9.0); reputation premium; bust-out action. Requires `evolution.revise_prob = mutation_prob = 0` in multi-day runs |
 | `premium` | 0.0 | **PLACEHOLDER** (0.4 in the 2026-11-06 run) | price = base × tier × (1 + premium × (rating − 0.5)) |
+| `counterfeit_entry` | "reopen" | | 0.17.0. `reopen`: a stall takes a counterfeit name only by a rename at reopening (below). `day`: at the start of day `counterfeit_day` every deceptive stall still in the market (licensees excluded) copies the name of the top-rated genuine brand of its category, by ratings at the end of the previous day (unrated = 0.5), in stall order; ties and the near-copy edits are drawn from `default_rng([seed, 23])`. From then to the last day it bears that counterfeit name, claims the original's true quality (`q_pitch`), and is never offered a rename after a catch |
+| `counterfeit_day` | 2 | | 0.17.0: the entry day for `counterfeit_entry` `day` (2 ≤ day ≤ `market.days`) |
+| `counterfeit_price_factor` | 1.0 | | 0.17.0 (φ, in (0, 10]): a counterfeit posts round(φ × the original's posted price) that day (both entry modes; 1.0 = exactly the original's price). It still claims the original's quality; unit cost is unchanged. With `counterfeit_entry` `day` or φ ≠ 1, `day_end` logs `counterfeit_prices` (per counterfeit: original, price, unit cost, `below_cost`) and `counterfeit_below_cost` (stall-days priced below unit cost), and `day_start` of the entry day logs `counterfeit_entry` |
 
 With brands on (source: `engine/brands.py`):
 - **Ratings by name.** Reviews are filed by brand name and updated as in `ratings` (same share,
@@ -321,10 +324,11 @@ and one due after the last day is never filed. Source: `engine/critics.py`.
 ### `licensing` (0.16.0; off while `schedule` is empty)
 | key | default | status | meaning |
 |---|---|---|---|
-| `schedule` | {} | | `{owner stall id: {"day": b, "n": N}}`: at the start of day b (2 ≤ b ≤ `market.days`) the genuine owner licenses its brand to N non-genuine stalls (seconds or deceptive) of its category. Needs `brands.enabled` and `market.days` > 1 |
+| `schedule` | {} | | `{owner stall id: {"day": b, "n": N}}`: at the start of day b (2 ≤ b ≤ `market.days`) the genuine owner licenses its brand to N ≥ 0 (0.17.0; N ≥ 1 before) non-genuine stalls (seconds or deceptive) of its category. Needs `brands.enabled` and `market.days` > 1 |
 | `quality` | "cheap" | | `cheap`: licensee true quality drawn from `stalls.q_low`, sign shows the brand's quality (`stalls.deceptive_sign`), run by `agents.seller.deceptive`'s policy. `contract`: the owner's true quality, sign `truth`, run by `rule_honest` |
 | `royalty` | 0.15 | **PLACEHOLDER** | the licensee pays the owner round(royalty × price) per unit sold |
 | `owner_liable` | false | | fines from catches at a licensee are charged to its owner instead (the licensee is still closed) |
+| `brand` | "owner" | | 0.17.0. `owner`: licensees bear the owner's brand (as described here). `white_label`: the same licensees switch to the licence quality, sign and policy on day b, but each under one fresh unrated brand of its own (`fresh_name` from `default_rng([seed, 24, owner index])`): no royalty, `owner_liable` does not apply, reviews are filed under the fresh brand, and the price follows that brand's own start-of-day rating by the morning rule (base × the stall type's tier × premium). The `licensing` outcome still lists them under their owner |
 
 Licensees are drawn from `[seed, 19, owner index]`: a permutation of the category's non-genuine stalls in
 stall order (the first 2 of 6 are the 2 of 2), then one quality draw per candidate. From day b a licensee

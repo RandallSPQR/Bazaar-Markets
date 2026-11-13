@@ -62,4 +62,11 @@ points, through role-specific JSON observations and schema-validated actions.
 #         royalty per unit; reviews of their sales go to the brand; licensing.owner_liable moves fines
 #         from catches at licensees to the owner. Outcome "licensing" and royalties in the profit
 #         identity, only when on. Defaults reproduce 0.15.0 byte for byte.
-ENGINE_VERSION = "0.16.0"
+# 0.17.0: brands.counterfeit_entry "day" (every deceptive stall copies the top-rated genuine brand of its
+#         category at the start of brands.counterfeit_day, claims its quality, never renames; stream
+#         [seed, 23]); brands.counterfeit_price_factor (a counterfeit posts phi x the original's price; day
+#         log reports counterfeit prices and unit costs, flagging prices below cost); licensing.brand
+#         "white_label" (licensees under one fresh unrated brand each, stream [seed, 24, owner index]: no
+#         royalty, no tie to the owner); licensing schedules may have n = 0. Defaults reproduce 0.16.0
+#         byte for byte.
+ENGINE_VERSION = "0.17.0"

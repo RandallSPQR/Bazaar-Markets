@@ -17,6 +17,11 @@ draw per candidate, in permutation order). Decided 2026-11-11:
   * licensing.owner_liable: a fine from a catch at a licensee is charged to its owner (closure still
     falls on the licensee). Otherwise the licensee pays, as anyone does.
 Stall profit = revenue - cost - ad spend - penalties - switch cost - royalties paid + royalties received.
+
+Engine 0.17.0, licensing.brand "white_label": the same licensees switch to the licence quality, sign and policy
+on day b, but each bears one fresh unrated brand of its own (fresh_name from [seed, 24, owner index]): no
+royalty, owner_liable does not apply, reviews go to the fresh brand, and its price follows that brand's rating
+by the morning rule (base x its type's tier x premium). A schedule may have n = 0 (no licensee).
 """
 from __future__ import annotations
 
@@ -25,7 +30,9 @@ import numpy as np
 from . import brands as B
 
 QUALITIES = ("cheap", "contract")
+BRANDS = ("owner", "white_label")
 STREAM = 19
+WHITE_LABEL_STREAM = 24      # 0.17.0: fresh names for white-label licensees, [seed, 24, owner index]
 
 
 def on(cfg) -> bool:
@@ -40,6 +47,8 @@ def validate(cfg, stalls: list) -> None:
         raise ValueError("licensing needs brands.enabled and market.days >= 2")
     if lc.quality not in QUALITIES:
         raise ValueError(f"licensing.quality must be one of {QUALITIES}, got {lc.quality!r}")
+    if lc.brand not in BRANDS:
+        raise ValueError(f"licensing.brand must be one of {BRANDS}, got {lc.brand!r}")
     r = lc.royalty
     if isinstance(r, bool) or not isinstance(r, (int, float)) or not 0 <= r <= 1:
         raise ValueError(f"licensing.royalty must be in [0, 1], got {r!r}")
@@ -51,8 +60,8 @@ def validate(cfg, stalls: list) -> None:
         if set(spec) != {"day", "n"}:
             raise ValueError(f"licensing.schedule[{sid!r}] must be {{\"day\": b, \"n\": N}}, got {spec!r}")
         d, n = spec["day"], spec["n"]
-        if any(isinstance(x, bool) or int(x) != x for x in (d, n)) or not 2 <= d <= int(cfg.market.days) or n < 1:
-            raise ValueError(f"licensing.schedule[{sid!r}]: day must be in [2, market.days] and n >= 1, got {spec!r}")
+        if any(isinstance(x, bool) or int(x) != x for x in (d, n)) or not 2 <= d <= int(cfg.market.days) or n < 0:
+            raise ValueError(f"licensing.schedule[{sid!r}]: day must be in [2, market.days] and n >= 0, got {spec!r}")
         pool = [s for s in stalls if s.category == st.category and s.stype != "genuine"]
         if n > len(pool):
             raise ValueError(f"licensing.schedule[{sid!r}]: n = {n} but only {len(pool)} non-genuine stalls")
@@ -76,8 +85,9 @@ def sign(cfg, st) -> str:
     return "truth" if st.licence == "contract" else cfg.stalls.deceptive_sign
 
 
-def apply(cfg, stalls: list, day: int) -> list[dict]:
-    """Grant the licences scheduled for `day` (start of the day). Mutates the stalls; returns records."""
+def apply(cfg, stalls: list, day: int, book=None) -> list[dict]:
+    """Grant the licences scheduled for `day` (start of the day). Mutates the stalls; returns records.
+    licensing.brand "white_label" (0.17.0): each licensee takes a fresh unrated name, added to `book`."""
     out = []
     lc = cfg.licensing
     for sid in sorted(lc.schedule, key=lambda s: next(st.idx for st in stalls if st.sid == s)):
@@ -92,6 +102,8 @@ def apply(cfg, stalls: list, day: int) -> list[dict]:
         u = rng.random(len(order))
         lo = cfg.stalls.q_low
         chosen = []
+        white = lc.brand == "white_label"
+        wl_rng = np.random.default_rng([cfg.seed, WHITE_LABEL_STREAM, owner.idx]) if white else None
         for st, ui in list(zip(order, u))[:int(spec["n"])]:
             if st.licensed_from is not None or st.exited_day is not None:
                 raise ValueError(f"stall {st.sid} cannot take a licence (already licensed or exited)")
@@ -99,20 +111,28 @@ def apply(cfg, stalls: list, day: int) -> list[dict]:
             rec = {"stall": st.sid, "stype": st.stype, "from_brand": st.brand, "q_was": st.q_true, "q_true": q}
             st.licensed_from, st.licence = owner.sid, lc.quality
             st.brand, st.counterfeit_of, st.rename_pending = owner.brand, None, False
+            if white:
+                name = B.fresh_name(st.category, wl_rng, book.used)
+                book.add(name)
+                st.brand, st.rating, st.white_label = name, None, True
+                rec["brand"] = name
             st.q_true, st.q_pitch = q, owner.q_true
             st.sign = sign(cfg, st)
             st.unit_cost_cents = B.unit_cost(cfg, st, q)
             chosen.append(rec)
-        out.append({"day": day, "owner": owner.sid, "brand": owner.brand, "quality": lc.quality,
-                    "royalty": float(lc.royalty), "owner_liable": bool(lc.owner_liable), "licensees": chosen})
+        rec_out = {"day": day, "owner": owner.sid, "brand": owner.brand, "quality": lc.quality,
+                   "royalty": float(lc.royalty), "owner_liable": bool(lc.owner_liable), "licensees": chosen}
+        if white:
+            rec_out.update(licence_brand="white_label", royalty=0.0, owner_liable=False)
+        out.append(rec_out)
     return out
 
 
 def prices(stalls: list) -> None:
-    """A licensee posts its owner's price (after morning prices)."""
+    """A licensee posts its owner's price (after morning prices); a white label keeps its own."""
     by = {st.sid: st for st in stalls}
     for st in stalls:
-        if st.licensed_from is not None:
+        if st.licensed_from is not None and not st.white_label:
             st.price_cents = by[st.licensed_from].price_cents
 
 

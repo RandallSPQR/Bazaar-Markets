@@ -71,7 +71,7 @@ class BazaarEngine:
         self.licence_log: list[dict] = []
         if self.licensing_on:
             LIC.validate(cfg, self.stalls)
-            self.licence_log = LIC.apply(cfg, self.stalls, int(day))
+            self.licence_log = LIC.apply(cfg, self.stalls, int(day), book)
         validate_demand(cfg)
         self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
                                                  self.rng_treat, self.rng_insp, root=r, stalls=self.stalls)
@@ -145,10 +145,15 @@ class BazaarEngine:
         self._busts_now: list[dict] = []
         self.seller_privileged = {sid: bool(a.meta().get("privileged")) for sid, a in self.seller_agents.items()}
         C.validate(cfg)
+        B.validate_counterfeits(cfg)
+        self.counterfeit_entry_log: list[dict] = []
         if self.brands_on:
             self.book = book if book is not None else B.BrandBook(self.stalls)
             if book is None and (C.critics_on(cfg) or C.capture_on(cfg)):
                 C.init_ties(cfg, self.book, self.stalls)
+            # 0.17.0: counterfeit entry on a fixed day, before prices are set
+            if cfg.brands.counterfeit_entry == "day" and self.day == int(cfg.brands.counterfeit_day):
+                self.counterfeit_entry_log = B.enter_counterfeits(cfg, self.stalls, self.book)
             B.morning_prices(cfg, self.stalls, self.book)
             if self.licensing_on:
                 LIC.prices(self.stalls)
@@ -489,7 +494,7 @@ class BazaarEngine:
     def catch(self, st: Stall, p: Person, ch: str, q: float) -> dict:
         # 0.16.0: a licensee's fine goes to its owner when licensing.owner_liable
         payer = st
-        if st.licensed_from is not None and self.cfg.licensing.owner_liable:
+        if st.licensed_from is not None and self.cfg.licensing.owner_liable and not st.white_label:
             payer = self.by_sid[st.licensed_from]
         if self.lag:                    # 0.15.0: the fine falls due lag days later
             due = self.day + self.lag
@@ -509,8 +514,8 @@ class BazaarEngine:
             ev["licensee_of"], ev["fined"] = st.licensed_from, payer.sid
         self.catch_events.append(ev)
         self.catch_ticks.append((self.t, st))
-        if self.brands_on and st.licensed_from is None:   # 0.16.0: a licensee never renames
-            st.rename_pending = True
+        if self.brands_on and st.licensed_from is None and not st.counterfeit_fixed:
+            st.rename_pending = True      # 0.16.0: a licensee never renames; 0.17.0: nor a day-entry counterfeit
         return ev
 
     def rename(self, st: Stall, how: str) -> None:
@@ -530,7 +535,7 @@ class BazaarEngine:
         else:
             name = B.counterfeit_name(target.brand, rng, book.used)
             st.counterfeit_of = target.brand
-            st.price_cents = target.price_cents
+            st.price_cents = B.counterfeit_price(self.cfg, target.price_cents)
         book.add(name)
         st.brand, st.rating = name, None
         rec = {"t": self.t, "day": self.day, "stall": st.sid, "how": how, "from": old, "to": name,
@@ -695,7 +700,7 @@ class BazaarEngine:
         st.revenue_cents += amount
         st.cost_cents += units * st.unit_cost_cents
         st.units_sold += units
-        if st.licensed_from is not None:   # 0.16.0: royalty to the owner
+        if st.licensed_from is not None and not st.white_label:   # 0.16.0: royalty to the owner
             r = LIC.royalty_cents(self.cfg, st, units)
             st.royalty_paid_cents += r
             self.by_sid[st.licensed_from].royalty_received_cents += r

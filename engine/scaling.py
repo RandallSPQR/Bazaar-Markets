@@ -116,6 +116,9 @@ FIELDS: dict[str, tuple[str, str]] = {
     # brands
     "brands.enabled": (NONE, "switch"),
     "brands.premium": (NONE, "price multiplier per unit of rating"),
+    "brands.counterfeit_entry": (NONE, "label"),
+    "brands.counterfeit_day": (NONE, "day number (days are not ticks)"),
+    "brands.counterfeit_price_factor": (NONE, "price ratio"),
     "buyers.bargain_share": (NONE, "share"),
     "buyers.demand_mode": (NONE, "label"),
     "buyers.consider": (NONE, "stalls per buyer"),
@@ -135,6 +138,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "licensing.quality": (NONE, "label"),
     "licensing.royalty": (NONE, "money ratio per unit"),
     "licensing.owner_liable": (NONE, "switch"),
+    "licensing.brand": (NONE, "label"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
