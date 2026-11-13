@@ -3,3 +3,5 @@ __pycache__/
 .pytest_cache/
 runs/*.jsonl
 .certify_tmp/
+runs/pilot_canal_equity/**/*.jsonl
+runs/pilot_canal_equity/*.jsonl
