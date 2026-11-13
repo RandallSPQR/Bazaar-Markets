@@ -1,0 +1,8 @@
+2026-11-12 23:22:11 brand equity: engine 0.17.0, commit 5458448, seeds 900-902
+2026-11-12 23:22:11 18 chains, 0 cached, 18 to run; workers 4; load [6.21, 5.67, 4.51]; memory {'swap_free_mb': 913.69, 'free_pct': 55}
+2026-11-12 23:24:22 18/18 chains, 131 s, load [5.85, 5.81, 4.74], memory {'swap_free_mb': 913.69, 'free_pct': 56}
+2026-11-12 23:24:22 royalty check: pass
+2026-11-12 23:24:22 78 chains, 18 cached, 72 to run; workers 4; load [5.85, 5.81, 4.74]; memory {'swap_free_mb': 913.69, 'free_pct': 56}
+2026-11-12 23:30:27 50/72 chains, 365 s, load [6.55, 6.14, 5.25], memory {'swap_free_mb': 913.69, 'free_pct': 56}
+2026-11-12 23:32:49 72/72 chains, 506 s, load [6.19, 6.14, 5.38], memory {'swap_free_mb': 913.69, 'free_pct': 56}
+2026-11-12 23:32:49 done; 0 flags; wall 0.18 h

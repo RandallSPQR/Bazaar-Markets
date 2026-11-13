@@ -1,0 +1,300 @@
+{
+ "G1": {
+  "pass": true,
+  "canal_chains": 60,
+  "equity_chains": 90
+ },
+ "G2": {
+  "pass": true,
+  "canal_off": [
+   {
+    "cond": "off|t100|ds1.0",
+    "seed": 900,
+    "equal": true
+   },
+   {
+    "cond": "off|t40|ds1.0",
+    "seed": 900,
+    "equal": true
+   },
+   {
+    "cond": "off|t40|ds0.0",
+    "seed": 900,
+    "equal": true
+   },
+   {
+    "cond": "off|t100|ds0.0",
+    "seed": 900,
+    "equal": true
+   },
+   {
+    "cond": "off|t100|ds1.0",
+    "seed": 901,
+    "equal": true
+   },
+   {
+    "cond": "off|t40|ds1.0",
+    "seed": 901,
+    "equal": true
+   },
+   {
+    "cond": "off|t40|ds0.0",
+    "seed": 901,
+    "equal": true
+   },
+   {
+    "cond": "off|t100|ds0.0",
+    "seed": 901,
+    "equal": true
+   },
+   {
+    "cond": "off|t40|ds1.0",
+    "seed": 902,
+    "equal": true
+   },
+   {
+    "cond": "off|t100|ds1.0",
+    "seed": 902,
+    "equal": true
+   },
+   {
+    "cond": "off|t40|ds0.0",
+    "seed": 902,
+    "equal": true
+   },
+   {
+    "cond": "off|t100|ds0.0",
+    "seed": 902,
+    "equal": true
+   }
+  ],
+  "equity_never_pilot": [
+   {
+    "t": "t100",
+    "seed": 900,
+    "equal": true
+   },
+   {
+    "t": "t40",
+    "seed": 900,
+    "equal": true
+   },
+   {
+    "t": "t100",
+    "seed": 901,
+    "equal": true
+   },
+   {
+    "t": "t40",
+    "seed": 901,
+    "equal": true
+   },
+   {
+    "t": "t40",
+    "seed": 902,
+    "equal": true
+   },
+   {
+    "t": "t100",
+    "seed": 902,
+    "equal": true
+   }
+  ],
+  "equity_never_250": [
+   {
+    "t": "t40",
+    "seed": 250,
+    "totals_equal": true,
+    "units_equal": true,
+    "ratings_equal": true,
+    "digest_equal": true
+   },
+   {
+    "t": "t100",
+    "seed": 250,
+    "totals_equal": true,
+    "units_equal": true,
+    "ratings_equal": true,
+    "digest_equal": true
+   },
+   {
+    "t": "t40",
+    "seed": 251,
+    "totals_equal": true,
+    "units_equal": true,
+    "ratings_equal": true,
+    "digest_equal": true
+   },
+   {
+    "t": "t100",
+    "seed": 251,
+    "totals_equal": true,
+    "units_equal": true,
+    "ratings_equal": true,
+    "digest_equal": true
+   },
+   {
+    "t": "t40",
+    "seed": 252,
+    "totals_equal": true,
+    "units_equal": true,
+    "ratings_equal": true,
+    "digest_equal": true
+   },
+   {
+    "t": "t100",
+    "seed": 252,
+    "totals_equal": true,
+    "units_equal": true,
+    "ratings_equal": true,
+    "digest_equal": true
+   }
+  ],
+  "J": {
+   "J_checked": 108,
+   "J_mismatch": 0,
+   "split_resid_max_abs": 4.656612873077393e-10
+  },
+  "royalty_check": true
+ },
+ "G3": {
+  "pass": true,
+  "proj": {
+   "canal": {
+    "pilot_chains": 60,
+    "pilot_wall_s": 403.02627396583557,
+    "per_chain_s": 6.71710456609726,
+    "main_chains": 600,
+    "hours": 1.1195174276828765,
+    "cut": null
+   },
+   "equity": {
+    "pilot_chains": 90,
+    "pilot_wall_s": 637.4062049388885,
+    "per_chain_s": 7.082291165987651,
+    "main_chains": 792,
+    "hours": 1.5581040565172832,
+    "cut": null
+   }
+  },
+  "queue_hours": 2.6776214842001598,
+  "load": [
+   6.54,
+   6.5,
+   5.68
+  ]
+ },
+ "G4": {
+  "pass": true,
+  "cells": {
+   "phi0.4|t100|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 10.660536398467434,
+    "below_cost_share": 0.9363984674329502
+   },
+   "phi0.4|t100|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 4.290421455938698,
+    "below_cost_share": 0.6996168582375479
+   },
+   "phi0.4|t40|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 4.271264367816092,
+    "below_cost_share": 0.8015325670498084
+   },
+   "phi0.4|t40|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 2.5609195402298846,
+    "below_cost_share": 0.6505747126436782
+   },
+   "phi0.6|t100|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 10.611494252873563,
+    "below_cost_share": 0.03065134099616858
+   },
+   "phi0.6|t100|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 4.2107279693486594,
+    "below_cost_share": 0.0
+   },
+   "phi0.6|t40|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 4.215325670498085,
+    "below_cost_share": 0.03601532567049808
+   },
+   "phi0.6|t40|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 2.4651340996168583,
+    "below_cost_share": 0.0007662835249042146
+   },
+   "phi0.8|t100|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 9.86206896551724,
+    "below_cost_share": 0.0
+   },
+   "phi0.8|t100|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 3.949425287356322,
+    "below_cost_share": 0.0
+   },
+   "phi0.8|t40|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 3.929501915708812,
+    "below_cost_share": 0.0
+   },
+   "phi0.8|t40|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 2.3800766283524903,
+    "below_cost_share": 0.0
+   },
+   "phi1.0|t100|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 7.394636015325671,
+    "below_cost_share": 0.0
+   },
+   "phi1.0|t100|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 3.030651340996169,
+    "below_cost_share": 0.0
+   },
+   "phi1.0|t40|ds0.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 3.010727969348659,
+    "below_cost_share": 0.0
+   },
+   "phi1.0|t40|ds1.0": {
+    "seeds_with_sales": 3,
+    "seeds": 3,
+    "units_per_stall_day": 1.8306513409961687,
+    "below_cost_share": 0.0
+   }
+  },
+  "below_cost_over_10pct": [
+   "phi0.4|t100|ds0.0",
+   "phi0.4|t100|ds1.0",
+   "phi0.4|t40|ds0.0",
+   "phi0.4|t40|ds1.0"
+  ]
+ },
+ "G5": {
+  "pass": true,
+  "chains": 156,
+  "bad": [],
+  "fallbacks": 0
+ }
+}

@@ -1,0 +1,7 @@
+2026-11-12 23:15:28 pilot: engine 0.17.0, commit 5458448, seeds [900, 901, 902], load [2.65, 3.72, 3.41]
+2026-11-12 23:22:11 canal pilot: exit 0, wall 403 s, load [6.21, 5.67, 4.51]
+2026-11-12 23:32:49 equity pilot: exit 0, wall 637 s, load [6.19, 6.14, 5.38]
+2026-11-12 23:32:49 6 chains, 0 cached, 6 to run; workers 4; load [6.19, 6.14, 5.38]; memory {'swap_free_mb': 913.69, 'free_pct': 56}
+2026-11-12 23:33:37 6/6 chains, 49 s, load [5.41, 5.97, 5.36], memory {'swap_free_mb': 913.69, 'free_pct': 56}
+2026-11-12 23:35:58 0.16.0 digests: 18 chains at 60f1ddf, engine 0.16.0
+2026-11-12 23:35:58 gates: G1 pass, G2 pass, G3 pass, G4 pass, G5 pass
