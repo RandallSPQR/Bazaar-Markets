@@ -1,0 +1,82 @@
+{
+ "G1": {
+  "pass": true,
+  "exit": 0,
+  "chains": 216,
+  "flags": []
+ },
+ "G2": {
+  "pass": true,
+  "ref_017": {
+   "compared": 78,
+   "equal": 78
+  },
+  "expected": 78,
+  "J": {
+   "J_checked": 252,
+   "J_mismatch": 0,
+   "split_resid_max_abs": 2.3283064365386963e-10,
+   "tier_price_chains": 72,
+   "tier_price_miss": 0
+  },
+  "royalty_check": true,
+  "royalty_rows": 18
+ },
+ "G3": {
+  "pass": true,
+  "per_chain_s": 10.988982777904582,
+  "pilot_chains": 216,
+  "pilot_cached": 216,
+  "pilot_wall_s": 2373.6202800273895,
+  "main_chains": 1998,
+  "hours": 6.098885441737043,
+  "cut": {
+   "levels": [
+    "current",
+    "slow15"
+   ],
+   "chains": 1578,
+   "hours": 4.816837450981509
+  },
+  "load": [
+   7.17,
+   8.03,
+   8.05
+  ]
+ },
+ "G4": {
+  "pass": true,
+  "share": {
+   "p0|cheap|t100|deceptive": 1.0,
+   "p0|cheap|t100|seconds": 1.0,
+   "p0|cheap|t40|deceptive": 1.0,
+   "p0|cheap|t40|seconds": 1.0,
+   "p0|contract|t100|deceptive": 1.0,
+   "p0|contract|t100|seconds": 1.0,
+   "p0|contract|t40|deceptive": 1.0,
+   "p0|contract|t40|seconds": 1.0,
+   "p2.5|contract|t100|deceptive": 1.0,
+   "p2.5|contract|t100|seconds": 1.0,
+   "p2.5|contract|t40|deceptive": 1.0,
+   "p2.5|contract|t40|seconds": 1.0,
+   "p50|contract|t100|deceptive": 1.0,
+   "p50|contract|t100|seconds": 1.0,
+   "p50|contract|t40|deceptive": 1.0,
+   "p50|contract|t40|seconds": 1.0
+  },
+  "checked": [
+   "p0|contract|t100|seconds",
+   "p0|contract|t40|seconds",
+   "p2.5|contract|t100|seconds",
+   "p2.5|contract|t40|seconds",
+   "p50|contract|t100|seconds",
+   "p50|contract|t40|seconds"
+  ]
+ },
+ "G5": {
+  "pass": true,
+  "chains": 216,
+  "bad": [],
+  "fallbacks": 0
+ }
+}

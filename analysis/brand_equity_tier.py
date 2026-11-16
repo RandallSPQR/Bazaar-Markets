@@ -16,6 +16,7 @@ calibration to give about 1 (the current market, prior_n 0), 5 and 15 days for a
 reach a 0.9 rating.
   Current speed: never, R, W_g, W_t x {contract, cheap} x {t40, t100}.
   Slow speeds (5 and 15 days): never, R, W_g x contract x {t40, t100}.
+  (The 5-day level was cut by the timing gate; PR1 and PR4 slopes are then over the two remaining levels.)
 Seeds 300-329 (30), paired; everything rerun at 0.18.0. Extra gate: at current speed, never, R and W_t equal the
 0.17.0 Brand Equity chains (runs/brand_equity_cache.jsonl) to the cent and by full-outcome digest.
 
@@ -77,8 +78,10 @@ TARGET = 0.9
 # Rating-speed levels: label -> ratings.prior_n. Set from the calibration (runs/calibration_rating_speed.md) before
 # any main run; DAYS_TO_TARGET holds the calibration's days for a fresh contract white label to reach 0.9 (t40),
 # the x of the PR1 and PR4 slopes.
-LEVELS: dict[str, float] = {"current": 0.0, "slow5": 2.5, "slow15": 50.0}
-DAYS_TO_TARGET: dict[str, float] = {"current": 1.04, "slow5": 4.78, "slow15": 14.91}
+# The 5-day level (prior_n 2.5, 4.78 days) was cut by the timing gate (projected 6.10 h with it, 4.82 h without;
+# runs/pilot_brand_equity_tier.md), as the spec directs: cut the 5-day level before cutting seeds.
+LEVELS: dict[str, float] = {"current": 0.0, "slow15": 50.0}
+DAYS_TO_TARGET: dict[str, float] = {"current": 1.04, "slow15": 14.91}
 CURRENT = "current"
 PREDICTIONS = [
     "PR1 (confirmatory): contract, t40: the reputation effect rises with time to reputation. Slope of R − W_g over "

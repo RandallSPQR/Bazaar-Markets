@@ -1,0 +1,14 @@
+2026-11-16 12:15:27 pilot: engine 0.18.0, commit 7e77afd, seeds 900-902, levels {'current': 0.0, 'slow5': 2.5, 'slow15': 50.0}, load [4.11, 4.98, 5.71]
+2026-11-16 12:15:27 brand equity tier: engine 0.18.0, commit 7e77afd, seeds 900-902, levels {'current': 0.0, 'slow5': 2.5, 'slow15': 50.0}
+2026-11-16 12:15:27 27 chains, 0 cached, 27 to run; workers 4; load [4.11, 4.98, 5.71]; memory {'swap_free_mb': 794.19, 'free_pct': 70}
+2026-11-16 12:20:14 27/27 chains, 287 s, load [7.89, 7.15, 6.51], memory {'swap_free_mb': 794.19, 'free_pct': 71}
+2026-11-16 12:20:14 royalty check: pass
+2026-11-16 12:20:14 198 chains, 27 cached, 189 to run; workers 4; load [7.89, 7.15, 6.51]; memory {'swap_free_mb': 794.19, 'free_pct': 71}
+2026-11-16 12:29:34 50/189 chains, 560 s, load [7.77, 8.13, 7.45], memory {'swap_free_mb': 802.19, 'free_pct': 70}
+2026-11-16 12:38:31 100/189 chains, 1097 s, load [7.54, 8.02, 7.72], memory {'swap_free_mb': 810.19, 'free_pct': 71}
+2026-11-16 12:48:01 150/189 chains, 1667 s, load [9.41, 8.62, 8.12], memory {'swap_free_mb': 818.19, 'free_pct': 71}
+2026-11-16 12:55:00 189/189 chains, 2087 s, load [7.17, 8.03, 8.05], memory {'swap_free_mb': 818.19, 'free_pct': 71}
+2026-11-16 12:55:00 0.17.0 reference: 90 chains from runs/pilot_canal_equity/equity/brand_equity_cache.jsonl
+2026-11-16 12:55:00 done; 0 flags; wall 0.66 h
+2026-11-16 12:55:00 pilot run: exit 0, wall 2374 s, load [7.17, 8.03, 8.05]
+2026-11-16 12:55:00 gates: G1 pass, G2 pass, G3 pass, G4 pass, G5 pass
