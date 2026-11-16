@@ -169,6 +169,7 @@ order). Source: `engine/days.py`.
 | `tau` | **0.5** | **PLACEHOLDER** | the rule buyer skips stalls rated below τ; unrated stalls are neutral (not skipped) |
 | `visible_to` | expert, local | | profiles that consult the ratings board (tourists do not) |
 | `rugpull_threshold` | 0.8 | | a genuine → deceptive switch while rated ≥ this is logged as a rugpull |
+| `prior_n` | 0 | | 0.18.0, rating speed (needs `brands.enabled` and `mode` not `off`). Every brand starts with `prior_n` pseudo-reviews at 0.5: on a day with rated units, share = (honest + 0.5 w) / (rated + w), then the usual blend (first rating = share). w starts at `prior_n` when the brand is created (day 1, a rename, a counterfeit or white-label name) and is multiplied by `memory` at every day end. 0 = 0.17.0 behaviour |
 
 A day's share is computed from that day's realized purchases only: the share of units whose true
 Q met the latest claim the stall made to the buyer before the sale. Units bought with no claim from
@@ -329,6 +330,7 @@ and one due after the last day is never filed. Source: `engine/critics.py`.
 | `royalty` | 0.15 | **PLACEHOLDER** | the licensee pays the owner round(royalty × price) per unit sold |
 | `owner_liable` | false | | fines from catches at a licensee are charged to its owner instead (the licensee is still closed) |
 | `brand` | "owner" | | 0.17.0. `owner`: licensees bear the owner's brand (as described here). `white_label`: the same licensees switch to the licence quality, sign and policy on day b, but each under one fresh unrated brand of its own (`fresh_name` from `default_rng([seed, 24, owner index])`): no royalty, `owner_liable` does not apply, reviews are filed under the fresh brand, and the price follows that brand's own start-of-day rating by the morning rule (base × the stall type's tier × premium). The `licensing` outcome still lists them under their owner |
+| `white_label_tier` | "type" | | 0.18.0, white labels only. `type`: a white label's price uses its stall type's tier (seconds: `pricing.seconds_price_factor`), as in 0.17.0. `genuine`: tier 1.0, so it posts base × (1 + premium × (rating − 0.5)) from its own brand's start-of-day rating, the owner's formula; R and W then differ in price only through the rating. Unit cost and fines do not depend on the tier. Ignored unless `brand` is `white_label` |
 
 Licensees are drawn from `[seed, 19, owner index]`: a permutation of the category's non-genuine stalls in
 stall order (the first 2 of 6 are the 2 of 2), then one quality draw per candidate. From day b a licensee

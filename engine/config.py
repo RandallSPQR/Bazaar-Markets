@@ -270,6 +270,10 @@ class RatingsCfg:
     tau: float = 0.5               # PLACEHOLDER: the rule buyer skips stalls rated below this
     visible_to: list = field(default_factory=lambda: ["expert", "local"])
     rugpull_threshold: float = 0.8 # genuine -> deceptive while rated >= this is logged as a rugpull
+    # Engine 0.18.0, rating speed (brands on, ratings not off). Every brand starts with prior_n pseudo-reviews
+    # at 0.5: on a day with rated units, share = (honest + 0.5 w) / (rated + w), then the blend above; w starts
+    # at prior_n when the brand is created and is multiplied by `memory` at every day end. 0 = 0.17.0.
+    prior_n: float = 0.0
 
 
 @dataclass
@@ -340,6 +344,10 @@ class LicensingCfg:
     # owner, no royalty, owner_liable does not apply, reviews are filed under the fresh brand, and its
     # price follows that brand's own rating by the morning rule (base x its type's tier x premium).
     brand: str = "owner"
+    # Engine 0.18.0, white labels only. "type" (default, 0.17.0): a white label's price uses its stall type's
+    # tier (seconds: pricing.seconds_price_factor). "genuine": tier 1.0, so it posts base x (1 + premium x
+    # (rating - 0.5)) from its own brand's rating, the owner's formula. Ignored unless brand = "white_label".
+    white_label_tier: str = "type"
 
 
 @dataclass

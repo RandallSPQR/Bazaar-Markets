@@ -113,6 +113,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "ratings.tau": (NONE, "rating threshold"),
     "ratings.visible_to": (NONE, "profiles"),
     "ratings.rugpull_threshold": (NONE, "rating threshold"),
+    "ratings.prior_n": (NONE, "pseudo-reviews per brand; ratings update once per day"),
     # brands
     "brands.enabled": (NONE, "switch"),
     "brands.premium": (NONE, "price multiplier per unit of rating"),
@@ -139,6 +140,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "licensing.royalty": (NONE, "money ratio per unit"),
     "licensing.owner_liable": (NONE, "switch"),
     "licensing.brand": (NONE, "label"),
+    "licensing.white_label_tier": (NONE, "label"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).

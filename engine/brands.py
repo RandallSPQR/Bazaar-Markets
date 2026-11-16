@@ -104,8 +104,11 @@ class BrandBook:
     """Brand state that persists across days: ratings by name, every name ever used, and how
     many times each stall has been renamed (the rename stream index)."""
 
-    def __init__(self, stalls: list):
+    def __init__(self, stalls: list, prior_n: float = 0.0):
         self.ratings: dict[str, float | None] = {st.brand: st.rating for st in stalls}
+        # Engine 0.18.0 (ratings.prior_n): pseudo-review weight at 0.5 by brand name; empty when prior_n = 0.
+        self.prior_n = float(prior_n)
+        self.prior_w: dict[str, float] = {n: self.prior_n for n in self.ratings} if self.prior_n > 0 else {}
         self.used: set = {n for names in BRANDS.values() for n in names} | set(self.ratings)
         self.renames: dict[str, int] = {st.sid: 0 for st in stalls}
         # Privileged benchmark input (0.9.0): yesterday's catches per stall making false claims
@@ -125,6 +128,8 @@ class BrandBook:
     def add(self, name: str) -> None:
         self.used.add(name)
         self.ratings.setdefault(name, None)
+        if self.prior_n > 0:
+            self.prior_w.setdefault(name, self.prior_n)
 
 
 # 0.8.0 names, kept so old code and configs still work.
@@ -141,6 +146,8 @@ lookalike_name = counterfeit_name
 
 def tier_factor(cfg, st) -> float:
     pr = cfg.pricing
+    if st.white_label and cfg.licensing.white_label_tier == "genuine":   # 0.18.0
+        return 1.0
     return {"genuine": 1.0, "deceptive": pr.deceptive_price_factor, "seconds": pr.seconds_price_factor}[st.stype]
 
 
@@ -254,7 +261,8 @@ lookalike_target = counterfeit_target
 def update_brand_ratings(book: BrandBook, buys: list[dict], memory: float, extra: list | None = None) -> dict:
     """End-of-day rating update by brand name. Each rated unit (the buyer had received at least
     one claim from the stall before buying) is filed under the purchase's `filed_under` name and
-    is honest when the stall's true Q met the latest such claim. Same blend as 0.7.0. `extra`
+    is honest when the stall's true Q met the latest such claim. Same blend as 0.7.0. With
+    ratings.prior_n > 0 (0.18.0) each brand's share also counts its remaining pseudo-reviews at 0.5. `extra`
     (critics, 0.11.0): (name, positive, weight) reviews counted as `weight` rated units each.
     Returns {name: (honest units, claimed units)} for the day."""
     claimed: dict = {}
@@ -271,9 +279,12 @@ def update_brand_ratings(book: BrandBook, buys: list[dict], memory: float, extra
         if b["q_true"] >= b["known_claims"][-1] - 1e-12:
             honest[n] = honest.get(n, 0) + b["units"]
     for n, c in claimed.items():
-        share = honest.get(n, 0) / c
+        w = book.prior_w.get(n, 0.0)
+        share = (honest.get(n, 0) + 0.5 * w) / (c + w) if w else honest.get(n, 0) / c
         old = book.ratings.get(n)
         book.ratings[n] = share if old is None else memory * old + (1 - memory) * share
+    for n in book.prior_w:          # 0.18.0: pseudo-reviews fade at the memory rate, every day end
+        book.prior_w[n] *= memory
     return {n: (honest.get(n, 0), c) for n, c in sorted(claimed.items())}
 
 

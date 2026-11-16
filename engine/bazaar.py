@@ -135,6 +135,11 @@ class BazaarEngine:
         self.switch_costs_on = bool(cfg.pricing.switch_cost_to_genuine or cfg.pricing.switch_cost_to_deceptive)
         if cfg.ratings.mode not in ("off", "hidden", "public"):
             raise ValueError(f"unknown ratings.mode {cfg.ratings.mode!r}")
+        pn = cfg.ratings.prior_n
+        if isinstance(pn, bool) or not isinstance(pn, (int, float)) or not 0 <= pn < float("inf"):
+            raise ValueError(f"ratings.prior_n must be a finite number >= 0, got {pn!r}")
+        if pn > 0 and (cfg.ratings.mode == "off" or not cfg.brands.enabled):
+            raise ValueError("ratings.prior_n > 0 needs brands.enabled and ratings.mode != 'off'")
         # 0.8.0 switches (brands, known horizon), also off by default.
         self.day = int(day)
         self.brands_on = bool(cfg.brands.enabled)
@@ -148,7 +153,7 @@ class BazaarEngine:
         B.validate_counterfeits(cfg)
         self.counterfeit_entry_log: list[dict] = []
         if self.brands_on:
-            self.book = book if book is not None else B.BrandBook(self.stalls)
+            self.book = book if book is not None else B.BrandBook(self.stalls, prior_n=cfg.ratings.prior_n)
             if book is None and (C.critics_on(cfg) or C.capture_on(cfg)):
                 C.init_ties(cfg, self.book, self.stalls)
             # 0.17.0: counterfeit entry on a fixed day, before prices are set

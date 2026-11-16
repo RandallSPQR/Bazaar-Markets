@@ -69,4 +69,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #         "white_label" (licensees under one fresh unrated brand each, stream [seed, 24, owner index]: no
 #         royalty, no tie to the owner); licensing schedules may have n = 0. Defaults reproduce 0.16.0
 #         byte for byte.
-ENGINE_VERSION = "0.17.0"
+# 0.18.0: licensing.white_label_tier ("type" = 0.17.0; "genuine": a white label prices at tier 1.0, the owner's
+#         formula) and ratings.prior_n (every brand starts with prior_n pseudo-reviews at 0.5, counted in
+#         each day's share and fading by ratings.memory per day; brands only). Defaults reproduce 0.17.0
+#         byte for byte.
+ENGINE_VERSION = "0.18.0"

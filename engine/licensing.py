@@ -22,6 +22,7 @@ Engine 0.17.0, licensing.brand "white_label": the same licensees switch to the l
 on day b, but each bears one fresh unrated brand of its own (fresh_name from [seed, 24, owner index]): no
 royalty, owner_liable does not apply, reviews go to the fresh brand, and its price follows that brand's rating
 by the morning rule (base x its type's tier x premium). A schedule may have n = 0 (no licensee).
+Engine 0.18.0, licensing.white_label_tier "genuine": a white label's tier is 1.0 (the owner's formula).
 """
 from __future__ import annotations
 
@@ -31,6 +32,7 @@ from . import brands as B
 
 QUALITIES = ("cheap", "contract")
 BRANDS = ("owner", "white_label")
+WHITE_LABEL_TIERS = ("type", "genuine")
 STREAM = 19
 WHITE_LABEL_STREAM = 24      # 0.17.0: fresh names for white-label licensees, [seed, 24, owner index]
 
@@ -49,6 +51,8 @@ def validate(cfg, stalls: list) -> None:
         raise ValueError(f"licensing.quality must be one of {QUALITIES}, got {lc.quality!r}")
     if lc.brand not in BRANDS:
         raise ValueError(f"licensing.brand must be one of {BRANDS}, got {lc.brand!r}")
+    if lc.white_label_tier not in WHITE_LABEL_TIERS:
+        raise ValueError(f"licensing.white_label_tier must be one of {WHITE_LABEL_TIERS}, got {lc.white_label_tier!r}")
     r = lc.royalty
     if isinstance(r, bool) or not isinstance(r, (int, float)) or not 0 <= r <= 1:
         raise ValueError(f"licensing.royalty must be in [0, 1], got {r!r}")
