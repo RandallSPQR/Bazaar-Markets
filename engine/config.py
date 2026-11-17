@@ -274,6 +274,10 @@ class RatingsCfg:
     # at 0.5: on a day with rated units, share = (honest + 0.5 w) / (rated + w), then the blend above; w starts
     # at prior_n when the brand is created and is multiplied by `memory` at every day end. 0 = 0.17.0.
     prior_n: float = 0.0
+    # Engine 0.19.0: which brands get the prior. "all" (default) = 0.18.0. "new": only brands created on day 2 or
+    # later (white labels, fresh or counterfeit names at reopening, counterfeit entry); brands that exist on day 1
+    # (every original stall's name, and any name taken on day 1) rate as with prior_n 0.
+    prior_scope: str = "all"
 
 
 @dataclass

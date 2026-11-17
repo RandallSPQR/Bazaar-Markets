@@ -114,6 +114,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "ratings.visible_to": (NONE, "profiles"),
     "ratings.rugpull_threshold": (NONE, "rating threshold"),
     "ratings.prior_n": (NONE, "pseudo-reviews per brand; ratings update once per day"),
+    "ratings.prior_scope": (NONE, "label"),
     # brands
     "brands.enabled": (NONE, "switch"),
     "brands.premium": (NONE, "price multiplier per unit of rating"),

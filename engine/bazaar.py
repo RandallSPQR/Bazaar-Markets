@@ -69,6 +69,8 @@ class BazaarEngine:
         # Licensing (0.16.0): licences scheduled for today take effect before agents and prices.
         self.licensing_on = LIC.on(cfg)
         self.licence_log: list[dict] = []
+        if book is not None:                     # 0.19.0: the book knows today's date (ratings.prior_scope)
+            book.day = int(day)
         if self.licensing_on:
             LIC.validate(cfg, self.stalls)
             self.licence_log = LIC.apply(cfg, self.stalls, int(day), book)
@@ -140,6 +142,8 @@ class BazaarEngine:
             raise ValueError(f"ratings.prior_n must be a finite number >= 0, got {pn!r}")
         if pn > 0 and (cfg.ratings.mode == "off" or not cfg.brands.enabled):
             raise ValueError("ratings.prior_n > 0 needs brands.enabled and ratings.mode != 'off'")
+        if cfg.ratings.prior_scope not in B.PRIOR_SCOPES:
+            raise ValueError(f"ratings.prior_scope must be one of {B.PRIOR_SCOPES}, got {cfg.ratings.prior_scope!r}")
         # 0.8.0 switches (brands, known horizon), also off by default.
         self.day = int(day)
         self.brands_on = bool(cfg.brands.enabled)
@@ -153,7 +157,8 @@ class BazaarEngine:
         B.validate_counterfeits(cfg)
         self.counterfeit_entry_log: list[dict] = []
         if self.brands_on:
-            self.book = book if book is not None else B.BrandBook(self.stalls, prior_n=cfg.ratings.prior_n)
+            self.book = book if book is not None else B.BrandBook(self.stalls, prior_n=cfg.ratings.prior_n,
+                                                                       prior_scope=cfg.ratings.prior_scope, day=self.day)
             if book is None and (C.critics_on(cfg) or C.capture_on(cfg)):
                 C.init_ties(cfg, self.book, self.stalls)
             # 0.17.0: counterfeit entry on a fixed day, before prices are set

@@ -47,7 +47,7 @@ Source of truth: `engine/config.py`. Full default configs:
 | `sight_range` / `earshot` / `whisper_range` / `interact_range` | 3 / 4 / 2 / 1 | | channel ranges in grid cells |
 | `max_actions_per_stop` | 4 | | stall actions a buyer may take at one stop before the engine moves it on |
 | `whispers_allowed` | true | | false = a public medium: sellers can use only signs, yells and answers. Sellers see `ranges.whispers_allowed: false`; a whisper is an invalid action (fallback), so none is ever delivered. Rule sellers do not try |
-| `days` | 1 | | number of days; each day a full run with fresh buyers, and type switches between days (`evolution`, below) |
+| `days` | 1 | | number of days; each day a full run with fresh buyers, and type switches between days (`evolution`, below). 60 checked end to end at 0.19.0: nothing assumes 30 days; with `horizon_known` the day number and `days` reach sellers, and only the `rule_genuine_rational` benchmark sellers read them |
 | `horizon_known` | false | | 0.8.0: seller observations carry `horizon` (`day`, `days`) and `yesterday` (the stall's previous-day ledger; null on day 1) |
 | `scale` | 1 | | grid refinement k (integer ≥ 1): cells 1/k as large, ticks 1/k as long; every other distance and time value stays in real units (k = 1 cells and ticks). See below |
 
@@ -170,6 +170,7 @@ order). Source: `engine/days.py`.
 | `visible_to` | expert, local | | profiles that consult the ratings board (tourists do not) |
 | `rugpull_threshold` | 0.8 | | a genuine → deceptive switch while rated ≥ this is logged as a rugpull |
 | `prior_n` | 0 | | 0.18.0, rating speed (needs `brands.enabled` and `mode` not `off`). Every brand starts with `prior_n` pseudo-reviews at 0.5: on a day with rated units, share = (honest + 0.5 w) / (rated + w), then the usual blend (first rating = share). w starts at `prior_n` when the brand is created (day 1, a rename, a counterfeit or white-label name) and is multiplied by `memory` at every day end. 0 = 0.17.0 behaviour |
+| `prior_scope` | `all` | `all`, `new` | 0.19.0. Which brands get the `prior_n` pseudo-reviews. `all`: every brand (0.18.0). `new`: only brands created on day 2 or later (white labels, fresh or counterfeit names at reopening, counterfeit entry); brands that exist on day 1, the owner's and every original stall's name included, rate as with `prior_n` 0 |
 
 A day's share is computed from that day's realized purchases only: the share of units whose true
 Q met the latest claim the stall made to the buyer before the sale. Units bought with no claim from

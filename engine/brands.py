@@ -100,15 +100,23 @@ def counterfeit_name(original: str, rng: np.random.Generator, used: set) -> str:
     raise RuntimeError(f"no free counterfeit of {original!r}")
 
 
+PRIOR_SCOPES = ("all", "new")     # ratings.prior_scope (engine 0.19.0)
+
+
 class BrandBook:
     """Brand state that persists across days: ratings by name, every name ever used, and how
     many times each stall has been renamed (the rename stream index)."""
 
-    def __init__(self, stalls: list, prior_n: float = 0.0):
+    def __init__(self, stalls: list, prior_n: float = 0.0, prior_scope: str = "all", day: int = 1):
         self.ratings: dict[str, float | None] = {st.brand: st.rating for st in stalls}
         # Engine 0.18.0 (ratings.prior_n): pseudo-review weight at 0.5 by brand name; empty when prior_n = 0.
+        # Engine 0.19.0 (ratings.prior_scope): "new" gives it only to brands created on day 2 or later; `day` is
+        # the current market day, set by the engine each morning.
         self.prior_n = float(prior_n)
-        self.prior_w: dict[str, float] = {n: self.prior_n for n in self.ratings} if self.prior_n > 0 else {}
+        self.prior_scope = prior_scope
+        self.day = int(day)
+        self.prior_w: dict[str, float] = ({n: self.prior_n for n in self.ratings}
+                                          if self.prior_n > 0 and prior_scope == "all" else {})
         self.used: set = {n for names in BRANDS.values() for n in names} | set(self.ratings)
         self.renames: dict[str, int] = {st.sid: 0 for st in stalls}
         # Privileged benchmark input (0.9.0): yesterday's catches per stall making false claims
@@ -126,9 +134,10 @@ class BrandBook:
         return self.ratings.get(name)
 
     def add(self, name: str) -> None:
+        is_new = name not in self.ratings
         self.used.add(name)
         self.ratings.setdefault(name, None)
-        if self.prior_n > 0:
+        if self.prior_n > 0 and (self.prior_scope == "all" or (is_new and self.day >= 2)):
             self.prior_w.setdefault(name, self.prior_n)
 
 

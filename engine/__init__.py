@@ -73,4 +73,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #         formula) and ratings.prior_n (every brand starts with prior_n pseudo-reviews at 0.5, counted in
 #         each day's share and fading by ratings.memory per day; brands only). Defaults reproduce 0.17.0
 #         byte for byte.
-ENGINE_VERSION = "0.18.0"
+# 0.19.0: ratings.prior_scope ("all" = 0.18.0; "new": the prior reaches only brands created on day 2 or later, so
+#         the owner's and every original stall's name rate as with prior_n 0). market.days 60 checked end to end:
+#         nothing in the engine or agents assumes 30 days; the horizon (market.horizon_known) is read only by the
+#         rule_genuine_rational benchmark sellers. Defaults reproduce 0.18.0 byte for byte.
+ENGINE_VERSION = "0.19.0"
