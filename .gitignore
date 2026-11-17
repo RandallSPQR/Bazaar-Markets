@@ -7,3 +7,6 @@ runs/pilot_canal_equity/**/*.jsonl
 runs/pilot_canal_equity/*.jsonl
 runs/calibration_rating_speed/*.jsonl
 runs/pilot_brand_equity_tier/**/*.jsonl
+runs/calibration_brand_equity_speed/*.jsonl
+runs/pilot_brand_equity_speed/**/*.jsonl
+runs/pilot_brand_equity_speed/*.jsonl
