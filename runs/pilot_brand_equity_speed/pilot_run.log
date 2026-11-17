@@ -1,0 +1,5 @@
+2026-11-17 16:27:32 pilot: engine 0.19.0, commit 950f745, seeds 900-902, levels {'current': 0.0, 'd5': 3.5, 'd10': 10.0, 'd20': 400.0}, load [4.08, 5.59, 5.57]
+2026-11-17 17:11:12 pilot run: exit 0, wall 2620 s, load [5.4, 6.07, 6.22]
+2026-11-17 17:11:12 28 chains, 0 cached, 28 to run; workers 4; load [5.4, 6.07, 6.22]; memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 17:14:28 28/28 chains, 195 s, load [6.24, 6.27, 6.27], memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 17:14:28 gates: G1 pass, G2 pass, G3 pass, G4 pass, G5 pass

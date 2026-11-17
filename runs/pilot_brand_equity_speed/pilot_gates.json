@@ -1,0 +1,85 @@
+{
+ "G1": {
+  "pass": true,
+  "exit": 0,
+  "chains": 180,
+  "flags": []
+ },
+ "G2": {
+  "pass": true,
+  "ref_0180": {
+   "chains": 28,
+   "equal": 28,
+   "reference_chains": 34,
+   "unequal": [],
+   "wall_s": 195.3266727924347
+  },
+  "J": {
+   "J_checked": 216,
+   "J_mismatch": 0,
+   "split_resid_max_abs": 5.505474594732126e-10,
+   "window_resid_max_abs": 0.0,
+   "tier_price_chains": 72,
+   "tier_price_miss": 0
+  },
+  "royalty_check": true,
+  "royalty_rows": 12
+ },
+ "G3": {
+  "pass": true,
+  "per_chain_s": 14.55682733853658,
+  "pilot_chains": 180,
+  "pilot_wall_s": 2620.2289209365845,
+  "projections": [
+   {
+    "design": "all levels at t100, 20 seeds",
+    "seeds": 20,
+    "t100_levels": null,
+    "chains": 1132,
+    "hours": 4.577313485339836
+   },
+   {
+    "design": "t100 at current and d20 only, 20 seeds",
+    "seeds": 20,
+    "t100_levels": [
+     "current",
+     "d20"
+    ],
+    "chains": 852,
+    "hours": 3.4451158034536573
+   },
+   {
+    "design": "t100 at current and d20 only, 15 seeds",
+    "seeds": 15,
+    "t100_levels": [
+     "current",
+     "d20"
+    ],
+    "chains": 642,
+    "hours": 2.5959675420390234
+   }
+  ],
+  "choice": {
+   "design": "all levels at t100, 20 seeds",
+   "seeds": 20,
+   "t100_levels": null,
+   "chains": 1132,
+   "hours": 4.577313485339836
+  },
+  "load": [
+   6.24,
+   6.27,
+   6.27
+  ]
+ },
+ "G4": {
+  "pass": true,
+  "chains_checked": 132,
+  "fails": []
+ },
+ "G5": {
+  "pass": true,
+  "chains": 208,
+  "bad": []
+ }
+}

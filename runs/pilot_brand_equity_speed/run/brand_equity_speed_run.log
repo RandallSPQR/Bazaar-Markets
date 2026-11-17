@@ -1,0 +1,10 @@
+2026-11-17 16:27:32 brand equity speed: engine 0.19.0, commit 950f745, seeds 900-902, levels {'current': 0.0, 'd5': 3.5, 'd10': 10.0, 'd20': 400.0}, t100 levels all
+2026-11-17 16:27:32 18 chains, 0 cached, 18 to run; workers 4; load [4.08, 5.59, 5.57]; memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 16:31:52 18/18 chains, 260 s, load [4.97, 5.77, 5.69], memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 16:31:52 royalty check: pass
+2026-11-17 16:31:52 168 chains, 18 cached, 162 to run; workers 4; load [4.97, 5.77, 5.69]; memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 16:44:59 50/162 chains, 787 s, load [7.03, 6.73, 6.28], memory {'swap_free_mb': 1320.31, 'free_pct': 66}
+2026-11-17 16:56:16 100/162 chains, 1464 s, load [6.08, 6.35, 6.3], memory {'swap_free_mb': 1320.31, 'free_pct': 64}
+2026-11-17 17:08:35 150/162 chains, 2203 s, load [6.35, 6.41, 6.34], memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 17:11:12 162/162 chains, 2360 s, load [5.4, 6.07, 6.22], memory {'swap_free_mb': 1320.31, 'free_pct': 65}
+2026-11-17 17:11:12 done; 0 flags; wall 0.73 h
