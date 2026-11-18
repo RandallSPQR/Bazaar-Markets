@@ -340,7 +340,7 @@ class RuleBuyer:
         task = me["task"]
         left, need, q_req = task["budget_left_cents"], task["units_needed"], task["q_req"]
         cost_i = me["inspect_cost_cents"]
-        stalls = sorted(obs["stalls_here"], key=lambda s: (s["price_cents"], s["id"]))
+        stalls = sorted(obs["stalls_here"], key=lambda s: (s["price_cents"], _tie(s)))
         stalls = [s for s in stalls if s.get("rating") is None or s["rating"] >= self.rating_tau]
         for s in stalls:
             units = min(need, left // s["price_cents"])
@@ -404,7 +404,8 @@ class RuleBuyer:
         heard nothing from), but buys only in phase "choose": then, among stalls here and stalls
         seen earlier that it believes meet Q_req, pass the rating threshold and fit its budget,
         it picks the highest visible rating (unrated = 0.5), then the lowest price (tourists, who
-        see no ratings: lowest price), ties by stall id; buys if that stall is here, else walks
+        see no ratings: lowest price), ties by stall id (or, with buyers.tie_break "random", by the row's
+        tie_rank, engine 0.20.0); buys if that stall is here, else walks
         back to it ("choose"). No candidate: move on."""
         me = obs["you"]
         task = me["task"]
@@ -436,8 +437,8 @@ class RuleBuyer:
         def key(x):
             s = x[0]
             if "rating" in s:
-                return (-(0.5 if s["rating"] is None else s["rating"]), s["price_cents"], s["id"])
-            return (s["price_cents"], s["id"])
+                return (-(0.5 if s["rating"] is None else s["rating"]), s["price_cents"], _tie(s))
+            return (s["price_cents"], _tie(s))
         cands.sort(key=key)
         best, is_here = cands[0]
         ids = [s["id"] for s, _ in cands]
@@ -445,3 +446,9 @@ class RuleBuyer:
             return _out({"action": "buy", "stall": best["id"], "units": int(min(need, left // best["price_cents"])),
                          "candidates": ids})
         return _out({"action": "choose", "stall": best["id"], "candidates": ids})
+
+
+def _tie(s: dict):
+    """Tie-break key for a stall row: its tie_rank under buyers.tie_break "random" (engine 0.20.0), else its id."""
+    r = s.get("tie_rank")
+    return s["id"] if r is None else r

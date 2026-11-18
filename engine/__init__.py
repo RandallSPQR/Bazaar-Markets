@@ -77,4 +77,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #         the owner's and every original stall's name rate as with prior_n 0). market.days 60 checked end to end:
 #         nothing in the engine or agents assumes 30 days; the horizon (market.horizon_known) is read only by the
 #         rule_genuine_rational benchmark sellers. Defaults reproduce 0.18.0 byte for byte.
-ENGINE_VERSION = "0.19.0"
+# 0.20.0: ratings.display ("exact" = 0.19.0; "stars": every rating a buyer, a posted price or a seller decision reads is
+#         rounded half up to ratings.display_step, default 0.02; the stored rating and the logs stay unrounded) and
+#         buyers.tie_break ("stall_id" = 0.19.0; "random": ties on (visible rating, price) by a per-buyer, per-day random
+#         order of the stalls from default_rng([seed, 29, day, buyer index])). Defaults reproduce 0.19.0 byte for byte.
+ENGINE_VERSION = "0.20.0"

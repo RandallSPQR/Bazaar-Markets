@@ -33,6 +33,9 @@ from . import licensing as LIC
 from .world import (UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text,
                     validate_demand)
 
+TIE_BREAKS = ("stall_id", "random")     # buyers.tie_break (engine 0.20.0)
+TIE_STREAM = 29
+
 PROFILES = ("tourist", "local", "expert")
 
 AgentFactory = Callable[[str, str, str, int], Agent]   # (role, policy, agent_key, index) -> Agent
@@ -144,6 +147,12 @@ class BazaarEngine:
             raise ValueError("ratings.prior_n > 0 needs brands.enabled and ratings.mode != 'off'")
         if cfg.ratings.prior_scope not in B.PRIOR_SCOPES:
             raise ValueError(f"ratings.prior_scope must be one of {B.PRIOR_SCOPES}, got {cfg.ratings.prior_scope!r}")
+        B.validate_display(cfg)                   # 0.20.0: ratings.display, display_step
+        if cfg.buyers.tie_break not in TIE_BREAKS:
+            raise ValueError(f"buyers.tie_break must be one of {TIE_BREAKS}, got {cfg.buyers.tie_break!r}")
+        self.tie_random = cfg.buyers.tie_break == "random"
+        self.buyer_idx = {p.pid: j for j, p in enumerate(self.buyers)}
+        self._tie_rank: dict = {}
         # 0.8.0 switches (brands, known horizon), also off by default.
         self.day = int(day)
         self.brands_on = bool(cfg.brands.enabled)
@@ -187,6 +196,15 @@ class BazaarEngine:
                     self.fines["charged"].append((st.sid, f["cents"]))
 
     # ------------------------------------------------------------------ helpers
+
+    def tie_rank(self, p: Person, st: Stall) -> int:
+        """buyers.tie_break "random" (0.20.0): the stall's place in this buyer's random order of all stalls for
+        today, drawn once per buyer and day from default_rng([seed, 29, day, buyer index])."""
+        perm = self._tie_rank.get(p.pid)
+        if perm is None:
+            rng = np.random.default_rng([int(self.cfg.seed), TIE_STREAM, int(self.day), self.buyer_idx[p.pid]])
+            perm = self._tie_rank[p.pid] = rng.permutation(len(self.stalls))
+        return int(perm[st.idx])
 
     def capture_factor(self, p: Person, st: Stall) -> float:
         """1, or (1 - capture_effect) when a dedicated inspector is tied to the stall's brand."""
@@ -537,7 +555,7 @@ class BazaarEngine:
         old, target = st.brand, None
         how = B.canonical_reopen(how)
         if how == "counterfeit":
-            target = B.counterfeit_target(self.stalls, st, book, rng)
+            target = B.counterfeit_target(self.stalls, st, book, rng, self.cfg)
         if target is None:
             name = B.fresh_name(st.category, rng, book.used)
             st.counterfeit_of = None
@@ -778,7 +796,7 @@ class BazaarEngine:
         }
         if self.brands_on:
             honest = st.stype == "genuine" and st.busted_day is None
-            obs["brand"] = {"name": st.brand, "counterfeit_of": st.counterfeit_of, "rating": st.rating,
+            obs["brand"] = {"name": st.brand, "counterfeit_of": st.counterfeit_of, "rating": B.shown(self.cfg, st.rating),
                             "neutral_price_cents": B.neutral_price(self.cfg, st),
                             "rename_available": st.rename_pending,
                             "first_decision_today": not st.decided_today, "busted_day": st.busted_day,
@@ -810,7 +828,9 @@ class BazaarEngine:
                 # inspector-buyers with buyers.inspector_knowledge on get this field.
                 row["own_assessment"] = st.q_true
             if self.cfg.ratings.mode == "public" and p.profile in self.cfg.ratings.visible_to:
-                row["rating"] = st.rating
+                row["rating"] = B.shown(self.cfg, st.rating)          # 0.20.0: as displayed
+            if self.tie_random:
+                row["tie_rank"] = self.tie_rank(p, st)
             stalls.append(row)
         obs = {
             "role": "buyer", "tick": self.t,
@@ -844,7 +864,9 @@ class BazaarEngine:
             if self.knows_quality(p):
                 row["own_assessment"] = st.q_true
             if self.cfg.ratings.mode == "public" and p.profile in self.cfg.ratings.visible_to:
-                row["rating"] = st.rating
+                row["rating"] = B.shown(self.cfg, st.rating)          # 0.20.0: as displayed
+            if self.tie_random:
+                row["tie_rank"] = self.tie_rank(p, st)
             rows.append(row)
         return {"depth": p.search_k, "seen_count": len(p.seen), "phase": phase, "route_end": route_end,
                 "seen_elsewhere": rows}

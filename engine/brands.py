@@ -25,6 +25,8 @@ never shift any engine stream. Names are fictional.
 """
 from __future__ import annotations
 
+import math
+
 import numpy as np
 
 from .world import BRANDS
@@ -101,6 +103,29 @@ def counterfeit_name(original: str, rng: np.random.Generator, used: set) -> str:
 
 
 PRIOR_SCOPES = ("all", "new")     # ratings.prior_scope (engine 0.19.0)
+DISPLAYS = ("exact", "stars")      # ratings.display (engine 0.20.0)
+
+
+def shown(cfg, r: float | None) -> float | None:
+    """The rating as market participants see it (engine 0.20.0, ratings.display). "exact": r itself (0.19.0).
+    "stars": r rounded half up to the nearest ratings.display_step (a step of 0.02 is a tenth of a star on a
+    five-star scale). None (unrated) stays None; readers count it as 0.5 as before. The stored rating is never
+    changed: only what buyers, prices and seller decisions read."""
+    if r is None or cfg.ratings.display == "exact":
+        return r
+    step = float(cfg.ratings.display_step)
+    k = math.floor(r / step + 0.5 + 1e-9)
+    return round(k * step, 12)
+
+
+def validate_display(cfg) -> None:
+    r = cfg.ratings
+    if r.display not in DISPLAYS:
+        raise ValueError(f"ratings.display must be one of {DISPLAYS}, got {r.display!r}")
+    st = r.display_step
+    if isinstance(st, bool) or not isinstance(st, (int, float)) or not math.isfinite(st) or not 0 < st <= 1 \
+            or abs(1 / st - round(1 / st)) > 1e-9:
+        raise ValueError(f"ratings.display_step must be in (0, 1] with 1/step an integer, got {st!r}")
 
 
 class BrandBook:
@@ -176,7 +201,7 @@ def morning_prices(cfg, stalls: list, book: BrandBook) -> None:
     then take the price of the stall bearing the original's name."""
     for st in stalls:
         st.rating = book.rating(st.brand)
-        st.price_cents = premium_price(cfg, st, st.rating)
+        st.price_cents = premium_price(cfg, st, shown(cfg, st.rating))     # 0.20.0: the displayed rating
     holder = {st.brand: st for st in stalls if st.counterfeit_of is None and st.licensed_from is None}
     for st in stalls:
         if st.counterfeit_of is not None and st.counterfeit_of in holder:
@@ -228,7 +253,7 @@ def enter_counterfeits(cfg, stalls: list, book: BrandBook) -> list[dict]:
         if not cands:
             out.append({"stall": st.sid, "from": st.brand, "to": None, "counterfeit_of": None})
             continue
-        score = {s.sid: (0.5 if book.rating(s.brand) is None else book.rating(s.brand)) for s in cands}
+        score = {s.sid: (0.5 if book.rating(s.brand) is None else shown(cfg, book.rating(s.brand))) for s in cands}
         best = max(score.values())
         top = sorted((s for s in cands if score[s.sid] == best), key=lambda s: s.idx)
         target = top[int(rng.integers(len(top)))] if len(top) > 1 else top[0]
@@ -251,14 +276,16 @@ def counterfeit_prices(stalls: list) -> dict:
             for st in sorted(stalls, key=lambda s: s.idx) if st.counterfeit_of is not None}
 
 
-def counterfeit_target(stalls: list, st, book: BrandBook, rng: np.random.Generator):
+def counterfeit_target(stalls: list, st, book: BrandBook, rng: np.random.Generator, cfg=None):
     """The highest-rated full-price brand on another stall of st's category (counterfeits
-    excluded; unrated = 0.5); ties uniformly at random. None if there is no candidate."""
+    excluded; unrated = 0.5); ties uniformly at random. None if there is no candidate. With cfg given,
+    ratings are compared as displayed (0.20.0, ratings.display)."""
     cands = [s for s in stalls if s.sid != st.sid and s.category == st.category and s.stype != "seconds"
              and s.counterfeit_of is None and s.exited_day is None]
     if not cands:
         return None
-    score = {s.sid: (0.5 if book.rating(s.brand) is None else book.rating(s.brand)) for s in cands}
+    score = {s.sid: (0.5 if book.rating(s.brand) is None else
+                     (book.rating(s.brand) if cfg is None else shown(cfg, book.rating(s.brand)))) for s in cands}
     best = max(score.values())
     top = [s for s in cands if score[s.sid] == best]
     return top[int(rng.integers(len(top)))]

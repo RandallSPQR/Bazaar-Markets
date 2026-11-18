@@ -145,6 +145,10 @@ class BuyersCfg:
     # Diagnostics (0.10.0): add a `search` block to the outcome (per buyer: stalls seen, choices,
     # walking ticks; per stall: buyers of its category that came within reach). Off = 0.9.0 bytes.
     search_log: bool = False
+    # Tie-break (engine 0.20.0) when a rule buyer ranks stalls to buy from: "stall_id" (default) = 0.19.0, ties on
+    # (visible rating, price) go to the lower stall id. "random": each buyer gets, per day, a random order of the
+    # stalls from default_rng([seed, 29, day, buyer index]) (stall rows carry "tie_rank"), used in place of the id.
+    tie_break: str = "stall_id"
     # Bargain hunters (engine 0.11.0; default 0 = off, 0.10.0 bytes): this share of buyers draw
     # Q_req from bargain_q_req instead of q_req. Two draws per buyer from the dedicated stream
     # [day root, 16], consumed only when the share is > 0, so nothing else shifts.
@@ -278,6 +282,14 @@ class RatingsCfg:
     # later (white labels, fresh or counterfeit names at reopening, counterfeit entry); brands that exist on day 1
     # (every original stall's name, and any name taken on day 1) rate as with prior_n 0.
     prior_scope: str = "all"
+    # Engine 0.20.0: what market participants see. "exact" (default) = 0.19.0, the unrounded rating. "stars": every
+    # rating a buyer, a price or a seller decision reads is rounded half up to the nearest display_step (0.02 = a
+    # tenth of a star on a five-star scale); unrated stays unrated (0.5). The stored rating keeps updating unrounded
+    # and is what the logs report. Readers: buyers' stall rows (ranking and the tau threshold), the posted price
+    # (premium formula; licensees and counterfeits copy it), the seller observation's brand.rating (read by the
+    # rule_genuine_rational benchmarks), and counterfeit target choice (reopening and counterfeit entry).
+    display: str = "exact"
+    display_step: float = 0.02
 
 
 @dataclass

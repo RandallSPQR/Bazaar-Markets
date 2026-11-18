@@ -1,0 +1,22 @@
+2026-11-18 08:56:18 start; commit f39a99e + engine 0.20.0 working tree; load { 2.65 2.77 2.71 }
+....................................                                     [100%]
+=================================== FAILURES ===================================
+__________________ test_every_config_field_has_a_scaling_rule __________________
+
+    def test_every_config_field_has_a_scaling_rule():
+        fields = set(all_config_fields(BazaarConfig()))
+        missing = fields - set(FIELDS)
+>       assert not missing, f"config fields with no scaling rule in engine/scaling.py FIELDS: {sorted(missing)}"
+E       AssertionError: config fields with no scaling rule in engine/scaling.py FIELDS: ['buyers.tie_break', 'ratings.display', 'ratings.display_step']
+E       assert not {'buyers.tie_break', 'ratings.display', 'ratings.display_step'}
+
+tests/test_scale.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_scale.py::test_every_config_field_has_a_scaling_rule - Asse...
+1 failed, 1602 passed, 17 skipped in 4544.89s (1:15:44)
+2026-11-18 10:12:03 end; load { 2.56 2.74 2.83 }
+2026-11-18 10:12:38 rerun after adding the three 0.20.0 keys to engine/scaling.py FIELDS (and moving TIE_BREAKS below the imports in engine/bazaar.py): tests/test_scale.py and tests/test_v0200.py in full
+........................................................................ [ 97%]
+......                                                                   [100%]
+222 passed in 748.02s (0:12:28)
+2026-11-18 10:25:06 end
