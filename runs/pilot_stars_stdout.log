@@ -1,0 +1,93 @@
+2026-11-18 10:25:19 pilot stars: engine 0.20.0, commit 84b7243, load [2.81, 2.96, 2.94]
+2026-11-18 10:25:19 112 chains, 0 cached, 112 to run; workers 4; load [2.81, 2.96, 2.94]; memory {'swap_free_mb': 1328.31, 'free_pct': 62}
+2026-11-18 10:36:51 50/112 chains, 691 s, load [6.32, 5.94, 4.83], memory {'swap_free_mb': 1328.31, 'free_pct': 64}
+2026-11-18 10:47:50 100/112 chains, 1351 s, load [6.24, 6.31, 5.64], memory {'swap_free_mb': 1328.31, 'free_pct': 65}
+2026-11-18 10:50:32 112/112 chains, 1512 s, load [6.09, 6.4, 5.8], memory {'swap_free_mb': 1328.31, 'free_pct': 65}
+2026-11-18 10:50:32 G2: 112/112 identical
+2026-11-18 10:50:32 stars sensitivity: engine 0.20.0, commit 84b7243, studies ['verification', 'liability', 'bustout', 'canal', 'licensing'], exact saved, seeds {'verification': '200-209', 'liability': '230-239', 'bustout': '230-239', 'canal': '270-279', 'licensing': '250-259'}; load [6.09, 6.4, 5.8], memory {'swap_free_mb': 1328.31, 'free_pct': 65}
+2026-11-18 10:50:33 reproduction check: 20 saved exact chains rerun at engine 0.20.0 with defaults
+2026-11-18 10:50:33 20 chains, 0 cached, 20 to run; workers 4; load [6.09, 6.4, 5.8]; memory {'swap_free_mb': 1328.31, 'free_pct': 65}
+2026-11-18 10:52:46 20/20 chains, 134 s, load [6.91, 6.59, 5.96], memory {'swap_free_mb': 1328.31, 'free_pct': 65}
+2026-11-18 10:52:46 repro verification A|t100|200|None|never: reproduces; fields compared 11; differ none; 26.26 s
+2026-11-18 10:52:46 repro verification A|t40|l1|203|None|never: reproduces; fields compared 11; differ none; 26.07 s
+2026-11-18 10:52:46 repro verification A|t40|l1|206|s13|30: reproduces; fields compared 11; differ none; 26.28 s
+2026-11-18 10:52:46 repro verification B|t100|209|s06|30: reproduces; fields compared 11; differ none; 25.4 s
+2026-11-18 10:52:46 repro liability col|t100|ds0.0|230|None|never: reproduces; fields compared 16; differ none; 27.54 s
+2026-11-18 10:52:46 repro liability col|t100|ds0.0|233|s28|30: reproduces; fields compared 16; differ none; 27.49 s
+2026-11-18 10:52:46 repro liability col|t100|ds1.0|236|s27|30: reproduces; fields compared 16; differ none; 25.25 s
+2026-11-18 10:52:46 repro liability col|t100|ds1.0|239|s19|30: reproduces; fields compared 16; differ none; 25.38 s
+2026-11-18 10:52:46 repro bustout col|t40|ds0.0|230|None|never: reproduces; fields compared 10; differ none; 27.52 s
+2026-11-18 10:52:46 repro bustout col|t40|ds0.0|233|s19|30: reproduces; fields compared 10; differ none; 27.53 s
+2026-11-18 10:52:46 repro bustout col|t40|ds0.0|236|s42|30: reproduces; fields compared 10; differ none; 27.34 s
+2026-11-18 10:52:46 repro bustout col|t40|ds0.0|239|s19|30: reproduces; fields compared 10; differ none; 27.44 s
+2026-11-18 10:52:46 repro canal off|t100|ds1.0|270: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 25.21 s
+2026-11-18 10:52:46 repro canal phi0.6|t100|ds1.0|273: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 25.02 s
+2026-11-18 10:52:46 repro canal phi0.6|t100|ds1.0|276: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 25.08 s
+2026-11-18 10:52:46 repro canal phi1.0|t100|ds1.0|279: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 25.07 s
+2026-11-18 10:52:46 repro licensing never|t40|ds1.0|250|None|never|r0.15: reproduces; fields compared 16; differ none; 27.79 s
+2026-11-18 10:52:46 repro licensing lic|contract|t40|ds1.0|free|253|s41|6x20|r0.15: reproduces; fields compared 16; differ none; 27.83 s
+2026-11-18 10:52:46 repro licensing lic|contract|t40|ds1.0|free|256|s37|6x20|r0.15: reproduces; fields compared 16; differ none; 27.7 s
+2026-11-18 10:52:46 repro licensing lic|contract|t40|ds1.0|free|259|s07|6x20|r0.15: reproduces; fields compared 16; differ none; 27.38 s
+2026-11-18 10:52:46 reproduction check pass; written to runs/pilot_stars/stars_sensitivity_repro.json
+2026-11-18 10:52:46 B reproduction check: pass
+2026-11-18 10:52:47 brand equity stars: engine 0.20.0, commit 84b7243, seeds 900-902, step 0.02, sensitivity on
+2026-11-18 10:52:47 18 chains, 0 cached, 18 to run; workers 4; load [6.91, 6.59, 5.96]; memory {'swap_free_mb': 1328.31, 'free_pct': 65}
+2026-11-18 10:57:06 18/18 chains, 259 s, load [4.63, 5.99, 5.88], memory {'swap_free_mb': 1328.31, 'free_pct': 66}
+2026-11-18 10:57:06 royalty check: pass
+2026-11-18 10:57:06 252 chains, 18 cached, 246 to run; workers 4; load [4.63, 5.99, 5.88]; memory {'swap_free_mb': 1328.31, 'free_pct': 66}
+2026-11-18 11:09:03 50/246 chains, 717 s, load [6.48, 6.64, 6.36], memory {'swap_free_mb': 1328.31, 'free_pct': 66}
+2026-11-18 11:20:18 100/246 chains, 1392 s, load [6.75, 6.96, 6.63], memory {'swap_free_mb': 1328.31, 'free_pct': 64}
+2026-11-18 11:32:13 150/246 chains, 2107 s, load [6.54, 6.29, 6.35], memory {'swap_free_mb': 1328.31, 'free_pct': 62}
+2026-11-18 11:44:10 200/246 chains, 2824 s, load [6.28, 6.38, 6.35], memory {'swap_free_mb': 1328.31, 'free_pct': 62}
+2026-11-18 11:55:20 246/246 chains, 3494 s, load [10.74, 8.48, 7.2], memory {'swap_free_mb': 1328.31, 'free_pct': 63}
+2026-11-18 11:55:21 done; 0 flags; wall 1.04 h
+2026-11-18 11:55:21 A: exit 0, 264 chains, 14.2 s per chain
+2026-11-18 11:55:21 stars sensitivity: engine 0.20.0, commit 84b7243, studies ['verification', 'liability', 'bustout', 'canal', 'licensing'], exact run, seeds {'verification': '900-902', 'liability': '900-902', 'bustout': '900-902', 'canal': '900-902', 'licensing': '900-902'}; load [10.74, 8.48, 7.2], memory {'swap_free_mb': 1328.31, 'free_pct': 63}
+2026-11-18 11:55:21 definition check verification: pass (20 seeds, 960 saved chains)
+2026-11-18 11:55:22 definition check liability: pass (20 seeds, 640 saved chains)
+2026-11-18 11:55:22 definition check bustout: pass (20 seeds, 80 saved chains)
+2026-11-18 11:55:22 definition check canal: pass (30 seeds, 90 saved chains)
+2026-11-18 11:55:22 definition check licensing: pass (20 seeds, 260 saved chains)
+2026-11-18 11:55:22 144 chains, 0 cached, 144 to run; workers 4; load [10.04, 8.37, 7.17]; memory {'swap_free_mb': 1328.31, 'free_pct': 63}
+2026-11-18 12:03:01 50/144 chains, 459 s, load [8.5, 8.82, 7.89], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:11:52 100/144 chains, 990 s, load [8.25, 8.47, 8.18], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:19:23 144/144 chains, 1440 s, load [8.71, 8.66, 8.36], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:19:23 96 chains, 144 cached, 96 to run; workers 4; load [8.71, 8.66, 8.36]; memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:28:45 50/96 chains, 562 s, load [8.64, 8.75, 8.48], memory {'swap_free_mb': 1344.31, 'free_pct': 58}
+2026-11-18 12:36:40 96/96 chains, 1037 s, load [11.24, 9.18, 8.69], memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:36:40 48 chains, 240 cached, 48 to run; workers 4; load [11.24, 9.18, 8.69]; memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:45:16 48/48 chains, 516 s, load [7.77, 8.15, 8.37], memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:45:16 9 chains, 288 cached, 9 to run; workers 4; load [7.77, 8.15, 8.37]; memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:46:50 9/9 chains, 94 s, load [7.26, 7.88, 8.24], memory {'swap_free_mb': 1344.31, 'free_pct': 58}
+2026-11-18 12:46:50 39 chains, 297 cached, 39 to run; workers 4; load [7.26, 7.88, 8.24]; memory {'swap_free_mb': 1344.31, 'free_pct': 58}
+2026-11-18 12:53:50 39/39 chains, 420 s, load [7.32, 8.0, 8.19], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:53:50 144 chains, 336 cached, 144 to run; workers 4; load [7.32, 8.0, 8.19]; memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 13:03:08 50/144 chains, 558 s, load [8.51, 8.71, 8.62], memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:11:42 100/144 chains, 1072 s, load [7.56, 8.3, 8.57], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 13:19:49 144/144 chains, 1558 s, load [9.36, 8.64, 8.62], memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:19:49 96 chains, 480 cached, 96 to run; workers 4; load [9.36, 8.64, 8.62]; memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:29:48 50/96 chains, 600 s, load [8.0, 8.5, 8.6], memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:39:03 96/96 chains, 1154 s, load [9.26, 11.01, 10.17], memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:39:03 12 chains, 576 cached, 12 to run; workers 4; load [9.26, 11.01, 10.17]; memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:41:37 12/12 chains, 154 s, load [8.82, 10.06, 9.91], memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:41:37 9 chains, 588 cached, 9 to run; workers 4; load [8.82, 10.06, 9.91]; memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:43:32 9/9 chains, 115 s, load [8.66, 9.63, 9.75], memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:43:32 39 chains, 597 cached, 39 to run; workers 4; load [8.66, 9.63, 9.75]; memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:51:12 39/39 chains, 459 s, load [8.88, 9.5, 9.79], memory {'swap_free_mb': 1360.31, 'free_pct': 56}
+2026-11-18 13:51:12 verification A_t100: exact +1,060.80 [−413.66, +2,535.26], stars +866.01 [+334.70, +1,397.33] *, stars − exact −194.79 [−1,181.56, +791.99]; sign change False, verdict change True
+2026-11-18 13:51:12 verification A_t40l1: exact −115.31 [−211.12, −19.50] *, stars −142.15 [−191.13, −93.17] *, stars − exact −26.84 [−164.81, +111.13]; sign change False, verdict change False
+2026-11-18 13:51:12 verification B_t100: exact −636.94 [−998.54, −275.33] *, stars −579.49 [−974.32, −184.66] *, stars − exact +57.45 [+23.87, +91.02] *; sign change False, verdict change False
+2026-11-18 13:51:12 verification PV4: exact −1,697.74 [−3,001.68, −393.80] *, stars −1,445.50 [−2,010.96, −880.05] *, stars − exact +252.23 [−761.63, +1,266.10]; sign change False, verdict change False
+2026-11-18 13:51:12 liability col_t100_ds0: exact +1,060.70 [−413.50, +2,534.91], stars +865.95 [+334.90, +1,397.01] *, stars − exact −194.75 [−1,181.48, +791.98]; sign change False, verdict change True
+2026-11-18 13:51:12 liability col_t100_ds1: exact −636.94 [−998.54, −275.33] *, stars −579.49 [−974.32, −184.66] *, stars − exact +57.45 [+23.87, +91.02] *; sign change False, verdict change False
+2026-11-18 13:51:12 liability col_t100_ds1_minus_ds0: exact −1,697.64 [−3,001.31, −393.97] *, stars −1,445.44 [−2,010.66, −880.23] *, stars − exact +252.20 [−761.62, +1,266.01]; sign change False, verdict change False
+2026-11-18 13:51:12 bustout lost_inspected: exact −215.58 [−298.60, −132.56] *, stars −246.95 [−321.45, −172.45] *, stars − exact −31.37 [−188.05, +125.31]; sign change False, verdict change False
+2026-11-18 13:51:12 bustout lost_rated_below: exact +0.00 [+0.00, +0.00], stars +0.00 [+0.00, +0.00], stars − exact +0.00 [+0.00, +0.00]; sign change False, verdict change False
+2026-11-18 13:51:12 bustout gain: exact −115.29 [−211.07, −19.50] *, stars −171.69 [−244.77, −98.62] *, stars − exact −56.41 [−154.81, +42.00]; sign change False, verdict change False
+2026-11-18 13:51:12 canal PK3: exact −0.383 [−0.435, −0.332] *, stars −0.386 [−0.437, −0.336] *, stars − exact −0.003 [−0.045, +0.039]; sign change False, verdict change False
+2026-11-18 13:51:12 canal PK2: exact −255.11 [−699.21, +188.99], stars −257.91 [−351.82, −164.01] *, stars − exact −2.80 [−528.68, +523.08]; sign change False, verdict change True
+2026-11-18 13:51:12 licensing con_unf_0.10: exact +4,046.13 [−11.21, +8,103.47], stars +4,434.48 [+987.49, +7,881.46] *, stars − exact +388.34 [−356.89, +1,133.57]; sign change False, verdict change True
+2026-11-18 13:51:12 done; 0 flags; wall 1.93 h; load [8.88, 9.5, 9.79]
+2026-11-18 13:51:12 B: exit 0, wall 1.93 h
+2026-11-18 13:51:12 gates: G1 pass, G2 pass, G3 pass, G4 pass, G5 pass; G3 choice sens=False|B=5
+exit 0

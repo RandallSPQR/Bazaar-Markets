@@ -1,0 +1,1030 @@
+{
+ "meta": {
+  "engine_version": "0.20.0",
+  "git": {
+   "commit": "84b7243fc97eabe8b946096cc6b7bd7561695e0b",
+   "status_porcelain": [
+    "?? runs/pilot_stars/",
+    "?? runs/pilot_stars_stdout.log",
+    "?? runs/queue_stars.sh"
+   ]
+  },
+  "script_sha256": "f9dbd83be46d8fbde6dd7824d13a510b23aa4d8595f697a4dfbe1efce3dc1ce0",
+  "command": "python -m analysis.stars_sensitivity --seeds 900-902 --exact run --workers 4 --outdir runs/pilot_stars/B --tests Engine 0.20.0: full suite 1602 passed, 17 skipped, 1 failed (missing scaling rules, fixed); rerun of test_scale.py and test_v0200.py 222 passed (runs/tests_0200.log) --gate Pilot run (seeds 900\u2013902).",
+  "tests": "Engine 0.20.0: full suite 1602 passed, 17 skipped, 1 failed (missing scaling rules, fixed); rerun of test_scale.py and test_v0200.py 222 passed (runs/tests_0200.log)",
+  "gate": "Pilot run (seeds 900\u2013902).",
+  "python": "3.12.7",
+  "numpy": "2.5.4",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "workers": 4,
+  "load_start": [
+   10.74,
+   8.48,
+   7.2
+  ],
+  "mem_start": {
+   "swap_free_mb": 1328.31,
+   "free_pct": 63
+  },
+  "exact_mode": "run",
+  "seeds_txt": {
+   "verification": "900-902 (3)",
+   "liability": "900-902 (3)",
+   "bustout": "900-902 (3)",
+   "canal": "900-902 (3)",
+   "licensing": "900-902 (3)"
+  },
+  "stars_overrides": [
+   "ratings.display=stars",
+   "ratings.display_step=0.02",
+   "buyers.tie_break=random"
+  ],
+  "chains_run": 636,
+  "chains_cached": 0,
+  "chains_saved": 0,
+  "pauses": 0,
+  "wall_h": 1.9307165773047341,
+  "load_end": [
+   8.88,
+   9.5,
+   9.79
+  ],
+  "mem_end": {
+   "swap_free_mb": 1360.31,
+   "free_pct": 56
+  }
+ },
+ "definition_check": {
+  "verification": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "A_t100",
+     "computed": {
+      "n": 20,
+      "mean": 56527.25,
+      "lo": 43354.700057258844,
+      "hi": 69699.79994274116
+     },
+     "published": "+565.27 [+433.55, +697.00] *",
+     "match": true
+    },
+    {
+     "id": "A_t40l1",
+     "computed": {
+      "n": 20,
+      "mean": -11098.733333333334,
+      "lo": -14731.925887133779,
+      "hi": -7465.540779532888
+     },
+     "published": "\u2212110.99 [\u2212147.32, \u221274.66] *",
+     "match": true
+    },
+    {
+     "id": "B_t100",
+     "computed": {
+      "n": 20,
+      "mean": -43574.46666666667,
+      "lo": -53661.816524777125,
+      "hi": -33487.11680855621
+     },
+     "published": "\u2212435.74 [\u2212536.62, \u2212334.87] *",
+     "match": true
+    },
+    {
+     "id": "PV4",
+     "computed": {
+      "n": 20,
+      "mean": -100101.71666666667,
+      "lo": -121214.28026822394,
+      "hi": -78989.1530651094
+     },
+     "published": "\u22121,001.02 [\u22121,212.14, \u2212789.89] *",
+     "match": true
+    }
+   ],
+   "seeds": "200-219"
+  },
+  "liability": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "col_t100_ds0",
+     "computed": {
+      "n": 20,
+      "mean": 56445.08333333333,
+      "lo": 43409.113105925804,
+      "hi": 69481.05356074085
+     },
+     "published": "+564.45 [+434.09, +694.81] *",
+     "match": true
+    },
+    {
+     "id": "col_t100_ds1",
+     "computed": {
+      "n": 20,
+      "mean": -38903.98333333332,
+      "lo": -49270.260395716294,
+      "hi": -28537.70627095035
+     },
+     "published": "\u2212389.04 [\u2212492.70, \u2212285.38] *",
+     "match": true
+    },
+    {
+     "id": "col_t100_ds1_minus_ds0",
+     "computed": {
+      "n": 20,
+      "mean": -95349.06666666668,
+      "lo": -117068.151794963,
+      "hi": -73629.98153837035
+     },
+     "published": "not published (PL1 slope: \u2212963.90 [\u22121,189.56, \u2212738.24] * per 1.0 of detect_scale)",
+     "match": null
+    }
+   ],
+   "seeds": "230-249"
+  },
+  "bustout": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "lost_inspected",
+     "computed": {
+      "n": 20,
+      "mean": -13192.916666666668,
+      "lo": -16581.35796136091,
+      "hi": -9804.475371972423
+     },
+     "published": "\u2212131.93 [\u2212165.81, \u221298.04] *",
+     "match": true
+    },
+    {
+     "id": "lost_rated_below",
+     "computed": {
+      "n": 20,
+      "mean": -1435.45,
+      "lo": -4250.022876765023,
+      "hi": 1379.1228767650234
+     },
+     "published": "\u221214.35 [\u221242.50, +13.79]",
+     "match": true
+    },
+    {
+     "id": "gain",
+     "computed": {
+      "n": 20,
+      "mean": -9357.283333333336,
+      "lo": -12255.511777833195,
+      "hi": -6459.054888833477
+     },
+     "published": "\u221293.57 [\u2212122.56, \u221264.59] *",
+     "match": true
+    }
+   ],
+   "seeds": "230-249"
+  },
+  "canal": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "PK3",
+     "computed": {
+      "n": 30,
+      "mean": -0.3789494375061849,
+      "lo": -0.3925050880828398,
+      "hi": -0.36539378692953006
+     },
+     "published": "\u22120.379 [\u22120.393, \u22120.365] *",
+     "match": true
+    },
+    {
+     "id": "PK2",
+     "computed": {
+      "n": 30,
+      "mean": -36982.84,
+      "lo": -45779.71150615433,
+      "hi": -28185.968493845663
+     },
+     "published": "\u2212369.83 [\u2212457.80, \u2212281.86] *",
+     "match": true
+    }
+   ],
+   "seeds": "270-299"
+  },
+  "licensing": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "con_unf_0.10",
+     "computed": {
+      "n": 20,
+      "mean": 344272.4333333334,
+      "lo": 276803.55461452424,
+      "hi": 411741.3120521426
+     },
+     "published": "+3,442.72 [+2,768.04, +4,117.41] *",
+     "match": true
+    }
+   ],
+   "seeds": "250-269"
+  }
+ },
+ "repro": null,
+ "results": {
+  "verification": {
+   "seeds": [
+    900,
+    901,
+    902
+   ],
+   "rows": [
+    {
+     "id": "A_t100",
+     "label": "Stage A, tourists 1.0 (t100): gain (PV3)",
+     "unit": "$",
+     "sign": 1,
+     "pub_txt": "+565.27 [+433.55, +697.00] *",
+     "pub_verdict": "PV3: supported",
+     "src": "analysis/verification.py:206 gains, :220 seed_mean, :304 PV3; runs/verification_summary.md:34, :44",
+     "exact": {
+      "n": 3,
+      "mean": 106080.2222222222,
+      "lo": -41365.897559693854,
+      "hi": 253526.34200413828
+     },
+     "stars": {
+      "n": 3,
+      "mean": 86601.44444444444,
+      "lo": 33469.826650583615,
+      "hi": 139733.06223830525
+     },
+     "diff": {
+      "n": 3,
+      "mean": -19478.777777777777,
+      "lo": -118156.46522159576,
+      "hi": 79198.9096660402
+     },
+     "per_seed_exact": [
+      114975.66666666667,
+      42784.333333333336,
+      160480.66666666666
+     ],
+     "per_seed_stars": [
+      81715.33333333333,
+      68080.66666666667,
+      110008.33333333333
+     ],
+     "verdict_exact": "not supported (interval includes 0)",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": true
+    },
+    {
+     "id": "A_t40l1",
+     "label": "Stage A, tourists 0.4, locals inspect: gain (an endpoint of PV1)",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u2212110.99 [\u2212147.32, \u221274.66] *",
+     "pub_verdict": "no prediction on this cell (interval below 0); PV1, which uses it, supported",
+     "src": "analysis/verification.py:206, :220, :253; runs/verification_summary.md:30, :42",
+     "exact": {
+      "n": 3,
+      "mean": -11531.22222222222,
+      "lo": -21112.39461771264,
+      "hi": -1950.0498267318017
+     },
+     "stars": {
+      "n": 3,
+      "mean": -14215.333333333334,
+      "lo": -19113.235426383202,
+      "hi": -9317.431240283468
+     },
+     "diff": {
+      "n": 3,
+      "mean": -2684.111111111111,
+      "lo": -16481.059109412556,
+      "hi": 11112.836887190333
+     },
+     "per_seed_exact": [
+      -7262.666666666667,
+      -12566.333333333334,
+      -14764.666666666666
+     ],
+     "per_seed_stars": [
+      -16343.0,
+      -12450.333333333334,
+      -13852.666666666666
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "B_t100",
+     "label": "Stage B, t100: gain (PV3b, exploratory analogue)",
+     "unit": "$",
+     "sign": 1,
+     "pub_txt": "\u2212435.74 [\u2212536.62, \u2212334.87] *",
+     "pub_verdict": "PV3b: contradicted (interval on the opposite side of 0)",
+     "src": "analysis/verification.py:206, :220, :304; runs/verification_summary.md:109, :119",
+     "exact": {
+      "n": 3,
+      "mean": -63693.55555555556,
+      "lo": -99854.15286419413,
+      "hi": -27532.95824691699
+     },
+     "stars": {
+      "n": 3,
+      "mean": -57949.0,
+      "lo": -97432.44652056196,
+      "hi": -18465.553479438044
+     },
+     "diff": {
+      "n": 3,
+      "mean": 5744.555555555555,
+      "lo": 2386.8376592779086,
+      "hi": 9102.2734518332
+     },
+     "per_seed_exact": [
+      -48728.666666666664,
+      -77801.66666666667,
+      -64550.333333333336
+     ],
+     "per_seed_stars": [
+      -41717.0,
+      -73479.66666666667,
+      -58650.333333333336
+     ],
+     "verdict_exact": "contradicted (interval on the opposite side of 0)",
+     "verdict_stars": "contradicted (interval on the opposite side of 0)",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "PV4",
+     "label": "t100: Stage B \u2212 Stage A (PV4)",
+     "unit": "$",
+     "sign": -1,
+     "pub_txt": "\u22121,001.02 [\u22121,212.14, \u2212789.89] *",
+     "pub_verdict": "PV4: supported",
+     "src": "analysis/verification.py:330 cross_stage; runs/verification_summary.md:165",
+     "exact": {
+      "n": 3,
+      "mean": -169773.77777777778,
+      "lo": -300167.6505862161,
+      "hi": -39379.90496933943
+     },
+     "stars": {
+      "n": 3,
+      "mean": -144550.44444444447,
+      "lo": -201096.34410462523,
+      "hi": -88004.54478426371
+     },
+     "diff": {
+      "n": 3,
+      "mean": 25223.33333333334,
+      "lo": -76163.03818356113,
+      "hi": 126609.70485022782
+     },
+     "per_seed_exact": [
+      -163704.33333333334,
+      -120586.0,
+      -225031.0
+     ],
+     "per_seed_stars": [
+      -123432.33333333333,
+      -141560.33333333334,
+      -168658.66666666666
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": null,
+   "extra_stars": null
+  },
+  "liability": {
+   "seeds": [
+    900,
+    901,
+    902
+   ],
+   "rows": [
+    {
+     "id": "col_t100_ds0",
+     "label": "Collectible, t100, detect_scale 0: gain",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "+564.45 [+434.09, +694.81] *",
+     "pub_verdict": "no prediction on this cell (interval above 0)",
+     "src": "analysis/liability.py:263 gains, :277 seed_mean, :297; runs/liability_summary.md:31",
+     "exact": {
+      "n": 3,
+      "mean": 106070.44444444445,
+      "lo": -41349.89656147927,
+      "hi": 253490.7854503682
+     },
+     "stars": {
+      "n": 3,
+      "mean": 86595.44444444444,
+      "lo": 33489.92070847324,
+      "hi": 139700.96818041563
+     },
+     "diff": {
+      "n": 3,
+      "mean": -19475.000000000007,
+      "lo": -118147.58860648272,
+      "hi": 79197.58860648272
+     },
+     "per_seed_exact": [
+      114967.66666666667,
+      42784.333333333336,
+      160459.33333333334
+     ],
+     "per_seed_stars": [
+      81715.33333333333,
+      68081.33333333333,
+      109989.66666666667
+     ],
+     "verdict_exact": "interval includes 0",
+     "verdict_stars": "interval above 0",
+     "sign_change": false,
+     "verdict_change": true
+    },
+    {
+     "id": "col_t100_ds1",
+     "label": "Collectible, t100, detect_scale 1: gain",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u2212389.04 [\u2212492.70, \u2212285.38] *",
+     "pub_verdict": "no prediction on this cell (interval below 0)",
+     "src": "analysis/liability.py:263, :277, :297; runs/liability_summary.md:33",
+     "exact": {
+      "n": 3,
+      "mean": -63693.55555555556,
+      "lo": -99854.15286419413,
+      "hi": -27532.95824691699
+     },
+     "stars": {
+      "n": 3,
+      "mean": -57949.0,
+      "lo": -97432.44652056196,
+      "hi": -18465.553479438044
+     },
+     "diff": {
+      "n": 3,
+      "mean": 5744.555555555555,
+      "lo": 2386.8376592779086,
+      "hi": 9102.2734518332
+     },
+     "per_seed_exact": [
+      -48728.666666666664,
+      -77801.66666666667,
+      -64550.333333333336
+     ],
+     "per_seed_stars": [
+      -41717.0,
+      -73479.66666666667,
+      -58650.333333333336
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "col_t100_ds1_minus_ds0",
+     "label": "Collectible, t100: gain at ds 1 \u2212 gain at ds 0 (two-level analogue of PL1; PL1 is a slope over {0, 0.1, 1})",
+     "unit": "$",
+     "sign": -1,
+     "pub_txt": "not published (PL1 slope: \u2212963.90 [\u22121,189.56, \u2212738.24] * per 1.0 of detect_scale)",
+     "pub_verdict": "PL1: supported (a different statistic)",
+     "src": "per-seed difference of the two rows above; PL1 at analysis/liability.py:359, runs/liability_summary.md:47",
+     "exact": {
+      "n": 3,
+      "mean": -169764.00000000003,
+      "lo": -300131.12337886204,
+      "hi": -39396.876621138
+     },
+     "stars": {
+      "n": 3,
+      "mean": -144544.44444444444,
+      "lo": -201065.6768519918,
+      "hi": -88023.21203689708
+     },
+     "diff": {
+      "n": 3,
+      "mean": 25219.555555555566,
+      "lo": -76161.56104449427,
+      "hi": 126600.6721556054
+     },
+     "per_seed_exact": [
+      -163696.33333333334,
+      -120586.0,
+      -225009.6666666667
+     ],
+     "per_seed_stars": [
+      -123432.33333333333,
+      -141561.0,
+      -168640.0
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": null,
+   "extra_stars": null
+  },
+  "bustout": {
+   "seeds": [
+    900,
+    901,
+    902
+   ],
+   "rows": [
+    {
+     "id": "lost_inspected",
+     "label": "Collectible, t40, ds 0: b. lost: inspected and walked away",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u2212131.93 [\u2212165.81, \u221298.04] *",
+     "pub_verdict": "no prediction (interval below 0); the reading: the main cause of the loss",
+     "src": "analysis/bustout_report.py:56 cause, :70 decompose, :175 by_cond; runs/bustout_decomposition.md:32",
+     "exact": {
+      "n": 3,
+      "mean": -21557.88888888889,
+      "lo": -29860.0213687571,
+      "hi": -13255.756409020678
+     },
+     "stars": {
+      "n": 3,
+      "mean": -24694.88888888889,
+      "lo": -32144.822036753103,
+      "hi": -17244.955741024678
+     },
+     "diff": {
+      "n": 3,
+      "mean": -3137.0,
+      "lo": -18804.840684793497,
+      "hi": 12530.840684793495
+     },
+     "per_seed_exact": [
+      -19886.0,
+      -25405.666666666668,
+      -19382.0
+     ],
+     "per_seed_stars": [
+      -25521.0,
+      -21369.666666666668,
+      -27194.0
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "lost_rated_below",
+     "label": "Collectible, t40, ds 0: b. lost: rating below threshold",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u221214.35 [\u221242.50, +13.79]",
+     "pub_verdict": "no prediction (interval includes 0); the reading: \"add little\"",
+     "src": "analysis/bustout_report.py:56, :70, :175; runs/bustout_decomposition.md:33",
+     "exact": {
+      "n": 3,
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0
+     },
+     "stars": {
+      "n": 3,
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0
+     },
+     "diff": {
+      "n": 3,
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0
+     },
+     "per_seed_exact": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "per_seed_stars": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "verdict_exact": "interval includes 0",
+     "verdict_stars": "interval includes 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "gain",
+     "label": "Collectible, t40, ds 0: gain of the decomposed candidate (context)",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u221293.57 [\u2212122.56, \u221264.59] *",
+     "pub_verdict": "no prediction (interval below 0)",
+     "src": "analysis/bustout_report.py:70, :175; runs/bustout_decomposition.md:40",
+     "exact": {
+      "n": 3,
+      "mean": -11528.555555555555,
+      "lo": -21107.067288652564,
+      "hi": -1950.0438224585432
+     },
+     "stars": {
+      "n": 3,
+      "mean": -17169.333333333332,
+      "lo": -24477.050431403568,
+      "hi": -9861.616235263096
+     },
+     "diff": {
+      "n": 3,
+      "mean": -5640.777777777777,
+      "lo": -15481.473180138166,
+      "hi": 4199.917624582611
+     },
+     "per_seed_exact": [
+      -7262.666666666667,
+      -12558.333333333334,
+      -14764.666666666666
+     ],
+     "per_seed_stars": [
+      -16958.333333333332,
+      -14339.0,
+      -20210.666666666668
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": {
+    "e_max_abs": 0,
+    "pre_bust_differences": 0,
+    "units_inspected": [
+     3,
+     6,
+     8,
+     7,
+     5,
+     7,
+     9,
+     2,
+     5
+    ],
+    "units_rated_below": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "best": {
+     "900|s14": "29",
+     "900|s27": "30",
+     "900|s41": "29",
+     "901|s33": "29",
+     "901|s32": "30",
+     "901|s09": "30",
+     "902|s29": "30",
+     "902|s45": "29",
+     "902|s44": "30"
+    }
+   },
+   "extra_stars": {
+    "e_max_abs": 0,
+    "pre_bust_differences": 0,
+    "units_inspected": [
+     11,
+     4,
+     11,
+     6,
+     4,
+     7,
+     8,
+     6,
+     5
+    ],
+    "units_rated_below": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "best": {
+     "900|s14": "29",
+     "900|s27": "30",
+     "900|s41": "29",
+     "901|s33": "29",
+     "901|s32": "30",
+     "901|s09": "30",
+     "902|s29": "30",
+     "902|s45": "29",
+     "902|s44": "30"
+    }
+   }
+  },
+  "canal": {
+   "seeds": [
+    900,
+    901,
+    902
+   ],
+   "rows": [
+    {
+     "id": "PK3",
+     "label": "t100, ds 1, \u03c6 0.6: copied originals' day-30 rating, on \u2212 off (PK3)",
+     "unit": "rating",
+     "sign": -1,
+     "pub_txt": "\u22120.379 [\u22120.393, \u22120.365] *",
+     "pub_verdict": "PK3: supported",
+     "src": "analysis/canal_street.py:190, :196, :229; runs/canal_street_summary.md:39",
+     "exact": {
+      "n": 3,
+      "mean": -0.3834579797514226,
+      "lo": -0.4345881469810402,
+      "hi": -0.332327812521805
+     },
+     "stars": {
+      "n": 3,
+      "mean": -0.3861164976516893,
+      "lo": -0.4366111650029259,
+      "hi": -0.33562183030045273
+     },
+     "diff": {
+      "n": 3,
+      "mean": -0.00265851790026674,
+      "lo": -0.0445780907116189,
+      "hi": 0.03926105491108542
+     },
+     "per_seed_exact": [
+      -0.36100182582061124,
+      -0.4014216685272504,
+      -0.3879504449064062
+     ],
+     "per_seed_stars": [
+      -0.36571286979646633,
+      -0.3862742748467784,
+      -0.40636234831182333
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "PK2",
+     "label": "t100, ds 1, \u03c6 1.0: gap, 30-day (PK2)",
+     "unit": "$",
+     "sign": -1,
+     "pub_txt": "\u2212369.83 [\u2212457.80, \u2212281.86] *",
+     "pub_verdict": "PK2: supported",
+     "src": "analysis/canal_street.py:185, :227; runs/canal_street_summary.md:38",
+     "exact": {
+      "n": 3,
+      "mean": -25511.22222222222,
+      "lo": -69920.9456377138,
+      "hi": 18898.501193269352
+     },
+     "stars": {
+      "n": 3,
+      "mean": -25791.377777777776,
+      "lo": -35181.92048044641,
+      "hi": -16400.83507510914
+     },
+     "diff": {
+      "n": 3,
+      "mean": -280.15555555555574,
+      "lo": -52868.33510541896,
+      "hi": 52308.023994307856
+     },
+     "per_seed_exact": [
+      -11466.8,
+      -45633.53333333333,
+      -19433.333333333332
+     ],
+     "per_seed_stars": [
+      -30010.466666666667,
+      -22713.8,
+      -24649.866666666665
+     ],
+     "verdict_exact": "not supported (interval includes 0)",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": true
+    }
+   ],
+   "extra_exact": null,
+   "extra_stars": null
+  },
+  "licensing": {
+   "seeds": [
+    900,
+    901,
+    902
+   ],
+   "rows": [
+    {
+     "id": "con_unf_0.10",
+     "label": "Contract, t40, ds 1, not liable: owner's gain over the options every licensee accepts, royalty 0.10, unfloored",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "+3,442.72 [+2,768.04, +4,117.41] *",
+     "pub_verdict": "no prediction (interval above 0); the BLUF's headline",
+     "src": "analysis/licensing_checks.py:339 _owner_rows, :443-452, :463; runs/licensing_checks.md:8, :435",
+     "exact": {
+      "n": 3,
+      "mean": 404613.22222222225,
+      "lo": -1120.9935273661977,
+      "hi": 810347.4379718107
+     },
+     "stars": {
+      "n": 3,
+      "mean": 443447.6666666667,
+      "lo": 98749.43186496024,
+      "hi": 788145.9014683731
+     },
+     "diff": {
+      "n": 3,
+      "mean": 38834.44444444443,
+      "lo": -35688.580824213954,
+      "hi": 113357.46971310282
+     },
+     "per_seed_exact": [
+      253063.66666666666,
+      383192.6666666667,
+      577583.3333333334
+     ],
+     "per_seed_stars": [
+      326421.6666666667,
+      407198.6666666667,
+      596722.6666666666
+     ],
+     "verdict_exact": "interval includes 0",
+     "verdict_stars": "interval above 0",
+     "sign_change": false,
+     "verdict_change": true
+    }
+   ],
+   "extra_exact": {
+    "licensee_accept_share": 0.9722222222222222
+   },
+   "extra_stars": {
+    "licensee_accept_share": 1.0
+   }
+  }
+ },
+ "guard": {
+  "verification \u00b7 exact": {
+   "chains": 144,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 648000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 5745.88
+  },
+  "liability \u00b7 exact": {
+   "chains": 96,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 432000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 4138.86
+  },
+  "bustout \u00b7 exact": {
+   "chains": 48,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 216000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 2056.2400000000007
+  },
+  "canal \u00b7 exact": {
+   "chains": 9,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 40500,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 312.69000000000005
+  },
+  "licensing \u00b7 exact": {
+   "chains": 39,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 175500,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 1646.7400000000002
+  },
+  "verification \u00b7 stars": {
+   "chains": 144,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 648000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 6213.26
+  },
+  "liability \u00b7 stars": {
+   "chains": 96,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 432000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 4604.380000000001
+  },
+  "bustout \u00b7 stars": {
+   "chains": 12,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 54000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 610.49
+  },
+  "canal \u00b7 stars": {
+   "chains": 9,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 40500,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 387.96
+  },
+  "licensing \u00b7 stars": {
+   "chains": 39,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 175500,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 1802.3200000000002
+  }
+ },
+ "flags": [],
+ "bust_best": {
+  "bustout": {
+   "900|s14": "29",
+   "900|s27": "30",
+   "900|s41": "29",
+   "901|s33": "29",
+   "901|s32": "30",
+   "901|s09": "30",
+   "902|s29": "30",
+   "902|s45": "29",
+   "902|s44": "30"
+  }
+ }
+}

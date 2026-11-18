@@ -1,0 +1,759 @@
+{
+ "meta": {
+  "engine_version": "0.20.0",
+  "git": {
+   "commit": "84b7243fc97eabe8b946096cc6b7bd7561695e0b",
+   "status_porcelain": [
+    "?? runs/pilot_stars/",
+    "?? runs/pilot_stars_stdout.log",
+    "?? runs/queue_stars.sh"
+   ]
+  },
+  "load_start": [
+   2.81,
+   2.96,
+   2.94
+  ],
+  "start": "2026-11-18 10:25:19",
+  "tests": "Engine 0.20.0: full suite 1602 passed, 17 skipped, 1 failed (missing scaling rules, fixed); rerun of test_scale.py and test_v0200.py 222 passed (runs/tests_0200.log)",
+  "end": "2026-11-18 13:51:12",
+  "load_end": [
+   8.88,
+   9.5,
+   9.79
+  ]
+ },
+ "G2": {
+  "pass": true,
+  "chains": 112,
+  "found": 112,
+  "identical": 112,
+  "differ": [],
+  "guard": {
+   "stuck_buyers": 0,
+   "idle_choosers": 0,
+   "parked": 0,
+   "fallbacks": 0
+  },
+  "wall_s": 1512.3323409557343
+ },
+ "B_repro": {
+  "pass": true,
+  "exit": 0,
+  "cmd": "/Users/randallbennington/Bazaar Markets/.venv/bin/python -m analysis.stars_sensitivity --repro 4 --repro-file runs/pilot_stars/stars_sensitivity_repro.json --outdir runs/pilot_stars/B_repro --workers 4",
+  "file": "runs/pilot_stars/stars_sensitivity_repro.json",
+  "detail": {
+   "engine_version": "0.20.0",
+   "git": "84b7243fc97eabe8b946096cc6b7bd7561695e0b",
+   "time": "2026-11-18 10:50:32",
+   "n_per_study": 4,
+   "studies": {
+    "verification": {
+     "chains": 4,
+     "reproduced": 4,
+     "rows": [
+      {
+       "skey": "A|t100|200|None|never",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "fallbacks",
+        "key",
+        "profile",
+        "seed",
+        "stage",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 26.26,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "A|t40|l1|203|None|never",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "fallbacks",
+        "key",
+        "profile",
+        "seed",
+        "stage",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 26.07,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "A|t40|l1|206|s13|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "fallbacks",
+        "key",
+        "profile",
+        "seed",
+        "stage",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 26.28,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "B|t100|209|s06|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "fallbacks",
+        "key",
+        "profile",
+        "seed",
+        "stage",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 25.4,
+       "totals_new": null,
+       "totals_saved": null
+      }
+     ],
+     "pass": true
+    },
+    "liability": {
+     "chains": 4,
+     "reproduced": 4,
+     "rows": [
+      {
+       "skey": "col|t100|ds0.0|230|None|never",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "dec_catches",
+        "dec_stall_days",
+        "exited",
+        "fallbacks",
+        "fines",
+        "guard",
+        "key",
+        "market_fines",
+        "profile",
+        "seed",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.54,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "col|t100|ds0.0|233|s28|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "dec_catches",
+        "dec_stall_days",
+        "exited",
+        "fallbacks",
+        "fines",
+        "guard",
+        "key",
+        "market_fines",
+        "profile",
+        "seed",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.49,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "col|t100|ds1.0|236|s27|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "dec_catches",
+        "dec_stall_days",
+        "exited",
+        "fallbacks",
+        "fines",
+        "guard",
+        "key",
+        "market_fines",
+        "profile",
+        "seed",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 25.25,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "col|t100|ds1.0|239|s19|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "busts",
+        "cond",
+        "days",
+        "dec_catches",
+        "dec_stall_days",
+        "exited",
+        "fallbacks",
+        "fines",
+        "guard",
+        "key",
+        "market_fines",
+        "profile",
+        "seed",
+        "stall",
+        "totals"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 25.38,
+       "totals_new": null,
+       "totals_saved": null
+      }
+     ],
+     "pass": true
+    },
+    "bustout": {
+     "chains": 4,
+     "reproduced": 4,
+     "rows": [
+      {
+       "skey": "col|t40|ds0.0|230|None|never",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "cond",
+        "days",
+        "exited",
+        "fines",
+        "key",
+        "seed",
+        "stall",
+        "totals",
+        "watch"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.52,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "col|t40|ds0.0|233|s19|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "cond",
+        "days",
+        "exited",
+        "fines",
+        "key",
+        "seed",
+        "stall",
+        "totals",
+        "watch"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.53,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "col|t40|ds0.0|236|s42|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "cond",
+        "days",
+        "exited",
+        "fines",
+        "key",
+        "seed",
+        "stall",
+        "totals",
+        "watch"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.34,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "col|t40|ds0.0|239|s19|30",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "b",
+        "cond",
+        "days",
+        "exited",
+        "fines",
+        "key",
+        "seed",
+        "stall",
+        "totals",
+        "watch"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.44,
+       "totals_new": null,
+       "totals_saved": null
+      }
+     ],
+     "pass": true
+    },
+    "canal": {
+     "chains": 4,
+     "reproduced": 4,
+     "rows": [
+      {
+       "skey": "off|t100|ds1.0|270",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "below_cost",
+        "catches",
+        "cf_fixed_ok",
+        "cond",
+        "copied",
+        "counterfeit_of",
+        "digest",
+        "guard",
+        "key",
+        "profile",
+        "profit_mismatch",
+        "rating",
+        "renames",
+        "seed",
+        "series",
+        "stalls"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": true,
+       "secs": 25.21,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "phi0.6|t100|ds1.0|273",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "below_cost",
+        "catches",
+        "cf_fixed_ok",
+        "cond",
+        "copied",
+        "counterfeit_of",
+        "digest",
+        "guard",
+        "key",
+        "profile",
+        "profit_mismatch",
+        "rating",
+        "renames",
+        "seed",
+        "series",
+        "stalls"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": true,
+       "secs": 25.02,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "phi0.6|t100|ds1.0|276",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "below_cost",
+        "catches",
+        "cf_fixed_ok",
+        "cond",
+        "copied",
+        "counterfeit_of",
+        "digest",
+        "guard",
+        "key",
+        "profile",
+        "profit_mismatch",
+        "rating",
+        "renames",
+        "seed",
+        "series",
+        "stalls"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": true,
+       "secs": 25.08,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "phi1.0|t100|ds1.0|279",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "below_cost",
+        "catches",
+        "cf_fixed_ok",
+        "cond",
+        "copied",
+        "counterfeit_of",
+        "digest",
+        "guard",
+        "key",
+        "profile",
+        "profit_mismatch",
+        "rating",
+        "renames",
+        "seed",
+        "series",
+        "stalls"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": true,
+       "secs": 25.07,
+       "totals_new": null,
+       "totals_saved": null
+      }
+     ],
+     "pass": true
+    },
+    "licensing": {
+     "chains": 4,
+     "reproduced": 4,
+     "rows": [
+      {
+       "skey": "never|t40|ds1.0|250|None|never|r0.15",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "cond",
+        "dig_nonroy",
+        "dig_trade",
+        "key",
+        "kind",
+        "lic",
+        "meta",
+        "o",
+        "profit_mismatch",
+        "roy",
+        "roy_mismatch",
+        "royalty",
+        "seed",
+        "stall",
+        "totals",
+        "win"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.79,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "lic|contract|t40|ds1.0|free|253|s41|6x20|r0.15",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "cond",
+        "dig_nonroy",
+        "dig_trade",
+        "key",
+        "kind",
+        "lic",
+        "meta",
+        "o",
+        "profit_mismatch",
+        "roy",
+        "roy_mismatch",
+        "royalty",
+        "seed",
+        "stall",
+        "totals",
+        "win"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.83,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "lic|contract|t40|ds1.0|free|256|s37|6x20|r0.15",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "cond",
+        "dig_nonroy",
+        "dig_trade",
+        "key",
+        "kind",
+        "lic",
+        "meta",
+        "o",
+        "profit_mismatch",
+        "roy",
+        "roy_mismatch",
+        "royalty",
+        "seed",
+        "stall",
+        "totals",
+        "win"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.7,
+       "totals_new": null,
+       "totals_saved": null
+      },
+      {
+       "skey": "lic|contract|t40|ds1.0|free|259|s07|6x20|r0.15",
+       "match": true,
+       "arm_ok": true,
+       "compared": [
+        "cond",
+        "dig_nonroy",
+        "dig_trade",
+        "key",
+        "kind",
+        "lic",
+        "meta",
+        "o",
+        "profit_mismatch",
+        "roy",
+        "roy_mismatch",
+        "royalty",
+        "seed",
+        "stall",
+        "totals",
+        "win"
+       ],
+       "differs": [],
+       "only_new": [],
+       "only_saved": [],
+       "digest_compared": false,
+       "secs": 27.38,
+       "totals_new": null,
+       "totals_saved": null
+      }
+     ],
+     "pass": true
+    }
+   },
+   "pass": true
+  }
+ },
+ "A": {
+  "exit": 0,
+  "chains": 264,
+  "wall_s": 3754.2443482875824,
+  "s_per_chain": 14.220622531392358,
+  "flags": [],
+  "summary": true,
+  "pred": {
+   "PT1": {
+    "mean": 25511.071829000302,
+    "lo": 6416.391795238629,
+    "hi": 44605.75186276197,
+    "verdict": "supported"
+   },
+   "PT2": {
+    "mean": 533754.6666666666,
+    "lo": 110095.60522359231,
+    "hi": 957413.7281097409,
+    "verdict": "supported"
+   },
+   "PT3": {
+    "mean": 35314.06666666667,
+    "lo": 5818.679106226409,
+    "hi": 64809.45422710694,
+    "verdict": "supported"
+   }
+  }
+ },
+ "B": {
+  "exit": 0,
+  "cmd": "/Users/randallbennington/Bazaar Markets/.venv/bin/python -m analysis.stars_sensitivity --seeds 900-902 --exact run --workers 4 --outdir runs/pilot_stars/B --tests Engine 0.20.0: full suite 1602 passed, 17 skipped, 1 failed (missing scaling rules, fixed); rerun of test_scale.py and test_v0200.py 222 passed (runs/tests_0200.log) --gate Pilot run (seeds 900\u2013902).",
+  "wall_s": 6950.936719179153,
+  "summary": true,
+  "flags": [],
+  "chains": 636,
+  "s_per_stars_chain": {
+   "verification": 43.14763888888889,
+   "liability": 47.96229166666668,
+   "bustout": 50.87416666666667,
+   "canal": 43.10666666666666,
+   "licensing": 46.21333333333334
+  },
+  "guard": {
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "arm_bad": 0
+  }
+ },
+ "G1": {
+  "pass": true
+ },
+ "G3": {
+  "pass": true,
+  "limit_h": 7.0,
+  "projections": {
+   "sens=True|B=10": {
+    "A_h": 6.683692589754409,
+    "B_h": 3.152409722222222,
+    "total_h": 9.836102311976632
+   },
+   "sens=True|B=5": {
+    "A_h": 6.683692589754409,
+    "B_h": 1.576204861111111,
+    "total_h": 8.25989745086552
+   },
+   "sens=False|B=10": {
+    "A_h": 4.471595751537819,
+    "B_h": 3.152409722222222,
+    "total_h": 7.624005473760041
+   },
+   "sens=False|B=5": {
+    "A_h": 4.471595751537819,
+    "B_h": 1.576204861111111,
+    "total_h": 6.04780061264893
+   }
+  },
+  "choice": "sens=False|B=5"
+ },
+ "G4": {
+  "pass": true,
+  "step_0.02": {
+   "same": 15005,
+   "miss": 0
+  },
+  "step_0.1": {
+   "same": 9515,
+   "miss": 0
+  }
+ },
+ "G5": {
+  "pass": true,
+  "A": {
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0
+  },
+  "G2": {
+   "stuck_buyers": 0,
+   "idle_choosers": 0,
+   "parked": 0,
+   "fallbacks": 0
+  },
+  "B": {
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "arm_bad": 0
+  }
+ }
+}

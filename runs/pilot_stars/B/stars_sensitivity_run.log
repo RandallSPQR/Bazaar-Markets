@@ -1,0 +1,46 @@
+2026-11-18 11:55:21 stars sensitivity: engine 0.20.0, commit 84b7243, studies ['verification', 'liability', 'bustout', 'canal', 'licensing'], exact run, seeds {'verification': '900-902', 'liability': '900-902', 'bustout': '900-902', 'canal': '900-902', 'licensing': '900-902'}; load [10.74, 8.48, 7.2], memory {'swap_free_mb': 1328.31, 'free_pct': 63}
+2026-11-18 11:55:21 definition check verification: pass (20 seeds, 960 saved chains)
+2026-11-18 11:55:22 definition check liability: pass (20 seeds, 640 saved chains)
+2026-11-18 11:55:22 definition check bustout: pass (20 seeds, 80 saved chains)
+2026-11-18 11:55:22 definition check canal: pass (30 seeds, 90 saved chains)
+2026-11-18 11:55:22 definition check licensing: pass (20 seeds, 260 saved chains)
+2026-11-18 11:55:22 144 chains, 0 cached, 144 to run; workers 4; load [10.04, 8.37, 7.17]; memory {'swap_free_mb': 1328.31, 'free_pct': 63}
+2026-11-18 12:03:01 50/144 chains, 459 s, load [8.5, 8.82, 7.89], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:11:52 100/144 chains, 990 s, load [8.25, 8.47, 8.18], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:19:23 144/144 chains, 1440 s, load [8.71, 8.66, 8.36], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:19:23 96 chains, 144 cached, 96 to run; workers 4; load [8.71, 8.66, 8.36]; memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:28:45 50/96 chains, 562 s, load [8.64, 8.75, 8.48], memory {'swap_free_mb': 1344.31, 'free_pct': 58}
+2026-11-18 12:36:40 96/96 chains, 1037 s, load [11.24, 9.18, 8.69], memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:36:40 48 chains, 240 cached, 48 to run; workers 4; load [11.24, 9.18, 8.69]; memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:45:16 48/48 chains, 516 s, load [7.77, 8.15, 8.37], memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:45:16 9 chains, 288 cached, 9 to run; workers 4; load [7.77, 8.15, 8.37]; memory {'swap_free_mb': 1344.31, 'free_pct': 59}
+2026-11-18 12:46:50 9/9 chains, 94 s, load [7.26, 7.88, 8.24], memory {'swap_free_mb': 1344.31, 'free_pct': 58}
+2026-11-18 12:46:50 39 chains, 297 cached, 39 to run; workers 4; load [7.26, 7.88, 8.24]; memory {'swap_free_mb': 1344.31, 'free_pct': 58}
+2026-11-18 12:53:50 39/39 chains, 420 s, load [7.32, 8.0, 8.19], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 12:53:50 144 chains, 336 cached, 144 to run; workers 4; load [7.32, 8.0, 8.19]; memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 13:03:08 50/144 chains, 558 s, load [8.51, 8.71, 8.62], memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:11:42 100/144 chains, 1072 s, load [7.56, 8.3, 8.57], memory {'swap_free_mb': 1344.31, 'free_pct': 57}
+2026-11-18 13:19:49 144/144 chains, 1558 s, load [9.36, 8.64, 8.62], memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:19:49 96 chains, 480 cached, 96 to run; workers 4; load [9.36, 8.64, 8.62]; memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:29:48 50/96 chains, 600 s, load [8.0, 8.5, 8.6], memory {'swap_free_mb': 1344.31, 'free_pct': 56}
+2026-11-18 13:39:03 96/96 chains, 1154 s, load [9.26, 11.01, 10.17], memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:39:03 12 chains, 576 cached, 12 to run; workers 4; load [9.26, 11.01, 10.17]; memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:41:37 12/12 chains, 154 s, load [8.82, 10.06, 9.91], memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:41:37 9 chains, 588 cached, 9 to run; workers 4; load [8.82, 10.06, 9.91]; memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:43:32 9/9 chains, 115 s, load [8.66, 9.63, 9.75], memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:43:32 39 chains, 597 cached, 39 to run; workers 4; load [8.66, 9.63, 9.75]; memory {'swap_free_mb': 1352.31, 'free_pct': 55}
+2026-11-18 13:51:12 39/39 chains, 459 s, load [8.88, 9.5, 9.79], memory {'swap_free_mb': 1360.31, 'free_pct': 56}
+2026-11-18 13:51:12 verification A_t100: exact +1,060.80 [−413.66, +2,535.26], stars +866.01 [+334.70, +1,397.33] *, stars − exact −194.79 [−1,181.56, +791.99]; sign change False, verdict change True
+2026-11-18 13:51:12 verification A_t40l1: exact −115.31 [−211.12, −19.50] *, stars −142.15 [−191.13, −93.17] *, stars − exact −26.84 [−164.81, +111.13]; sign change False, verdict change False
+2026-11-18 13:51:12 verification B_t100: exact −636.94 [−998.54, −275.33] *, stars −579.49 [−974.32, −184.66] *, stars − exact +57.45 [+23.87, +91.02] *; sign change False, verdict change False
+2026-11-18 13:51:12 verification PV4: exact −1,697.74 [−3,001.68, −393.80] *, stars −1,445.50 [−2,010.96, −880.05] *, stars − exact +252.23 [−761.63, +1,266.10]; sign change False, verdict change False
+2026-11-18 13:51:12 liability col_t100_ds0: exact +1,060.70 [−413.50, +2,534.91], stars +865.95 [+334.90, +1,397.01] *, stars − exact −194.75 [−1,181.48, +791.98]; sign change False, verdict change True
+2026-11-18 13:51:12 liability col_t100_ds1: exact −636.94 [−998.54, −275.33] *, stars −579.49 [−974.32, −184.66] *, stars − exact +57.45 [+23.87, +91.02] *; sign change False, verdict change False
+2026-11-18 13:51:12 liability col_t100_ds1_minus_ds0: exact −1,697.64 [−3,001.31, −393.97] *, stars −1,445.44 [−2,010.66, −880.23] *, stars − exact +252.20 [−761.62, +1,266.01]; sign change False, verdict change False
+2026-11-18 13:51:12 bustout lost_inspected: exact −215.58 [−298.60, −132.56] *, stars −246.95 [−321.45, −172.45] *, stars − exact −31.37 [−188.05, +125.31]; sign change False, verdict change False
+2026-11-18 13:51:12 bustout lost_rated_below: exact +0.00 [+0.00, +0.00], stars +0.00 [+0.00, +0.00], stars − exact +0.00 [+0.00, +0.00]; sign change False, verdict change False
+2026-11-18 13:51:12 bustout gain: exact −115.29 [−211.07, −19.50] *, stars −171.69 [−244.77, −98.62] *, stars − exact −56.41 [−154.81, +42.00]; sign change False, verdict change False
+2026-11-18 13:51:12 canal PK3: exact −0.383 [−0.435, −0.332] *, stars −0.386 [−0.437, −0.336] *, stars − exact −0.003 [−0.045, +0.039]; sign change False, verdict change False
+2026-11-18 13:51:12 canal PK2: exact −255.11 [−699.21, +188.99], stars −257.91 [−351.82, −164.01] *, stars − exact −2.80 [−528.68, +523.08]; sign change False, verdict change True
+2026-11-18 13:51:12 licensing con_unf_0.10: exact +4,046.13 [−11.21, +8,103.47], stars +4,434.48 [+987.49, +7,881.46] *, stars − exact +388.34 [−356.89, +1,133.57]; sign change False, verdict change True
+2026-11-18 13:51:12 done; 0 flags; wall 1.93 h; load [8.88, 9.5, 9.79]
