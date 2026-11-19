@@ -6,7 +6,7 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 |---|---|
 | Stage | 1: checking vs reading ratings (engine 0.21.0) |
 | Running | Stage 1 main run, full design: block 1 seeds 350–359, then block 2 360–369, then a final pass (`runs/queue_check_vs_read.log`) |
-| Projected finish | block 1 about 22:05, block 2 about 04:10 (2026-11-20), at the pilot's rates |
+| Projected finish | block 1 about 22:25, block 2 about 04:30 (2026-11-20), at the pilot's rates |
 | Last gate | Stage 1 pilot: G1, G2, G4, G5 pass; G3 failed and was waived by Randall (deviation D4) |
 | Next step | after the main run: results, reading and caveats; checkpoint C2 |
 
@@ -14,7 +14,7 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 
 | Checkpoint | When | Result |
 |---|---|---|
-| C1 | Stage 1 engine and pilot passed; main run launched | 2026-11-19 16:00: main run launched, full design (G3 waived, D4); ETA about 04:10 on 2026-11-20 |
+| C1 | Stage 1 engine and pilot passed; main run launched | 2026-11-19 16:18: main run launched, full design (G3 waived, D4); ETA about 04:30 on 2026-11-20 |
 | C2 | Stage 1 summary written | – |
 | C3 | Stage 2 cross-check done; tag v1.0.0 | – |
 | C4 | Stage 3 engine and pilots passed; state bank night 1 launched | – |
@@ -31,4 +31,4 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 - 2026-11-19 15:05: repo pushed to GitHub (origin/main; regular commits pushed by Claude, releases and tags by Randall). README.md added (74dd1ee). To do at Stage 2: recheck the README against 1.0.0 (status line, links to `runs/BASELINE_1_0_0.md` and `docs/agent_interface.md`, quick start on `configs/reference_1_0.yaml` once the loader reads it).
 - 2026-11-19 15:52: **STOP (G3).** Stage 1 pilot (`runs/pilot_check_vs_read.md`): G1, G2, G5 pass; G4 passed after one pipeline fix (the comparison did not relabel the D chains' per-buyer profile labels; 150/150 identical after the fix, negative controls fail); G3 fails: 12.3 h full, 9.6 h without prior_n 0, 7.2 h at 15 seeds, against a 7 h limit. Load during the pilot 5–7.6 with 4 workers. Options in the pilot report; waiting for Randall.
 - 2026-11-19 15:55: Randall: "Ignore the timing gate. Just keep running." Full design, no trims, as two back-to-back 10-seed blocks (plan deviation D4).
-- 2026-11-19 16:00: **Checkpoint C1.** Stage 1 main run launched (`runs/queue_check_vs_read.sh`, under `caffeinate -i`, nice 19, 4 workers): 5,000 chains, about 12.3 h at the pilot's rates; ETA about 04:10 on 2026-11-20.
+- 2026-11-19 16:18: **Checkpoint C1.** Stage 1 main run launched (`runs/queue_check_vs_read.sh`, under `caffeinate -i`, nice 19, 4 workers): 5,000 chains, about 12.3 h at the pilot's rates; ETA about 04:30 on 2026-11-20.
