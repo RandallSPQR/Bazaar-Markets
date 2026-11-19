@@ -1,0 +1,1977 @@
+{
+ "meta": {
+  "engine_version": "0.20.0",
+  "git": {
+   "commit": "47634b06fb2109efdca31041bcf2a99a29ee5144",
+   "status_porcelain": [
+    "?? runs/brand_equity_stars.csv",
+    "?? runs/brand_equity_stars.json.gz",
+    "?? runs/brand_equity_stars_run.log",
+    "?? runs/brand_equity_stars_stdout.log",
+    "?? runs/brand_equity_stars_summary.md",
+    "?? runs/pilot_stars/A/brand_equity_stars_cache.jsonl",
+    "?? runs/pilot_stars/B/stars_sensitivity_cache.jsonl",
+    "?? runs/pilot_stars/g2_cache.jsonl",
+    "?? runs/pilot_stars/os_check/g2_macos27_cache.jsonl",
+    "?? runs/queue_stars.log",
+    "?? runs/stars_sensitivity_run.log",
+    "?? runs/stars_sensitivity_stdout.log"
+   ]
+  },
+  "script_sha256": "f9dbd83be46d8fbde6dd7824d13a510b23aa4d8595f697a4dfbe1efce3dc1ce0",
+  "command": "python -m analysis.stars_sensitivity --repro-file runs/pilot_stars/stars_sensitivity_repro.json --seeds-per-study 10 --workers 4 --min-swap-mb 0 --tests Engine 0.20.0 (952af31): full suite 1602 passed, 17 skipped, 1 failed (missing scaling rules, fixed); rerun of test_scale.py and test_v0200.py 222 passed (runs/tests_0200.log) --gate Pilot gate G1\u2013G5 passed (runs/pilot_stars.md); G3 cut waived by the user for the full design (step 0.1 cells on, Run B 10 seeds per study)",
+  "tests": "Engine 0.20.0 (952af31): full suite 1602 passed, 17 skipped, 1 failed (missing scaling rules, fixed); rerun of test_scale.py and test_v0200.py 222 passed (runs/tests_0200.log)",
+  "gate": "Pilot gate G1\u2013G5 passed (runs/pilot_stars.md); G3 cut waived by the user for the full design (step 0.1 cells on, Run B 10 seeds per study)",
+  "python": "3.12.7",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "workers": 4,
+  "load_start": [
+   5.27,
+   5.6,
+   5.6
+  ],
+  "mem_start": {
+   "swap_free_mb": 0.0,
+   "free_pct": 82
+  },
+  "exact_mode": "saved",
+  "seeds_txt": {
+   "verification": "200-209 (10)",
+   "liability": "230-239 (10)",
+   "bustout": "230-239 (10)",
+   "canal": "270-279 (10)",
+   "licensing": "250-259 (10)"
+  },
+  "stars_overrides": [
+   "ratings.display=stars",
+   "ratings.display_step=0.02",
+   "buyers.tie_break=random"
+  ],
+  "chains_run": 1000,
+  "chains_cached": 0,
+  "chains_saved": 1000,
+  "pauses": 0,
+  "wall_h": 1.901357198357582,
+  "load_end": [
+   5.14,
+   5.69,
+   5.8
+  ],
+  "mem_end": {
+   "swap_free_mb": 0.0,
+   "free_pct": 79
+  }
+ },
+ "definition_check": {
+  "verification": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "A_t100",
+     "computed": {
+      "n": 20,
+      "mean": 56527.25,
+      "lo": 43354.700057258844,
+      "hi": 69699.79994274116
+     },
+     "published": "+565.27 [+433.55, +697.00] *",
+     "match": true
+    },
+    {
+     "id": "A_t40l1",
+     "computed": {
+      "n": 20,
+      "mean": -11098.733333333334,
+      "lo": -14731.925887133779,
+      "hi": -7465.540779532888
+     },
+     "published": "\u2212110.99 [\u2212147.32, \u221274.66] *",
+     "match": true
+    },
+    {
+     "id": "B_t100",
+     "computed": {
+      "n": 20,
+      "mean": -43574.46666666667,
+      "lo": -53661.816524777125,
+      "hi": -33487.11680855621
+     },
+     "published": "\u2212435.74 [\u2212536.62, \u2212334.87] *",
+     "match": true
+    },
+    {
+     "id": "PV4",
+     "computed": {
+      "n": 20,
+      "mean": -100101.71666666667,
+      "lo": -121214.28026822394,
+      "hi": -78989.1530651094
+     },
+     "published": "\u22121,001.02 [\u22121,212.14, \u2212789.89] *",
+     "match": true
+    }
+   ],
+   "seeds": "200-219"
+  },
+  "liability": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "col_t100_ds0",
+     "computed": {
+      "n": 20,
+      "mean": 56445.08333333333,
+      "lo": 43409.113105925804,
+      "hi": 69481.05356074085
+     },
+     "published": "+564.45 [+434.09, +694.81] *",
+     "match": true
+    },
+    {
+     "id": "col_t100_ds1",
+     "computed": {
+      "n": 20,
+      "mean": -38903.98333333332,
+      "lo": -49270.260395716294,
+      "hi": -28537.70627095035
+     },
+     "published": "\u2212389.04 [\u2212492.70, \u2212285.38] *",
+     "match": true
+    },
+    {
+     "id": "col_t100_ds1_minus_ds0",
+     "computed": {
+      "n": 20,
+      "mean": -95349.06666666668,
+      "lo": -117068.151794963,
+      "hi": -73629.98153837035
+     },
+     "published": "not published (PL1 slope: \u2212963.90 [\u22121,189.56, \u2212738.24] * per 1.0 of detect_scale)",
+     "match": null
+    }
+   ],
+   "seeds": "230-249"
+  },
+  "bustout": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "lost_inspected",
+     "computed": {
+      "n": 20,
+      "mean": -13192.916666666668,
+      "lo": -16581.35796136091,
+      "hi": -9804.475371972423
+     },
+     "published": "\u2212131.93 [\u2212165.81, \u221298.04] *",
+     "match": true
+    },
+    {
+     "id": "lost_rated_below",
+     "computed": {
+      "n": 20,
+      "mean": -1435.45,
+      "lo": -4250.022876765023,
+      "hi": 1379.1228767650234
+     },
+     "published": "\u221214.35 [\u221242.50, +13.79]",
+     "match": true
+    },
+    {
+     "id": "gain",
+     "computed": {
+      "n": 20,
+      "mean": -9357.283333333336,
+      "lo": -12255.511777833195,
+      "hi": -6459.054888833477
+     },
+     "published": "\u221293.57 [\u2212122.56, \u221264.59] *",
+     "match": true
+    }
+   ],
+   "seeds": "230-249"
+  },
+  "canal": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "PK3",
+     "computed": {
+      "n": 30,
+      "mean": -0.3789494375061849,
+      "lo": -0.3925050880828398,
+      "hi": -0.36539378692953006
+     },
+     "published": "\u22120.379 [\u22120.393, \u22120.365] *",
+     "match": true
+    },
+    {
+     "id": "PK2",
+     "computed": {
+      "n": 30,
+      "mean": -36982.84,
+      "lo": -45779.71150615433,
+      "hi": -28185.968493845663
+     },
+     "published": "\u2212369.83 [\u2212457.80, \u2212281.86] *",
+     "match": true
+    }
+   ],
+   "seeds": "270-299"
+  },
+  "licensing": {
+   "pass": true,
+   "missing": 0,
+   "rows": [
+    {
+     "id": "con_unf_0.10",
+     "computed": {
+      "n": 20,
+      "mean": 344272.4333333334,
+      "lo": 276803.55461452424,
+      "hi": 411741.3120521426
+     },
+     "published": "+3,442.72 [+2,768.04, +4,117.41] *",
+     "match": true
+    }
+   ],
+   "seeds": "250-269"
+  }
+ },
+ "repro": {
+  "engine_version": "0.20.0",
+  "git": "84b7243fc97eabe8b946096cc6b7bd7561695e0b",
+  "time": "2026-11-18 10:50:32",
+  "n_per_study": 4,
+  "studies": {
+   "verification": {
+    "chains": 4,
+    "reproduced": 4,
+    "rows": [
+     {
+      "skey": "A|t100|200|None|never",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "fallbacks",
+       "key",
+       "profile",
+       "seed",
+       "stage",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 26.26,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "A|t40|l1|203|None|never",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "fallbacks",
+       "key",
+       "profile",
+       "seed",
+       "stage",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 26.07,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "A|t40|l1|206|s13|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "fallbacks",
+       "key",
+       "profile",
+       "seed",
+       "stage",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 26.28,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "B|t100|209|s06|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "fallbacks",
+       "key",
+       "profile",
+       "seed",
+       "stage",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 25.4,
+      "totals_new": null,
+      "totals_saved": null
+     }
+    ],
+    "pass": true
+   },
+   "liability": {
+    "chains": 4,
+    "reproduced": 4,
+    "rows": [
+     {
+      "skey": "col|t100|ds0.0|230|None|never",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "dec_catches",
+       "dec_stall_days",
+       "exited",
+       "fallbacks",
+       "fines",
+       "guard",
+       "key",
+       "market_fines",
+       "profile",
+       "seed",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.54,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "col|t100|ds0.0|233|s28|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "dec_catches",
+       "dec_stall_days",
+       "exited",
+       "fallbacks",
+       "fines",
+       "guard",
+       "key",
+       "market_fines",
+       "profile",
+       "seed",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.49,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "col|t100|ds1.0|236|s27|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "dec_catches",
+       "dec_stall_days",
+       "exited",
+       "fallbacks",
+       "fines",
+       "guard",
+       "key",
+       "market_fines",
+       "profile",
+       "seed",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 25.25,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "col|t100|ds1.0|239|s19|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "busts",
+       "cond",
+       "days",
+       "dec_catches",
+       "dec_stall_days",
+       "exited",
+       "fallbacks",
+       "fines",
+       "guard",
+       "key",
+       "market_fines",
+       "profile",
+       "seed",
+       "stall",
+       "totals"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 25.38,
+      "totals_new": null,
+      "totals_saved": null
+     }
+    ],
+    "pass": true
+   },
+   "bustout": {
+    "chains": 4,
+    "reproduced": 4,
+    "rows": [
+     {
+      "skey": "col|t40|ds0.0|230|None|never",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "cond",
+       "days",
+       "exited",
+       "fines",
+       "key",
+       "seed",
+       "stall",
+       "totals",
+       "watch"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.52,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "col|t40|ds0.0|233|s19|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "cond",
+       "days",
+       "exited",
+       "fines",
+       "key",
+       "seed",
+       "stall",
+       "totals",
+       "watch"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.53,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "col|t40|ds0.0|236|s42|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "cond",
+       "days",
+       "exited",
+       "fines",
+       "key",
+       "seed",
+       "stall",
+       "totals",
+       "watch"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.34,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "col|t40|ds0.0|239|s19|30",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "b",
+       "cond",
+       "days",
+       "exited",
+       "fines",
+       "key",
+       "seed",
+       "stall",
+       "totals",
+       "watch"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.44,
+      "totals_new": null,
+      "totals_saved": null
+     }
+    ],
+    "pass": true
+   },
+   "canal": {
+    "chains": 4,
+    "reproduced": 4,
+    "rows": [
+     {
+      "skey": "off|t100|ds1.0|270",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "below_cost",
+       "catches",
+       "cf_fixed_ok",
+       "cond",
+       "copied",
+       "counterfeit_of",
+       "digest",
+       "guard",
+       "key",
+       "profile",
+       "profit_mismatch",
+       "rating",
+       "renames",
+       "seed",
+       "series",
+       "stalls"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": true,
+      "secs": 25.21,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "phi0.6|t100|ds1.0|273",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "below_cost",
+       "catches",
+       "cf_fixed_ok",
+       "cond",
+       "copied",
+       "counterfeit_of",
+       "digest",
+       "guard",
+       "key",
+       "profile",
+       "profit_mismatch",
+       "rating",
+       "renames",
+       "seed",
+       "series",
+       "stalls"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": true,
+      "secs": 25.02,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "phi0.6|t100|ds1.0|276",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "below_cost",
+       "catches",
+       "cf_fixed_ok",
+       "cond",
+       "copied",
+       "counterfeit_of",
+       "digest",
+       "guard",
+       "key",
+       "profile",
+       "profit_mismatch",
+       "rating",
+       "renames",
+       "seed",
+       "series",
+       "stalls"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": true,
+      "secs": 25.08,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "phi1.0|t100|ds1.0|279",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "below_cost",
+       "catches",
+       "cf_fixed_ok",
+       "cond",
+       "copied",
+       "counterfeit_of",
+       "digest",
+       "guard",
+       "key",
+       "profile",
+       "profit_mismatch",
+       "rating",
+       "renames",
+       "seed",
+       "series",
+       "stalls"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": true,
+      "secs": 25.07,
+      "totals_new": null,
+      "totals_saved": null
+     }
+    ],
+    "pass": true
+   },
+   "licensing": {
+    "chains": 4,
+    "reproduced": 4,
+    "rows": [
+     {
+      "skey": "never|t40|ds1.0|250|None|never|r0.15",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "cond",
+       "dig_nonroy",
+       "dig_trade",
+       "key",
+       "kind",
+       "lic",
+       "meta",
+       "o",
+       "profit_mismatch",
+       "roy",
+       "roy_mismatch",
+       "royalty",
+       "seed",
+       "stall",
+       "totals",
+       "win"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.79,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "lic|contract|t40|ds1.0|free|253|s41|6x20|r0.15",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "cond",
+       "dig_nonroy",
+       "dig_trade",
+       "key",
+       "kind",
+       "lic",
+       "meta",
+       "o",
+       "profit_mismatch",
+       "roy",
+       "roy_mismatch",
+       "royalty",
+       "seed",
+       "stall",
+       "totals",
+       "win"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.83,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "lic|contract|t40|ds1.0|free|256|s37|6x20|r0.15",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "cond",
+       "dig_nonroy",
+       "dig_trade",
+       "key",
+       "kind",
+       "lic",
+       "meta",
+       "o",
+       "profit_mismatch",
+       "roy",
+       "roy_mismatch",
+       "royalty",
+       "seed",
+       "stall",
+       "totals",
+       "win"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.7,
+      "totals_new": null,
+      "totals_saved": null
+     },
+     {
+      "skey": "lic|contract|t40|ds1.0|free|259|s07|6x20|r0.15",
+      "match": true,
+      "arm_ok": true,
+      "compared": [
+       "cond",
+       "dig_nonroy",
+       "dig_trade",
+       "key",
+       "kind",
+       "lic",
+       "meta",
+       "o",
+       "profit_mismatch",
+       "roy",
+       "roy_mismatch",
+       "royalty",
+       "seed",
+       "stall",
+       "totals",
+       "win"
+      ],
+      "differs": [],
+      "only_new": [],
+      "only_saved": [],
+      "digest_compared": false,
+      "secs": 27.38,
+      "totals_new": null,
+      "totals_saved": null
+     }
+    ],
+    "pass": true
+   }
+  },
+  "pass": true
+ },
+ "results": {
+  "verification": {
+   "seeds": [
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209
+   ],
+   "rows": [
+    {
+     "id": "A_t100",
+     "label": "Stage A, tourists 1.0 (t100): gain (PV3)",
+     "unit": "$",
+     "sign": 1,
+     "pub_txt": "+565.27 [+433.55, +697.00] *",
+     "pub_verdict": "PV3: supported",
+     "src": "analysis/verification.py:206 gains, :220 seed_mean, :304 PV3; runs/verification_summary.md:34, :44",
+     "exact": {
+      "n": 10,
+      "mean": 49151.23333333333,
+      "lo": 30575.09242964069,
+      "hi": 67727.37423702597
+     },
+     "stars": {
+      "n": 10,
+      "mean": 46672.0,
+      "lo": 31147.54227485187,
+      "hi": 62196.45772514813
+     },
+     "diff": {
+      "n": 10,
+      "mean": -2479.2333333333336,
+      "lo": -15567.429018336754,
+      "hi": 10608.962351670087
+     },
+     "per_seed_exact": [
+      50835.333333333336,
+      27567.333333333332,
+      69941.0,
+      48759.333333333336,
+      69546.0,
+      58046.333333333336,
+      85592.0,
+      62097.666666666664,
+      14237.333333333334,
+      4890.0
+     ],
+     "per_seed_stars": [
+      63434.666666666664,
+      25603.0,
+      49421.0,
+      65783.0,
+      76748.33333333333,
+      41364.333333333336,
+      45283.333333333336,
+      63194.333333333336,
+      29846.0,
+      6042.0
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "A_t40l1",
+     "label": "Stage A, tourists 0.4, locals inspect: gain (an endpoint of PV1)",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u2212110.99 [\u2212147.32, \u221274.66] *",
+     "pub_verdict": "no prediction on this cell (interval below 0); PV1, which uses it, supported",
+     "src": "analysis/verification.py:206, :220, :253; runs/verification_summary.md:30, :42",
+     "exact": {
+      "n": 10,
+      "mean": -10920.766666666666,
+      "lo": -16020.858365052965,
+      "hi": -5820.674968280368
+     },
+     "stars": {
+      "n": 10,
+      "mean": -12085.733333333334,
+      "lo": -18634.76755161397,
+      "hi": -5536.699115052696
+     },
+     "diff": {
+      "n": 10,
+      "mean": -1164.966666666667,
+      "lo": -3373.271293301116,
+      "hi": 1043.3379599677826
+     },
+     "per_seed_exact": [
+      -25654.333333333332,
+      -4667.333333333333,
+      -13323.333333333334,
+      -7534.333333333333,
+      -6463.333333333333,
+      -18376.666666666668,
+      -13799.0,
+      -10611.0,
+      -7122.0,
+      -1656.3333333333333
+     ],
+     "per_seed_stars": [
+      -26097.666666666668,
+      -2905.6666666666665,
+      -17768.666666666668,
+      -8026.0,
+      -3548.3333333333335,
+      -24906.333333333332,
+      -18762.666666666668,
+      -10690.333333333334,
+      -6618.666666666667,
+      -1533.0
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "B_t100",
+     "label": "Stage B, t100: gain (PV3b, exploratory analogue)",
+     "unit": "$",
+     "sign": 1,
+     "pub_txt": "\u2212435.74 [\u2212536.62, \u2212334.87] *",
+     "pub_verdict": "PV3b: contradicted (interval on the opposite side of 0)",
+     "src": "analysis/verification.py:206, :220, :304; runs/verification_summary.md:109, :119",
+     "exact": {
+      "n": 10,
+      "mean": -43532.333333333336,
+      "lo": -60291.95564847124,
+      "hi": -26772.711018195438
+     },
+     "stars": {
+      "n": 10,
+      "mean": -47304.33333333333,
+      "lo": -62662.464083680825,
+      "hi": -31946.202582985832
+     },
+     "diff": {
+      "n": 10,
+      "mean": -3771.9999999999977,
+      "lo": -11712.49166430508,
+      "hi": 4168.491664305084
+     },
+     "per_seed_exact": [
+      -45859.333333333336,
+      -18622.666666666668,
+      -45065.0,
+      -46692.333333333336,
+      -82381.66666666667,
+      -39015.333333333336,
+      -51386.333333333336,
+      -74330.0,
+      -27051.0,
+      -4919.666666666667
+     ],
+     "per_seed_stars": [
+      -63673.0,
+      -23936.333333333332,
+      -59576.333333333336,
+      -47172.666666666664,
+      -62247.666666666664,
+      -53930.333333333336,
+      -58782.666666666664,
+      -71149.66666666667,
+      -28383.333333333332,
+      -4191.333333333333
+     ],
+     "verdict_exact": "contradicted (interval on the opposite side of 0)",
+     "verdict_stars": "contradicted (interval on the opposite side of 0)",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "PV4",
+     "label": "t100: Stage B \u2212 Stage A (PV4)",
+     "unit": "$",
+     "sign": -1,
+     "pub_txt": "\u22121,001.02 [\u22121,212.14, \u2212789.89] *",
+     "pub_verdict": "PV4: supported",
+     "src": "analysis/verification.py:330 cross_stage; runs/verification_summary.md:165",
+     "exact": {
+      "n": 10,
+      "mean": -92683.56666666668,
+      "lo": -126062.73974434489,
+      "hi": -59304.393588988474
+     },
+     "stars": {
+      "n": 10,
+      "mean": -93976.33333333334,
+      "lo": -123860.59241382146,
+      "hi": -64092.074252845225
+     },
+     "diff": {
+      "n": 10,
+      "mean": -1292.7666666666614,
+      "lo": -13925.452996856593,
+      "hi": 11339.919663523271
+     },
+     "per_seed_exact": [
+      -96694.66666666667,
+      -46190.0,
+      -115006.0,
+      -95451.66666666667,
+      -151927.6666666667,
+      -97061.66666666667,
+      -136978.33333333334,
+      -136427.66666666666,
+      -41288.333333333336,
+      -9809.666666666668
+     ],
+     "per_seed_stars": [
+      -127107.66666666666,
+      -49539.33333333333,
+      -108997.33333333334,
+      -112955.66666666666,
+      -138996.0,
+      -95294.66666666667,
+      -104066.0,
+      -134344.0,
+      -58229.33333333333,
+      -10233.333333333332
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": null,
+   "extra_stars": null
+  },
+  "liability": {
+   "seeds": [
+    230,
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239
+   ],
+   "rows": [
+    {
+     "id": "col_t100_ds0",
+     "label": "Collectible, t100, detect_scale 0: gain",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "+564.45 [+434.09, +694.81] *",
+     "pub_verdict": "no prediction on this cell (interval above 0)",
+     "src": "analysis/liability.py:263 gains, :277 seed_mean, :297; runs/liability_summary.md:31",
+     "exact": {
+      "n": 10,
+      "mean": 64208.96666666666,
+      "lo": 42608.78372459087,
+      "hi": 85809.14960874245
+     },
+     "stars": {
+      "n": 10,
+      "mean": 60673.06666666667,
+      "lo": 44028.9314407924,
+      "hi": 77317.20189254094
+     },
+     "diff": {
+      "n": 10,
+      "mean": -3535.899999999999,
+      "lo": -19581.361523503823,
+      "hi": 12509.561523503826
+     },
+     "per_seed_exact": [
+      59533.333333333336,
+      33233.333333333336,
+      30216.333333333332,
+      24723.666666666668,
+      56394.666666666664,
+      111590.66666666667,
+      71683.66666666667,
+      76790.0,
+      69402.33333333333,
+      108521.66666666667
+     ],
+     "per_seed_stars": [
+      67445.0,
+      64396.666666666664,
+      17901.666666666668,
+      26694.666666666668,
+      77844.66666666667,
+      70014.66666666667,
+      84497.66666666667,
+      53905.333333333336,
+      55039.666666666664,
+      88990.66666666667
+     ],
+     "verdict_exact": "interval above 0",
+     "verdict_stars": "interval above 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "col_t100_ds1",
+     "label": "Collectible, t100, detect_scale 1: gain",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u2212389.04 [\u2212492.70, \u2212285.38] *",
+     "pub_verdict": "no prediction on this cell (interval below 0)",
+     "src": "analysis/liability.py:263, :277, :297; runs/liability_summary.md:33",
+     "exact": {
+      "n": 10,
+      "mean": -47003.73333333334,
+      "lo": -64947.335999414005,
+      "hi": -29060.130667252666
+     },
+     "stars": {
+      "n": 10,
+      "mean": -44711.36666666667,
+      "lo": -59053.103531706,
+      "hi": -30369.629801627332
+     },
+     "diff": {
+      "n": 10,
+      "mean": 2292.3666666666672,
+      "lo": -4516.159263552563,
+      "hi": 9100.892596885897
+     },
+     "per_seed_exact": [
+      -50292.333333333336,
+      -43693.0,
+      -12013.333333333334,
+      -30729.0,
+      -24282.0,
+      -79702.66666666667,
+      -69071.66666666667,
+      -25334.333333333332,
+      -47793.666666666664,
+      -87125.33333333333
+     ],
+     "per_seed_stars": [
+      -49696.0,
+      -33112.333333333336,
+      -14451.0,
+      -27742.666666666668,
+      -39064.666666666664,
+      -78220.33333333333,
+      -61721.333333333336,
+      -26542.666666666668,
+      -50782.666666666664,
+      -65780.0
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "col_t100_ds1_minus_ds0",
+     "label": "Collectible, t100: gain at ds 1 \u2212 gain at ds 0 (two-level analogue of PL1; PL1 is a slope over {0, 0.1, 1})",
+     "unit": "$",
+     "sign": -1,
+     "pub_txt": "not published (PL1 slope: \u2212963.90 [\u22121,189.56, \u2212738.24] * per 1.0 of detect_scale)",
+     "pub_verdict": "PL1: supported (a different statistic)",
+     "src": "per-seed difference of the two rows above; PL1 at analysis/liability.py:359, runs/liability_summary.md:47",
+     "exact": {
+      "n": 10,
+      "mean": -111212.7,
+      "lo": -148542.1675874901,
+      "hi": -73883.23241250988
+     },
+     "stars": {
+      "n": 10,
+      "mean": -105384.43333333335,
+      "lo": -134417.79932697234,
+      "hi": -76351.06733969436
+     },
+     "diff": {
+      "n": 10,
+      "mean": 5828.2666666666655,
+      "lo": -12177.713652588416,
+      "hi": 23834.24698592175
+     },
+     "per_seed_exact": [
+      -109825.66666666667,
+      -76926.33333333334,
+      -42229.666666666664,
+      -55452.66666666667,
+      -80676.66666666666,
+      -191293.33333333334,
+      -140755.33333333334,
+      -102124.33333333333,
+      -117196.0,
+      -195647.0
+     ],
+     "per_seed_stars": [
+      -117141.0,
+      -97509.0,
+      -32352.666666666668,
+      -54437.333333333336,
+      -116909.33333333334,
+      -148235.0,
+      -146219.0,
+      -80448.0,
+      -105822.33333333333,
+      -154770.6666666667
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": null,
+   "extra_stars": null
+  },
+  "bustout": {
+   "seeds": [
+    230,
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239
+   ],
+   "rows": [
+    {
+     "id": "lost_inspected",
+     "label": "Collectible, t40, ds 0: b. lost: inspected and walked away",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u2212131.93 [\u2212165.81, \u221298.04] *",
+     "pub_verdict": "no prediction (interval below 0); the reading: the main cause of the loss",
+     "src": "analysis/bustout_report.py:56 cause, :70 decompose, :175 by_cond; runs/bustout_decomposition.md:32",
+     "exact": {
+      "n": 10,
+      "mean": -16694.266666666666,
+      "lo": -21950.961708435454,
+      "hi": -11437.571624897879
+     },
+     "stars": {
+      "n": 10,
+      "mean": -16122.166666666666,
+      "lo": -23720.346624624624,
+      "hi": -8523.98670870871
+     },
+     "diff": {
+      "n": 10,
+      "mean": 572.0999999999997,
+      "lo": -4628.7408064042575,
+      "hi": 5772.940806404256
+     },
+     "per_seed_exact": [
+      -17006.666666666668,
+      -19955.0,
+      -3933.6666666666665,
+      -12394.666666666666,
+      -26449.333333333332,
+      -16232.333333333334,
+      -20856.333333333332,
+      -7747.333333333333,
+      -15663.333333333334,
+      -26704.0
+     ],
+     "per_seed_stars": [
+      -16389.0,
+      -7424.666666666667,
+      -5378.0,
+      -11294.666666666666,
+      -18710.666666666668,
+      -15998.333333333334,
+      -21558.666666666668,
+      -8553.666666666666,
+      -13339.333333333334,
+      -42574.666666666664
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval below 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "lost_rated_below",
+     "label": "Collectible, t40, ds 0: b. lost: rating below threshold",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u221214.35 [\u221242.50, +13.79]",
+     "pub_verdict": "no prediction (interval includes 0); the reading: \"add little\"",
+     "src": "analysis/bustout_report.py:56, :70, :175; runs/bustout_decomposition.md:33",
+     "exact": {
+      "n": 10,
+      "mean": -2693.0,
+      "lo": -8784.565999999999,
+      "hi": 3398.566
+     },
+     "stars": {
+      "n": 10,
+      "mean": -6642.733333333333,
+      "lo": -21668.596133333333,
+      "hi": 8383.129466666665
+     },
+     "diff": {
+      "n": 10,
+      "mean": -3949.7333333333327,
+      "lo": -12884.030133333334,
+      "hi": 4984.563466666667
+     },
+     "per_seed_exact": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -26930.0
+     ],
+     "per_seed_stars": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -66427.33333333333
+     ],
+     "verdict_exact": "interval includes 0",
+     "verdict_stars": "interval includes 0",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "gain",
+     "label": "Collectible, t40, ds 0: gain of the decomposed candidate (context)",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "\u221293.57 [\u2212122.56, \u221264.59] *",
+     "pub_verdict": "no prediction (interval below 0)",
+     "src": "analysis/bustout_report.py:70, :175; runs/bustout_decomposition.md:40",
+     "exact": {
+      "n": 10,
+      "mean": -12240.566666666666,
+      "lo": -15986.697316651022,
+      "hi": -8494.43601668231
+     },
+     "stars": {
+      "n": 10,
+      "mean": -17350.166666666668,
+      "lo": -34961.064217542415,
+      "hi": 260.73088420907516
+     },
+     "diff": {
+      "n": 10,
+      "mean": -5109.6,
+      "lo": -20719.37144780458,
+      "hi": 10500.17144780458
+     },
+     "per_seed_exact": [
+      -13904.333333333334,
+      -17097.0,
+      -3021.3333333333335,
+      -10883.333333333334,
+      -10212.333333333334,
+      -8846.0,
+      -16161.333333333334,
+      -6696.333333333333,
+      -15525.333333333334,
+      -20058.333333333332
+     ],
+     "per_seed_stars": [
+      -14246.0,
+      -5782.333333333333,
+      -4711.0,
+      -10083.333333333334,
+      -6778.333333333333,
+      -9514.0,
+      -17637.666666666668,
+      -5113.666666666667,
+      -13293.333333333334,
+      -86342.0
+     ],
+     "verdict_exact": "interval below 0",
+     "verdict_stars": "interval includes 0",
+     "sign_change": false,
+     "verdict_change": true
+    }
+   ],
+   "extra_exact": {
+    "e_max_abs": 0,
+    "pre_bust_differences": 0,
+    "units_inspected": [
+     13,
+     5,
+     6,
+     10,
+     10,
+     5,
+     4,
+     10,
+     3,
+     10,
+     6,
+     12,
+     3,
+     10,
+     10,
+     2,
+     5,
+     7,
+     6,
+     1,
+     8,
+     10,
+     1,
+     0,
+     7,
+     6,
+     4,
+     1,
+     7,
+     15
+    ],
+    "units_rated_below": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     15,
+     0,
+     0
+    ],
+    "best": {
+     "230|s08": "30",
+     "230|s17": "30",
+     "230|s42": "30",
+     "231|s33": "30",
+     "231|s08": "29",
+     "231|s12": "30",
+     "232|s31": "30",
+     "232|s09": "29",
+     "232|s12": "30",
+     "233|s19": "30",
+     "233|s28": "30",
+     "233|s02": "30",
+     "234|s34": "30",
+     "234|s41": "28",
+     "234|s04": "30",
+     "235|s43": "30",
+     "235|s04": "30",
+     "235|s41": "30",
+     "236|s27": "30",
+     "236|s42": "30",
+     "236|s40": "30",
+     "237|s22": "30",
+     "237|s25": "30",
+     "237|s24": "30",
+     "238|s39": "30",
+     "238|s05": "30",
+     "238|s01": "30",
+     "239|s44": "20",
+     "239|s39": "30",
+     "239|s19": "30"
+    }
+   },
+   "extra_stars": {
+    "e_max_abs": 0,
+    "pre_bust_differences": 0,
+    "units_inspected": [
+     13,
+     4,
+     6,
+     3,
+     7,
+     9,
+     6,
+     9,
+     6,
+     8,
+     8,
+     6,
+     1,
+     8,
+     10,
+     2,
+     3,
+     7,
+     7,
+     1,
+     8,
+     7,
+     6,
+     0,
+     6,
+     6,
+     2,
+     11,
+     6,
+     15
+    ],
+    "units_rated_below": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     37,
+     0,
+     0
+    ],
+    "best": {
+     "230|s08": "30",
+     "230|s17": "30",
+     "230|s42": "30",
+     "231|s33": "30",
+     "231|s08": "29",
+     "231|s12": "30",
+     "232|s31": "30",
+     "232|s09": "29",
+     "232|s12": "30",
+     "233|s19": "30",
+     "233|s28": "30",
+     "233|s02": "30",
+     "234|s34": "30",
+     "234|s41": "28",
+     "234|s04": "30",
+     "235|s43": "30",
+     "235|s04": "30",
+     "235|s41": "30",
+     "236|s27": "30",
+     "236|s42": "30",
+     "236|s40": "30",
+     "237|s22": "30",
+     "237|s25": "30",
+     "237|s24": "30",
+     "238|s39": "30",
+     "238|s05": "30",
+     "238|s01": "30",
+     "239|s44": "20",
+     "239|s39": "30",
+     "239|s19": "30"
+    }
+   }
+  },
+  "canal": {
+   "seeds": [
+    270,
+    271,
+    272,
+    273,
+    274,
+    275,
+    276,
+    277,
+    278,
+    279
+   ],
+   "rows": [
+    {
+     "id": "PK3",
+     "label": "t100, ds 1, \u03c6 0.6: copied originals' day-30 rating, on \u2212 off (PK3)",
+     "unit": "rating",
+     "sign": -1,
+     "pub_txt": "\u22120.379 [\u22120.393, \u22120.365] *",
+     "pub_verdict": "PK3: supported",
+     "src": "analysis/canal_street.py:190, :196, :229; runs/canal_street_summary.md:39",
+     "exact": {
+      "n": 10,
+      "mean": -0.3705258591713741,
+      "lo": -0.3947221104305699,
+      "hi": -0.3463296079121783
+     },
+     "stars": {
+      "n": 10,
+      "mean": -0.36675030308083184,
+      "lo": -0.392405517852075,
+      "hi": -0.3410950883095887
+     },
+     "diff": {
+      "n": 10,
+      "mean": 0.003775556090542248,
+      "lo": -0.0034486967692316547,
+      "hi": 0.01099980895031615
+     },
+     "per_seed_exact": [
+      -0.37137121688881525,
+      -0.3421912730482485,
+      -0.3258296412451621,
+      -0.37899728732074595,
+      -0.39806591074105535,
+      -0.3418371797724253,
+      -0.44623806634854574,
+      -0.36188764616917435,
+      -0.3652948480237612,
+      -0.37354552215580755
+     ],
+     "per_seed_stars": [
+      -0.3556011994433498,
+      -0.348122892318828,
+      -0.31872318066060795,
+      -0.3655062214703754,
+      -0.3956938806901858,
+      -0.3361716256747593,
+      -0.44467618609041404,
+      -0.3476968506045989,
+      -0.364392950065928,
+      -0.3909180437892717
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    },
+    {
+     "id": "PK2",
+     "label": "t100, ds 1, \u03c6 1.0: gap, 30-day (PK2)",
+     "unit": "$",
+     "sign": -1,
+     "pub_txt": "\u2212369.83 [\u2212457.80, \u2212281.86] *",
+     "pub_verdict": "PK2: supported",
+     "src": "analysis/canal_street.py:185, :227; runs/canal_street_summary.md:38",
+     "exact": {
+      "n": 10,
+      "mean": -30362.833333333332,
+      "lo": -45851.48427781686,
+      "hi": -14874.182388849804
+     },
+     "stars": {
+      "n": 10,
+      "mean": -37218.56,
+      "lo": -54761.246008153015,
+      "hi": -19675.87399184698
+     },
+     "diff": {
+      "n": 10,
+      "mean": -6855.726666666667,
+      "lo": -29022.95528962055,
+      "hi": 15311.501956287217
+     },
+     "per_seed_exact": [
+      -34793.13333333333,
+      -63002.666666666664,
+      -19385.0,
+      -6776.133333333333,
+      -323.2,
+      -27601.133333333335,
+      -34408.73333333333,
+      -13123.066666666668,
+      -40094.333333333336,
+      -64120.933333333334
+     ],
+     "per_seed_stars": [
+      -5302.133333333333,
+      -70135.13333333333,
+      -60948.46666666667,
+      -34870.4,
+      -14704.4,
+      -50639.26666666667,
+      -6676.0,
+      -68635.33333333333,
+      -25941.6,
+      -34332.86666666667
+     ],
+     "verdict_exact": "supported",
+     "verdict_stars": "supported",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": null,
+   "extra_stars": null
+  },
+  "licensing": {
+   "seeds": [
+    250,
+    251,
+    252,
+    253,
+    254,
+    255,
+    256,
+    257,
+    258,
+    259
+   ],
+   "rows": [
+    {
+     "id": "con_unf_0.10",
+     "label": "Contract, t40, ds 1, not liable: owner's gain over the options every licensee accepts, royalty 0.10, unfloored",
+     "unit": "$",
+     "sign": 0,
+     "pub_txt": "+3,442.72 [+2,768.04, +4,117.41] *",
+     "pub_verdict": "no prediction (interval above 0); the BLUF's headline",
+     "src": "analysis/licensing_checks.py:339 _owner_rows, :443-452, :463; runs/licensing_checks.md:8, :435",
+     "exact": {
+      "n": 10,
+      "mean": 338799.6333333333,
+      "lo": 250272.94284478342,
+      "hi": 427326.3238218832
+     },
+     "stars": {
+      "n": 10,
+      "mean": 313776.6666666666,
+      "lo": 240077.5273806639,
+      "hi": 387475.80595266935
+     },
+     "diff": {
+      "n": 10,
+      "mean": -25022.966666666664,
+      "lo": -71363.77928477249,
+      "hi": 21317.84595143916
+     },
+     "per_seed_exact": [
+      223588.33333333334,
+      288148.3333333333,
+      434766.0,
+      275671.3333333333,
+      443313.3333333333,
+      399374.6666666667,
+      343792.0,
+      431988.0,
+      77421.66666666667,
+      469932.6666666667
+     ],
+     "per_seed_stars": [
+      170453.33333333334,
+      310762.3333333333,
+      351495.6666666667,
+      346268.6666666667,
+      310070.3333333333,
+      377932.0,
+      381440.0,
+      342233.0,
+      100701.66666666667,
+      446409.6666666667
+     ],
+     "verdict_exact": "interval above 0",
+     "verdict_stars": "interval above 0",
+     "sign_change": false,
+     "verdict_change": false
+    }
+   ],
+   "extra_exact": {
+    "licensee_accept_share": 0.9895833333333334
+   },
+   "extra_stars": {
+    "licensee_accept_share": 1.0
+   }
+  }
+ },
+ "guard": {
+  "verification \u00b7 stars": {
+   "chains": 480,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 2160000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 13227.949999999997
+  },
+  "liability \u00b7 stars": {
+   "chains": 320,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 1440000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 8682.14
+  },
+  "bustout \u00b7 stars": {
+   "chains": 40,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 180000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 1112.1500000000003
+  },
+  "canal \u00b7 stars": {
+   "chains": 30,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 135000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 762.02
+  },
+  "licensing \u00b7 stars": {
+   "chains": 130,
+   "stuck_buyers": 0,
+   "parked": 0,
+   "idle_choosers": 0,
+   "fallbacks": 0,
+   "buyer_days": 585000,
+   "arm_bad": 0,
+   "schedule_bad": 0,
+   "secs": 3448.2200000000016
+  }
+ },
+ "flags": [],
+ "bust_best": {
+  "bustout": {
+   "230|s08": "30",
+   "230|s17": "30",
+   "230|s42": "30",
+   "231|s33": "30",
+   "231|s08": "29",
+   "231|s12": "30",
+   "232|s31": "30",
+   "232|s09": "29",
+   "232|s12": "30",
+   "233|s19": "30",
+   "233|s28": "30",
+   "233|s02": "30",
+   "234|s34": "30",
+   "234|s41": "28",
+   "234|s04": "30",
+   "235|s43": "30",
+   "235|s04": "30",
+   "235|s41": "30",
+   "236|s27": "30",
+   "236|s42": "30",
+   "236|s40": "30",
+   "237|s22": "30",
+   "237|s25": "30",
+   "237|s24": "30",
+   "238|s39": "30",
+   "238|s05": "30",
+   "238|s01": "30",
+   "239|s44": "20",
+   "239|s39": "30",
+   "239|s19": "30",
+   "240|s38": "30",
+   "240|s18": "30",
+   "240|s06": "30",
+   "241|s26": "29",
+   "241|s02": "30",
+   "241|s39": "30",
+   "242|s07": "30",
+   "242|s27": "30",
+   "242|s04": "30",
+   "243|s00": "30",
+   "243|s14": "30",
+   "243|s28": "30",
+   "244|s19": "30",
+   "244|s21": "30",
+   "244|s41": "30",
+   "245|s02": "30",
+   "245|s28": "28",
+   "245|s12": "30",
+   "246|s45": "30",
+   "246|s16": "30",
+   "246|s11": "30",
+   "247|s15": "29",
+   "247|s21": "30",
+   "247|s33": "30",
+   "248|s20": "30",
+   "248|s09": "30",
+   "248|s27": "25",
+   "249|s17": "30",
+   "249|s23": "29",
+   "249|s28": "30"
+  }
+ }
+}
