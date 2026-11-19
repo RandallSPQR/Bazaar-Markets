@@ -142,3 +142,7 @@ CHECKPOINT C6 with `runs/REPORT_2026-11.md`. Then stop. The LLM battery is not p
 ## Deviations
 
 (None yet. Add dated notes here if anything in the plan has to change, with the reason.)
+
+- **2026-11-19 (D1), "nights" are blocks, run back to back.** At Randall's instruction, "night" in this plan means a block of at most 10 h of wall clock, each usable on its own; stages and batches run back to back, not only overnight. Workers stay at 4, nice 19, so the machine remains usable. Reason: scheduling only; no design change. Every time limit in the plan (7 h, 10 h) applies as written.
+- **2026-11-19 (D2), every queue runs under `caffeinate -i`.** This prevents idle sleep mid-run. Reason: scheduling only; no design change.
+- **2026-11-19 (D3), the memory guard's swap test is off; the free-memory test stays on.** Since the macOS 27.2 restart the machine has no swap file, so free swap reads 0 MB, and the guard (≥ 512 MB free swap) would pause every chain forever. Runs pass `--min-swap-mb 0` and keep the free-memory guard (≥ 15% free); this was first used, and its reproduction checks recorded, in `runs/pilot_stars.md`. The guard only pauses new chains, so it cannot change a result. Reason: machine setup only; no design change.
