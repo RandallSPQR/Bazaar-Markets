@@ -69,3 +69,16 @@ nohup sh runs/queue_stars.sh > runs/queue_stars.log 2>&1 &
   `runs/brand_equity_stars_stdout.log` and `runs/stars_sensitivity_stdout.log`; queue log `runs/queue_stars.log`.
 - Summaries: `runs/brand_equity_stars_summary.md` and `runs/stars_sensitivity_summary.md`. The reading and caveats
   are written after the results.
+
+## Addendum before launch (2026-11-18, 19:45–20:00): macOS update
+
+The machine was restarted and updated from macOS 26.6.2 to 27.2.1 after the pilot. Before launch:
+
+- **Engine reproduces on the new OS.** Run B's reproduction check, rerun (4 saved exact chains per study, 20):
+  20/20 (`runs/pilot_stars/os_check/stars_sensitivity_repro_macos27.json`). The first 16 brand_equity_speed chains of
+  seed 330, rerun with defaults, equal their 0.19.0 records by full-outcome digest, daily trade digests, ledgers,
+  totals and ratings: 16/16 (`runs/pilot_stars/os_check/g2_macos27.json`, script `g2_macos27.py`). The saved exact
+  chains therefore stay valid partners for the stars chains.
+- **Memory guard.** After a fresh boot macOS has no swap file, so free swap reads 0 MB and the guard (≥ 512 MB) paused
+  every chain with 82% of memory free. The queue passes `--min-swap-mb 0` to both runs; the free-memory guard (≥ 15%)
+  stays on. The guard only pauses new chains, so it cannot change any result.

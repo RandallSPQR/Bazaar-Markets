@@ -1,0 +1,25 @@
+2026-11-18 19:54:24 stars sensitivity: engine 0.20.0, commit cc24b8c, studies ['verification', 'liability', 'bustout', 'canal', 'licensing'], exact saved, seeds {'verification': '200-209', 'liability': '230-239', 'bustout': '230-239', 'canal': '270-279', 'licensing': '250-259'}; load [1.92, 2.58, 2.76], memory {'swap_free_mb': 0.0, 'free_pct': 82}
+2026-11-18 19:54:24 reproduction check: 20 saved exact chains rerun at engine 0.20.0 with defaults
+2026-11-18 19:54:24 20 chains, 0 cached, 20 to run; workers 4; load [2.01, 2.59, 2.76]; memory {'swap_free_mb': 0.0, 'free_pct': 83}
+2026-11-18 19:56:17 20/20 chains, 113 s, load [5.3, 3.57, 3.12], memory {'swap_free_mb': 0.0, 'free_pct': 83}
+2026-11-18 19:56:17 repro verification A|t100|200|None|never: reproduces; fields compared 11; differ none; 20.28 s
+2026-11-18 19:56:17 repro verification A|t40|l1|203|None|never: reproduces; fields compared 11; differ none; 20.47 s
+2026-11-18 19:56:17 repro verification A|t40|l1|206|s13|30: reproduces; fields compared 11; differ none; 20.45 s
+2026-11-18 19:56:17 repro verification B|t100|209|s06|30: reproduces; fields compared 11; differ none; 19.94 s
+2026-11-18 19:56:17 repro liability col|t100|ds0.0|230|None|never: reproduces; fields compared 16; differ none; 22.99 s
+2026-11-18 19:56:17 repro liability col|t100|ds0.0|233|s28|30: reproduces; fields compared 16; differ none; 22.98 s
+2026-11-18 19:56:17 repro liability col|t100|ds1.0|236|s27|30: reproduces; fields compared 16; differ none; 21.09 s
+2026-11-18 19:56:17 repro liability col|t100|ds1.0|239|s19|30: reproduces; fields compared 16; differ none; 21.35 s
+2026-11-18 19:56:17 repro bustout col|t40|ds0.0|230|None|never: reproduces; fields compared 10; differ none; 23.4 s
+2026-11-18 19:56:17 repro bustout col|t40|ds0.0|233|s19|30: reproduces; fields compared 10; differ none; 23.47 s
+2026-11-18 19:56:17 repro bustout col|t40|ds0.0|236|s42|30: reproduces; fields compared 10; differ none; 23.39 s
+2026-11-18 19:56:17 repro bustout col|t40|ds0.0|239|s19|30: reproduces; fields compared 10; differ none; 23.49 s
+2026-11-18 19:56:17 repro canal off|t100|ds1.0|270: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 22.46 s
+2026-11-18 19:56:17 repro canal phi0.6|t100|ds1.0|273: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 22.26 s
+2026-11-18 19:56:17 repro canal phi0.6|t100|ds1.0|276: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 22.43 s
+2026-11-18 19:56:17 repro canal phi1.0|t100|ds1.0|279: reproduces; fields compared 16 (incl. full-outcome digest); differ none; 22.3 s
+2026-11-18 19:56:17 repro licensing never|t40|ds1.0|250|None|never|r0.15: reproduces; fields compared 16; differ none; 23.58 s
+2026-11-18 19:56:17 repro licensing lic|contract|t40|ds1.0|free|253|s41|6x20|r0.15: reproduces; fields compared 16; differ none; 23.55 s
+2026-11-18 19:56:17 repro licensing lic|contract|t40|ds1.0|free|256|s37|6x20|r0.15: reproduces; fields compared 16; differ none; 23.66 s
+2026-11-18 19:56:17 repro licensing lic|contract|t40|ds1.0|free|259|s07|6x20|r0.15: reproduces; fields compared 16; differ none; 23.23 s
+2026-11-18 19:56:17 reproduction check pass; written to runs/pilot_stars/os_check/stars_sensitivity_repro_macos27.json
