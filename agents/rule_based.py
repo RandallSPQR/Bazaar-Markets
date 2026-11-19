@@ -318,10 +318,23 @@ class RuleBuyer:
         self.rng = rng
         self._checks: dict = {}
 
-    def checks(self, profile: str, sid: str) -> bool:
+    @staticmethod
+    def check_rule(me: dict):
+        """Which inspection rule the buyer follows: "expert" (any stall before buying), "local" (a stall that
+        yelled or whispered at it) or None (tourists: never). A tourist given you.inspect_prob
+        (buyers.profile_overrides, engine 0.21.0) follows the local rule."""
+        if me["profile"] == "expert":
+            return "expert"
+        if me["profile"] == "local" or me.get("inspect_prob") is not None:
+            return "local"
+        return None
+
+    def checks(self, profile: str, sid: str, p: float | None = None) -> bool:
         """Whether this buyer verifies stall sid when its rule calls for it (locals: an advertising
-        stall; experts: any stall before buying)."""
-        p = self.inspect_prob.get(profile, 1.0)
+        stall; experts: any stall before buying). p: the buyer's own probability (you.inspect_prob, engine
+        0.21.0), replacing the profile's default when given."""
+        if p is None:
+            p = self.inspect_prob.get(profile, 1.0)
         if p >= 1.0:
             return True
         if p <= 0.0:
@@ -359,11 +372,12 @@ class RuleBuyer:
             if claim < q_req:
                 continue
             pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
-            wants_check = me["profile"] == "expert" or (me["profile"] == "local" and pushy)
-            if wants_check and self.checks(me["profile"], s["id"]):
+            rule = self.check_rule(me)
+            wants_check = rule == "expert" or (rule == "local" and pushy)
+            if wants_check and self.checks(rule, s["id"], me.get("inspect_prob")):
                 if cost_i + s["price_cents"] <= left:
                     return _out({"action": "inspect", "stall": s["id"]})
-                if me["profile"] == "expert":
+                if rule == "expert":
                     continue
             return _out({"action": "buy", "stall": s["id"], "units": int(units)})
         for s in stalls:
@@ -390,10 +404,11 @@ class RuleBuyer:
             return known >= q_req
         if not s["messages"] or s["messages"][-1]["claimed_quality"] < q_req:
             return False
-        if me["profile"] == "expert" and self.checks("expert", s["id"]):
+        rule, ip = self.check_rule(me), me.get("inspect_prob")
+        if rule == "expert" and self.checks("expert", s["id"], ip):
             return False                                   # experts buy only what they inspected
         pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
-        if me["profile"] == "local" and pushy and self.checks("local", s["id"]):
+        if rule == "local" and pushy and self.checks("local", s["id"], ip):
             # a local inspects a pushy stall first; it buys uninspected only if it cannot afford to
             return me["inspect_cost_cents"] + s["price_cents"] > left
         return True
@@ -420,8 +435,9 @@ class RuleBuyer:
             if s["messages"][-1]["claimed_quality"] < q_req:
                 continue
             pushy = any(m["channel"] in ("yell", "whisper") for m in s["messages"])
-            if (me["profile"] == "expert" or (me["profile"] == "local" and pushy)) and cost_i + s["price_cents"] <= left \
-                    and self.checks(me["profile"], s["id"]):
+            rule = self.check_rule(me)
+            if (rule == "expert" or (rule == "local" and pushy)) and cost_i + s["price_cents"] <= left \
+                    and self.checks(rule, s["id"], me.get("inspect_prob")):
                 return _out({"action": "inspect", "stall": s["id"]})
         for s in here:
             if not s["messages"] and not s["ask_pending"] and s["inspected_quality"] is None \

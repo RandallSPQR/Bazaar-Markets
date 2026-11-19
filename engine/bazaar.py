@@ -34,6 +34,24 @@ from .world import (UNIFORMABLE, Layout, Person, Stall, build_people, build_stal
                     validate_demand)
 
 TIE_BREAKS = ("stall_id", "random")     # buyers.tie_break (engine 0.20.0)
+OVERRIDE_PROFILES = ("tourist", "local", "expert", "bargain")   # buyers.profile_overrides (engine 0.21.0)
+OVERRIDE_KEYS = ("reads_ratings", "inspect_prob")
+
+
+def validate_profile_overrides(ov) -> None:
+    if not isinstance(ov, dict):
+        raise ValueError(f"buyers.profile_overrides must be a mapping, got {ov!r}")
+    for prof, d in ov.items():
+        if prof not in OVERRIDE_PROFILES:
+            raise ValueError(f"buyers.profile_overrides: unknown profile {prof!r}; one of {OVERRIDE_PROFILES}")
+        if not isinstance(d, dict) or any(k not in OVERRIDE_KEYS for k in d):
+            raise ValueError(f"buyers.profile_overrides.{prof} must map keys from {OVERRIDE_KEYS}, got {d!r}")
+        if "reads_ratings" in d and not isinstance(d["reads_ratings"], bool):
+            raise ValueError(f"buyers.profile_overrides.{prof}.reads_ratings must be true or false")
+        if "inspect_prob" in d:
+            v = d["inspect_prob"]
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or not 0.0 <= float(v) <= 1.0:
+                raise ValueError(f"buyers.profile_overrides.{prof}.inspect_prob must be in [0, 1], got {v!r}")
 TIE_STREAM = 29
 
 PROFILES = ("tourist", "local", "expert")
@@ -151,6 +169,7 @@ class BazaarEngine:
         if cfg.buyers.tie_break not in TIE_BREAKS:
             raise ValueError(f"buyers.tie_break must be one of {TIE_BREAKS}, got {cfg.buyers.tie_break!r}")
         self.tie_random = cfg.buyers.tie_break == "random"
+        validate_profile_overrides(cfg.buyers.profile_overrides)   # 0.21.0
         self.buyer_idx = {p.pid: j for j, p in enumerate(self.buyers)}
         self._tie_rank: dict = {}
         # 0.8.0 switches (brands, known horizon), also off by default.
@@ -827,7 +846,7 @@ class BazaarEngine:
                 # Reliable quality information from the buyer's own expertise. Only
                 # inspector-buyers with buyers.inspector_knowledge on get this field.
                 row["own_assessment"] = st.q_true
-            if self.cfg.ratings.mode == "public" and p.profile in self.cfg.ratings.visible_to:
+            if self.sees_ratings(p):
                 row["rating"] = B.shown(self.cfg, st.rating)          # 0.20.0: as displayed
             if self.tie_random:
                 row["tie_rank"] = self.tie_rank(p, st)
@@ -841,11 +860,33 @@ class BazaarEngine:
             "stalls_here": stalls,
             "actions_left_here": self.cfg.market.max_actions_per_stop - p.stop_actions,
         }
+        ip = self.profile_override(p, "inspect_prob")
+        if ip is not None:
+            obs["you"]["inspect_prob"] = float(ip)                   # 0.21.0: buyers.profile_overrides
         if privileged:
             # Informed reference agent only. Never given to study agents.
             obs["oracle"] = {"true_quality": {st.sid: st.q_true for st in here},
                              "route_ahead": self.route_ahead(p)}
         return obs
+
+    def profile_override(self, p: Person, key: str):
+        """buyers.profile_overrides (engine 0.21.0): the buyer's override for key, or None (unset). A bargain
+        hunter's "bargain" keys win over its profile's."""
+        ov = self.cfg.buyers.profile_overrides
+        if not ov:
+            return None
+        v = ov.get(p.profile, {}).get(key)
+        if p.task is not None and p.task.get("bargain") and key in ov.get("bargain", {}):
+            v = ov["bargain"][key]
+        return v
+
+    def sees_ratings(self, p: Person) -> bool:
+        """Whether buyer p's stall rows carry ratings: ratings public and its profile in ratings.visible_to, unless
+        buyers.profile_overrides sets reads_ratings for it (engine 0.21.0)."""
+        if self.cfg.ratings.mode != "public":
+            return False
+        r = self.profile_override(p, "reads_ratings")
+        return p.profile in self.cfg.ratings.visible_to if r is None else bool(r)
 
     def search_obs(self, p: Person, here: list[Stall], phase: str, route_end: bool) -> dict:
         """What a searching buyer remembers: every stall of its category it has seen and is not
@@ -863,7 +904,7 @@ class BazaarEngine:
                    "steps_away": abs(p.step - idx)}
             if self.knows_quality(p):
                 row["own_assessment"] = st.q_true
-            if self.cfg.ratings.mode == "public" and p.profile in self.cfg.ratings.visible_to:
+            if self.sees_ratings(p):
                 row["rating"] = B.shown(self.cfg, st.rating)          # 0.20.0: as displayed
             if self.tie_random:
                 row["tie_rank"] = self.tie_rank(p, st)

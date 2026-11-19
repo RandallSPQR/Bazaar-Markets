@@ -149,6 +149,16 @@ class BuyersCfg:
     # (visible rating, price) go to the lower stall id. "random": each buyer gets, per day, a random order of the
     # stalls from default_rng([seed, 29, day, buyer index]) (stall rows carry "tie_rank"), used in place of the id.
     tie_break: str = "stall_id"
+    # Profile overrides (engine 0.21.0; default {} = 0.20.0 bytes). Per profile ("tourist", "local", "expert") or
+    # "bargain" (bargain hunters, whatever their profile; their keys win over their profile's), optional:
+    #   reads_ratings (bool): whether the buyer sees ratings (stall rows carry "rating"), replacing
+    #     `ratings.visible_to` for it. False: it ranks candidates as a tourist does (lowest price) and never sees
+    #     ratings. True: it sees them (ratings.mode "public" only).
+    #   inspect_prob (0-1): the probability it inspects before buying, replacing the profile's default (the
+    #     rule_buyer local_inspect_prob / expert_inspect_prob params). Locals and tourists inspect an advertising
+    #     (yelling or whispering) stall; experts any stall before buying. Given to the buyer as you.inspect_prob.
+    # Unset means current behaviour. Nothing else changes (budgets, Q_req, search, inspection cost, what sellers see).
+    profile_overrides: dict = field(default_factory=dict)
     # Bargain hunters (engine 0.11.0; default 0 = off, 0.10.0 bytes): this share of buyers draw
     # Q_req from bargain_q_req instead of q_req. Two draws per buyer from the dedicated stream
     # [day root, 16], consumed only when the share is > 0, so nothing else shifts.

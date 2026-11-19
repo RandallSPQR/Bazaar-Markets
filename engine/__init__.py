@@ -81,4 +81,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #         rounded half up to ratings.display_step, default 0.02; the stored rating and the logs stay unrounded) and
 #         buyers.tie_break ("stall_id" = 0.19.0; "random": ties on (visible rating, price) by a per-buyer, per-day random
 #         order of the stalls from default_rng([seed, 29, day, buyer index])). Defaults reproduce 0.19.0 byte for byte.
-ENGINE_VERSION = "0.20.0"
+# 0.21.0: buyers.profile_overrides: per profile (tourist, local, expert) or bargain hunters, optional reads_ratings
+#         (sees ratings or not, replacing ratings.visible_to for it; without them it ranks as a tourist does) and
+#         inspect_prob (replacing the profile's default inspection probability; a tourist given one follows the local
+#         rule). Default {} = 0.20.0 bytes.
+ENGINE_VERSION = "0.21.0"

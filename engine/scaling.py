@@ -76,6 +76,7 @@ FIELDS: dict[str, tuple[str, str]] = {
     "buyers.search_depth": (NONE, "count"),
     "buyers.search_log": (NONE, "label"),
     "buyers.tie_break": (NONE, "label"),
+    "buyers.profile_overrides": (NONE, "per-profile behaviour"),
     "buyers.inspect_cost_frac": (NONE, "money ratio"),
     "buyers.aisles_per_route": (NONE, "count; routes are refined after they are drawn"),
     "buyers.profile_noise": (NONE, "probability per (stall, person) pair"),
