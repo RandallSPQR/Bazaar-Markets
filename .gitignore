@@ -10,3 +10,19 @@ runs/pilot_brand_equity_tier/**/*.jsonl
 runs/calibration_brand_equity_speed/*.jsonl
 runs/pilot_brand_equity_speed/**/*.jsonl
 runs/pilot_brand_equity_speed/*.jsonl
+
+# Chain caches (large, regenerable from the scripts and seeds)
+*_cache.jsonl
+
+# Files over 50 MB (git cannot ignore by size; listed by name, 2026-11-19)
+runs/licensing_cache.jsonl
+runs/liability_cache.jsonl
+runs/bustout_cache.jsonl
+
+# Secrets: never tracked (keys come from the environment via direnv)
+.env
+.env.*
+.envrc
+secrets/
+
+.DS_Store
