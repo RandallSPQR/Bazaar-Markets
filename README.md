@@ -12,6 +12,10 @@ A bazaar of stalls selling fish, electronics and designer goods. Stalls are genu
 
 The market engine is deterministic. Agents act only at decision points, so any agent (a rule, a human, or an LLM) can be dropped into the same market and compared on paired seeds.
 
+![The viewer replaying a market day: buyers move through three aisles of stalls, stalls yell and whisper true and false claims, purchases ring the buyer, and inspectors catch and close deceptive stalls](docs/img/viewer.gif)
+
+*The first 150 ticks of one market day in the browser viewer (`viewer/index.html`), replayed from an engine log: default config, seed 0, rule-based agents.*
+
 ## Findings (v1.0.0, rule-based agents)
 
 Each finding, its run, its estimate and its status (prespecified and supported, exploratory, or provisional) is listed in [`runs/BASELINE_1_0_0.md`](runs/BASELINE_1_0_0.md). The headlines:
