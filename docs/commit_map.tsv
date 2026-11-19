@@ -1,0 +1,72 @@
+old_commit	new_commit	date	subject
+521ac1c98207db6b4f7d3357d69c02f144e8184e	31a2a2574ed70c64b16ccec87b3f354886fbe768	2026-11-03	Bazaar Markets engine: M0 regression + M1-ready bazaar
+ca4e588e3d0cf04177e3091c12cc8fce0a6f765b	c57eeb2277dbdd4e0fdea810ba01049d02f661c6	2026-11-03	Eight review fixes: task completion, selection rules, cap, references, inspector switches, pairing, regression
+29135717594b8e8e53808ae20c1d3f32937ab444	c166a9ac4775f14f96ccc333284ceaf777bd24ae	2026-11-03	Sweep nested metrics, engine 0.2.0, version-aware replay, rerun inspector sweep
+7de649141c3463332e117e5dafe4bc741c962a2c	1d085339c8d3dcd3bd8492ee3baf5fcddac9bcdb	2026-11-05	Add inspector placement sweep script (analysis only, no engine changes)
+3de5fc842019964c13db1d6f818429dc3fa03c91	8da15ee1062b7e2eaa2e5530792078dcccd42e6b	2026-11-05	Inspector placement sweep: bazaar replication of the M0 pocket result
+c0cc5dbe3c4de6e13ce1389189d6e0d82df7e95e	d7f88283817b409055e327f0e40b4e8e4219efbe	2026-11-05	Engine 0.3.0: uniformed inspectors, sign action, catch notices, adaptive seller
+c7cf7fec062dafef71200feafb8649adcdc9512b	9a2883c80b0ca6daf4c54456bc677bc84713ea02	2026-11-05	Visibility x seller adaptivity run: does strategic avoidance erode the patrol advantage?
+b9c88fb688c1247753d0b492cbb905bff6451e4d	18fcbf30db19d3e4bd25569d7288af3c7b7eefa2	2026-11-05	Engine 0.4.0: recognition range, full-shift disguised inspectors
+463af5d834ff4401481d626bd29c802a84ecad2a	3a3e4f9dad5a227b480f31c13d5473a7a4aed048	2026-11-05	Recognition-range dose-response run, with equal-effort disguised inspectors
+3feebcfd1fe1fc22726f9bbe1f1fbf3b0b4310fe	f63398459fc3b0c28ded800d81a4495ff84794d0	2026-11-05	Profit decomposition: adaptive sellers' extra profit is avoided penalties
+43964e6d982080fee88653dd21cfc274376c4f0a	a2e77ad35729be39491d1c36b37e009dd8795a26	2026-11-05	Engine 0.5.0: grid refinement (market.scale)
+e514ceace1cd9b2bdce2fe93be8335e061294d0b	f18d0b311bf555ffca523bb6795d2111149c7390	2026-11-05	Grid refinement run: the patrol advantage ends in one step at recognition = whisper range
+e755591ce1d6e307e7e8c1bd59911ed466ac41a6	ec24f9085efb22719f27da36b7229047877cc7e2	2026-11-05	Engine 0.6.0: multi-day runs with entry and exit (market.days)
+29ceac52bbda26a9f4d6d00f3b42921e46f8c318	b3a0c18e1a4f4199c5ec3a62f865a5586f0aecea	2026-11-05	Engine 0.7.0: public ratings, switching costs, whisper ban, rugpull logging
+c88b6dcf6acfa638bb72dc37190d1a9a44b55b5b	7ee47c09e0b824095c2c7e5982d9007e4d90d094	2026-11-05	Entry/exit run: catch notices do not pull stalls into deception
+856d6f518baaf3bbb4c005c109aace945a33bdc0	66a0fd6bbd031c262abf0fb2b3b447dbf1a2db52	2026-11-05	Reputation run: public ratings cut shortfall at once, move stall types slowly
+0a22990a7537656fd0abf7aa3639a2b4ec7d7364	02f4967eaa16e01814a5d1f5974bcda16054b331	2026-11-06	Engine 0.8.0: brands, look-alikes, reputation premium, known horizon, bust-out
+dc548e5172faca22c1c05397410b4c100b1b566d	9eb22923a6e8e831b3494cd38f1e03477a340406	2026-11-06	Brands run: look-alikes damage originals but do not pay at base budgets
+3342f39d8cadd6315bc0fd3d7c80f85249e34249	d6488e7e8a3b21708767f7a70ce962c76abeb23d	2026-11-06	Engine 0.9.0: counterfeits, budget dial, penalty-aware bust-out benchmark
+564170130e880cd4b8e856886548854703410651	336bcd050419f159825bc2c80f099f22839ccc4d	2026-11-06	Counterfeit run: stopped at calibration; rated share is capped by entrance capture
+063aee586c458d739420ae3adeb1d26944951283	c73abb3714a24c4768c14f091269ea758d2b350a	2026-11-06	Engine 0.10.0: buyer search depth and exposure diagnostics
+14f341c28026622a9d2479dffc1bdf8bea943d76	b8c3b4c156eb5e988164f61e509d66095dc88fa0	2026-11-06	Search-depth run: k*=2; counterfeiting still does not pay up to 1.5x budget
+9dd42d0327036c7f8787fbfe2b992256e08d2c15	5a76fdeb5e59b73091dca99f98b04fc802aeb623	2026-11-07	Analysis: floor check flags cells with zero task completion, purchases or sales
+e5d7818c3a0c60e8e93aa29a00b27874db912ebd	da730471f0695bf848856eea57e68e20bde2b0dc	2026-11-07	Dilemma-boundary run: v2 loses to honesty at every inspector count, most at 0
+690f58cd51dd2f6387f823b5d150a4b5774dd824	2f41abc97c87e9ce6982065404723e54230ab426	2026-11-07	Engine 0.11.0: critics, ties, embarrassment, inspector capture, bust-out benchmark
+6b286fd94cd1cfd344ef567f1aacdfe4e206fdaa	23fa417cf91f4f6b59113f7eac9ab74a2f032e05	2026-11-07	Capture run, stage A: bust-out never pays at 40% tourists; tourists matter more than rating speed
+b833b2f73a5d467e31629f8c312b90d043dafaf0	ac056ebfa40a6b4f810221e91fdf61e1e1a5ff6e	2026-11-08	Capture run, stage B: critic ties don't move the bust-out gain; inspector capture does
+9f5fffeb99194fbf590edf44c37dba944bdf328b	30d8f06ee8ef547aedbbb678c84ca14fb36eb151	2026-11-08	Mark brand, counterfeit, dilemma and capture results provisional
+66d917dc34df369557cee0a830f03e07d81a0a9c	c2b19f2752c12762cd7127ff8792c26eab2797f5	2026-11-08	Bust-out loss diagnostic: no bug; the loss is the stall's own lost sales
+6fb75b76c4226111c63d15be8bc1e973d4533447	7c25dddce2a32688fc96ec095a8e5f1ea2b7df37	2026-11-08	Engine 0.12.0: choice-set demand; wider bust-out benchmark candidates
+5ea5f24accaeacdbe5be1535253dd1c53a6c4979	308f6ea607f2fea34ee5ba6e7ec09695882cb457	2026-11-08	Pilot: choice-set demand at 150 buyers passes P0-P3 (seeds 900-904, throwaway)
+64dd293d1f19f9c3a61a99774ff5f02e2459c5e6	c4645bd1760f6c4503176fca8490226ed765b5fc	2026-11-08	Engine 0.13.0: verification dial, configurable bust-out candidates
+175e0421494c2315e303ca9544d011ca9821cc7e	5a0a5ec016b007174feea23f1ce68f407a348001	2026-11-08	Pilot gate for the verification run: G1 (seconds demand) fails; main run not started
+c8c04074676c069f72421a83b538cc993cdecd15	1187b50efe1f45a08949d570b0767804a8a0bb72	2026-11-08	Verification run, stage A (no inspectors): PV1-PV3 supported
+2cc134293702e4204553900b24581474c381405b	a950141f9cc3d32ffa10c68fc9e96a040546fe58	2026-11-08	Verification run, stage B (2 patrolling inspectors): PV4 supported
+56f0574be87c7c8843cd2b8db3dad54c2c45f3f3	4ca11d6ec526f402bb70c4c733fc1d311e893f62	2026-11-09	Honest-profit diagnostic: engine bug traps choice-set buyers (not fixed)
+aff9549e7e37e49702e3edb6f66934a829d896f0	2eb4b42cc668f37673e13e83ccb07a1060ccec1b	2026-11-09	Engine 0.14.0: trapped- and parked-buyer fixes, stuck-buyer guard
+f0ea358392bb8253f19631ca6e64d884e00c26e8	1c8dbc86dfb5c0e89c20421c86ec20aa4b912f7b	2026-11-09	Stuck-buyer certification of earlier runs (observer only)
+845e9e4d00ce6d342fca399a31c5a627f73c7cd9	089e4584c1c51941ecbef9a9c0af8fca3be49435	2026-11-09	Pilot P2/P3 recheck at engine 0.14.0: both pass, guard 0
+f2c3d8a2b0b2eb9567359051bf07b20b886c0dc5	a27697e628927d590a5ff01f5e43124ce6eecc60	2026-11-09	Certification notes in the search/counterfeit, dilemma boundary and capture summaries
+3357cd9d00acd87ec316459fc9674f3107baab23	75201517cccc04f3a84d22484e7c4dde6d3f1eed	2026-11-09	Parked-buyer check at engine 0.14.0; Stage B rerun prepared
+6268c3e2153a6c00d9e49619b9c297724e6b565b	3527b164364e355a18b6e7736e73ac0d21b87cbf	2026-11-09	Confirming full-suite log at engine 0.14.0: 752 passed, 17 skipped (21.5 min)
+445c65496cb8152ac53a52cfc2cfdfee8bfe53af	5a6f85f517dd5b0822b9ce2265a4b715236919cc	2026-11-10	Verification Stage B rerun at engine 0.14.0: PV4 supported; honest-profit puzzle was the bug
+9dfd2f0ccf864f0dfe39992b1eac7fb85eca628c	88d88d6464365d6986f4657279c11b970388b543	2026-11-10	Engine 0.15.0: enforcement intensity, penalty lag, exit
+32fb8329efd715b3e81b161cccfd033759066074	320b1bba1c5f9db66cd52904bff8a0acbc6e0eee	2026-11-10	Pilot gate for the liability run: G1-G3 pass; detect_scale 0.3 dropped
+5b6072005abbdc7f322141b373cceece0d625766	a7083aadf3fac8d419ca33fcc8159ef7ea0238ff	2026-11-10	Liability run: PL1 supported, PL2 supported (unfloored), PL3 contradicted
+63c21bccd8466ca09cced9399e3d27f109041a89	6e0b3b2665e8bd9722fb8100016963259efed1c0	2026-11-11	Engine 0.16.0: licensing (off by default; reproduces 0.15.0 byte for byte)
+f85ffdbbf2499a4200ce5d4992985021262614e0	cef7391857034a02183bf44c0b1fbb2fcbbdc74a	2026-11-11	Bust-out decomposition (exploratory, after the liability results)
+ddd6fc2fecb1d99b971f41201020074bca806abe	88ceb7d2462d0b21ae18ef2877b1888153117a46	2026-11-11	Pilot gate for the licensing run: G1-G3 pass; main run prepared, not launched
+fcbd8e206570f13f39585ec4991ce29852a1a4d2	b75044acf34beb19c1b93ab2cfd3b19d3cdc9a0d	2026-11-12	Licensing run: PX1 supported, PX2 supported, PX3 supported
+35614d1bcd7d0f4fde0123398e37cf716cf9bd6c	7cbfc31e1398d5a0c955acf4811bb8dd7e6d40db	2026-11-12	Licensing checks script: extra sales, licensee participation, royalty recompute (exploratory)
+60f1ddfc110c02a11bc484586cea1f2c2b6671a7	da55c04ebd0321b66ad9ec9fe2edd258aa40e437	2026-11-12	Licensing checks: extra sales, licensee participation, royalty recompute (exploratory)
+e9cdc07b65a6f9e39a04c064e51a8a95f803dbad	b30993627d30f4e66f20c456ddeb88be2506a6da	2026-11-12	Engine 0.17.0: counterfeit entry day, counterfeit price factor, white-label licensing (defaults reproduce 0.16.0)
+54584484b5a1eef8b63c605bb38ae1e6d76b4ae5	24bdeb354f1f03bb00b5bfe09631bdf15e2c2601	2026-11-12	Canal Street and Brand Equity run scripts and their pilot gate (prepared, not run)
+10314846c5cf56cf319a2199c379958e66412de4	1b39980190b9505c45bfcab734a6d31d9f4cfed4	2026-11-12	Pilot gate for Canal Street and Brand Equity: G1-G5 pass; queue prepared, not launched
+0762786ef51751bc3dd68cab47cc14ad9574e82c	de5817152cb2fb79302dc9403ab56be3c0c046f3	2026-11-13	Pilot outputs for Canal Street and Brand Equity (seeds 900-902)
+1c0ed961fe11d02d2fe0ba5bd2fa03b5ac424788	31a1a55791300cd67cec656b63f8dea507dbcfac	2026-11-13	Canal Street and Brand Equity runs: results, summaries with readings and caveats
+20ee3032b9d1ad2899f9d01040bc0629034cc410	093f582acc6505a2c1dfc0015931364bc77c9b77	2026-11-16	Engine 0.18.0: white labels at the genuine tier, rating speed (ratings.prior_n)
+7e77afd2c9ba61fa72ba7716e01e89d60b3930b4	2f3fad46ad6c8441b20608220b6b050569cc5842	2026-11-16	Brand Equity tier and speed: calibration, run script and pilot script (prepared, not run)
+1a39d229b9c6be2268e5eabb0a002d01c694981a	dcac77018f9d5b3383845ebc90c705f771bf68d0	2026-11-16	Pilot gate for Brand Equity tier and speed: G1-G5 pass; 5-day level cut by the timing gate; queue prepared, not launched
+4bcfaac39361ebb9f67977ef3e00a43351eec9ed	3e0c0258f499d7c95aad805bb52b7b09d6f976f5	2026-11-17	Brand Equity tier and speed run: results, summary with reading and caveats
+8b7884bb05d1706902cda6462e06fe559bf1f33e	e26fb11fa1d9a118217d8c7455a8d2f2c86cf42a	2026-11-17	Engine 0.19.0: ratings.prior_scope; 60-day horizon checked
+950f74527a64207245fc46de8ce3b453d7ac213b	da1f4f3f0d2a757376a12644c4371557795281be	2026-11-17	Brand Equity speed: calibration (levels prior_n 0, 3.5, 10, 400), run, pilot and calibration scripts; 0.19.0 suite log
+2744a4a5d8972eb7e3e4443e6443f21b65525fa3	eb84a43322ab2a8036e13dd58f5ced978af1a773	2026-11-17	Pilot gate for Brand Equity speed: G1-G5 pass, no cut; queue prepared, not launched
+f39a99e746eec406b434635cebc18f52665dc7da	81bbc9111a350d49bd320c39a7b62fdae3701c5a	2026-11-18	Brand Equity speed run: results, summary with reading and caveats
+952af316e4cfc63adece85fde9f6e94e765a873f	bc54ac031dfc79cef3b87347176177b851cfc99c	2026-11-18	Engine 0.20.0: ratings.display (stars) and buyers.tie_break (random)
+84b7243fc97eabe8b946096cc6b7bd7561695e0b	10561591f4cdab1e780944dfbbdbb81451b1db1b	2026-11-18	Displayed ratings: Run A (brand_equity_stars), Run B (stars_sensitivity) and pilot scripts; predictions PT1-PT6 fixed before any run
+cc24b8c477842b4f96c1aa9517d26ef15a58eb82	b4246594846d39ad3b9c578ef64a956e06ae0cba	2026-11-18	Pilot gate for displayed ratings: G1-G5 pass; G3 cut waived by the user for the full design; queue prepared, not launched
+47634b06fb2109efdca31041bcf2a99a29ee5144	174cc5ef77ff8abcf7186f957b3280be6436a924	2026-11-18	Stars queue: reproduction rechecked on macOS 27.2.1 (20/20, 16/16); swap guard off after fresh boot, free-memory guard kept
+6da68e50a3e15e9450f6fd0c465bf013c972175d	f66984f7831e0b5977a4af9f621c4ec9bed5bbfa	2026-11-19	Displayed ratings: Run A (Brand Equity speed under stars) and Run B (sensitivity of earlier headlines), results with readings and caveats
+195e23687dd5cc44bf8f719c2dffc10cc0f24bef	2684acf4bab4c32d73c8c335ee14d9c66baa8457	2026-11-19	gitignore: chain caches (*_cache.jsonl), the three files over 50 MB, and .env/.envrc/secrets before the first push
