@@ -76,4 +76,5 @@ Inspired by Don Marti's posts on deceptive advertising and ad reform (blog.zgp.o
 
 ## License
 
-Code: MIT ([`LICENSE`](LICENSE)). TODO: docs and data (CC BY 4.0?).
+- Code (`engine/`, `agents/`, `analysis/`, `cli/`, `configs/`, `tests/`, `viewer/`): MIT, see [`LICENSE`](LICENSE).
+- Docs and data (`docs/`, `runs/`, and the run caches archived with each release): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
