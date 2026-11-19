@@ -1,0 +1,87 @@
+{
+ "G1": {
+  "pass": true
+ },
+ "G2": {
+  "pass": true,
+  "chains": 23,
+  "identical": 23,
+  "J": {
+   "J_pairs": 270,
+   "J_mismatch": 0,
+   "tier_price_miss": 0
+  }
+ },
+ "G3": {
+  "pass": false,
+  "limit_h": 7.0,
+  "secs_per_chain": {
+   "A": 27.282520833333333,
+   "B": 55.3195238095238,
+   "D": 28.428166666666666
+  },
+  "efficiency": 1.0029675023936142,
+  "projections": {
+   "full": {
+    "chains": 5000,
+    "hours": 12.267035493164563
+   },
+   "no_pn0": {
+    "chains": 4300,
+    "hours": 9.56991193481807
+   },
+   "no_pn0_15seeds": {
+    "chains": 3225,
+    "hours": 7.177433951113551
+   }
+  },
+  "choice": null
+ },
+ "G4": {
+  "pass": false,
+  "chains": 150,
+  "identical": 138
+ },
+ "G5": {
+  "pass": true,
+  "stuck_buyers": 0,
+  "parked": 0,
+  "idle_choosers": 0,
+  "cell_bad": 0
+ },
+ "meta": {
+  "engine_version": "0.21.0",
+  "git": {
+   "commit": "4a837842836002fbf03b632ef275685f9f574264",
+   "status_porcelain": [
+    "M docs/formal_model.md",
+    "?? runs/formal_model_check.md",
+    "?? runs/pilot_check_vs_read/",
+    "?? runs/pilot_check_vs_read_stdout.log"
+   ]
+  },
+  "script_sha256": "c9b9d251d1016e714a751d83991e473324618ed63554916ed870fa2921700c04",
+  "command": "python -m analysis.check_vs_read --pilot --min-swap-mb 0 --tests full suite at 4a83784: 1799 passed, 17 skipped (runs/tests_0210.log); tests/test_v0210.py passed",
+  "tests": "full suite at 4a83784: 1799 passed, 17 skipped (runs/tests_0210.log); tests/test_v0210.py passed",
+  "python": "3.12.7",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "workers": 4,
+  "load_start": [
+   2.79,
+   2.95,
+   2.91
+  ],
+  "seeds_txt": "900-902",
+  "start": "2026-11-19 13:55:47",
+  "end": "2026-11-19 15:49:33",
+  "load_end": [
+   5.02,
+   5.72,
+   5.69
+  ],
+  "wall_h": 1.8960153385665681,
+  "chains": 773,
+  "pauses": 0
+ }
+}

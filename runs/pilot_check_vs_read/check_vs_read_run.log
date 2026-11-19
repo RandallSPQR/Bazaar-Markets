@@ -1,0 +1,27 @@
+2026-11-19 13:55:47 check vs read: engine 0.21.0, commit 4a83784, seeds 900-902, pilot True, no_pn0 False; load [2.79, 2.95, 2.91]
+2026-11-19 13:55:48 713 chains, 0 cached, 713 to run; workers 4; load [2.79, 2.95, 2.91]; memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 14:02:35 50/713 chains, 408 s, load [6.06, 5.17, 4.03], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 14:09:52 100/713 chains, 844 s, load [6.13, 6.74, 5.38], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 14:17:19 150/713 chains, 1291 s, load [6.12, 6.49, 5.82], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 14:24:47 200/713 chains, 1740 s, load [6.45, 6.45, 6.06], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 14:32:12 250/713 chains, 2184 s, load [6.49, 6.52, 6.25], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 14:39:37 300/713 chains, 2630 s, load [6.36, 6.49, 6.33], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 14:47:06 350/713 chains, 3078 s, load [6.47, 6.43, 6.35], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 14:54:52 400/713 chains, 3544 s, load [6.33, 6.52, 6.38], memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 15:02:42 450/713 chains, 4014 s, load [5.02, 5.36, 5.82], memory {'swap_free_mb': 0.0, 'free_pct': 78}
+2026-11-19 15:10:29 500/713 chains, 4482 s, load [5.8, 5.59, 5.71], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:18:34 550/713 chains, 4966 s, load [7.61, 6.57, 6.1], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 15:26:07 600/713 chains, 5420 s, load [5.57, 5.81, 5.88], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:33:16 650/713 chains, 5848 s, load [5.11, 5.5, 5.69], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:40:14 700/713 chains, 6266 s, load [5.37, 5.34, 5.52], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:42:25 713/713 chains, 6397 s, load [5.06, 5.43, 5.54], memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 15:42:25 60 chains, 713 cached, 60 to run; workers 4; load [5.06, 5.43, 5.54]; memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 15:48:37 50/60 chains, 371 s, load [5.62, 5.91, 5.76], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:49:33 60/60 chains, 428 s, load [5.02, 5.72, 5.69], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:49:33 Pilot: G1 pass, G2 pass, G3 FAIL, G4 FAIL, G5 pass; G3 choice None; projections {"full": {"chains": 5000, "hours": 12.267035493164563}, "no_pn0": {"chains": 4300, "hours": 9.56991193481807}, "no_pn0_15seeds": {"chains": 3225, "hours": 7.177433951113551}}
+2026-11-19 15:49:33 done; 0 flags; wall 1.90 h
+2026-11-19 15:51:16 check vs read: engine 0.21.0, commit 1f96cbb, seeds 900-902, pilot True, no_pn0 False; load [2.52, 4.64, 5.27]
+2026-11-19 15:51:16 713 chains, 773 cached, 0 to run; workers 4; load [2.52, 4.64, 5.27]; memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:51:16 60 chains, 773 cached, 0 to run; workers 4; load [2.52, 4.64, 5.27]; memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 15:51:17 Pilot: G1 pass, G2 pass, G3 pass, G4 pass, G5 pass; G3 choice full; projections {"full": {"chains": 5000, "hours": 0.0009145801322443124}, "no_pn0": {"chains": 4300, "hours": 0.0007134936006168218}, "no_pn0_15seeds": {"chains": 3225, "hours": 0.0005351202004626163}}
+2026-11-19 15:51:17 done; 0 flags; wall 0.00 h

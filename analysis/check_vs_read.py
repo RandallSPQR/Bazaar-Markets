@@ -540,6 +540,13 @@ def _same(a, b, relabel=False) -> bool:
     """Records equal but for their key, cell and timing. relabel (G4): the per-profile tally ("profile", outcome A)
     is compared summed over profiles, since the same buyers are labelled local in one cell and tourist in the other."""
     drop = {"key", "cell", "secs", "cell_ok", *(("profile",) if relabel else ())}
+    if relabel and isinstance(a.get("days"), list):
+        # D chains store each buyer's profile label: map the nn cell's locals to tourists, then require equality
+        a = json.loads(json.dumps(a))
+        for d in a["days"]:
+            for bu in d.get("buyers", {}).values():
+                if bu.get("profile") == "local":
+                    bu["profile"] = "tourist"
     if {k: v for k, v in a.items() if k not in drop} != {k: v for k, v in b.items() if k not in drop}:
         return False
     if relabel and "profile" in a:
