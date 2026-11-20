@@ -52,6 +52,12 @@ GitHub release and handles Zenodo.
 8. **Randall → Claude:** both DOIs. **Claude:** add the DOI badge and citation to the README on `main`, and the
    `doi` and `identifiers` fields to `CITATION.cff` on `main`. The tag is not touched again.
 
+## Done (2026-11-20)
+
+All steps done. Tag `v1.0.0` at 33714f3; GitHub release published. Zenodo software 10.5281/zenodo.24406533 (all
+versions 10.5281/zenodo.24406532); run-cache dataset 10.5281/zenodo.24406657 (CC BY 4.0, "Is supplement to" the
+software DOI; both files' MD5s on Zenodo match the local archive).
+
 ## Notes
 
 - The tag's engine is 1.0.0. `main` is already at engine 1.1.0 (Stage 3); that work is in the next release.

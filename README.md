@@ -1,5 +1,7 @@
 # Bazaar Markets: The Agentic Ad Engine
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24406532.svg)](https://doi.org/10.5281/zenodo.24406532)
+
 A deterministic market simulator for studying deception, verification and brand value, built as an evaluation environment for AI agents.
 
 **Main result so far:** in this market, deception is bounded by verification. Once about a third of buyers check what they buy, cashing in a good name stops paying, and enforcement does the same job where buyers don't check. A brand's reputation earns money only while rivals are still building theirs.
@@ -81,6 +83,12 @@ Inspired by Don Marti's posts on deceptive advertising and ad reform (blog.zgp.o
 ## Cite
 
 See [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" reads it). Each release is archived on Zenodo, with its run caches as a separate dataset.
+
+- Software, v1.0.0: [10.5281/zenodo.24406533](https://doi.org/10.5281/zenodo.24406533)
+- Software, all versions (resolves to the latest): [10.5281/zenodo.24406532](https://doi.org/10.5281/zenodo.24406532)
+- Run caches for v1.0.0 (dataset, CC BY 4.0): [10.5281/zenodo.24406657](https://doi.org/10.5281/zenodo.24406657)
+
+> Bennington, R. S. (2026). *Bazaar Markets: The Agentic Ad Engine* (v1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.24406533
 
 ## License
 

@@ -12,6 +12,17 @@ authors:
     orcid: "https://orcid.org/0009-0003-3145-4697"
 version: 1.0.0
 date-released: 2026-11-20
+doi: 10.5281/zenodo.24406533
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24406533
+    description: "Software, version 1.0.0"
+  - type: doi
+    value: 10.5281/zenodo.24406532
+    description: "Software, all versions (resolves to the latest)"
+  - type: doi
+    value: 10.5281/zenodo.24406657
+    description: "Run caches for version 1.0.0 (dataset, CC BY 4.0)"
 license: MIT
 repository-code: "https://github.com/RandallSPQR/Bazaar-Markets"
 keywords:
