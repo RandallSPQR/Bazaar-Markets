@@ -1,0 +1,54 @@
+2026-11-19 16:18:39 check vs read: engine 0.21.0, commit 4dd5c2d, seeds 350-359, pilot False, no_pn0 False; load [1.81, 2.39, 2.82]
+2026-11-19 16:18:39 2300 chains, 0 cached, 2300 to run; workers 4; load [1.81, 2.39, 2.82]; memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 16:25:05 50/2300 chains, 386 s, load [5.4, 4.74, 3.85], memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 16:31:53 100/2300 chains, 794 s, load [6.21, 5.58, 4.6], memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 16:38:56 150/2300 chains, 1217 s, load [5.62, 5.69, 5.03], memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 16:46:03 200/2300 chains, 1644 s, load [5.49, 5.61, 5.25], memory {'swap_free_mb': 0.0, 'free_pct': 76}
+2026-11-19 16:53:09 250/2300 chains, 2070 s, load [5.75, 5.67, 5.43], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:00:17 300/2300 chains, 2498 s, load [5.81, 5.77, 5.56], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:07:27 350/2300 chains, 2928 s, load [5.82, 5.77, 5.63], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:14:38 400/2300 chains, 3359 s, load [5.87, 5.87, 5.73], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:22:12 450/2300 chains, 3814 s, load [5.75, 5.76, 5.73], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:29:46 500/2300 chains, 4267 s, load [5.68, 5.64, 5.68], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:37:20 550/2300 chains, 4721 s, load [5.67, 5.71, 5.7], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:44:36 600/2300 chains, 5157 s, load [5.73, 5.57, 5.61], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:51:46 650/2300 chains, 5587 s, load [6.04, 6.09, 5.85], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 17:58:50 700/2300 chains, 6011 s, load [5.55, 5.61, 5.66], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 18:06:07 750/2300 chains, 6449 s, load [6.01, 5.85, 5.76], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:13:08 800/2300 chains, 6869 s, load [5.92, 5.8, 5.75], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:20:09 850/2300 chains, 7290 s, load [5.53, 5.69, 5.7], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:27:08 900/2300 chains, 7709 s, load [6.05, 5.75, 5.73], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:34:10 950/2300 chains, 8131 s, load [5.48, 5.63, 5.68], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:41:41 1000/2300 chains, 8582 s, load [5.28, 5.41, 5.56], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:49:12 1050/2300 chains, 9034 s, load [5.53, 5.61, 5.6], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 18:56:45 1100/2300 chains, 9486 s, load [5.57, 5.58, 5.58], memory {'swap_free_mb': 0.0, 'free_pct': 74}
+2026-11-19 19:04:17 1150/2300 chains, 9938 s, load [5.52, 5.78, 5.7], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:12:52 1200/2300 chains, 10453 s, load [8.58, 8.39, 7.29], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:21:35 1250/2300 chains, 10976 s, load [11.55, 9.25, 8.1], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:30:01 1300/2300 chains, 11483 s, load [9.65, 8.44, 8.12], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:37:49 1350/2300 chains, 11950 s, load [8.87, 7.87, 7.77], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:44:59 1400/2300 chains, 12381 s, load [5.48, 6.26, 7.0], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:52:04 1450/2300 chains, 12806 s, load [6.75, 6.3, 6.68], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 19:59:06 1500/2300 chains, 13227 s, load [5.0, 5.57, 6.18], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:06:08 1550/2300 chains, 13650 s, load [5.22, 5.47, 5.9], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:13:36 1600/2300 chains, 14097 s, load [5.67, 5.62, 5.79], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:21:06 1650/2300 chains, 14547 s, load [5.61, 5.69, 5.74], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:28:19 1700/2300 chains, 14980 s, load [4.85, 5.18, 5.47], memory {'swap_free_mb': 0.0, 'free_pct': 77}
+2026-11-19 20:35:18 1750/2300 chains, 15399 s, load [5.89, 5.45, 5.47], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:42:20 1800/2300 chains, 15821 s, load [5.52, 5.55, 5.52], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:49:21 1850/2300 chains, 16242 s, load [5.67, 5.66, 5.57], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 20:56:24 1900/2300 chains, 16665 s, load [5.51, 5.64, 5.59], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:03:26 1950/2300 chains, 17087 s, load [5.64, 5.68, 5.64], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:10:26 2000/2300 chains, 17508 s, load [5.35, 5.64, 5.66], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:17:24 2050/2300 chains, 17925 s, load [5.47, 5.59, 5.63], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:24:20 2100/2300 chains, 18342 s, load [5.2, 5.42, 5.53], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:31:44 2150/2300 chains, 18786 s, load [5.82, 5.65, 5.6], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:39:11 2200/2300 chains, 19233 s, load [5.78, 5.56, 5.56], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:46:36 2250/2300 chains, 19678 s, load [5.94, 5.62, 5.58], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:53:50 2300/2300 chains, 20111 s, load [5.27, 5.6, 5.62], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:53:50 200 chains, 2300 cached, 200 to run; workers 4; load [5.27, 5.6, 5.62]; memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 21:59:42 50/200 chains, 352 s, load [6.19, 5.78, 5.67], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 22:05:11 100/200 chains, 680 s, load [5.57, 5.78, 5.71], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 22:11:02 150/200 chains, 1032 s, load [5.37, 5.74, 5.74], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 22:16:33 200/200 chains, 1362 s, load [5.22, 5.58, 5.68], memory {'swap_free_mb': 0.0, 'free_pct': 75}
+2026-11-19 22:16:33 done; 0 flags; wall 5.97 h

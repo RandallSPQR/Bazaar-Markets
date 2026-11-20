@@ -4,18 +4,18 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 
 | | |
 |---|---|
-| Stage | 1: checking vs reading ratings (engine 0.21.0) |
-| Running | Stage 1 main run, full design: block 1 seeds 350–359, then block 2 360–369, then a final pass (`runs/queue_check_vs_read.log`) |
-| Projected finish | block 1 about 22:25, block 2 about 04:30 (2026-11-20), at the pilot's rates |
-| Last gate | Stage 1 pilot: G1, G2, G4, G5 pass; G3 failed and was waived by Randall (deviation D4) |
-| Next step | after the main run: results, reading and caveats; checkpoint C2 |
+| Stage | 2: v1.0.0 baseline (Stage 1 done) |
+| Running | nothing |
+| Projected finish | – |
+| Last gate | Stage 1 main run: 5,000 chains, 0 flags, J identity 1800/1800, guards 0, reference − neither 0.00 in every outcome; PC1–PC4 supported |
+| Next step | Stage 2 code steps: C1 fix (own commit, reference cells must reproduce), N1 wording, reference config and variants, v1_0_0 digests, BASELINE Stage 1 rows, README recheck, bump, full suite, tag v1.0.0 locally; checkpoint C3 |
 
 ## Checkpoints
 
 | Checkpoint | When | Result |
 |---|---|---|
 | C1 | Stage 1 engine and pilot passed; main run launched | 2026-11-19 16:18: main run launched, full design (G3 waived, D4); ETA about 04:30 on 2026-11-20 |
-| C2 | Stage 1 summary written | – |
+| C2 | Stage 1 summary written | 2026-11-20 04:25: PC1–PC4 supported (`runs/check_vs_read_summary.md`) |
 | C3 | Stage 2 cross-check done; tag v1.0.0 | – |
 | C4 | Stage 3 engine and pilots passed; state bank night 1 launched | – |
 | C5 | State bank complete | – |
@@ -33,3 +33,5 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 - 2026-11-19 15:55: Randall: "Ignore the timing gate. Just keep running." Full design, no trims, as two back-to-back 10-seed blocks (plan deviation D4).
 - 2026-11-19 16:18: **Checkpoint C1.** Stage 1 main run launched (`runs/queue_check_vs_read.sh`, under `caffeinate -i`, nice 19, 4 workers): 5,000 chains, about 12.3 h at the pilot's rates; ETA about 04:30 on 2026-11-20.
 - 2026-11-19 16:40: Stage 2 drafts committed while the Stage 1 run goes (docs only; no file the run imports changed, so block 2 and the final pass record later commits with identical code): `runs/formal_model_check.md` and `docs/formal_model.md` (cc6572c), `CHANGELOG.md`, `docs/agent_interface.md` (0dcdc6f), `runs/BASELINE_1_0_0.md`. Questions for Randall in the BASELINE open-questions section and below. Code steps of Stage 2 (C1 fix, N1 wording, reference config and variants, v1_0_0 digests, bump, tag) wait for the run to finish.
+- 2026-11-20 04:04: Stage 1 main run done: block 1 5.97 h (4dd5c2d), block 2 5.79 h (9cb3e67, docs-only commits between, identical code), final pass from the cache; 5,000 chains, 0 flags.
+- 2026-11-20 04:25: **Checkpoint C2.** Stage 1 summary written (`runs/check_vs_read_summary.md`). PC1 supported: inspection's main effect on the cash-in gain −$364.05 [−479.15, −248.94]. PC2 supported: |inspection| − |reading| +$185.69 [+121.68, +249.71]. PC3 supported: reading's main effect on E +$9,987.06 [+7,410.85, +12,563.27]. PC4 supported: |reading| − |inspection| +$5,902.60 [+4,439.89, +7,365.30]. Reading: inspection, not reading, stops cashing in; reading, not inspection, makes a reputation pay, and inspection shrinks it; locals' checking does not protect tourists. Continuing to Stage 2.
