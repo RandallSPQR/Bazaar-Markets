@@ -9,8 +9,8 @@ GitHub release and handles Zenodo.
   plus release files only: `CITATION.cff`, `.zenodo.json`, `docs/releases/v1.0.0.md` (the release notes), this
   checklist, `pyproject.toml` version 0.1.0 → 1.0.0, and the README Cite text with its two TODOs removed. No engine,
   agent, analysis or test file changes.
-- Local tag `v1.0.0` (annotated, never pushed) still points at 825a295. It moves to the release commit in step 1, so
-  Zenodo archives a tree with the citation metadata.
+- Local tag `v1.0.0` (annotated, never pushed) points at the release commit (moved from 825a295 in step 1), so
+  Zenodo archives a tree with the citation metadata. Steps 0 and 1 are done; next is step 2.
 - Run-cache archive (not in git): `dist/v1.0.0/bazaar-markets-v1.0.0-run-caches.tar.gz`, 79 MB, the 32 chain caches
   behind every summary up to 1.0.0, about 800 MB uncompressed, with per-file SHA-256s inside
   (`SHA256SUMS_caches.txt`). The archive's own SHA-256 is in `dist/v1.0.0/SHA256SUMS.txt`.
