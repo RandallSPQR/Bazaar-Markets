@@ -1,0 +1,200 @@
+{
+  "agents": {
+    "buyer": "rule_buyer",
+    "params": {
+      "rule_buyer": {
+        "local_inspect_prob": 1.0
+      },
+      "rule_deceptive": {
+        "reopen": "fresh"
+      }
+    },
+    "seller": {
+      "deceptive": "rule_deceptive",
+      "genuine": "rule_honest",
+      "seconds": "rule_honest"
+    }
+  },
+  "brands": {
+    "counterfeit_day": 2,
+    "counterfeit_entry": "reopen",
+    "counterfeit_price_factor": 1.0,
+    "enabled": true,
+    "premium": 0.4
+  },
+  "buyers": {
+    "aisles_per_route": [
+      1,
+      3
+    ],
+    "bargain_q_req": [
+      0.15,
+      0.4
+    ],
+    "bargain_share": 0.2,
+    "budget_factor_override": 1.25,
+    "budget_factors": {
+      "above": 1.25,
+      "at": 1.0,
+      "below": 0.8
+    },
+    "budget_level": "at",
+    "consider": 3,
+    "count": 150,
+    "demand_mode": "choice_set",
+    "inspect_cost_frac": {
+      "expert": 0.02,
+      "local": 0.05,
+      "tourist": 0.1
+    },
+    "inspector_enforcement": true,
+    "inspector_fraction": 0.0,
+    "inspector_knowledge": true,
+    "position_rent": 0,
+    "profile_noise": 0.3,
+    "profile_overrides": {},
+    "profile_shares": {
+      "expert": 0.3,
+      "local": 0.3,
+      "tourist": 0.4
+    },
+    "q_req": [
+      0.5,
+      0.7
+    ],
+    "search_depth": {
+      "expert": 1,
+      "local": 1,
+      "tourist": 1
+    },
+    "search_log": false,
+    "tie_break": "random",
+    "units": [
+      1,
+      2
+    ]
+  },
+  "critics": {
+    "count": 0,
+    "emb_max": 10,
+    "embarrassment": false,
+    "sample": 6,
+    "tie_delay": 10,
+    "tie_share": 0.0,
+    "weight": 5.0
+  },
+  "detection": {
+    "channel_weight": {
+      "answer": 1.0,
+      "sign": 0.4,
+      "whisper": 1.0,
+      "yell": 0.6
+    },
+    "f_scale": 0.3,
+    "form": "graded",
+    "hazard_k": 6.0,
+    "hazard_lam": 2.0,
+    "proximity": "linear"
+  },
+  "evolution": {
+    "mutation_prob": 0,
+    "revise_prob": 0
+  },
+  "inspectors": {
+    "capture": 0.0,
+    "capture_effect": 0.8,
+    "count": 2,
+    "detect_scale": 1.0,
+    "disguised_ask_prob": 0.3,
+    "disguised_shift": "single_trip",
+    "feature_correlation": 0.0,
+    "placement": "patrolling",
+    "recognition_range": null,
+    "uniformed": false
+  },
+  "licensing": {
+    "brand": "owner",
+    "owner_liable": false,
+    "quality": "cheap",
+    "royalty": 0.15,
+    "schedule": {},
+    "white_label_tier": "type"
+  },
+  "market": {
+    "categories": [
+      "fish",
+      "electronics",
+      "designer"
+    ],
+    "clustering": 1.0,
+    "days": 30,
+    "earshot": 4.0,
+    "horizon_known": true,
+    "interact_range": 1.0,
+    "max_actions_per_stop": 4,
+    "scale": 1,
+    "sight_range": 3.0,
+    "slot_spacing": 2,
+    "slots_per_side": 8,
+    "ticks": 240,
+    "whisper_range": 2.0,
+    "whispers_allowed": true
+  },
+  "mode": "bazaar",
+  "pricing": {
+    "base_price_cents": {
+      "designer": 12000,
+      "electronics": 4000,
+      "fish": 800
+    },
+    "close_ticks": 40,
+    "deceptive_price_factor": 1.0,
+    "penalty_lag_days": 0,
+    "penalty_mult": 1.5,
+    "seconds_price_factor": 0.55,
+    "switch_cost_to_deceptive": 0.0,
+    "switch_cost_to_genuine": 0.0,
+    "unit_cost": [
+      0.3,
+      0.5
+    ],
+    "whisper_cost_frac": 0.004,
+    "yell_cost_frac": 0.002
+  },
+  "ratings": {
+    "display": "stars",
+    "display_step": 0.02,
+    "memory": 0.7,
+    "mode": "public",
+    "prior_n": 0.0,
+    "prior_scope": "all",
+    "rugpull_threshold": 0.8,
+    "tau": 0.5,
+    "visible_to": [
+      "expert",
+      "local"
+    ]
+  },
+  "seed": 0,
+  "stalls": {
+    "deceptive_sign": "pitch",
+    "q_high": [
+      0.7,
+      0.95
+    ],
+    "q_low": [
+      0.15,
+      0.45
+    ],
+    "type_shares": {
+      "deceptive": 0.3,
+      "genuine": 0.4,
+      "seconds": 0.3
+    }
+  },
+  "valuation": {
+    "form": "step_salvage",
+    "salvage": 0.5,
+    "value_mult": 1.3
+  }
+}

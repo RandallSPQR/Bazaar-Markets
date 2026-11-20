@@ -39,6 +39,10 @@ These are results of one stylized model, not claims about real markets.
 
 The last command runs one market and prints its outcome; the event log it writes opens in `viewer/index.html`.
 
+The reference market of v1.0.0 is `configs/reference_1_0.json`. It is the licensing market: 150 buyers comparing 3 stalls, 40% tourists, star ratings, brands, and 2 patrolling inspectors over 30 days. `configs/reference_1_0_variants.json` turns it into the market of each published run, as a list of `--set` overrides:
+
+    python -m cli.run --config configs/reference_1_0.json --seed 0
+
 Reproduce a published run, for example verification (stage A, about 7 h on 4 CPU workers; the summary and run record are written to `runs/`):
 
     python -m analysis.verification --stage A --seeds 200-219

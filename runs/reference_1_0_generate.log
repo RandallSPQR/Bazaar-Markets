@@ -1,0 +1,39 @@
+2026-11-20 04:28:49 verification: 320 chains captured, 10 market cells, 40 selected (0 s)
+2026-11-20 04:28:49 liability: 420 chains captured, 13 market cells, 48 selected (0 s)
+2026-11-20 04:28:49 bustout_decomposition: 96 chains captured, 13 market cells, 48 selected (0 s)
+2026-11-20 04:28:49 licensing: 368 chains captured, 11 market cells, 36 selected (0 s)
+2026-11-20 04:28:49 licensing_checks: 272 chains captured, 13 market cells, 30 selected (0 s)
+2026-11-20 04:28:49 canal_street: 40 chains captured, 21 market cells, 40 selected (0 s)
+2026-11-20 04:28:49 brand_equity: 52 chains captured, 9 market cells, 20 selected (0 s)
+2026-11-20 04:28:50 brand_equity_tier: 104 chains captured, 19 market cells, 40 selected (0 s)
+2026-11-20 04:28:50 brand_equity_speed: 112 chains captured, 25 market cells, 48 selected (0 s)
+2026-11-20 04:28:50 stars_sensitivity: 200 chains captured, 10 market cells, 34 selected (0 s)
+2026-11-20 04:28:50 brand_equity_stars: 168 chains captured, 37 market cells, 72 selected (0 s)
+2026-11-20 04:28:51 check_vs_read: 500 chains captured, 41 market cells, 120 selected (1 s)
+2026-11-20 04:28:51 wrote configs/reference_1_0.json and configs/reference_1_0_variants.json (12 variants)
+2026-11-20 04:28:51 576 chains to rerun from the reference config at engine 1.0.0
+2026-11-20 04:32:09 25/576 chains rerun
+2026-11-20 04:35:06 50/576 chains rerun
+2026-11-20 04:38:08 75/576 chains rerun
+2026-11-20 04:41:12 100/576 chains rerun
+2026-11-20 04:44:50 125/576 chains rerun
+2026-11-20 04:47:56 150/576 chains rerun
+2026-11-20 04:51:04 175/576 chains rerun
+2026-11-20 04:54:13 200/576 chains rerun
+2026-11-20 04:57:42 225/576 chains rerun
+2026-11-20 05:00:30 250/576 chains rerun
+2026-11-20 05:03:11 275/576 chains rerun
+2026-11-20 05:05:47 300/576 chains rerun
+2026-11-20 05:11:13 325/576 chains rerun
+2026-11-20 05:16:31 350/576 chains rerun
+2026-11-20 05:19:22 375/576 chains rerun
+2026-11-20 05:23:47 400/576 chains rerun
+2026-11-20 05:29:37 425/576 chains rerun
+2026-11-20 05:35:03 450/576 chains rerun
+2026-11-20 05:40:16 475/576 chains rerun
+2026-11-20 05:44:01 500/576 chains rerun
+2026-11-20 05:49:09 525/576 chains rerun
+2026-11-20 05:52:50 550/576 chains rerun
+2026-11-20 05:56:21 575/576 chains rerun
+2026-11-20 05:56:26 576/576 chains rerun
+2026-11-20 05:56:27 all 576 chains reproduce their saved records; digests written to tests/reference/v1_0_0/digests.json

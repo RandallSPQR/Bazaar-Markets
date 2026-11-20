@@ -1,0 +1,1625 @@
+{
+ "engine_version": "1.0.0",
+ "reference": "configs/reference_1_0.json",
+ "use": "load(reference, [*overrides, *cells[cell], 'seed=N']); chain-level bust-out and licensing schedules are applied by the run's script (benchmark.bust_config, licence_config)",
+ "variants": {
+  "verification": {
+   "run": "runs/verification_summary.md",
+   "script": "analysis/verification.py",
+   "engine": "0.13.0 (stage A), 0.14.0 (stage B)",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "A|t40|l1|None|never": [
+     "inspectors.count=0"
+    ],
+    "A|t40|l0|None|never": [
+     "agents.params.rule_buyer.local_inspect_prob=0.0",
+     "inspectors.count=0"
+    ],
+    "A|t70|l1|None|never": [
+     "buyers.profile_shares={\"tourist\":0.7,\"local\":0.15,\"expert\":0.15}",
+     "inspectors.count=0"
+    ],
+    "A|t70|l0|None|never": [
+     "agents.params.rule_buyer.local_inspect_prob=0.0",
+     "buyers.profile_shares={\"tourist\":0.7,\"local\":0.15,\"expert\":0.15}",
+     "inspectors.count=0"
+    ],
+    "A|t100|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.count=0"
+    ],
+    "B|t40|l1|None|never": [],
+    "B|t40|l0|None|never": [
+     "agents.params.rule_buyer.local_inspect_prob=0.0"
+    ],
+    "B|t70|l1|None|never": [
+     "buyers.profile_shares={\"tourist\":0.7,\"local\":0.15,\"expert\":0.15}"
+    ],
+    "B|t70|l0|None|never": [
+     "agents.params.rule_buyer.local_inspect_prob=0.0",
+     "buyers.profile_shares={\"tourist\":0.7,\"local\":0.15,\"expert\":0.15}"
+    ],
+    "B|t100|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ]
+   },
+   "cell_sha256": {
+    "A|t40|l1|None|never": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f",
+    "A|t40|l0|None|never": "b8cfd6ca95c9c7b0596e0dd86406cb384d0d7466fa2b25ddf767f70aced899b6",
+    "A|t70|l1|None|never": "11b9d216e1485a71c51c6c95bdadaafe1ae2f84e459643600febf0dc0e1947a0",
+    "A|t70|l0|None|never": "599f3baedfe99779de5011e2e7148c2d7237f6833a49e2d806297f9f0f2ddc9c",
+    "A|t100|None|never": "317b9497eb4952ccedb476701aaa67c2416816d67028b514d4212111f318020d",
+    "B|t40|l1|None|never": "77cd04f5c814d66458ff062b7a7952945a0d4c4683dd7f7b8cbdbc79c11de156",
+    "B|t40|l0|None|never": "e7b01fc84260fa130438f9f748dfd0a8b29d98b40ed9cccf762603f0337b22f2",
+    "B|t70|l1|None|never": "374eeaba094fa7d6b45cbe6c54c721ce83231d4dec03755c76f673f9da390590",
+    "B|t70|l0|None|never": "1c71a5831ad52183e59411a699274a0bb20be0fdfe5879a2649d64d335241379",
+    "B|t100|None|never": "cdf27e8e2a89a8ada25b6d0a9375ee1759bc760014b35b40f1a9ecc03805aaa4"
+   }
+  },
+  "liability": {
+   "run": "runs/liability_summary.md",
+   "script": "analysis/liability.py",
+   "engine": "0.15.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "col|t40|ds0.0|None|never": [
+     "inspectors.detect_scale=0.0"
+    ],
+    "col|t40|ds0.1|None|never": [
+     "inspectors.detect_scale=0.1"
+    ],
+    "col|t40|ds1.0|None|never": [],
+    "col|t100|ds0.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "col|t100|ds0.1|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.1"
+    ],
+    "col|t100|ds1.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "jp|t40|ds0.0|None|never": [
+     "inspectors.detect_scale=0.0",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t40|ds0.1|None|never": [
+     "inspectors.detect_scale=0.1",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t40|ds1.0|None|never": [
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t100|ds0.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t100|ds0.1|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.1",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t100|ds1.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "pricing.penalty_lag_days=3"
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "col|t40|ds0.0|None|never": "6f56efc5af18f92f7e1adbed0495abadf7c5e13c82af89093b7b466da733cce4",
+    "col|t40|ds0.1|None|never": "b0b12a0926aa893c52a8be2b4b321a27263f6aa864eb9a6d65ed209f8da48153",
+    "col|t40|ds1.0|None|never": "77cd04f5c814d66458ff062b7a7952945a0d4c4683dd7f7b8cbdbc79c11de156",
+    "col|t100|ds0.0|None|never": "a9a76efc5c3b62619a98e32edadb0091f487085413052e48c1b91aae4e84e6b1",
+    "col|t100|ds0.1|None|never": "4e6bb493f98a5276481778fe0e752115e421725694bc720f00fd67e2de7b01b7",
+    "col|t100|ds1.0|None|never": "cdf27e8e2a89a8ada25b6d0a9375ee1759bc760014b35b40f1a9ecc03805aaa4",
+    "jp|t40|ds0.0|None|never": "bec95870a93385cc9fd3b2b8ebb98df9e54d794bc17f4f272d5318863d6c5216",
+    "jp|t40|ds0.1|None|never": "87fe051b3212ea0982573a6d83f70c888d86d4b5ffd3481c408162031bd710ba",
+    "jp|t40|ds1.0|None|never": "0452a929a7e3ae0f2e1fd361c32fa401c73edaca5aafcfeea776ab597f9d68cd",
+    "jp|t100|ds0.0|None|never": "12abb91d5772ac9fd3549c971b45f5fb9374635f90c2d71dd3136d66751f1d5b",
+    "jp|t100|ds0.1|None|never": "efef8814114dc4ac8af225f29cffe32a127f81c978b71d923b74aadebd2f8a49",
+    "jp|t100|ds1.0|None|never": "a94d6468b3b60cb06527a5f82920aac448f0babdfb1b72cb029e9a98d074c21a",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "bustout_decomposition": {
+   "run": "runs/bustout_decomposition.md",
+   "script": "analysis/bustout_decomp.py",
+   "engine": "0.15.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "col|t40|ds0.0|None|never": [
+     "inspectors.detect_scale=0.0"
+    ],
+    "col|t40|ds0.1|None|never": [
+     "inspectors.detect_scale=0.1"
+    ],
+    "col|t40|ds1.0|None|never": [],
+    "col|t100|ds0.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "col|t100|ds0.1|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.1"
+    ],
+    "col|t100|ds1.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "jp|t40|ds0.0|None|never": [
+     "inspectors.detect_scale=0.0",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t40|ds0.1|None|never": [
+     "inspectors.detect_scale=0.1",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t40|ds1.0|None|never": [
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t100|ds0.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t100|ds0.1|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.1",
+     "pricing.penalty_lag_days=3"
+    ],
+    "jp|t100|ds1.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "pricing.penalty_lag_days=3"
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "col|t40|ds0.0|None|never": "6f56efc5af18f92f7e1adbed0495abadf7c5e13c82af89093b7b466da733cce4",
+    "col|t40|ds0.1|None|never": "b0b12a0926aa893c52a8be2b4b321a27263f6aa864eb9a6d65ed209f8da48153",
+    "col|t40|ds1.0|None|never": "77cd04f5c814d66458ff062b7a7952945a0d4c4683dd7f7b8cbdbc79c11de156",
+    "col|t100|ds0.0|None|never": "a9a76efc5c3b62619a98e32edadb0091f487085413052e48c1b91aae4e84e6b1",
+    "col|t100|ds0.1|None|never": "4e6bb493f98a5276481778fe0e752115e421725694bc720f00fd67e2de7b01b7",
+    "col|t100|ds1.0|None|never": "cdf27e8e2a89a8ada25b6d0a9375ee1759bc760014b35b40f1a9ecc03805aaa4",
+    "jp|t40|ds0.0|None|never": "bec95870a93385cc9fd3b2b8ebb98df9e54d794bc17f4f272d5318863d6c5216",
+    "jp|t40|ds0.1|None|never": "87fe051b3212ea0982573a6d83f70c888d86d4b5ffd3481c408162031bd710ba",
+    "jp|t40|ds1.0|None|never": "0452a929a7e3ae0f2e1fd361c32fa401c73edaca5aafcfeea776ab597f9d68cd",
+    "jp|t100|ds0.0|None|never": "12abb91d5772ac9fd3549c971b45f5fb9374635f90c2d71dd3136d66751f1d5b",
+    "jp|t100|ds0.1|None|never": "efef8814114dc4ac8af225f29cffe32a127f81c978b71d923b74aadebd2f8a49",
+    "jp|t100|ds1.0|None|never": "a94d6468b3b60cb06527a5f82920aac448f0babdfb1b72cb029e9a98d074c21a",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "licensing": {
+   "run": "runs/licensing_summary.md",
+   "script": "analysis/licensing.py",
+   "engine": "0.16.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "never|t40|ds0.0|None|never": [
+     "inspectors.detect_scale=0.0"
+    ],
+    "never|t40|ds1.0|None|never": [],
+    "never|t100|ds0.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "never|t100|ds1.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "lic|cheap|t40|ds0.0|liable|s28|2x10": [
+     "inspectors.detect_scale=0.0",
+     "licensing.owner_liable=true"
+    ],
+    "lic|cheap|t40|ds1.0|liable|s28|2x10": [
+     "licensing.owner_liable=true"
+    ],
+    "lic|cheap|t100|ds0.0|liable|s28|2x10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0",
+     "licensing.owner_liable=true"
+    ],
+    "lic|cheap|t100|ds1.0|liable|s28|2x10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.owner_liable=true"
+    ],
+    "lic|contract|t40|ds1.0|free|s28|2x10": [
+     "licensing.quality=\"contract\""
+    ],
+    "lic|contract|t100|ds1.0|free|s28|2x10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\""
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "never|t40|ds0.0|None|never": "6f56efc5af18f92f7e1adbed0495abadf7c5e13c82af89093b7b466da733cce4",
+    "never|t40|ds1.0|None|never": "77cd04f5c814d66458ff062b7a7952945a0d4c4683dd7f7b8cbdbc79c11de156",
+    "never|t100|ds0.0|None|never": "a9a76efc5c3b62619a98e32edadb0091f487085413052e48c1b91aae4e84e6b1",
+    "never|t100|ds1.0|None|never": "cdf27e8e2a89a8ada25b6d0a9375ee1759bc760014b35b40f1a9ecc03805aaa4",
+    "lic|cheap|t40|ds0.0|liable|s28|2x10": "260e16ccc0807664c3dbde80df123bfd4b6754de7904ff99b597fe3f3b09abf4",
+    "lic|cheap|t40|ds1.0|liable|s28|2x10": "2e006b2c4070d14f84df634a749bbe13a35aeefd24339be2830dd1d1d636402a",
+    "lic|cheap|t100|ds0.0|liable|s28|2x10": "7082afbe4bdf93cc8ee56724e9cf7eb261e8cce354ac5e77778068eb29b04aca",
+    "lic|cheap|t100|ds1.0|liable|s28|2x10": "0e8aa627872c2beb6eda146b0e3d8bdfd6a3c5888d9847d42455de58182853ca",
+    "lic|contract|t40|ds1.0|free|s28|2x10": "fa2cf25c7152e66bd4284f6cd26d095824b424854275bf59a3f611d1acfe405c",
+    "lic|contract|t100|ds1.0|free|s28|2x10": "2dbb856c6f938a25841946ca4da0f435353bfbf0f8697c8629cc1b6624c184b6",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "licensing_checks": {
+   "run": "runs/licensing_checks.md",
+   "script": "analysis/licensing_checks.py",
+   "engine": "0.16.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "lic|cheap|t100|ds1.0|free|s28|2x10|r0.15": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "lic|cheap|t100|ds1.0|free|s28|2x10|r0.05": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.05"
+    ],
+    "lic|cheap|t100|ds1.0|free|s28|2x10|r0.25": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.25"
+    ],
+    "never|t40|ds0.0|None|never|r0.15": [
+     "inspectors.detect_scale=0.0"
+    ],
+    "never|t40|ds1.0|None|never|r0.15": [],
+    "never|t100|ds0.0|None|never|r0.15": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "lic|contract|t40|ds1.0|free|s28|2x10|r0.15": [
+     "licensing.quality=\"contract\""
+    ],
+    "lic|contract|t100|ds1.0|free|s28|2x10|r0.15": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\""
+    ],
+    "lic|cheap|t40|ds0.0|liable|s28|2x10|r0.15": [
+     "inspectors.detect_scale=0.0",
+     "licensing.owner_liable=true"
+    ],
+    "lic|cheap|t40|ds1.0|liable|s28|2x10|r0.15": [
+     "licensing.owner_liable=true"
+    ],
+    "lic|cheap|t100|ds0.0|liable|s28|2x10|r0.15": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0",
+     "licensing.owner_liable=true"
+    ],
+    "lic|cheap|t100|ds1.0|liable|s28|2x10|r0.15": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.owner_liable=true"
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "lic|cheap|t100|ds1.0|free|s28|2x10|r0.15": "cdf27e8e2a89a8ada25b6d0a9375ee1759bc760014b35b40f1a9ecc03805aaa4",
+    "lic|cheap|t100|ds1.0|free|s28|2x10|r0.05": "18f3ea74e357dd5ae7eb4f69aa1b5e762ae913915ba050c93a3d6aafb15ee1e3",
+    "lic|cheap|t100|ds1.0|free|s28|2x10|r0.25": "2deccc2554729f087c355ce3c8869faac980e70a40f410fadadc1ae26a8dd1e2",
+    "never|t40|ds0.0|None|never|r0.15": "6f56efc5af18f92f7e1adbed0495abadf7c5e13c82af89093b7b466da733cce4",
+    "never|t40|ds1.0|None|never|r0.15": "77cd04f5c814d66458ff062b7a7952945a0d4c4683dd7f7b8cbdbc79c11de156",
+    "never|t100|ds0.0|None|never|r0.15": "a9a76efc5c3b62619a98e32edadb0091f487085413052e48c1b91aae4e84e6b1",
+    "lic|contract|t40|ds1.0|free|s28|2x10|r0.15": "fa2cf25c7152e66bd4284f6cd26d095824b424854275bf59a3f611d1acfe405c",
+    "lic|contract|t100|ds1.0|free|s28|2x10|r0.15": "2dbb856c6f938a25841946ca4da0f435353bfbf0f8697c8629cc1b6624c184b6",
+    "lic|cheap|t40|ds0.0|liable|s28|2x10|r0.15": "260e16ccc0807664c3dbde80df123bfd4b6754de7904ff99b597fe3f3b09abf4",
+    "lic|cheap|t40|ds1.0|liable|s28|2x10|r0.15": "2e006b2c4070d14f84df634a749bbe13a35aeefd24339be2830dd1d1d636402a",
+    "lic|cheap|t100|ds0.0|liable|s28|2x10|r0.15": "7082afbe4bdf93cc8ee56724e9cf7eb261e8cce354ac5e77778068eb29b04aca",
+    "lic|cheap|t100|ds1.0|liable|s28|2x10|r0.15": "0e8aa627872c2beb6eda146b0e3d8bdfd6a3c5888d9847d42455de58182853ca",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "canal_street": {
+   "run": "runs/canal_street_summary.md",
+   "script": "analysis/canal_street.py",
+   "engine": "0.17.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "off|t40|ds0.0": [
+     "inspectors.detect_scale=0.0"
+    ],
+    "off|t40|ds1.0": [],
+    "off|t100|ds0.0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "off|t100|ds1.0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "phi1.0|t40|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi1.0|t40|ds1.0": [
+     "brands.counterfeit_entry=\"day\""
+    ],
+    "phi1.0|t100|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi1.0|t100|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "phi0.8|t40|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.8",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi0.8|t40|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.8"
+    ],
+    "phi0.8|t100|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.8",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi0.8|t100|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.8",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "phi0.6|t40|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.6",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi0.6|t40|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.6"
+    ],
+    "phi0.6|t100|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.6",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi0.6|t100|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.6",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "phi0.4|t40|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.4",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi0.4|t40|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.4"
+    ],
+    "phi0.4|t100|ds0.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.4",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "phi0.4|t100|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.4",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "off|t40|ds0.0": "6f56efc5af18f92f7e1adbed0495abadf7c5e13c82af89093b7b466da733cce4",
+    "off|t40|ds1.0": "77cd04f5c814d66458ff062b7a7952945a0d4c4683dd7f7b8cbdbc79c11de156",
+    "off|t100|ds0.0": "a9a76efc5c3b62619a98e32edadb0091f487085413052e48c1b91aae4e84e6b1",
+    "off|t100|ds1.0": "cdf27e8e2a89a8ada25b6d0a9375ee1759bc760014b35b40f1a9ecc03805aaa4",
+    "phi1.0|t40|ds0.0": "d0ec75d0cd2945c5e1ae043a89a4c3c0f3e89d77f746a3e97bd54bbe93b1945b",
+    "phi1.0|t40|ds1.0": "37451674f4d0a07ff42b4f7149f30779e0c9ce6335c9e6f920e23bc3999dfac3",
+    "phi1.0|t100|ds0.0": "0fa6c35efc1594d085f9ebd1b2a5813f3cbe5b38d8e4eeec7d325c2249a26d12",
+    "phi1.0|t100|ds1.0": "960325a74dfc7c0f02631333e5bdbbd393d7e717fa33ae3dcb3728fc9145d1cc",
+    "phi0.8|t40|ds0.0": "d9f682c16858a880117c6dd8965fa4c6a3cfc31ebef0f753f729519c7460d9f1",
+    "phi0.8|t40|ds1.0": "3090e18bed899412733937f6ac77c4bd7e78324b070fe4076fbdc4b562205ad6",
+    "phi0.8|t100|ds0.0": "1b7ccb5bfb8029c99f28498a04e73bd835f646b71fb249e3dba459ceeaf6871c",
+    "phi0.8|t100|ds1.0": "16e32d7d2c081d80474968e61848608ca3de46bc05bd66a92c9225ca47bc49c2",
+    "phi0.6|t40|ds0.0": "ea16444498075c23f77e6a027160d7905b27388fd3d20bb0c940174b561c382b",
+    "phi0.6|t40|ds1.0": "a81355e5be906b5fe75a11b470cb42ee793cfede78716d36b202184f56be09ab",
+    "phi0.6|t100|ds0.0": "b771a89a857949d56ee84adbf1a7bd1ec342ab357dfd194bb7989d554fd70c82",
+    "phi0.6|t100|ds1.0": "b46b96ba7fc08ed9f6dbe23bf06dd87654961f68ce61e698fae23739953ea712",
+    "phi0.4|t40|ds0.0": "948eb4798f777d541f3a274f0d9b0a883c1e95fea34bd1095c88388adbe53c3c",
+    "phi0.4|t40|ds1.0": "9cbd8d5487f1a319ea75df1fb08864ed203c6a5e135c07ab134617669db170b5",
+    "phi0.4|t100|ds0.0": "a6fe66dd3c1d60aa095cc8ccf4b9c63b51a7da7ddb480c79507940d797af5cd2",
+    "phi0.4|t100|ds1.0": "22ef06494cb6c73ab5d9ead24e1a0f767d5e342b15215870a28ba8246b38f902",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "brand_equity": {
+   "run": "runs/brand_equity_summary.md",
+   "script": "analysis/brand_equity.py",
+   "engine": "0.17.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "never|-|t40|None|0.10": [
+     "licensing.royalty=0.1"
+    ],
+    "never|-|t100|None|0.10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1"
+    ],
+    "R|contract|t40|s12|0.10": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "W|contract|t40|s12|0.10": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "R|contract|t100|s12|0.10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "W|contract|t100|s12|0.10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "W|cheap|t40|s12|0.10": [
+     "licensing.brand=\"white_label\"",
+     "licensing.royalty=0.1"
+    ],
+    "W|cheap|t100|s12|0.10": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.royalty=0.1"
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "never|-|t40|None|0.10": "5ce8d158b624c18100f21fdf9275abd135c31500ec29c7ab2f30f7400a4b9063",
+    "never|-|t100|None|0.10": "039921513b51be1ca3e34f3ab8d0f8ce84623ab74da303e7fb01af239da9035f",
+    "R|contract|t40|s12|0.10": "d5c75e92c37913087a3544239d0522f7b192c575c39cba60527f9b5d8f74a97f",
+    "W|contract|t40|s12|0.10": "e4f988471f051a731aa47e8005a332abc0c40c3273ec896fe3e788fe48c37112",
+    "R|contract|t100|s12|0.10": "e01ec0846fbd7d61f2532fd780580d9b388ac27107eef90595241bd1b465fba9",
+    "W|contract|t100|s12|0.10": "24fb106bf42a77dcfd202f75fbdd3f28ad046e80e4794ded786fa23d3a803347",
+    "W|cheap|t40|s12|0.10": "f98b80d86739e0706c40a31ca8ef51ca4ee6a3ddbf42296dc180bace61a8414b",
+    "W|cheap|t100|s12|0.10": "61f7ebf5a61ab754005bf2208693db94edab110cea16be4c78d24ad6b0ffe3d4",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "brand_equity_tier": {
+   "run": "runs/brand_equity_tier_summary.md",
+   "script": "analysis/brand_equity_tier.py",
+   "engine": "0.18.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "never|-|t40|None|0.10|0": [
+     "licensing.royalty=0.1"
+    ],
+    "never|-|t100|None|0.10|0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1"
+    ],
+    "R|contract|t40|s12|0.10|0": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "Wg|contract|t40|s12|0.10|0": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\""
+    ],
+    "Wt|contract|t40|s12|0.10|0": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "R|contract|t100|s12|0.10|0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "Wg|contract|t100|s12|0.10|0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\""
+    ],
+    "Wt|contract|t100|s12|0.10|0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1"
+    ],
+    "Wg|cheap|t40|s12|0.10|0": [
+     "licensing.brand=\"white_label\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\""
+    ],
+    "Wt|cheap|t40|s12|0.10|0": [
+     "licensing.brand=\"white_label\"",
+     "licensing.royalty=0.1"
+    ],
+    "Wg|cheap|t100|s12|0.10|0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\""
+    ],
+    "Wt|cheap|t100|s12|0.10|0": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.royalty=0.1"
+    ],
+    "never|-|t40|None|0.10|50": [
+     "licensing.royalty=0.1",
+     "ratings.prior_n=50.0"
+    ],
+    "never|-|t100|None|0.10|50": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "ratings.prior_n=50.0"
+    ],
+    "R|contract|t40|s12|0.10|50": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "ratings.prior_n=50.0"
+    ],
+    "Wg|contract|t40|s12|0.10|50": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "ratings.prior_n=50.0"
+    ],
+    "R|contract|t100|s12|0.10|50": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "ratings.prior_n=50.0"
+    ],
+    "Wg|contract|t100|s12|0.10|50": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "ratings.prior_n=50.0"
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "never|-|t40|None|0.10|0": "5ce8d158b624c18100f21fdf9275abd135c31500ec29c7ab2f30f7400a4b9063",
+    "never|-|t100|None|0.10|0": "039921513b51be1ca3e34f3ab8d0f8ce84623ab74da303e7fb01af239da9035f",
+    "R|contract|t40|s12|0.10|0": "d5c75e92c37913087a3544239d0522f7b192c575c39cba60527f9b5d8f74a97f",
+    "Wg|contract|t40|s12|0.10|0": "176542e42213bcbbffe3d32534ebe903e0ca2320d7f717da5a8651d715619200",
+    "Wt|contract|t40|s12|0.10|0": "e4f988471f051a731aa47e8005a332abc0c40c3273ec896fe3e788fe48c37112",
+    "R|contract|t100|s12|0.10|0": "e01ec0846fbd7d61f2532fd780580d9b388ac27107eef90595241bd1b465fba9",
+    "Wg|contract|t100|s12|0.10|0": "dfc5ca77c681c48abb415fae5b6cb02191750246ce85870b3cf5cd9631433280",
+    "Wt|contract|t100|s12|0.10|0": "24fb106bf42a77dcfd202f75fbdd3f28ad046e80e4794ded786fa23d3a803347",
+    "Wg|cheap|t40|s12|0.10|0": "b32d784204e0e1174decd77b57bfd54611fa2eb8e4f332f8b1c27d4bc7508386",
+    "Wt|cheap|t40|s12|0.10|0": "f98b80d86739e0706c40a31ca8ef51ca4ee6a3ddbf42296dc180bace61a8414b",
+    "Wg|cheap|t100|s12|0.10|0": "859d1ffada560ffa7dddebc93acb4a3701478e31245664fd96c09fb00e22e124",
+    "Wt|cheap|t100|s12|0.10|0": "61f7ebf5a61ab754005bf2208693db94edab110cea16be4c78d24ad6b0ffe3d4",
+    "never|-|t40|None|0.10|50": "daefa16e6ab8a5d0684a2635ca6a3865c1e795eacec3bda8e04ebcffd6d7629d",
+    "never|-|t100|None|0.10|50": "6c42a497e3364e1b769a5560cd05c39d7c08fcbf97d65d399874b477d6575017",
+    "R|contract|t40|s12|0.10|50": "66602b281dd6858190581579656142de1e8647e81266721069d0fdd00bd687ee",
+    "Wg|contract|t40|s12|0.10|50": "62e706096b35fdcd8e97d4f61a3b85460e8d2f9fdaf9f4d5c80463e81de55ff9",
+    "R|contract|t100|s12|0.10|50": "f8e425a7428c96ee49b5f033998bd51774648d6fca9d58cc21ca84b2cf51bc00",
+    "Wg|contract|t100|s12|0.10|50": "9bac68908ba425bd42e2d6c4ab05ca77deac68f0dc6a91434eea8ba36f57a78b",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "brand_equity_speed": {
+   "run": "runs/brand_equity_speed_summary.md",
+   "script": "analysis/brand_equity_speed.py",
+   "engine": "0.19.0",
+   "overrides": [
+    "buyers.tie_break=\"stall_id\"",
+    "ratings.display=\"exact\""
+   ],
+   "cells": {
+    "never|t40|None|0.10|0|60|new": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|0|60|new": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|0|60|new": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|3.5|60|new": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|3.5|60|new": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|3.5|60|new": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|10|60|new": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|10|60|new": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|10|60|new": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|400|60|new": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|400|60|new": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|400|60|new": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|0|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|0|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|0|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|3.5|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|3.5|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|3.5|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|10|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|10|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|10|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|400|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|400|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|400|60|new": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "sampler": [
+     "inspectors.count=0"
+    ]
+   },
+   "cell_sha256": {
+    "never|t40|None|0.10|0|60|new": "e77f687c202924e3e9f7d272df8388864762569aac447fd4283bf3b1a75864a9",
+    "R|t40|s25|0.10|0|60|new": "8511d3f8dd17c93acb4af94a29fa07a214ac97a4bce1c396452356c1b70b0dd5",
+    "Wg|t40|s25|0.10|0|60|new": "d7fd3a963b2a5e3a9df687860bb6eb0c12c23750a608d35df6ee324aa19a7a8e",
+    "never|t40|None|0.10|3.5|60|new": "33b20a2f7c30efd8672a7753098dd1a0684eab58258ca49ccda3eb8ce67119a6",
+    "R|t40|s25|0.10|3.5|60|new": "7b4bea258671e479fe1abd90483936fb915380cde93f754f9e7ce8caaeae7724",
+    "Wg|t40|s25|0.10|3.5|60|new": "b53a3692a64bdab5dfbbd3d04c769312b6d8ac74af3e87384e35de3b95b3bd91",
+    "never|t40|None|0.10|10|60|new": "cd0a56a8a51ec15984dbc2f6e00ee9029f1a758973af9ecbe3b78d53d9b62486",
+    "R|t40|s25|0.10|10|60|new": "c887f1dd1b921fe20234ba1c02da1e365ec19a1749b95d48006f4147b0d30b3a",
+    "Wg|t40|s25|0.10|10|60|new": "bf21f799b2e7158879cce5bc97e17dc011ac65174d1c5bd0f4938b2bcd1313f6",
+    "never|t40|None|0.10|400|60|new": "bf8fe0222084f95e96acd75eb9e60f2dc35b253eb964356e4dde99d618c57a38",
+    "R|t40|s25|0.10|400|60|new": "fed34af7386391bc13e610b18fdf2176864445eea234c9ae1e93c383c2288507",
+    "Wg|t40|s25|0.10|400|60|new": "fda7d5d3e803801a5bf65e080a5ff6fb9c9d5f8b0b7c61324f4370bac90d7834",
+    "never|t100|None|0.10|0|60|new": "3a252678bd191259dc3cc49590bfefe590357a24933d6cbcc387ff791b76d298",
+    "R|t100|s25|0.10|0|60|new": "9a9dfa4167920db58a5bca46d24d49e549e395518bfcb10a97ef90c1e7e1a2a6",
+    "Wg|t100|s25|0.10|0|60|new": "5697a44f6a8050c44347da6c396767dcd0e92b29875b3bcdd52b0b8d574c50bc",
+    "never|t100|None|0.10|3.5|60|new": "94c1c00128b4671ac52e664a63920e01ced5e43e122d36b50c7f36208f02c30a",
+    "R|t100|s25|0.10|3.5|60|new": "e1d57af111cb870a126209b3734004ea2a43e4b2dcf783ee9cb476d517a56cc9",
+    "Wg|t100|s25|0.10|3.5|60|new": "35d586aadcdf3cf595f753980ec4ccd5d2ccfbcac0769d9c74ee3bdc96fb59ae",
+    "never|t100|None|0.10|10|60|new": "559d989fffbab4ec445522c3e4ccdfa7b2c79f43bfcf6391a1cc67ec95cb10fd",
+    "R|t100|s25|0.10|10|60|new": "e0b3153b11254f527b79ac5d25420b64d68ffe002a1d29ddb238c00ad9aa7cd4",
+    "Wg|t100|s25|0.10|10|60|new": "94c40cdda8d24686d05651d4d50c94601923ac211bc87866e73de71fa42054ab",
+    "never|t100|None|0.10|400|60|new": "211346aac9f046254743770e0945eea36cc6bfca03f9735d88480b1e7605b14f",
+    "R|t100|s25|0.10|400|60|new": "f9fd07fc6c8cbbbd19d1960a46e2ebbc0d2698a283eddfb00424ea7db0ad8d1f",
+    "Wg|t100|s25|0.10|400|60|new": "e9173056ed00c870fd7f181a4f088857803491cfad03188040804f3aee658996",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "stars_sensitivity": {
+   "run": "runs/stars_sensitivity_summary.md",
+   "script": "analysis/stars_sensitivity.py",
+   "engine": "0.20.0",
+   "overrides": [],
+   "cells": {
+    "verification|stars|A|t100|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.count=0"
+    ],
+    "verification|stars|A|t40|l1|None|never": [
+     "inspectors.count=0"
+    ],
+    "verification|stars|B|t100|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "liability|stars|col|t100|ds0.0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "bustout|stars|col|t40|ds0.0|None|never": [
+     "inspectors.detect_scale=0.0"
+    ],
+    "canal|stars|phi0.6|t100|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "brands.counterfeit_price_factor=0.6",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "canal|stars|phi1.0|t100|ds1.0": [
+     "brands.counterfeit_entry=\"day\"",
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "licensing|stars|never|t40|ds1.0|None|never|r0.15": [],
+    "licensing|stars|lic|contract|t40|ds1.0|free|s28|2x10|r0.15": [
+     "licensing.quality=\"contract\""
+    ],
+    "sampler": [
+     "buyers.tie_break=\"stall_id\"",
+     "inspectors.count=0",
+     "ratings.display=\"exact\""
+    ]
+   },
+   "cell_sha256": {
+    "verification|stars|A|t100|None|never": "cfb4c5e7e55aa9966b97f88e32d514e6c0b066d57b2f37b00050e33121538c23",
+    "verification|stars|A|t40|l1|None|never": "7b247981d3f3ea25437c70cdb7be2df77585d040784890a8f45ecbbd75145664",
+    "verification|stars|B|t100|None|never": "02596d687770f0c7ca0fa3a74e30cb1b3d6a1925f9ac8795b0541b8383eaf3b1",
+    "liability|stars|col|t100|ds0.0|None|never": "bbe5f24ed2c1b4542d66e7730a044eeec01e7fb76e1482bbf91e610a9ae03ca8",
+    "bustout|stars|col|t40|ds0.0|None|never": "f1269186d917825dced9dae2578fb43bcd06b9e0b13cfde1907c725d689ae29b",
+    "canal|stars|phi0.6|t100|ds1.0": "26c800c8ade14e0849cd111b3e4077c6fd1db37dbc3c89d3c164f08fcbe9055d",
+    "canal|stars|phi1.0|t100|ds1.0": "932acf6dcac9df68d9ef47ebd1d4cb52b3703b11101b100bf8423c10c6a9f13e",
+    "licensing|stars|never|t40|ds1.0|None|never|r0.15": "1b73968ec50c1b346a4c1ebb7947a3e5c9cc1792777244bb2aeb8c3ef692ae9b",
+    "licensing|stars|lic|contract|t40|ds1.0|free|s28|2x10|r0.15": "4bfb91878292cffad8ec411e2d82e1a9d44635b80e518d8a5d1516e9406f6e0c",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "brand_equity_stars": {
+   "run": "runs/brand_equity_stars_summary.md",
+   "script": "analysis/brand_equity_stars.py",
+   "engine": "0.20.0",
+   "overrides": [],
+   "cells": {
+    "never|t40|None|0.10|0|60|new|stars0.02": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|0|60|new|stars0.02": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|0|60|new|stars0.02": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|3.5|60|new|stars0.02": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|3.5|60|new|stars0.02": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|3.5|60|new|stars0.02": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|10|60|new|stars0.02": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|10|60|new|stars0.02": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|10|60|new|stars0.02": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|400|60|new|stars0.02": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|400|60|new|stars0.02": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|400|60|new|stars0.02": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|0|60|new|stars0.1": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|0|60|new|stars0.1": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|0|60|new|stars0.1": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t40|None|0.10|10|60|new|stars0.1": [
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t40|s25|0.10|10|60|new|stars0.1": [
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t40|s25|0.10|10|60|new|stars0.1": [
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|0|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|0|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|0|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|3.5|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|3.5|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|3.5|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=3.5",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|10|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|10|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|10|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|400|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|400|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|400|60|new|stars0.02": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|0|60|new|stars0.1": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|0|60|new|stars0.1": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|0|60|new|stars0.1": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_scope=\"new\""
+    ],
+    "never|t100|None|0.10|10|60|new|stars0.1": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "R|t100|s25|0.10|10|60|new|stars0.1": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "Wg|t100|s25|0.10|10|60|new|stars0.1": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.display_step=0.1",
+     "ratings.prior_n=10.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "sampler": [
+     "buyers.tie_break=\"stall_id\"",
+     "inspectors.count=0",
+     "ratings.display=\"exact\""
+    ]
+   },
+   "cell_sha256": {
+    "never|t40|None|0.10|0|60|new|stars0.02": "12ac9200c3a788140bcd2ec65c75c3618f6f8cec0aedf5f7d16102a1bbc5d6bc",
+    "R|t40|s25|0.10|0|60|new|stars0.02": "72103bdb12c0097bf6a023a9e20936b41a6a75b343c314b1594368b93cf4a6d4",
+    "Wg|t40|s25|0.10|0|60|new|stars0.02": "27568ebac611943d341fef3a678a412a4b8c611d389c9441050d0eeae99b6761",
+    "never|t40|None|0.10|3.5|60|new|stars0.02": "9777c4173aa3406181597ec4db2c3136a9271dd94a175e06f7f3c144bd888f25",
+    "R|t40|s25|0.10|3.5|60|new|stars0.02": "f3aa15e93737a0df55d7bb5a5d203c9e0cddb59c76955b2ca71d5584f4ed13af",
+    "Wg|t40|s25|0.10|3.5|60|new|stars0.02": "3315084bb914870cbfdd5c4c29d5a67bd9ad2b80214ef10c934bf3bc38ce3080",
+    "never|t40|None|0.10|10|60|new|stars0.02": "b6f84436f432f21124e0f257fb9b7231c69859596ace368c5590e29d1b8dbc79",
+    "R|t40|s25|0.10|10|60|new|stars0.02": "82cc47a8ad8bbbddcd84a4b553617ba4691fe9f291f1ffa58dcafb33b36d91e7",
+    "Wg|t40|s25|0.10|10|60|new|stars0.02": "362fa24a2e7e4d43138ab8fb520ee091eafc95c9656012a0da5db95b33ac3af4",
+    "never|t40|None|0.10|400|60|new|stars0.02": "a035e8a3fbc7eddad34f728d673a7ee48e97652ca90df0c61377221defff43d8",
+    "R|t40|s25|0.10|400|60|new|stars0.02": "f6b6dcb11bad4bcaeb92043215f055226c6b9a42e00b867d473a4733e5745e14",
+    "Wg|t40|s25|0.10|400|60|new|stars0.02": "2b21f81a394e493d2eaf59c72f65aecddd852eed5d832e8f0d33f76622e13453",
+    "never|t40|None|0.10|0|60|new|stars0.1": "9af45a538390c8318c2b83aa8c53819db54c75ea882ea6eb91e1cfe4e738730b",
+    "R|t40|s25|0.10|0|60|new|stars0.1": "887b4e0a4a7f75bde7d0af8d53678a673ccf73c5120d9cde7b2c716c8eaba372",
+    "Wg|t40|s25|0.10|0|60|new|stars0.1": "152978bd68a562bb9b646ef46cb9319c8529794d95614b17afb11cf6af330750",
+    "never|t40|None|0.10|10|60|new|stars0.1": "0d85b2c2249222ab33845aa1619344611b7773cb638b48248e5cce84be2786e7",
+    "R|t40|s25|0.10|10|60|new|stars0.1": "43d172f1809232cc8224d32c5d81a5e841acff30ba295521cbc0647dafbf52a5",
+    "Wg|t40|s25|0.10|10|60|new|stars0.1": "9aacac07b42984a0cd7cc166fb994eb052231713def028dfa4722b3509b30cc5",
+    "never|t100|None|0.10|0|60|new|stars0.02": "98aacbe81259b3c0446fe58fbe8445931523cf71d36ddd58c0dfacc5d33c3c4d",
+    "R|t100|s25|0.10|0|60|new|stars0.02": "a1676bc60b0b0613ce1724ed66e1e04462eb9e581b793fe558158b1f0bafc072",
+    "Wg|t100|s25|0.10|0|60|new|stars0.02": "795d9256d74f5c32242ceed7bd645ffc380350a81c731b8104cd32929f026ae6",
+    "never|t100|None|0.10|3.5|60|new|stars0.02": "11de525fc1edf4f475bec47c4f57f38929e65e6526de80e95bcab70c87dedd8d",
+    "R|t100|s25|0.10|3.5|60|new|stars0.02": "95e764b925680ec77e7aba65f36433622b42eb7c67409b94b95467be515722f4",
+    "Wg|t100|s25|0.10|3.5|60|new|stars0.02": "cc643cb4cf0623216b1d54a271be833fbd573ead2a0052dc9a05fdcdb881fd6d",
+    "never|t100|None|0.10|10|60|new|stars0.02": "0701b2ca8bc0363ff159fe068e8fae44ceb3c49bb30395d859a5166f654a277c",
+    "R|t100|s25|0.10|10|60|new|stars0.02": "ca89e0998da74239df39183e5c3e508e9d0eb29f9f97ca7a7d3892c241aaad70",
+    "Wg|t100|s25|0.10|10|60|new|stars0.02": "4e97c90c187eaf7a3ffb0c08348f469cb1801b27c202b3bbd568d1d5e9a86f7b",
+    "never|t100|None|0.10|400|60|new|stars0.02": "231ff278f35c821c97bc4501addc3fd386167b82ae6fee89c6df1416fd712db4",
+    "R|t100|s25|0.10|400|60|new|stars0.02": "42e22bab7d8fd31c6fb08fd57e1a49843ff1734efabb1bb4733e0c661cd6c456",
+    "Wg|t100|s25|0.10|400|60|new|stars0.02": "5c62ada6349338aad157ce419f1b876a82c563cbe77cf6018f0f06efc99afc46",
+    "never|t100|None|0.10|0|60|new|stars0.1": "254cd8c02fd67c7c18e04f0b84af9e78958b4a239130498d0c905900be2d24d0",
+    "R|t100|s25|0.10|0|60|new|stars0.1": "4bc5d5941c6719345ff543ceddbe896957c592e78078a364844511d23dd8b169",
+    "Wg|t100|s25|0.10|0|60|new|stars0.1": "8f9b01bca780418fd1877f4abb1fc8cf0dd6335e8ab035246d4cf79ff6d6602c",
+    "never|t100|None|0.10|10|60|new|stars0.1": "625bf0095f400508cabbc5ceba813eb53eb64e048ebb72593c48166accc01458",
+    "R|t100|s25|0.10|10|60|new|stars0.1": "682497f71dff77952533b32cf1b17d395218582d904caae6314816562697d199",
+    "Wg|t100|s25|0.10|10|60|new|stars0.1": "0ddb9bb2402527c717c7b106dce6291d62b1007ad25081c9d7d5e1386a7ca7ff",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  },
+  "check_vs_read": {
+   "run": "runs/check_vs_read_summary.md",
+   "script": "analysis/check_vs_read.py",
+   "engine": "0.21.0",
+   "overrides": [],
+   "cells": {
+    "A|RI|ds0|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "A|RI|ds1|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}"
+    ],
+    "B|RI|pn0|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|RI|pn0|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|RI|pn0|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|RI|pn400|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|RI|pn400|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|RI|pn400|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "A|Rn|ds0|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "A|Rn|ds1|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}"
+    ],
+    "B|Rn|pn0|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|Rn|pn0|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|Rn|pn0|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|Rn|pn400|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|Rn|pn400|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|Rn|pn400|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":true,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "A|nI|ds0|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "A|nI|ds1|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}"
+    ],
+    "B|nI|pn0|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nI|pn0|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nI|pn0|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nI|pn400|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nI|pn400|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nI|pn400|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":1.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "A|nn|ds0|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "A|nn|ds1|None|never": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}"
+    ],
+    "B|nn|pn0|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nn|pn0|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nn|pn0|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nn|pn400|never|None": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nn|pn400|R|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|nn|pn400|Wg|s47": [
+     "buyers.profile_overrides.local={\"reads_ratings\":false,\"inspect_prob\":0.0}",
+     "buyers.profile_shares={\"tourist\":0.4,\"local\":0.6,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "A|ref|ds0|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "inspectors.detect_scale=0.0"
+    ],
+    "A|ref|ds1|None|never": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}"
+    ],
+    "B|ref|pn0|never|None": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|ref|pn0|R|s47": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|ref|pn0|Wg|s47": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|ref|pn400|never|None": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|ref|pn400|R|s47": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "B|ref|pn400|Wg|s47": [
+     "buyers.profile_shares={\"tourist\":1.0,\"local\":0.0,\"expert\":0.0}",
+     "licensing.brand=\"white_label\"",
+     "licensing.quality=\"contract\"",
+     "licensing.royalty=0.1",
+     "licensing.white_label_tier=\"genuine\"",
+     "market.days=60",
+     "ratings.prior_n=400.0",
+     "ratings.prior_scope=\"new\""
+    ],
+    "sampler": [
+     "buyers.tie_break=\"stall_id\"",
+     "inspectors.count=0",
+     "ratings.display=\"exact\""
+    ]
+   },
+   "cell_sha256": {
+    "A|RI|ds0|None|never": "8d7087fd499ec204840163e526731ec570b9b5da052fdd1a5fa74ce231d034f4",
+    "A|RI|ds1|None|never": "06f68f740d37d23634aee132506a7b3d4b7149f39a845511c80f51cc17f0b413",
+    "B|RI|pn0|never|None": "7796939751af5fc3c8f9eff5b836072fb64668a4cab8a4b7a3aa078eaca712c0",
+    "B|RI|pn0|R|s47": "ba28e184a5f3b11e041299778b24b490d3edbc1a0065a3ecf39c288f2077e181",
+    "B|RI|pn0|Wg|s47": "9933f0ccaeb1d0a5450a3a25c99dd2ef714db0e9dddd50f86e964d92e291e758",
+    "B|RI|pn400|never|None": "c560eaeb7c60358f0a4e762f41a50ed1dfaa9e2fc3c7d33b45e88c48afc7b70f",
+    "B|RI|pn400|R|s47": "ba3aa5daa731f5c4a5603907fd9e41c2df076b1db105fc8a51cc771ccf42f91e",
+    "B|RI|pn400|Wg|s47": "7a935be3ddfceba03f84f97846be5459b6263816ec1a46840a98811e246b9de7",
+    "A|Rn|ds0|None|never": "bc802c92bdb18494503734331c4e3bf0340f31bf92ebebff0614a1451f8cfd11",
+    "A|Rn|ds1|None|never": "bfafa30077d5101147bfe9fdc29fb14e10a7e5cfc4308c23bb646d7c5d53789a",
+    "B|Rn|pn0|never|None": "91be29ac836ba88e80aa5381cd6b7ba62a825632349cc7afe02392d76c945fe1",
+    "B|Rn|pn0|R|s47": "362fd1baf0f2efba2375e6ceadb91d819e1c7c6803e9a501dc515e467e4825ad",
+    "B|Rn|pn0|Wg|s47": "1cf9a62b71c695b136eba985a457401f90337269ae205ae162ce9aae6c4972a2",
+    "B|Rn|pn400|never|None": "3781db02008c30c3ebe5aef5d173ec642743357485a853128222fb0b586e0f46",
+    "B|Rn|pn400|R|s47": "94e4acd07a8b9ffc009d82f27e08c284b9a9b16c4dc59b390de3f7f7e73cb36d",
+    "B|Rn|pn400|Wg|s47": "c54fabb400c2fdb6ed644956e02552a37cf14bb6aa62e00e30138e139c9bf414",
+    "A|nI|ds0|None|never": "dba6329759777b504529ad9dbe28453fa719938ca6a3cc528309fd035ccf0d82",
+    "A|nI|ds1|None|never": "7777060125b30053085e8dc46f2c0ce897218c6e7da7a84f14c78b3cdd9c0fc4",
+    "B|nI|pn0|never|None": "e9460698d7a1d6c1eda71edea74a7b80d5120a052588a5b425897fa043b46c78",
+    "B|nI|pn0|R|s47": "7aa446b40e3852b8a9e539b884306c82a6e387f8cfd793eb7e8b2fd66a11a9ee",
+    "B|nI|pn0|Wg|s47": "47c0ca3a5f9aa30858c46170dc157f2dc4e16bd893ff6b0610802a6d570d5793",
+    "B|nI|pn400|never|None": "6f33bb22201f9449f58424938e69d807ab20ea72903ed086d96f871b06834ff5",
+    "B|nI|pn400|R|s47": "6098483db4374d2e7465b5ebe33c6460832e44ddc2bf945c404275caa0945442",
+    "B|nI|pn400|Wg|s47": "84dbc07adebb65d5c5446a209e83cf2675898303303f6161dfd46c4c43aa5096",
+    "A|nn|ds0|None|never": "e7fa318ef8c897f4e9011e75722a4e4447f5107dca4b0f531b50286906425b54",
+    "A|nn|ds1|None|never": "7ce5a42098fea28c4a15dacc17a1168a61df0e2befc64f4129a81573a3add369",
+    "B|nn|pn0|never|None": "ee41d0ef765032a054f079ed832aac43c9147bb7be54f7ecc3ca29780824c50b",
+    "B|nn|pn0|R|s47": "b66b3c05796b77bcd5ba7522e2ebfd480c3324eac3a1bdafef67be593107444e",
+    "B|nn|pn0|Wg|s47": "e3fca6ef5770edddab4a790949a7f8d479cac41fdb2ee5ce13fdd9d50892775d",
+    "B|nn|pn400|never|None": "ee495a9f5cba48406d577c9a0fb32dc3a18d459d3637443d6ab84a7c0f0c5964",
+    "B|nn|pn400|R|s47": "1391cf1e9637ed6bf4cb2840845944ebe2bfccab253b1ea27cac9da808c05171",
+    "B|nn|pn400|Wg|s47": "d531942d3dc4c41b9f10090fb3cad9b1bf2903290d58d56c037987c1e66246b9",
+    "A|ref|ds0|None|never": "bbe5f24ed2c1b4542d66e7730a044eeec01e7fb76e1482bbf91e610a9ae03ca8",
+    "A|ref|ds1|None|never": "02596d687770f0c7ca0fa3a74e30cb1b3d6a1925f9ac8795b0541b8383eaf3b1",
+    "B|ref|pn0|never|None": "98aacbe81259b3c0446fe58fbe8445931523cf71d36ddd58c0dfacc5d33c3c4d",
+    "B|ref|pn0|R|s47": "a1676bc60b0b0613ce1724ed66e1e04462eb9e581b793fe558158b1f0bafc072",
+    "B|ref|pn0|Wg|s47": "795d9256d74f5c32242ceed7bd645ffc380350a81c731b8104cd32929f026ae6",
+    "B|ref|pn400|never|None": "231ff278f35c821c97bc4501addc3fd386167b82ae6fee89c6df1416fd712db4",
+    "B|ref|pn400|R|s47": "42e22bab7d8fd31c6fb08fd57e1a49843ff1734efabb1bb4733e0c661cd6c456",
+    "B|ref|pn400|Wg|s47": "5c62ada6349338aad157ce419f1b876a82c563cbe77cf6018f0f06efc99afc46",
+    "sampler": "8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f"
+   }
+  }
+ }
+}
