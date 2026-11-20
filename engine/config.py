@@ -321,7 +321,9 @@ class BrandsCfg:
     counterfeit_entry: str = "reopen"
     counterfeit_day: int = 2
     # A counterfeit posts round(counterfeit_price_factor x the original's posted price) each day (both entry
-    # modes). It still claims the original's quality; its unit cost is unchanged. 1.0 = the original's price.
+    # modes). Claims are unchanged by the price: a day-entry counterfeit claims the original's true quality (set
+    # at entry); one made by renaming at reopening keeps its own pitched quality. Unit cost is unchanged. 1.0 = the
+    # original's price.
     counterfeit_price_factor: float = 1.0
 
 
