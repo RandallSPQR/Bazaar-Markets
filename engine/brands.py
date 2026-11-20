@@ -196,12 +196,71 @@ def premium_price(cfg, st, rating: float | None) -> int:
     return int(round(base * tier_factor(cfg, st) * (1 + cfg.brands.premium * (r - 0.5))))
 
 
+# ------------------------------------------------------------------ engine 1.1.0: price policies
+
+PRICE_POLICIES = ("rating_indexed", "cost_plus", "match_rival", "undercut", "promo")
+PROMO_OFF = 0.15
+PROMO_DAYS = 7
+MATCH_BAND = 0.1
+
+
+def _half_up(x: float) -> int:
+    return int(math.floor(x + 0.5))
+
+
+def validate_price_policy(cfg) -> None:
+    s = cfg.sellers
+    if s.price_policy not in PRICE_POLICIES:
+        raise ValueError(f"sellers.price_policy must be one of {PRICE_POLICIES}, got {s.price_policy!r}")
+    m = s.markup
+    if isinstance(m, bool) or not isinstance(m, (int, float)) or not math.isfinite(m) or m < 0:
+        raise ValueError(f"sellers.markup must be a finite number >= 0, got {m!r}")
+    if s.price_policy != "rating_indexed" and not cfg.brands.enabled:
+        raise ValueError("sellers.price_policy other than rating_indexed needs brands.enabled")
+
+
+def _shown_or_neutral(cfg, r: float | None) -> float:
+    v = shown(cfg, r)
+    return 0.5 if v is None else v
+
+
+def policy_price(cfg, st, stalls: list, rating: float | None) -> int:
+    """The stall's own price today under sellers.price_policy (1.1.0), given its start-of-day rating (None after a
+    rename). rating_indexed is the 1.0.0 formula. Rivals are read with their start-of-day ratings, so morning_prices
+    sets every rating before any price."""
+    ri = premium_price(cfg, st, shown(cfg, rating))
+    pol = cfg.sellers.price_policy
+    if pol == "rating_indexed":
+        return ri
+    if pol == "cost_plus":
+        return _half_up(st.unit_cost_cents * (1 + float(cfg.sellers.markup)))
+    if pol == "promo":
+        h = st.units_hist
+        return _half_up(ri * (1 - PROMO_OFF)) if h and h[-1] < sum(h) / len(h) else ri
+    own = _shown_or_neutral(cfg, rating)
+    rivals = [s for s in stalls if s.sid != st.sid and s.category == st.category and s.exited_day is None
+              and s.yesterday is not None]
+    if pol == "match_rival":
+        ps = sorted(s.yesterday["price_cents"] for s in rivals
+                    if _shown_or_neutral(cfg, s.rating) >= own - MATCH_BAND - 1e-9)
+        if not ps:
+            return ri
+        n = len(ps)
+        return ps[n // 2] if n % 2 else _half_up((ps[n // 2 - 1] + ps[n // 2]) / 2)
+    ps = [s.yesterday["price_cents"] for s in rivals if _shown_or_neutral(cfg, s.rating) >= own - 1e-9]
+    if not ps:                                   # undercut
+        return ri
+    return max(min(ps) - 1, int(st.unit_cost_cents))
+
+
 def morning_prices(cfg, stalls: list, book: BrandBook) -> None:
     """Set every stall's price for the day from its brand's start-of-day rating; counterfeits
-    then take the price of the stall bearing the original's name."""
+    then take the price of the stall bearing the original's name. 1.1.0: the own price follows
+    sellers.price_policy (policy_price); every rating is set first."""
     for st in stalls:
         st.rating = book.rating(st.brand)
-        st.price_cents = premium_price(cfg, st, shown(cfg, st.rating))     # 0.20.0: the displayed rating
+    for st in stalls:
+        st.price_cents = policy_price(cfg, st, stalls, st.rating)     # 0.20.0: the displayed rating
     # 1.0.0 (formal-model check C1): a white-label licensee is the only stall bearing its fresh name, so it is the
     # holder; an owner-branded licensee shares its owner's name and stays out (the owner is the holder).
     holder = {st.brand: st for st in stalls
@@ -241,12 +300,12 @@ def counterfeit_logging(cfg) -> bool:
     return cfg.brands.counterfeit_entry == "day" or float(cfg.brands.counterfeit_price_factor) != 1.0
 
 
-def enter_counterfeits(cfg, stalls: list, book: BrandBook) -> list[dict]:
+def enter_counterfeits(cfg, stalls: list, book: BrandBook, sroot: tuple | None = None) -> list[dict]:
     """brands.counterfeit_entry "day": every deceptive stall still in the market (licensees excluded)
     copies the name of the top-rated genuine brand of its category (book ratings, i.e. at the end of the
     previous day; unrated = 0.5), in stall order. Ties and the name edits come from default_rng([seed, 23]).
     The stall claims the original's true quality from now on and is never offered a rename."""
-    rng = np.random.default_rng([cfg.seed, ENTRY_STREAM])
+    rng = np.random.default_rng([*((cfg.seed,) if sroot is None else sroot), ENTRY_STREAM])   # 1.1.0: sroot
     out = []
     for st in sorted(stalls, key=lambda s: s.idx):
         if st.stype != "deceptive" or st.exited_day is not None or st.licensed_from is not None:

@@ -13,13 +13,29 @@ from engine.config import load
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# Keys added after 1.0.0, with their defaults. At their defaults they reproduce 1.0.0, so the 1.0.0 files (which
+# do not have them) are compared after removing them; any other value fails.
+V110_DEFAULTS = {("sellers", "price_policy"): "rating_indexed", ("sellers", "markup"): 0.5,
+                 ("buyers", "choice"): "lexicographic", ("buyers", "logit_rating_weight"): 5.0,
+                 ("buyers", "logit_price_weight"): 5.0}
+
+
+def _as_v100(d: dict) -> dict:
+    d = json.loads(json.dumps(d))
+    for (sec, key), v in V110_DEFAULTS.items():
+        assert d[sec].pop(key) == v, (sec, key)
+    if d["sellers"] == {}:
+        del d["sellers"]
+    return d
+
+
 def _json(rel):
     with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
         return json.load(f)
 
 
 def test_reference_file_is_the_reference_market():
-    assert _json(R.REF_PATH) == R.reference_dict()
+    assert _json(R.REF_PATH) == _as_v100(R.reference_dict())
     cfg = load(os.path.join(ROOT, R.REF_PATH))
     assert (cfg.ratings.display, cfg.buyers.tie_break, cfg.inspectors.count, cfg.inspectors.detect_scale,
             cfg.pricing.penalty_lag_days, cfg.brands.premium, cfg.buyers.count) == ("stars", "random", 2, 1.0, 0, 0.4, 150)
@@ -33,7 +49,7 @@ def test_every_variant_cell_rebuilds_its_run_config():
     assert len(V) == 12
     for name, var in V.items():
         for lab in var["cells"]:
-            d = R._noseed(R.EC.to_dict(R.build(var, lab, 0)))
+            d = _as_v100(R._noseed(R.EC.to_dict(R.build(var, lab, 0))))
             assert hashlib.sha256(R.canon(d).encode()).hexdigest() == var["cell_sha256"][lab], (name, lab)
 
 

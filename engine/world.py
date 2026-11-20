@@ -91,6 +91,8 @@ class Stall:
     # engine 0.17.0
     counterfeit_fixed: bool = False   # took a counterfeit name by brands.counterfeit_entry "day": never renames
     white_label: bool = False         # a licensee under its own fresh brand (licensing.brand "white_label")
+    # engine 1.1.0
+    units_hist: list = field(default_factory=list)   # units sold on each of the last 7 days, oldest first
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),

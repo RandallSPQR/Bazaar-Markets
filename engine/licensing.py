@@ -89,7 +89,7 @@ def sign(cfg, st) -> str:
     return "truth" if st.licence == "contract" else cfg.stalls.deceptive_sign
 
 
-def apply(cfg, stalls: list, day: int, book=None) -> list[dict]:
+def apply(cfg, stalls: list, day: int, book=None, sroot: tuple | None = None) -> list[dict]:
     """Grant the licences scheduled for `day` (start of the day). Mutates the stalls; returns records.
     licensing.brand "white_label" (0.17.0): each licensee takes a fresh unrated name, added to `book`."""
     out = []
@@ -101,13 +101,14 @@ def apply(cfg, stalls: list, day: int, book=None) -> list[dict]:
         owner = next(st for st in stalls if st.sid == sid)
         pool = sorted((s for s in stalls if s.category == owner.category and s.stype != "genuine"),
                       key=lambda s: s.idx)
-        rng = np.random.default_rng([cfg.seed, STREAM, owner.idx])
+        S = (cfg.seed,) if sroot is None else tuple(sroot)        # 1.1.0: [seed, 31, k] in continuation k
+        rng = np.random.default_rng([*S, STREAM, owner.idx])
         order = [pool[int(i)] for i in rng.permutation(len(pool))]
         u = rng.random(len(order))
         lo = cfg.stalls.q_low
         chosen = []
         white = lc.brand == "white_label"
-        wl_rng = np.random.default_rng([cfg.seed, WHITE_LABEL_STREAM, owner.idx]) if white else None
+        wl_rng = np.random.default_rng([*S, WHITE_LABEL_STREAM, owner.idx]) if white else None
         for st, ui in list(zip(order, u))[:int(spec["n"])]:
             if st.licensed_from is not None or st.exited_day is not None:
                 raise ValueError(f"stall {st.sid} cannot take a licence (already licensed or exited)")

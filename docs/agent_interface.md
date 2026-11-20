@@ -136,8 +136,9 @@ No action field sets a price (`engine/interface.py:12-13`). The engine sets it:
 | copied name | round(φ × the original's current price), φ = `brands.counterfeit_price_factor` | `engine/brands.py:205-208`, `217-220` |
 | licensee under the owner's name | the owner's price | `engine/licensing.py:135-140` |
 | after a rename (same day) | new name: neutral price; copied name: φ × original's price | `engine/bazaar.py:579-585` |
+| 1.1.0, `sellers.price_policy` ≠ `rating_indexed` | the own price is the policy's (`cost_plus`, `match_rival`, `undercut`, `promo`; `docs/config_reference.md`, `sellers`); the copy rules above then apply unchanged; after a rename the policy's price at an unrated name | `engine/brands.py` `policy_price` |
 
-Ratings change only between days, so a stall's price is constant within a day except after a rename. The seller sees `stall.price_cents` and, with brands on, `brand.neutral_price_cents`. Stage 3 (engine 1.1.0) plans a market-wide `sellers.price_policy`; that is still a config setting, not an agent decision.
+Ratings change only between days, so a stall's price is constant within a day except after a rename. The seller sees `stall.price_cents` and, with brands on, `brand.neutral_price_cents`. Engine 1.1.0 adds a market-wide `sellers.price_policy`; it is a config setting, not an agent decision.
 
 ### 3.7 Decision point: switch supply
 
@@ -257,7 +258,7 @@ Nothing is clamped. A `buy` of 3 units when 2 are needed is rejected, not cut to
 
 - **Who, when.** Walk mode: any buyer turn. Searching: phase `choose`.
 - **Effect.** Pays units × price; value is realised from the stall's true quality (`engine/bazaar.py:741-771`). A unit counts toward the task only if true quality ≥ `q_req`. The purchase is rated (enters the name's next rating) only if the buyer had received at least one claim from the stall (`engine/brands.py:297-324`).
-- **Rule policy.** Quality estimate = own assessment, else inspection, else the latest claim. A stall is a candidate if the estimate ≥ `q_req`, one unit is affordable and, if the buyer sees ratings, the displayed rating is ≥ `ratings.tau` (unrated passes). Depth 1: it goes through stalls in reach by (price, tie-break) and acts at the first candidate (`agents/rule_based.py:349-388`). Searching: highest displayed rating (unrated = 0.5), then lowest price, then tie-break; buyers who do not see ratings take the lowest price (`agents/rule_based.py:448-464`). It buys min(units needed, units affordable).
+- **Rule policy.** Quality estimate = own assessment, else inspection, else the latest claim. A stall is a candidate if the estimate ≥ `q_req`, one unit is affordable and, if the buyer sees ratings, the displayed rating is ≥ `ratings.tau` (unrated passes). Depth 1: it goes through stalls in reach by (price, tie-break) and acts at the first candidate (`agents/rule_based.py:349-388`). Searching: highest displayed rating (unrated = 0.5), then lowest price, then tie-break; buyers who do not see ratings take the lowest price (`agents/rule_based.py:448-464`). It buys min(units needed, units affordable). 1.1.0, `buyers.choice` `logit`: the searching rule buyer instead picks candidate j with probability ∝ exp(w_r × displayed rating − w_p × price / base), w_r = 0 when its rows carry no rating, by inverse CDF of `search.choice.u` (one uniform per buyer and day) over the candidates in lexicographic order (`agents/rule_based.py` `logit_pick`). The observation's `search.choice` block (`rule`, `rating_weight`, `price_weight`, `base_price_cents`, `u`) appears only under logit.
 
 ## 5. Invalid outputs
 
@@ -347,13 +348,18 @@ The observation depends on the engine state, the config and one flag from the po
 
 No decision point gives an LLM agent information a rule-based agent *cannot* see. Rows 1 to 9 are information a rule agent is given but ignores; comparisons between LLM and rule agents should state that the LLM may use them.
 
+### 7.1 Engine 1.1.0 additions
+
+- `search.choice` (logit only) gives the buyer the weights and its uniform for the day. The uniform is a rule-agent aid, like `tie_rank`: an LLM buyer would see an unexplained number. Drop it from an LLM's prompt, or explain it, before LLM buyer runs (open point 13 applies).
+- Under `match_rival` and `undercut` a stall's price depends on its rivals' displayed ratings and yesterday's prices. The seller observation does not show rivals' prices; the state bank's observation (section 10) does.
+
 ## 8. Known rules of this world
 
 Each is a deliberate design fact at 1.0.0, not an accident of the code.
 
 1. **Lexicographic choice by displayed rating, then price.** A searching rule buyer that sees ratings picks the candidate with the highest displayed rating (unrated = 0.5), then the lowest price, then the tie-break; one that does not see ratings picks the lowest price (`agents/rule_based.py:453-458`; `docs/formal_model.md`, "Tie-break"). At search depth 1 (the engine default) the rule buyer acts at the cheapest candidate and uses ratings only as the τ threshold (`agents/rule_based.py:356-357`). This is a rule of the `rule_buyer` policy; the engine does not enforce it, and an LLM buyer may choose otherwise.
 2. **Tourists cannot see ratings.** Their stall rows carry no `rating` key (`ratings.visible_to` defaults to local and expert, `engine/config.py:285`; `engine/bazaar.py:883-889`). The engine enforces it; `buyers.profile_overrides.reads_ratings` can change it per profile. Tourists also read the original's name on a copied name and file reviews under it (`engine/bazaar.py:250-255`).
-3. **Prices are set mechanically from displayed ratings.** Each morning, round(base × tier × (1 + premium × (r̃ − 0.5))) from the displayed start-of-day rating; copies and licensees copy prices (`engine/brands.py:193-208`; `engine/licensing.py:135-140`). No agent sets a price. **Under test in Stage 3** (`sellers.price_policy`, engine 1.1.0).
+3. **Prices are set mechanically from displayed ratings.** Each morning, round(base × tier × (1 + premium × (r̃ − 0.5))) from the displayed start-of-day rating; copies and licensees copy prices (`engine/brands.py:193-208`; `engine/licensing.py:135-140`). No agent sets a price. **Under test in Stage 3**: engine 1.1.0 adds four other market-wide policies (`sellers.price_policy`), still not agent decisions.
 4. **Perfect inspection.** An inspection reveals true quality exactly, at a fixed cost by profile, and never fails (`engine/bazaar.py:728-733`; `engine/world.py:395`).
 5. **Star display.** With `ratings.display` `stars`, every rating a buyer, a price or a seller reads is rounded half up to `ratings.display_step` (0.02 = a tenth of a star); the stored rating and the logs stay unrounded (`engine/brands.py:109-118`). The engine default is `exact`; the 1.0.0 reference market uses stars at 0.02 (plan, Stage 2 item 2).
 6. **Claims come from a two-item menu and the engine writes the text** (`engine/interface.py:9-13`; `engine/bazaar.py:246-248`).
@@ -379,3 +385,18 @@ Found while writing this document. None is fixed here.
 12. **Scope of rule 1.** The plan states lexicographic choice without qualification; in code it holds only for searching buyers (`search_depth` > 1 or `choice_set`). The reference market (choice set m 3) is searching, so it holds there.
 13. **Policy parameters in the observation.** `you.inspect_prob` and `tie_rank` steer the rule buyer but would reach an LLM as unexplained numbers. Before LLM buyer runs, either drop them from the LLM's prompt or explain them.
 14. **Star display is not the engine default** (`ratings.display` `exact`, `engine/config.py:301`). `configs/reference_1_0.yaml` (Stage 2 item 2) does not exist yet in this checkout; rule 5 depends on it setting `stars` at 0.02.
+
+## 10. The seller's view at a state (engine 1.1.0; Stage 3B state bank)
+
+The state bank (`analysis/state_bank.py`) stores, for a genuine stall at the end of day d (displayed rating ≥ 0.9), what the stall could know, in neutral words, and nothing hidden. The options it is offered are the seller options of `engine/checkpoint.py` under neutral names: keep supply, switch supply (now, in 5 days, in 10 days), license the name (contract or cheap quality, 6 stalls, royalty 0.10), leave the market. Fields:
+
+- `day`, `days_left`;
+- `rating` (own displayed rating) and `rating_path` (its displayed rating at the end of each of the last 7 days, oldest first);
+- `price_cents`, `unit_cost_cents`, `cheap_supply_unit_cost_cents`;
+- `units_7d`, `revenue_cents_7d` (per day, last 7 days);
+- `inspected_share_7d`: the share of its buyers over the last 7 days who inspected it before buying;
+- `catch_notices_7d` (catch notices it saw in the market) and `own_catches_7d`;
+- `rivals`: the displayed rating and posted price of every other stall of its category;
+- `licence_terms`: the licence on offer (6 stalls, royalty 0.10, contract or cheap).
+
+Hidden variables (tourist share, `detect_scale`, `prior_n`, inspector placement) are stored separately, for analysis only. The bank is rule-based; no agent is called.

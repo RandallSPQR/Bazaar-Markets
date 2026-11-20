@@ -53,6 +53,8 @@ def validate_profile_overrides(ov) -> None:
             if isinstance(v, bool) or not isinstance(v, (int, float)) or not 0.0 <= float(v) <= 1.0:
                 raise ValueError(f"buyers.profile_overrides.{prof}.inspect_prob must be in [0, 1], got {v!r}")
 TIE_STREAM = 29
+CHOICE_STREAM = 37                       # 1.1.0: buyers.choice logit
+CHOICES = ("lexicographic", "logit")
 
 PROFILES = ("tourist", "local", "expert")
 
@@ -66,7 +68,8 @@ def _dist(a, b) -> float:
 class BazaarEngine:
     def __init__(self, cfg: BazaarConfig, log: JsonlLog | None = None,
                  agent_factory: AgentFactory | None = None, root: tuple | None = None,
-                 stalls: list[Stall] | None = None, day: int = 1, book: "B.BrandBook | None" = None):
+                 stalls: list[Stall] | None = None, day: int = 1, book: "B.BrandBook | None" = None,
+                 sroot: tuple | None = None):
         # root: stream prefix ([seed] by default; [seed, 9, day] on later days of a multi-day
         # run). stalls: an existing, already-refined stall list to use instead of building one
         # (later days of a multi-day run). day: the day number (multi-day runs). book: brand state
@@ -78,6 +81,8 @@ class BazaarEngine:
         self.k = int(cfg.market.scale)
         self.log = log if log is not None else JsonlLog(keep=False)
         self.root = r = (cfg.seed,) if root is None else tuple(root)
+        # 1.1.0: prefix of the streams keyed on the seed alone ([seed] normally; [seed, 31, k] in continuation k)
+        self.sroot = (cfg.seed,) if sroot is None else tuple(sroot)
         self.rng_world = np.random.default_rng([*r, 0])
         self.rng_routes = np.random.default_rng([*r, 1])
         self.rng_people = np.random.default_rng([*r, 2])
@@ -94,7 +99,7 @@ class BazaarEngine:
             book.day = int(day)
         if self.licensing_on:
             LIC.validate(cfg, self.stalls)
-            self.licence_log = LIC.apply(cfg, self.stalls, int(day), book)
+            self.licence_log = LIC.apply(cfg, self.stalls, int(day), book, sroot=self.sroot)
         validate_demand(cfg)
         self.people: list[Person] = build_people(cfg, self.layout, self.rng_routes, self.rng_people,
                                                  self.rng_treat, self.rng_insp, root=r, stalls=self.stalls)
@@ -183,6 +188,15 @@ class BazaarEngine:
         self.seller_privileged = {sid: bool(a.meta().get("privileged")) for sid, a in self.seller_agents.items()}
         C.validate(cfg)
         B.validate_counterfeits(cfg)
+        B.validate_price_policy(cfg)              # 1.1.0: sellers.price_policy
+        if cfg.buyers.choice not in CHOICES:     # 1.1.0: buyers.choice
+            raise ValueError(f"buyers.choice must be one of {CHOICES}, got {cfg.buyers.choice!r}")
+        for k in ("logit_rating_weight", "logit_price_weight"):
+            w = getattr(cfg.buyers, k)
+            if isinstance(w, bool) or not isinstance(w, (int, float)) or not math.isfinite(w) or w < 0:
+                raise ValueError(f"buyers.{k} must be a finite number >= 0, got {w!r}")
+        self.logit = cfg.buyers.choice == "logit"
+        self._choice_u: dict = {}
         self.counterfeit_entry_log: list[dict] = []
         if self.brands_on:
             self.book = book if book is not None else B.BrandBook(self.stalls, prior_n=cfg.ratings.prior_n,
@@ -191,7 +205,7 @@ class BazaarEngine:
                 C.init_ties(cfg, self.book, self.stalls)
             # 0.17.0: counterfeit entry on a fixed day, before prices are set
             if cfg.brands.counterfeit_entry == "day" and self.day == int(cfg.brands.counterfeit_day):
-                self.counterfeit_entry_log = B.enter_counterfeits(cfg, self.stalls, self.book)
+                self.counterfeit_entry_log = B.enter_counterfeits(cfg, self.stalls, self.book, sroot=self.sroot)
             B.morning_prices(cfg, self.stalls, self.book)
             if self.licensing_on:
                 LIC.prices(self.stalls)
@@ -221,7 +235,7 @@ class BazaarEngine:
         today, drawn once per buyer and day from default_rng([seed, 29, day, buyer index])."""
         perm = self._tie_rank.get(p.pid)
         if perm is None:
-            rng = np.random.default_rng([int(self.cfg.seed), TIE_STREAM, int(self.day), self.buyer_idx[p.pid]])
+            rng = np.random.default_rng([*self.sroot, TIE_STREAM, int(self.day), self.buyer_idx[p.pid]])
             perm = self._tie_rank[p.pid] = rng.permutation(len(self.stalls))
         return int(perm[st.idx])
 
@@ -578,7 +592,7 @@ class BazaarEngine:
         if target is None:
             name = B.fresh_name(st.category, rng, book.used)
             st.counterfeit_of = None
-            st.price_cents = B.premium_price(self.cfg, st, None)
+            st.price_cents = B.policy_price(self.cfg, st, self.stalls, None)   # 1.1.0: rating_indexed = 1.0.0
         else:
             name = B.counterfeit_name(target.brand, rng, book.used)
             st.counterfeit_of = target.brand
@@ -909,8 +923,23 @@ class BazaarEngine:
             if self.tie_random:
                 row["tie_rank"] = self.tie_rank(p, st)
             rows.append(row)
-        return {"depth": p.search_k, "seen_count": len(p.seen), "phase": phase, "route_end": route_end,
-                "seen_elsewhere": rows}
+        out = {"depth": p.search_k, "seen_count": len(p.seen), "phase": phase, "route_end": route_end,
+               "seen_elsewhere": rows}
+        if self.logit:                           # 1.1.0: buyers.choice logit
+            out["choice"] = self.choice_rule(p)
+        return out
+
+    def choice_rule(self, p: Person) -> dict:
+        """buyers.choice logit (1.1.0): the weights, the category's base price and the buyer's uniform for today,
+        drawn once per buyer and day from default_rng([seed, 37, day, buyer index])."""
+        u = self._choice_u.get(p.pid)
+        if u is None:
+            rng = np.random.default_rng([*self.sroot, CHOICE_STREAM, int(self.day), self.buyer_idx[p.pid]])
+            u = self._choice_u[p.pid] = float(rng.random())
+        bc = self.cfg.buyers
+        return {"rule": "logit", "rating_weight": float(bc.logit_rating_weight),
+                "price_weight": float(bc.logit_price_weight),
+                "base_price_cents": int(self.cfg.pricing.base_price_cents[p.task["category"]]), "u": u}
 
     def route_ahead(self, p: Person) -> list[dict]:
         seen, out = set(), []

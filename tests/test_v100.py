@@ -29,7 +29,8 @@ def _book(stalls, ratings):
 
 
 def test_version():
-    assert ENGINE_VERSION == "1.0.0"
+    # 1.1.0 keeps every 1.0.0 behaviour at its defaults (tests/test_v110.py); this file's checks still apply.
+    assert tuple(int(x) for x in ENGINE_VERSION.split(".")) >= (1, 0, 0)
 
 
 def test_counterfeit_of_white_label_follows_its_price():

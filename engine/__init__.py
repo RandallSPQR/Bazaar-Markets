@@ -90,4 +90,9 @@ points, through role-specific JSON observations and schema-validated actions.
 #        each morning, as specified; before, a white-label licensee was left out of the name-to-stall map, so such
 #        a counterfeit kept its own rule's price after its rename day. Reachable only with licensing.brand
 #        "white_label" and a counterfeit made by renaming at reopening; every reference cell reproduces 0.21.0.
-ENGINE_VERSION = "1.0.0"
+# 1.1.0: sellers.price_policy (rating_indexed = 1.0.0; cost_plus, match_rival, undercut, promo), buyers.choice
+#        (lexicographic = 1.0.0; logit, one uniform per buyer and day from [seed, 37, day, buyer index]), and
+#        checkpoint / continue (engine/checkpoint.py: snapshot after day d, continue days d+1..D on streams
+#        [seed, 31, k] or the run's own, under a seller option for one stall). The streams keyed on the seed alone
+#        take an optional prefix (BazaarEngine sroot). Defaults reproduce 1.0.0 byte for byte.
+ENGINE_VERSION = "1.1.0"

@@ -191,6 +191,37 @@ class BuyersCfg:
     # auditor with ordinary shopping; knowledge only = an expert shopper who never reports.
     inspector_knowledge: bool = True
     inspector_enforcement: bool = True
+    # Buyer choice (engine 1.1.0). "lexicographic" (default, 1.0.0 bytes): a searching buyer picks, among its
+    # candidates (stalls it believes meet Q_req, that pass the rating threshold and fit its budget), the highest
+    # displayed rating, then the lowest price, then the tie-break. "logit": it picks candidate j with probability
+    # proportional to exp(w_r x displayed rating_j - w_p x price_j / base price), unrated = 0.5, with
+    # w_r = logit_rating_weight for a buyer whose rows carry ratings and 0 for one whose rows do not (tourists, and
+    # buyers.profile_overrides reads_ratings false), w_p = logit_price_weight. The draw is one uniform per buyer and
+    # day from default_rng([seed, 37, day, buyer index]), reused for every choice that day (so a buyer walking to
+    # its choice picks it again on arrival), by inverse CDF over the candidates in their lexicographic order.
+    # Inspection, asking and the Q_req rule are unchanged: logit replaces only the ranking. Named settings:
+    # soft (5, 5) and sharp (20, 20), both PLACEHOLDER.
+    choice: str = "lexicographic"
+    logit_rating_weight: float = 5.0
+    logit_price_weight: float = 5.0
+
+
+@dataclass
+class SellersCfg:
+    # Price policy (engine 1.1.0), market-wide; brands.enabled only, applied every morning (and at a rename) to
+    # every stall's own price, before the copy rules (a counterfeit takes counterfeit_price_factor x the holder's
+    # price, an owner-branded licensee its owner's price). "rating_indexed" (default, 1.0.0 bytes): base x tier x
+    # (1 + premium x (displayed rating - 0.5)). "cost_plus": round(unit cost x (1 + markup)). "match_rival":
+    # the median of yesterday's posted prices of the other same-category stalls still in the market whose
+    # displayed rating is at least the stall's own - 0.1 (unrated = 0.5; median of an even count = the mean of
+    # the middle two, rounded half up), else rating_indexed. "undercut": the lowest of yesterday's posted prices of
+    # the other same-category stalls still in the market with an equal or higher displayed rating, minus 1 cent,
+    # floored at the stall's unit cost, else rating_indexed. "promo": rating_indexed, 15% off (rounded half up)
+    # on a day after the stall's units sold yesterday fell below the mean of its units over the last 7 days
+    # (fewer at the start), yesterday included. Day 1 has no yesterday: match_rival, undercut and promo post
+    # rating_indexed.
+    price_policy: str = "rating_indexed"
+    markup: float = 0.5
 
 
 @dataclass
@@ -395,6 +426,7 @@ class BazaarConfig:
     brands: BrandsCfg = field(default_factory=BrandsCfg)
     critics: CriticsCfg = field(default_factory=CriticsCfg)
     licensing: LicensingCfg = field(default_factory=LicensingCfg)
+    sellers: SellersCfg = field(default_factory=SellersCfg)
 
 
 PLACEHOLDERS = {
@@ -410,6 +442,9 @@ PLACEHOLDERS = {
     "critics.emb_max": "10 days (placeholder 2026-11-07)",
     "inspectors.capture_effect": "0.8 (placeholder 2026-11-07)",
     "licensing.royalty": "0.15 (placeholder 2026-11-11)",
+    "sellers.markup": "0.5 (placeholder 2026-11-19 plan, Stage 3)",
+    "buyers.logit_rating_weight": "5 soft / 20 sharp (placeholder 2026-11-19 plan, Stage 3)",
+    "buyers.logit_price_weight": "5 soft / 20 sharp (placeholder 2026-11-19 plan, Stage 3)",
 }
 
 
@@ -436,7 +471,7 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
                 (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg,
                 (BazaarConfig, "brands"): BrandsCfg, (BazaarConfig, "critics"): CriticsCfg,
-                (BazaarConfig, "licensing"): LicensingCfg}
+                (BazaarConfig, "licensing"): LicensingCfg, (BazaarConfig, "sellers"): SellersCfg}
 
 
 def from_dict(d: dict):

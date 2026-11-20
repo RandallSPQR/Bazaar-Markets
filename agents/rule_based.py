@@ -6,6 +6,7 @@ agent would, so they exercise the same parse/validate/fallback path.
 from __future__ import annotations
 
 import json
+import math
 
 import numpy as np
 
@@ -457,11 +458,34 @@ class RuleBuyer:
             return (s["price_cents"], _tie(s))
         cands.sort(key=key)
         best, is_here = cands[0]
+        rule = obs["search"].get("choice")
+        if rule is not None and rule.get("rule") == "logit":     # engine 1.1.0: buyers.choice logit
+            best, is_here = cands[logit_pick([s for s, _ in cands], rule)]
         ids = [s["id"] for s, _ in cands]
         if is_here:
             return _out({"action": "buy", "stall": best["id"], "units": int(min(need, left // best["price_cents"])),
                          "candidates": ids})
         return _out({"action": "choose", "stall": best["id"], "candidates": ids})
+
+
+def logit_pick(rows: list[dict], rule: dict) -> int:
+    """Engine 1.1.0, buyers.choice logit: the index of the row picked with probability proportional to
+    exp(w_r x rating - w_p x price / base), by inverse CDF of the buyer's uniform rule["u"] over the rows in the given
+    (lexicographic) order. w_r = rule["rating_weight"] for rows that carry a rating (unrated = 0.5), else 0."""
+    base = float(rule["base_price_cents"])
+    v = []
+    for s in rows:
+        wr = float(rule["rating_weight"]) if "rating" in s else 0.0
+        r = 0.5 if s.get("rating") is None else float(s["rating"])
+        v.append(wr * r - float(rule["price_weight"]) * s["price_cents"] / base)
+    m = max(v)
+    w = [math.exp(x - m) for x in v]
+    target, c = float(rule["u"]) * sum(w), 0.0
+    for i, x in enumerate(w):
+        c += x
+        if target < c:
+            return i
+    return len(w) - 1
 
 
 def _tie(s: dict):

@@ -47,11 +47,6 @@ SWITCHABLE = ("genuine", "deceptive")
 EXITED = 1 << 40        # closed_until of a stall that has left the market (0.15.0)
 
 
-def day_root(seed: int, day: int) -> tuple:
-    """Stream prefix for a day: [seed] on day 1, [seed, 9, day] after."""
-    return (seed,) if day == 1 else (seed, 9, day)
-
-
 def stall_profit(st) -> int:
     return (st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents - st.switch_cost_cents
             - st.royalty_paid_cents + st.royalty_received_cents)
@@ -91,7 +86,7 @@ def set_type(cfg: BazaarConfig, st, stype: str, hi: float, lo: float) -> None:
     st.unit_cost_cents = int(round(base * (pr.unit_cost[0] + pr.unit_cost[1] * float(q_true))))
 
 
-def revise(cfg: BazaarConfig, stalls: list, profits: dict, day: int) -> list[dict]:
+def revise(cfg: BazaarConfig, stalls: list, profits: dict, day: int, sroot: tuple | None = None) -> list[dict]:
     """Between-day type revision after `day`. Mutates stalls; returns the switch records."""
     ev = cfg.evolution
     old = {st.sid: st.stype for st in stalls}
@@ -103,7 +98,7 @@ def revise(cfg: BazaarConfig, stalls: list, profits: dict, day: int) -> list[dic
             for c, ss in by_cat.items()}
     out = []
     for st in stalls:
-        rng = np.random.default_rng([cfg.seed, 10, day, st.idx])
+        rng = np.random.default_rng([*((cfg.seed,) if sroot is None else sroot), 10, day, st.idx])
         u_rev, u_partner, u_switch, u_mut, hi_u, lo_u = rng.random(6)
         if old[st.sid] not in SWITCHABLE:
             continue
@@ -160,6 +155,7 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
         s.fines_pending = list(st.fines_pending)   # 0.15.0: lagged fines carry over
         if s.exited_day is not None:               # 0.15.0: a stall that left never reopens
             s.closed_until = EXITED
+        s.units_hist = (list(st.units_hist) + [st.units_sold])[-B.PROMO_DAYS:]   # 1.1.0: sellers.price_policy promo
         s.yesterday = {"units_sold": st.units_sold, "revenue_cents": st.revenue_cents, "cost_cents": st.cost_cents,
                        "ad_spend_cents": st.ad_spend_cents, "penalties_cents": st.penalties_cents,
                        "profit_cents": stall_profit(st), "price_cents": st.price_cents, "catches": st.catches}
@@ -167,26 +163,58 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
     return out
 
 
+def day_root(seed: int, day: int, sroot: tuple | None = None) -> tuple:
+    """Stream prefix for a day: [seed] on day 1, [seed, 9, day] after. 1.1.0: in continuation k (engine/checkpoint.py)
+    the seed is replaced by sroot = [seed, 31, k], so a continued day d uses [seed, 31, k, 9, d]."""
+    s = (seed,) if sroot is None else tuple(sroot)
+    return s if day == 1 else (*s, 9, day)
+
+
 def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
     """Run cfg.market.days days. Log: the header once, then per day a `day_start` event, that
     day's world, ticks and outcome, and a `day_end` event with the day's summary and the switches
     made after it."""
-    from .bazaar import BazaarEngine
     from .jsonlog import JsonlLog
     log = log if log is not None else JsonlLog(keep=False)
     D = int(cfg.market.days)
     if D < 1:
         raise ValueError(f"market.days must be >= 1, got {D}")
+    state = {"stalls": None, "book": None, "days": []}
+    run_span(cfg, log, state, 1, D, day_factories=day_factories)
+    return finish(state)
+
+
+def finish(state: dict) -> dict:
+    """The run's result from its day records and the stalls after the last day."""
+    days = state["days"]
+    guard = {k: {"by_day": [d["outcome"][k] for d in days], "total": sum(d["outcome"][k] for d in days)}
+             for k in ("stuck_buyers", "idle_choosers")}
+    return {"days": days, **guard, "liability": liability_total(days, state["stalls"])}
+
+
+def run_span(cfg: BazaarConfig, log, state: dict, first: int, last: int, day_factories=None, sroot=None,
+             factory_wrap=None, tap=None) -> None:
+    """Run days first..last of a cfg.market.days-day run, from `state` ({"stalls", "book", "days"}: the stalls after
+    the reset that follows day first - 1, the brand book, the day records so far; all None / [] before day 1),
+    which is updated in place. 1.1.0 (engine/checkpoint.py): sroot replaces [seed] in every stream of these days;
+    factory_wrap(factory, day) may replace a day's agent factory; tap(day, engine) is called after each day's
+    rating update, before the reset."""
+    from .bazaar import BazaarEngine
+    D = int(cfg.market.days)
     brands = bool(cfg.brands.enabled)
     if brands and (cfg.evolution.revise_prob or cfg.evolution.mutation_prob):
         raise ValueError("brands.enabled requires evolution.revise_prob = evolution.mutation_prob = 0")
-    stalls = None
-    book = None
-    days = []
-    for day in range(1, D + 1):
+    stalls, book, days = state["stalls"], state["book"], state["days"]
+    for day in range(first, last + 1):
+        root = day_root(cfg.seed, day, sroot)
         fac = day_factories(day) if day_factories else None
-        eng = BazaarEngine(cfg, log=log, agent_factory=fac, root=day_root(cfg.seed, day), stalls=stalls,
-                           day=day, book=book)
+        if factory_wrap is not None:
+            if fac is None:
+                from agents.registry import make_factory
+                fac = make_factory(cfg, root)
+            fac = factory_wrap(fac, day)
+        eng = BazaarEngine(cfg, log=log, agent_factory=fac, root=root, stalls=stalls,
+                           day=day, book=book, sroot=sroot)
         book = eng.book
         types = _types(eng.stalls)
         rated = cfg.ratings.mode != "off"
@@ -205,7 +233,7 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}
         reviews = None
-        crit = C.critics_day(cfg, book, eng.stalls, day_root(cfg.seed, day), day) if C.critics_on(cfg) else None
+        crit = C.critics_day(cfg, book, eng.stalls, root, day) if C.critics_on(cfg) else None
         if rated and brands:
             reviews = B.update_brand_ratings(book, eng.purchases, cfg.ratings.memory,
                                              extra=None if crit is None else
@@ -217,7 +245,7 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         if brands:
             liars = sum(st.stype == "deceptive" or st.busted_day is not None for st in eng.stalls)
             book.catch_rate_yesterday = out["catches"] / liars if liars else 0.0
-        switches = revise(cfg, eng.stalls, profits, day) if day < D else []
+        switches = revise(cfg, eng.stalls, profits, day, sroot) if day < D else []
         pbt = {t: d["profit_per_stall_cents"] for t, d in sorted(out["seller_by_type"].items())}
         extra = {}
         if rated:
@@ -243,10 +271,10 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
         if rated:
             extra["stall_types"] = stall_types
         days.append({"day": day, "types": types, "outcome": out, "switches": switches, **extra})
+        if tap is not None:
+            tap(day, eng)
         stalls = reset_for_day(cfg, eng.stalls)
-    guard = {k: {"by_day": [d["outcome"][k] for d in days], "total": sum(d["outcome"][k] for d in days)}
-             for k in ("stuck_buyers", "idle_choosers")}
-    return {"days": days, **guard, "liability": liability_total(days, stalls)}
+    state["stalls"], state["book"] = stalls, book
 
 
 def liability_total(days: list, stalls: list) -> dict:
