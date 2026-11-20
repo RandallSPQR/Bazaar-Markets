@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Bazaar Markets: The Agentic Ad Engine"
+abstract: >-
+  A deterministic market simulator for studying deception, verification and brand value, built as an evaluation
+  environment for AI agents. Version 1.0.0 is the frozen rule-based baseline: engine, reference market, regression
+  digests and every rule-based result so far (runs/BASELINE_1_0_0.md).
+authors:
+  - family-names: "FAMILY_NAME"
+    given-names: "GIVEN_NAMES"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+version: 1.0.0
+date-released: "RELEASE_DATE"
+license: MIT
+repository-code: "https://github.com/RandallSPQR/Bazaar-Markets"
+keywords:
+  - agent-based simulation
+  - market simulation
+  - deceptive advertising
+  - verification
+  - reputation
+  - AI agent evaluation

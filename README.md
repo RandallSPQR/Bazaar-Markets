@@ -68,7 +68,7 @@ Python 3.12, numpy 2.5. Chains are deterministic per seed; a run's record lists 
     tests/       unit tests and frozen reference digests
     viewer/      browser viewer for engine logs
 
-Large run caches are not in git; they are archived with each release (TODO: Zenodo link).
+Large run caches are not in git; they are archived on Zenodo with each release (see Cite).
 
 ## For agent builders
 
@@ -80,7 +80,7 @@ Inspired by Don Marti's posts on deceptive advertising and ad reform (blog.zgp.o
 
 ## Cite
 
-    TODO: Zenodo DOI after the first public release.
+See [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" reads it). Each release is archived on Zenodo, with its run caches as a separate dataset.
 
 ## License
 
