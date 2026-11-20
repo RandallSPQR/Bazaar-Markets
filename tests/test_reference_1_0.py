@@ -45,6 +45,24 @@ def _selected(full):
 FULL = os.environ.get("BAZAAR_FULL_REGRESSION") == "1"
 
 
+@pytest.fixture
+def engine_restored():
+    """The study modules install observers on the engine (engine.bazaar.run, BazaarEngine methods,
+    engine.days.reset_for_day) and leave them in place for the life of the process. Some of them expect a
+    multi-day output, so tests that run after this one in the same process would break. Restore the engine as found."""
+    import engine.bazaar as EB
+    import engine.days as DAYS
+    saved = [(o, dict(vars(o))) for o in (EB, DAYS, EB.BazaarEngine)]
+    yield
+    for o, d in saved:
+        for k in [k for k in vars(o) if k not in d]:
+            delattr(o, k)
+        for k, v in d.items():
+            if vars(o).get(k) is not v:
+                setattr(o, k, v)
+
+
+@pytest.mark.usefixtures("engine_restored")
 @pytest.mark.parametrize("item", _selected(FULL), ids=lambda it: f"{it[0]}:{it[1]['key']}")
 def test_v1_0_0_digest(item):
     """A chain of a published run, rerun with every config built from the reference file, gives the digest stored at
