@@ -4,11 +4,11 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 
 | | |
 |---|---|
-| Stage | 2: v1.0.0 baseline (Stage 1 done) |
-| Running | full test suite at engine 1.0.0, attempt 2 at 04e9532 (`runs/tests_100.log`) |
-| Projected finish | about 09:05 (2026-11-20) |
+| Stage | 3 (Stages 1 and 2 done; v1.0.0 tagged locally) |
+| Running | nothing |
+| Projected finish | – |
 | Last gate | Stage 1 main run: 5,000 chains, 0 flags, J identity 1800/1800, guards 0, reference − neither 0.00 in every outcome; PC1–PC4 supported |
-| Next step | if the suite passes: tag v1.0.0 locally (not pushed), checkpoint C3, then Stage 3 |
+| Next step | Stage 3 per the plan; Randall pushes the v1.0.0 tag and release |
 
 ## Checkpoints
 
@@ -16,7 +16,7 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 |---|---|---|
 | C1 | Stage 1 engine and pilot passed; main run launched | 2026-11-19 16:18: main run launched, full design (G3 waived, D4); ETA about 04:30 on 2026-11-20 |
 | C2 | Stage 1 summary written | 2026-11-20 04:08: PC1–PC4 supported (`runs/check_vs_read_summary.md`) |
-| C3 | Stage 2 cross-check done; tag v1.0.0 | – |
+| C3 | Stage 2 cross-check done; tag v1.0.0 | 2026-11-20 09:05: full suite at 1.0.0 passes (1,817 passed, 17 skipped); v1.0.0 tagged locally, not pushed |
 | C4 | Stage 3 engine and pilots passed; state bank night 1 launched | – |
 | C5 | State bank complete | – |
 | C6 | Robustness sweep complete; `runs/REPORT_2026-11.md` | – |
@@ -37,3 +37,4 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 - 2026-11-20 04:08: **Checkpoint C2.** Stage 1 summary written (`runs/check_vs_read_summary.md`). PC1 supported: inspection's main effect on the cash-in gain −$364.05 [−479.15, −248.94]. PC2 supported: |inspection| − |reading| +$185.69 [+121.68, +249.71]. PC3 supported: reading's main effect on E +$9,987.06 [+7,410.85, +12,563.27]. PC4 supported: |reading| − |inspection| +$5,902.60 [+4,439.89, +7,365.30]. Reading: inspection, not reading, stops cashing in; reading, not inspection, makes a reputation pay, and inspection shrinks it; locals' checking does not protect tourists. Continuing to Stage 2.
 - 2026-11-20 06:05: Stage 2 code steps done and pushed. C1 fix, engine 1.0.0 (fad17c6): 660 reference and licensing tests pass, every 0.20.0 reference cell reproduces. N1 wording (859fa52). Reference config, 12 variants and v1_0_0 digests (bda581d, deviation D5): 576 chains of every run since 0.14.0, rebuilt from the reference file, match their saved records field for field. BASELINE rows K1–K8 and the CHANGELOG 1.0.0 row (ea53694). Full suite running.
 - 2026-11-20 07:35: full suite attempt 1 failed: 358 failed, 1,459 passed, 17 skipped (`runs/tests_100_attempt1.log`). All 358 are one test-isolation bug in the new `tests/test_reference_1_0.py`: its digest chains run in the pytest process and leave the study modules' observers on the engine, which crash single-day tests run after it. No engine change; the digest tests passed. Fixed with a fixture that restores the engine (04e9532); a check of that file followed by two failing files, 77 passed. Attempt 2 running.
+- 2026-11-20 09:05: **Checkpoint C3.** Full suite at engine 1.0.0 (04e9532) passes: 1,817 passed, 17 skipped, 1 h 29 min (`runs/tests_100.log`). Annotated tag v1.0.0 made locally on this commit and not pushed (Randall pushes tags and releases; Zenodo). Continuing to Stage 3.
