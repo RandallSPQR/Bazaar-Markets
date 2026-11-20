@@ -8,7 +8,7 @@ the post-2026-11-19 hashes (old hashes map through `docs/commit_map.tsv`). The f
 
 | Version | Date | Commit | Change |
 |---|---|---|---|
-| 1.0.0 | DRAFT | – | Frozen rule-based baseline. Planned: counterfeit-of-white-label price fix (formal-model check C1), `configs/reference_1_0.yaml` with a named variant per published run, `tests/reference/v1_0_0` regression digests, formal model cross-checked against the code (`runs/formal_model_check.md`), `docs/agent_interface.md`, `runs/BASELINE_1_0_0.md`. |
+| 1.0.0 | 2026-11-20 | fad17c6 | Frozen rule-based baseline. One fix: a counterfeit of a white label's name follows the white label's price (formal-model check C1; no published run reaches it). `configs/reference_1_0.json` (the reference market) with one named variant per published run since verification (`configs/reference_1_0_variants.json`); `tests/reference/v1_0_0` digests of 576 chains of every published run since 0.14.0, each matching its saved record; formal model cross-checked against the code (`runs/formal_model_check.md`); `docs/agent_interface.md`; `runs/BASELINE_1_0_0.md`. |
 | 0.21.0 | 2026-11-19 | 4a83784 | `buyers.profile_overrides`: per profile or for bargain hunters, whether buyers read ratings and how often they inspect. |
 | 0.20.0 | 2026-11-18 | bc54ac0 | Star display (`ratings.display`, `display_step`) and random tie-break among equal (rating, price) stalls (`buyers.tie_break`). |
 | 0.19.0 | 2026-11-17 | e26fb11 | `ratings.prior_scope`: the rating prior can reach only names created after day 1; 60-day markets checked end to end. |

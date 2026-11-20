@@ -1,6 +1,6 @@
 # Baseline manifest: engine 1.0.0
 
-**BLUF.** This file lists every finding from the rule-based runs in `runs/`, one row each: the claim, the run file, the engine and commit it ran at, the headline estimate with its interval, and its status. Engine 1.0.0 freezes these results as the baseline that later agents (LLM or otherwise) are compared against. Of 88 rows, 25 are confirmatory and supported, 3 confirmatory and contradicted, 3 confirmatory and not supported, 1 confirmatory and partly supported, 31 exploratory, 19 provisional and 6 superseded. The superseded rows are the verification Stage B run at engine 0.13.0 (trapped-buyer bug) and the exact-rating Brand Equity speed run (replaced by the stars run). The provisional rows are the walk-mode brand, counterfeit, dilemma-boundary and capture runs. The Stage 1 run (checking vs reading ratings, engine 0.21.0) is still running and will be added when its summary is written.
+**BLUF.** This file lists every finding from the rule-based runs in `runs/`, one row each: the claim, the run file, the engine and commit it ran at, the headline estimate with its interval, and its status. Engine 1.0.0 freezes these results as the baseline that later agents (LLM or otherwise) are compared against. Of 96 rows, 29 are confirmatory and supported, 3 confirmatory and contradicted, 3 confirmatory and not supported, 1 confirmatory and partly supported, 35 exploratory, 19 provisional and 6 superseded. The superseded rows are the verification Stage B run at engine 0.13.0 (trapped-buyer bug) and the exact-rating Brand Equity speed run (replaced by the stars run). The provisional rows are the walk-mode brand, counterfeit, dilemma-boundary and capture runs. The Stage 1 run (checking vs reading ratings, engine 0.21.0) is section 5 (rows K1–K8).
 
 Every number is copied from the run summary named in its row. Intervals are 95% t-intervals over seeds, unadjusted, unless a row says bootstrap. Money is in dollars. "Not reported" means the summary gives no such number.
 
@@ -212,18 +212,24 @@ Old hashes are as cited in the summaries; new hashes from `docs/commit_map.tsv`.
 | Brand Equity tier | The 5-day speed level cut at the timing gate; PR1 and PR4 fitted over two levels. | `brand_equity_tier_summary.md` |
 | Stars (Runs A and B) | G3 cut waived by the user: full design, step 0.1 cells on, Run B 10 seeds per study. | `pilot_stars.md` |
 | Counterfeit | Calibration failed; the user chose to stop and report. | `counterfeit_summary.md` |
-| Stage 1 (pending) | G3 failed (7.18 h after both trims, limit 7 h); waived by Randall as deviation D4. | `pilot_check_vs_read.md`, `STATUS.md` |
+| Stage 1 (checking vs reading) | G3 failed (7.18 h after both trims, limit 7 h); waived by Randall as deviation D4. | `pilot_check_vs_read.md`, `STATUS.md` |
 
-## 5. Stage 1: checking vs reading ratings (engine 0.21.0) — pending, run in progress
+## 5. Stage 1: checking vs reading ratings (engine 0.21.0)
 
-Rows will be added here when `runs/check_vs_read_summary.md` is written (checkpoint C2).
+Locals both inspect and read ratings, so earlier runs could not say which behaviour stops bust-outs and which pays for reputation. This run separates them with `buyers.profile_overrides`: tourist share 0.4, the other 0.6 locals, reads_ratings {yes, no} × inspect_prob {1.0, 0}, plus a tourists-only reference cell. Outcome A is the bust-out gain (verification benchmark, detect_scale 0 and 1); outcome B is the reputation effect E (stars, contract, prior_scope new, 60 days, prior_n 0 and 400). Seeds 350–369, paired; 5,000 chains in two blocks (4dd5c2d, 9cb3e67, identical code); G3 waived (D4). Main effects average over the other factor; both outcomes have an interaction about as large as the smaller main effect.
 
-- **Question:** locals both inspect and read ratings, so earlier runs cannot say which behaviour stops bust-outs and which pays for reputation. This run separates them with `buyers.profile_overrides`.
-- **Engine:** 0.21.0, commit 4a83784 (after the hash rewrite; no old hash). Full suite 1799 passed, 17 skipped.
-- **Design:** tourist share 0.4; the other 0.6 are locals; reads_ratings {yes, no} × inspect_prob {1.0, 0}; reference cell tourists only. Outcome A, bust-out gain (verification benchmark, detect_scale 0 and 1). Outcome B, reputation effect E (stars, contract, prior_scope new, 60 days, prior_n 0 and 400). Seeds 350–369, paired.
-- **Confirmatory predictions:** PC1, inspection lowers the bust-out gain (detect_scale 0). PC2, reading ratings matters less than inspection for the bust-out gain. PC3, reading ratings raises the reputation effect (prior_n 400). PC4, inspection matters less than reading for the reputation effect. PC5 and PC6 are exploratory.
-- **Status:** pilot G1, G2, G4, G5 passed; G3 waived (D4). Main run launched 2026-11-19 16:18 as two 10-seed blocks, 5,000 chains; ETA about 04:30 on 2026-11-20.
-- **Rows to expect:** PC1–PC4 belong under 3.1 (PC1, PC2) and 3.4 (PC3, PC4). They bear directly on README headlines 1 and 5.
+| ID | Claim | Run file | Engine | Commit | Estimate [95% CI] | Status | Note |
+|---|---|---|---|---|---|---|---|
+| K1 | Without inspectors, locals' inspection lowers the bust-out gain (PC1). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | Main effect of inspection, ds 0: −364.05 [−479.15, −248.94] | Confirmatory, supported | Gain +466.61 when locals neither read nor inspect, −20.27 when they only inspect, +165.42 when they only read. |
+| K2 | For the bust-out gain, reading ratings matters less than inspection (PC2). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | \|inspection\| − \|reading\|, ds 0: +185.69 [+121.68, +249.71] | Confirmatory, supported | Reading's main effect −178.35 [−235.01, −121.70]; interaction +245.66 [+157.28, +334.05]. |
+| K3 | Locals reading ratings raises the reputation effect (PC3). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | Main effect of reading on E, prior_n 400: +9,987.06 [+7,410.85, +12,563.27] | Confirmatory, supported | E is negative wherever locals do not read (−6,020.85 inspecting, −4,077.21 neither = tourists only). |
+| K4 | For the reputation effect, inspection matters less than reading (PC4). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | \|reading\| − \|inspection\|, prior_n 400: +5,902.60 [+4,439.89, +7,365.30] | Confirmatory, supported | Inspection lowers E: main effect −4,084.47 [−5,214.36, −2,954.58]; interaction −4,281.65 [−5,417.73, −3,145.57]. |
+| K5 | With inspectors (ds 1), buyer behaviour adds little to the bust-out loss (PC5). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | Inspection −49.34 [−97.42, −1.25]; \|inspection\| − \|reading\| +43.78 [−3.00, +90.56] | Exploratory | Every cell loses (−356.46 to −411.35); the PC2 analogue is not supported. |
+| K6 | At prior_n 0 the reputation pattern holds at about a thirtieth of the size (PC5). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | Reading +262.29 [+195.94, +328.64]; \|reading\| − \|inspection\| +108.19 [+69.62, +146.77] | Exploratory | Inspection −154.10 [−197.25, −110.95]; interaction −196.88 [−243.21, −150.54]. |
+| K7 | Locals' checking protects locals, not tourists (PC6). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | Tourists' shortfall share, ds 0: 0.613 in every cell (RI 0.613 [0.606, 0.620]); deceptive share of units: neither 0.654 [0.649, 0.659], both 0.296 [0.292, 0.301] | Exploratory | Enforcement does reach tourists: at ds 1 their shortfall share is about 0.28 in every cell. |
+| K8 | Where locals only read, a bust-out loses through ranking and the price premium, not the rating threshold (PC6). | `check_vs_read_summary.md` | 0.21.0 | 4dd5c2d, 9cb3e67 | Rn: outranked −30.76 [−41.96, −19.56]; premium −44.27 [−61.18, −27.35]; rating below threshold −1.86 [−5.64, +1.91] | Exploratory | Where locals inspect, the loss is buyers who inspected and walked away (RI −114.86 [−159.17, −70.54]). |
+
+Bearing on the README: K1 and K2 say the verification boundary (headline 1) is set by inspection rather than by reading ratings. K3 and K4 say the reputation effect (headline 5) depends on buyers reading ratings, and shrinks where they inspect.
 
 ## 6. Open questions
 
