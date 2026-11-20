@@ -85,4 +85,9 @@ points, through role-specific JSON observations and schema-validated actions.
 #         (sees ratings or not, replacing ratings.visible_to for it; without them it ranks as a tourist does) and
 #         inspect_prob (replacing the profile's default inspection probability; a tourist given one follows the local
 #         rule). Default {} = 0.20.0 bytes.
-ENGINE_VERSION = "0.21.0"
+# 1.0.0: the frozen rule-based baseline. One fix (formal-model check C1, runs/formal_model_check.md): a counterfeit
+#        of a white label's name now posts round(brands.counterfeit_price_factor x the white label's posted price)
+#        each morning, as specified; before, a white-label licensee was left out of the name-to-stall map, so such
+#        a counterfeit kept its own rule's price after its rename day. Reachable only with licensing.brand
+#        "white_label" and a counterfeit made by renaming at reopening; every reference cell reproduces 0.21.0.
+ENGINE_VERSION = "1.0.0"

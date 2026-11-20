@@ -202,7 +202,10 @@ def morning_prices(cfg, stalls: list, book: BrandBook) -> None:
     for st in stalls:
         st.rating = book.rating(st.brand)
         st.price_cents = premium_price(cfg, st, shown(cfg, st.rating))     # 0.20.0: the displayed rating
-    holder = {st.brand: st for st in stalls if st.counterfeit_of is None and st.licensed_from is None}
+    # 1.0.0 (formal-model check C1): a white-label licensee is the only stall bearing its fresh name, so it is the
+    # holder; an owner-branded licensee shares its owner's name and stays out (the owner is the holder).
+    holder = {st.brand: st for st in stalls
+              if st.counterfeit_of is None and (st.licensed_from is None or st.white_label)}
     for st in stalls:
         if st.counterfeit_of is not None and st.counterfeit_of in holder:
             st.price_cents = counterfeit_price(cfg, holder[st.counterfeit_of].price_cents)

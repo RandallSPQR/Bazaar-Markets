@@ -111,7 +111,7 @@ $$
 p_{s,d} = \operatorname{round}(\chi\, p_{s',d})
 $$
 
-where s' is the stall bearing n that is neither a counterfeit nor a licensee (the stall's own price rule if there is none). Tourists read n on the counterfeit and file their reviews under n; locals and experts read and review the counterfeit's own name.
+where s' is the stall bearing n that is not a counterfeit and not an owner-branded licensee: the owner of an owner-branded name, or the white-label licensee that alone bears its fresh name (the stall's own price rule if there is none). Engine 1.0.0; at 0.21.0 a white-label licensee was left out (formal-model check C1). Tourists read n on the counterfeit and file their reviews under n; locals and experts read and review the counterfeit's own name.
 
 **Licensing (added at the 1.0.0 cross-check).** A schedule assigns a genuine owner o a licence day b_o (2 ≤ b_o ≤ D) and a count N_o ≥ 0. At the start of day b_o, before prices are set, its licensees are the first N_o stalls of a permutation of the non-genuine stalls of its category drawn from default_rng([seed, 19, o]), with one uniform u_ℓ per candidate. From day b_o to the last day a licensee ℓ claims the owner's quality and
 
