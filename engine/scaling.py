@@ -76,6 +76,9 @@ FIELDS: dict[str, tuple[str, str]] = {
     "buyers.search_depth": (NONE, "count"),
     "buyers.search_log": (NONE, "label"),
     "buyers.tie_break": (NONE, "label"),
+    "buyers.choice": (NONE, "label"),
+    "buyers.logit_rating_weight": (NONE, "utility weight per unit of rating"),
+    "buyers.logit_price_weight": (NONE, "utility weight per unit of relative price"),
     "buyers.profile_overrides": (NONE, "per-profile behaviour"),
     "buyers.inspect_cost_frac": (NONE, "money ratio"),
     "buyers.aisles_per_route": (NONE, "count; routes are refined after they are drawn"),
@@ -146,6 +149,8 @@ FIELDS: dict[str, tuple[str, str]] = {
     "licensing.owner_liable": (NONE, "switch"),
     "licensing.brand": (NONE, "label"),
     "licensing.white_label_tier": (NONE, "label"),
+    "sellers.price_policy": (NONE, "label; its windows (promo 7 days) count market days, which scale does not change"),
+    "sellers.markup": (NONE, "money ratio"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
