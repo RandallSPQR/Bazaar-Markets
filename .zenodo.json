@@ -3,7 +3,7 @@
   "upload_type": "software",
   "description": "<p>A deterministic market simulator for studying deception, verification and brand value, built as an evaluation environment for AI agents. Version 1.0.0 is the frozen rule-based baseline: engine 1.0.0, the reference market with one variant per published run, regression digests of 576 chains, the formal model cross-checked against the code, and every rule-based result so far (runs/BASELINE_1_0_0.md). Code is MIT; docs and data (docs/, runs/) are CC BY 4.0. The run caches are archived as a separate dataset.</p>",
   "creators": [
-    {"name": "FAMILY_NAME, GIVEN_NAMES", "orcid": "0000-0000-0000-0000"}
+    {"name": "Bennington, Randall S.", "orcid": "0009-0003-3145-4697"}
   ],
   "license": "MIT",
   "keywords": ["agent-based simulation", "market simulation", "deceptive advertising", "verification",

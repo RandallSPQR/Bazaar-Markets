@@ -7,11 +7,11 @@ abstract: >-
   environment for AI agents. Version 1.0.0 is the frozen rule-based baseline: engine, reference market, regression
   digests and every rule-based result so far (runs/BASELINE_1_0_0.md).
 authors:
-  - family-names: "FAMILY_NAME"
-    given-names: "GIVEN_NAMES"
-    orcid: "https://orcid.org/0000-0000-0000-0000"
+  - family-names: "Bennington"
+    given-names: "Randall S."
+    orcid: "https://orcid.org/0009-0003-3145-4697"
 version: 1.0.0
-date-released: "RELEASE_DATE"
+date-released: 2026-11-20
 license: MIT
 repository-code: "https://github.com/RandallSPQR/Bazaar-Markets"
 keywords:
