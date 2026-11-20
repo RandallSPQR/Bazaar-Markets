@@ -5,8 +5,8 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 | | |
 |---|---|
 | Stage | 3 (Stages 1 and 2 done; v1.0.0 tagged locally) |
-| Running | nothing |
-| Projected finish | – |
+| Running | state bank pilot (32 states × 6 options × K 30; `runs/state_bank/state_bank_run.log`) |
+| Projected finish | pilot about 17:30 on 2026-11-20 |
 | Last gate | Stage 1 main run: 5,000 chains, 0 flags, J identity 1800/1800, guards 0, reference − neither 0.00 in every outcome; PC1–PC4 supported |
 | Next step | Stage 3 per the plan; Randall pushes the v1.0.0 tag and release |
 
@@ -39,3 +39,4 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 - 2026-11-20 07:35: full suite attempt 1 failed: 358 failed, 1,459 passed, 17 skipped (`runs/tests_100_attempt1.log`). All 358 are one test-isolation bug in the new `tests/test_reference_1_0.py`: its digest chains run in the pytest process and leave the study modules' observers on the engine, which crash single-day tests run after it. No engine change; the digest tests passed. Fixed with a fixture that restores the engine (04e9532); a check of that file followed by two failing files, 77 passed. Attempt 2 running.
 - 2026-11-20 09:05: **Checkpoint C3.** Full suite at engine 1.0.0 (04e9532) passes: 1,817 passed, 17 skipped, 1 h 29 min (`runs/tests_100.log`). Annotated tag v1.0.0 made locally on this commit and not pushed (Randall pushes tags and releases; Zenodo). Continuing to Stage 3.
 - 2026-11-20 11:25: Stage 3A done. Engine 1.1.0 (9f99d3b): price policies, logit choice, checkpoint and continue, seller options; defaults reproduce 1.0.0 byte for byte. Full suite at 9f99d3b: 1 failed, 1,836 passed, 17 skipped, 1 h 42 min (`runs/tests_110.log`). The one failure was bookkeeping: `test_every_config_field_has_a_scaling_rule` needs a `market.scale` rule for each new config field. Fixed in `engine/scaling.py` (all five are labels or ratios, rule none; no behaviour change); `tests/test_scale.py`, `tests/test_v110.py` and `tests/test_state_bank.py` then pass, 67 of 67 (`runs/tests_110_fix.log`). State bank script committed; enumeration next.
+- 2026-11-20 12:31: Stage 3C script `analysis/robustness_1_1.py` committed before any sweep chain (48bb5b2): cells, endpoints, verdict rule for PX1–PX4 (every cell on the predicted side = supported; any on the opposite side = contradicted; else not supported) and trim order fixed. Release v1.0.0 prepared (17cbb16, merged b001f7d): notes, CITATION.cff, .zenodo.json and checklist in `docs/releases/`; author fields wait for Randall; tag still local. State bank enumeration done (b001f7d's parent code, e757d47): 800 base chains, 1.15 h, 57,600 eligible states, 1,800 in every market × day cell. Every eligible stall displays a rating of exactly 1.0, so the rating ≥ 0.9 filter does not bind and the observation's own rating has no spread; noted for the pilot report. Pilot launched.
