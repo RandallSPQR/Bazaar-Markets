@@ -26,3 +26,6 @@ runs/bustout_cache.jsonl
 secrets/
 
 .DS_Store
+
+# Release archives (uploaded to Zenodo, not tracked)
+dist/
