@@ -4,11 +4,11 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 
 | | |
 |---|---|
-| Stage | 3 (Stages 1 and 2 done; v1.0.0 tagged locally) |
-| Running | state bank pilot (32 states × 6 options × K 30; `runs/state_bank/state_bank_run.log`) |
-| Projected finish | pilot about 17:30 on 2026-11-20 |
-| Last gate | Stage 1 main run: 5,000 chains, 0 flags, J identity 1800/1800, guards 0, reference − neither 0.00 in every outcome; PC1–PC4 supported |
-| Next step | Stage 3 per the plan; Randall pushes the v1.0.0 tag and release |
+| Stage | 3 (Stages 1 and 2 done; v1.0.0 released: tag, GitHub release, Zenodo 10.5281/zenodo.24406533, run caches 10.5281/zenodo.24406657) |
+| Running | state bank, block 1 of 4 (`runs/queue_state_bank.sh`; queue log `runs/queue_state_bank.log`, run log `runs/state_bank/state_bank_run.log`) |
+| Projected finish | bank about 18:40 on 2026-11-21 (23.3 h at the pilot's rates), then the build phase |
+| Last gate | State bank pilot: K 20 (split-half 29/31 = 93.5%), G4b 56%, guards 0, close calls 0 (`runs/pilot_state_bank.md`) |
+| Next step | Bank blocks 2–4 and build (queued), C5; then the robustness sweep in full (D6), C6 and `runs/REPORT_2026-11.md` |
 
 ## Checkpoints
 
@@ -17,7 +17,7 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 | C1 | Stage 1 engine and pilot passed; main run launched | 2026-11-19 16:18: main run launched, full design (G3 waived, D4); ETA about 04:30 on 2026-11-20 |
 | C2 | Stage 1 summary written | 2026-11-20 04:08: PC1–PC4 supported (`runs/check_vs_read_summary.md`) |
 | C3 | Stage 2 cross-check done; tag v1.0.0 | 2026-11-20 09:05: full suite at 1.0.0 passes (1,817 passed, 17 skipped); v1.0.0 tagged locally, not pushed |
-| C4 | Stage 3 engine and pilots passed; state bank night 1 launched | – |
+| C4 | Stage 3 engine and pilots passed; state bank night 1 launched | 2026-11-20 19:17: pilot gates pass; full bank launched as four back-to-back blocks (D6); ETA about 18:40 on 2026-11-21 |
 | C5 | State bank complete | – |
 | C6 | Robustness sweep complete; `runs/REPORT_2026-11.md` | – |
 
@@ -39,4 +39,6 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 - 2026-11-20 07:35: full suite attempt 1 failed: 358 failed, 1,459 passed, 17 skipped (`runs/tests_100_attempt1.log`). All 358 are one test-isolation bug in the new `tests/test_reference_1_0.py`: its digest chains run in the pytest process and leave the study modules' observers on the engine, which crash single-day tests run after it. No engine change; the digest tests passed. Fixed with a fixture that restores the engine (04e9532); a check of that file followed by two failing files, 77 passed. Attempt 2 running.
 - 2026-11-20 09:05: **Checkpoint C3.** Full suite at engine 1.0.0 (04e9532) passes: 1,817 passed, 17 skipped, 1 h 29 min (`runs/tests_100.log`). Annotated tag v1.0.0 made locally on this commit and not pushed (Randall pushes tags and releases; Zenodo). Continuing to Stage 3.
 - 2026-11-20 11:25: Stage 3A done. Engine 1.1.0 (9f99d3b): price policies, logit choice, checkpoint and continue, seller options; defaults reproduce 1.0.0 byte for byte. Full suite at 9f99d3b: 1 failed, 1,836 passed, 17 skipped, 1 h 42 min (`runs/tests_110.log`). The one failure was bookkeeping: `test_every_config_field_has_a_scaling_rule` needs a `market.scale` rule for each new config field. Fixed in `engine/scaling.py` (all five are labels or ratios, rule none; no behaviour change); `tests/test_scale.py`, `tests/test_v110.py` and `tests/test_state_bank.py` then pass, 67 of 67 (`runs/tests_110_fix.log`). State bank script committed; enumeration next.
-- 2026-11-20 12:31: Stage 3C script `analysis/robustness_1_1.py` committed before any sweep chain (48bb5b2): cells, endpoints, verdict rule for PX1–PX4 (every cell on the predicted side = supported; any on the opposite side = contradicted; else not supported) and trim order fixed. Release v1.0.0 prepared (17cbb16, merged b001f7d): notes, CITATION.cff, .zenodo.json and checklist in `docs/releases/`; author fields wait for Randall; tag still local. State bank enumeration done (b001f7d's parent code, e757d47): 800 base chains, 1.15 h, 57,600 eligible states, 1,800 in every market × day cell. Every eligible stall displays a rating of exactly 1.0, so the rating ≥ 0.9 filter does not bind and the observation's own rating has no spread; noted for the pilot report. Pilot launched.
+- 2026-11-20 12:31: Stage 3C script `analysis/robustness_1_1.py` committed before any sweep chain (48bb5b2): cells, endpoints, verdict rule for PX1–PX4 (every cell on the predicted side = supported; any on the opposite side = contradicted; else not supported) and trim order fixed. Release v1.0.0 prepared (17cbb16, merged b001f7d): notes, CITATION.cff, .zenodo.json and checklist in `docs/releases/`; author fields wait for Randall; tag still local. State bank enumeration done (at e757d47): 800 base chains, 1.15 h, 57,600 eligible states, 1,800 in every market × day cell. Every eligible stall displays a rating of exactly 1.0, so the rating ≥ 0.9 filter does not bind and the observation's own rating has no spread; noted for the pilot report. Pilot launched.
+- 2026-11-20 15:40: v1.0.0 released. Citation metadata filled (Bennington, Randall S.; ORCID 0009-0003-3145-4697; 2026-11-20), local tag moved to the release commit 33714f3 with its message unchanged, merged into main (d005d43). Randall pushed the tag, created the GitHub release and published both Zenodo records: software 10.5281/zenodo.24406533 (all versions 10.5281/zenodo.24406532) and run caches 10.5281/zenodo.24406657 (CC BY 4.0, MD5s match the local archive). README badge, citation and CITATION.cff DOIs on main (62e7c03).
+- 2026-11-20 19:17: **Checkpoint C4.** State bank pilot done (12:30–19:13, 6.71 h, 5,760 continuations): K 20 (split-half 29/31 = 93.5%), G4b 18/32 = 56% (threshold 20%), guards 0, close calls 0; allocation H = t100 markets (86 states), L = t40 (114). Bank projected 23.3 h, over two 10 h blocks; Randall: "Whatever the timing, just keep going. I want the whole thing." So the full 200-state bank runs as four back-to-back blocks, one t40/t100 pair each, then build (deviation D6, which also runs the 3C sweep untrimmed). Pilot reading: the contract licence is the best option in 30/32 states (licensors get 10% of six licensees' sales at no cost), so best-option accuracy is a weak agent test; whether a switch or the cheap licence pays splits by verification (t40 2/16, both within noise; t100 16/16), and under enforcement every state has a switch that loses money (`runs/pilot_state_bank.md`).
