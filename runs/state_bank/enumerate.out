@@ -1,0 +1,20 @@
+2026-11-20 11:21:13 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank.py --phase enumerate --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "commit": "e757d47", "engine": "1.1.0", "numpy": "2.5.4", "phase": "enumerate", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885", "started": "2026-11-20 11:21:13", "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "workers": 4}
+2026-11-20 11:21:13 800 chains, 0 cached, 800 to run; workers 4; load [3.15, 3.8, 3.69]; memory {'swap_free_mb': 0.0, 'free_pct': 65}
+2026-11-20 11:24:51 50/800 chains, 218 s, load [5.72, 4.81, 4.15], memory {'swap_free_mb': 0.0, 'free_pct': 65}
+2026-11-20 11:28:32 100/800 chains, 440 s, load [5.62, 5.14, 4.43], memory {'swap_free_mb': 0.0, 'free_pct': 66}
+2026-11-20 11:32:42 150/800 chains, 690 s, load [5.42, 5.39, 4.72], memory {'swap_free_mb': 0.0, 'free_pct': 66}
+2026-11-20 11:36:19 200/800 chains, 907 s, load [5.53, 5.4, 4.86], memory {'swap_free_mb': 0.0, 'free_pct': 67}
+2026-11-20 11:39:52 250/800 chains, 1119 s, load [5.51, 5.53, 5.04], memory {'swap_free_mb': 0.0, 'free_pct': 67}
+2026-11-20 11:43:22 300/800 chains, 1329 s, load [5.44, 5.55, 5.16], memory {'swap_free_mb': 0.0, 'free_pct': 67}
+2026-11-20 11:46:52 350/800 chains, 1540 s, load [5.52, 5.63, 5.28], memory {'swap_free_mb': 0.0, 'free_pct': 67}
+2026-11-20 11:50:31 400/800 chains, 1758 s, load [5.76, 5.62, 5.34], memory {'swap_free_mb': 0.0, 'free_pct': 67}
+2026-11-20 11:54:22 450/800 chains, 1989 s, load [6.13, 5.81, 5.47], memory {'swap_free_mb': 0.0, 'free_pct': 68}
+2026-11-20 12:00:27 500/800 chains, 2355 s, load [47.43, 30.99, 16.67], memory {'swap_free_mb': 510.12, 'free_pct': 38}
+2026-11-20 12:05:42 550/800 chains, 2670 s, load [9.14, 16.36, 14.12], memory {'swap_free_mb': 764.62, 'free_pct': 40}
+2026-11-20 12:11:18 600/800 chains, 3005 s, load [9.27, 10.84, 12.09], memory {'swap_free_mb': 852.62, 'free_pct': 44}
+2026-11-20 12:16:14 650/800 chains, 3301 s, load [8.72, 9.12, 10.88], memory {'swap_free_mb': 868.62, 'free_pct': 43}
+2026-11-20 12:20:56 700/800 chains, 3583 s, load [6.56, 8.4, 10.17], memory {'swap_free_mb': 884.62, 'free_pct': 43}
+2026-11-20 12:25:42 750/800 chains, 3869 s, load [8.16, 7.96, 9.43], memory {'swap_free_mb': 900.62, 'free_pct': 39}
+2026-11-20 12:29:59 800/800 chains, 4126 s, load [6.63, 7.23, 8.71], memory {'swap_free_mb': 916.62, 'free_pct': 42}
+2026-11-20 12:30:00 enumerated 57600 states; per cell: {"t40|ds0|pn0|5": 1800, "t40|ds0|pn0|10": 1800, "t40|ds0|pn0|15": 1800, "t40|ds0|pn0|20": 1800, "t40|ds0|pn10new|5": 1800, "t40|ds0|pn10new|10": 1800, "t40|ds0|pn10new|15": 1800, "t40|ds0|pn10new|20": 1800, "t40|ds1|pn0|5": 1800, "t40|ds1|pn0|10": 1800, "t40|ds1|pn0|15": 1800, "t40|ds1|pn0|20": 1800, "t40|ds1|pn10new|5": 1800, "t40|ds1|pn10new|10": 1800, "t40|ds1|pn10new|15": 1800, "t40|ds1|pn10new|20": 1800, "t100|ds0|pn0|5": 1800, "t100|ds0|pn0|10": 1800, "t100|ds0|pn0|15": 1800, "t100|ds0|pn0|20": 1800, "t100|ds0|pn10new|5": 1800, "t100|ds0|pn10new|10": 1800, "t100|ds0|pn10new|15": 1800, "t100|ds0|pn10new|20": 1800, "t100|ds1|pn0|5": 1800, "t100|ds1|pn0|10": 1800, "t100|ds1|pn0|15": 1800, "t100|ds1|pn0|20": 1800, "t100|ds1|pn10new|5": 1800, "t100|ds1|pn10new|10": 1800, "t100|ds1|pn10new|15": 1800, "t100|ds1|pn10new|20": 1800}
+2026-11-20 12:30:00 phase enumerate done in 4127 s

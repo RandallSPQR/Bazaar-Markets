@@ -1,0 +1,889 @@
+{
+ "G4b_pass": true,
+ "G4b_unweighted": 0.5625,
+ "G4b_weighted": 0.5625,
+ "K_chosen": 20,
+ "K_split_half": [
+  {
+   "K": 10,
+   "agree": 31,
+   "share": 1.0,
+   "states": 31
+  },
+  {
+   "K": 20,
+   "agree": 29,
+   "share": 0.9354838709677419,
+   "states": 31
+  },
+  {
+   "K": 30,
+   "agree": 31,
+   "share": 0.96875,
+   "states": 32
+  }
+ ],
+ "allocation": {
+  "alloc": {
+   "t100|ds0|pn0|10": 6,
+   "t100|ds0|pn0|15": 6,
+   "t100|ds0|pn0|20": 6,
+   "t100|ds0|pn0|5": 6,
+   "t100|ds0|pn10new|10": 6,
+   "t100|ds0|pn10new|15": 5,
+   "t100|ds0|pn10new|20": 5,
+   "t100|ds0|pn10new|5": 6,
+   "t100|ds1|pn0|10": 5,
+   "t100|ds1|pn0|15": 5,
+   "t100|ds1|pn0|20": 5,
+   "t100|ds1|pn0|5": 5,
+   "t100|ds1|pn10new|10": 5,
+   "t100|ds1|pn10new|15": 5,
+   "t100|ds1|pn10new|20": 5,
+   "t100|ds1|pn10new|5": 5,
+   "t40|ds0|pn0|10": 8,
+   "t40|ds0|pn0|15": 7,
+   "t40|ds0|pn0|20": 7,
+   "t40|ds0|pn0|5": 8,
+   "t40|ds0|pn10new|10": 7,
+   "t40|ds0|pn10new|15": 7,
+   "t40|ds0|pn10new|20": 7,
+   "t40|ds0|pn10new|5": 7,
+   "t40|ds1|pn0|10": 7,
+   "t40|ds1|pn0|15": 7,
+   "t40|ds1|pn0|20": 7,
+   "t40|ds1|pn0|5": 7,
+   "t40|ds1|pn10new|10": 7,
+   "t40|ds1|pn10new|15": 7,
+   "t40|ds1|pn10new|20": 7,
+   "t40|ds1|pn10new|5": 7
+  },
+  "p_market": {
+   "t100|ds0|pn0": 0.9,
+   "t100|ds0|pn10new": 0.9,
+   "t100|ds1|pn0": 0.9,
+   "t100|ds1|pn10new": 0.9,
+   "t40|ds0|pn0": 0.1,
+   "t40|ds0|pn10new": 0.1,
+   "t40|ds1|pn0": 0.3,
+   "t40|ds1|pn10new": 0.3
+  },
+  "rule": {
+   "H": [
+    "t100|ds0|pn0",
+    "t100|ds0|pn10new",
+    "t100|ds1|pn0",
+    "t100|ds1|pn10new"
+   ],
+   "L": [
+    "t40|ds0|pn0",
+    "t40|ds0|pn10new",
+    "t40|ds1|pn0",
+    "t40|ds1|pn10new"
+   ],
+   "nH": 86,
+   "pH": 0.9,
+   "pL": 0.2
+  }
+ },
+ "bank_projected_hours": {
+  "20": 23.326821660192476,
+  "30": 34.99023249028871
+ },
+ "bank_states": 200,
+ "close_calls_pilot": 0,
+ "guard": {
+  "continuations": 5760,
+  "idle_choosers": 0,
+  "stuck_buyers": 0
+ },
+ "labels": {
+  "t100|ds0|pn0|402|5|s17": {
+   "best": "license_contract_6",
+   "best_minus_second": 40642.36666666664,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 94134.33333333333,
+    "license_cheap_6": 368727.9666666667,
+    "license_contract_6": 409370.3333333333,
+    "switch_d10": 155195.9,
+    "switch_d5": 186758.3,
+    "switch_now": 209387.33333333334
+   },
+   "paying_minus_honest": 274593.63333333336,
+   "paying_minus_honest_ci95": [
+    248477.54297262637,
+    300709.7236940404
+   ],
+   "pays": true,
+   "se_best_second": 4377.483053521707,
+   "second": "license_cheap_6"
+  },
+  "t100|ds0|pn0|431|15|s43": {
+   "best": "license_contract_6",
+   "best_minus_second": 8714.266666666721,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 237469.83333333334,
+    "license_cheap_6": 786234.6666666666,
+    "license_contract_6": 794948.9333333333,
+    "switch_d10": 311735.8333333333,
+    "switch_d5": 349781.7,
+    "switch_now": 393223.73333333334
+   },
+   "paying_minus_honest": 548764.8333333334,
+   "paying_minus_honest_ci95": [
+    498488.26629833237,
+    599041.4003683344
+   ],
+   "pays": true,
+   "se_best_second": 7521.188960168423,
+   "second": "license_cheap_6"
+  },
+  "t100|ds0|pn0|454|20|s47": {
+   "best": "license_cheap_6",
+   "best_minus_second": 14787.166666666744,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 146687.53333333333,
+    "license_cheap_6": 557115.3333333334,
+    "license_contract_6": 542328.1666666666,
+    "switch_d10": 158825.13333333333,
+    "switch_d5": 245613.53333333333,
+    "switch_now": 294391.8
+   },
+   "paying_minus_honest": 410427.8,
+   "paying_minus_honest_ci95": [
+    369243.38469127996,
+    451612.21530872
+   ],
+   "pays": true,
+   "se_best_second": 7475.906855394628,
+   "second": "license_contract_6"
+  },
+  "t100|ds0|pn0|479|10|s44": {
+   "best": "license_contract_6",
+   "best_minus_second": 93462.03333333333,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 281966.6666666667,
+    "license_cheap_6": 921255.0333333333,
+    "license_contract_6": 1014717.0666666667,
+    "switch_d10": 441690.3333333333,
+    "switch_d5": 517831.1,
+    "switch_now": 634134.6666666666
+   },
+   "paying_minus_honest": 639288.3666666667,
+   "paying_minus_honest_ci95": [
+    584495.992265462,
+    694080.7410678715
+   ],
+   "pays": true,
+   "se_best_second": 12049.245901188919,
+   "second": "license_cheap_6"
+  },
+  "t100|ds0|pn10new|406|10|s26": {
+   "best": "license_contract_6",
+   "best_minus_second": 27388.166666666628,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 63244.333333333336,
+    "license_cheap_6": 288053.43333333335,
+    "license_contract_6": 315441.6,
+    "switch_d10": 111967.43333333333,
+    "switch_d5": 142430.6,
+    "switch_now": 174008.03333333333
+   },
+   "paying_minus_honest": 224809.1,
+   "paying_minus_honest_ci95": [
+    207116.05023496097,
+    242502.14976503904
+   ],
+   "pays": true,
+   "se_best_second": 3111.406920217938,
+   "second": "license_cheap_6"
+  },
+  "t100|ds0|pn10new|428|5|s35": {
+   "best": "license_contract_6",
+   "best_minus_second": 97964.43333333335,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 304858.0333333333,
+    "license_cheap_6": 1120759.7333333334,
+    "license_contract_6": 1218724.1666666667,
+    "switch_d10": 509856.56666666665,
+    "switch_d5": 635736.0333333333,
+    "switch_now": 733074.5333333333
+   },
+   "paying_minus_honest": 815901.7,
+   "paying_minus_honest_ci95": [
+    738888.0789037397,
+    892915.3210962602
+   ],
+   "pays": true,
+   "se_best_second": 13034.053788802123,
+   "second": "license_cheap_6"
+  },
+  "t100|ds0|pn10new|482|20|s05": {
+   "best": "license_cheap_6",
+   "best_minus_second": 638.0,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 9334.8,
+    "license_cheap_6": 36983.63333333333,
+    "license_contract_6": 36345.63333333333,
+    "switch_d10": 9787.733333333334,
+    "switch_d5": 14106.066666666668,
+    "switch_now": 14805.633333333333
+   },
+   "paying_minus_honest": 27648.833333333332,
+   "paying_minus_honest_ci95": [
+    24996.876199222363,
+    30300.7904674443
+   ],
+   "pays": true,
+   "se_best_second": 462.104143111117,
+   "second": "license_contract_6"
+  },
+  "t100|ds0|pn10new|490|15|s24": {
+   "best": "license_contract_6",
+   "best_minus_second": 17160.0,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 58181.46666666667,
+    "license_cheap_6": 245286.53333333333,
+    "license_contract_6": 262446.5333333333,
+    "switch_d10": 87732.2,
+    "switch_d5": 96996.0,
+    "switch_now": 109180.93333333333
+   },
+   "paying_minus_honest": 187105.06666666668,
+   "paying_minus_honest_ci95": [
+    170180.08176734357,
+    204030.0515659898
+   ],
+   "pays": true,
+   "se_best_second": 2562.5640926102965,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn0|450|10|s40": {
+   "best": "license_contract_6",
+   "best_minus_second": 239097.1000000001,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 758885.9,
+    "license_cheap_6": 1233270.4,
+    "license_contract_6": 1472367.5,
+    "switch_d10": -67658.2,
+    "switch_d5": -436521.6,
+    "switch_now": -748192.6
+   },
+   "paying_minus_honest": 474384.5,
+   "paying_minus_honest_ci95": [
+    445161.3480765688,
+    503607.6519234312
+   ],
+   "pays": true,
+   "se_best_second": 16417.12384188793,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn0|450|5|s23": {
+   "best": "license_contract_6",
+   "best_minus_second": 123655.03333333327,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 310550.13333333336,
+    "license_cheap_6": 488866.7,
+    "license_contract_6": 612521.7333333333,
+    "switch_d10": -248091.0,
+    "switch_d5": -429959.4,
+    "switch_now": -562741.9333333333
+   },
+   "paying_minus_honest": 178316.56666666668,
+   "paying_minus_honest_ci95": [
+    168391.375405946,
+    188241.75792738737
+   ],
+   "pays": true,
+   "se_best_second": 6339.963796713657,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn0|466|20|s17": {
+   "best": "license_contract_6",
+   "best_minus_second": 35900.43333333332,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 117550.2,
+    "license_cheap_6": 199711.5,
+    "license_contract_6": 235611.93333333332,
+    "switch_d10": 79924.26666666666,
+    "switch_d5": -69552.4,
+    "switch_now": -199863.0
+   },
+   "paying_minus_honest": 82161.3,
+   "paying_minus_honest_ci95": [
+    74282.86666738921,
+    90039.73333261079
+   ],
+   "pays": true,
+   "se_best_second": 3453.908599075298,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn0|468|15|s47": {
+   "best": "license_contract_6",
+   "best_minus_second": 216457.33333333337,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 482771.1,
+    "license_cheap_6": 813613.6666666666,
+    "license_contract_6": 1030071.0,
+    "switch_d10": -6272.4,
+    "switch_d5": -369496.56666666665,
+    "switch_now": -685591.8333333334
+   },
+   "paying_minus_honest": 330842.56666666665,
+   "paying_minus_honest_ci95": [
+    313310.5789471019,
+    348374.5543862314
+   ],
+   "pays": true,
+   "se_best_second": 13418.065750026368,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn10new|401|20|s14": {
+   "best": "license_contract_6",
+   "best_minus_second": 3365.300000000003,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 26667.766666666666,
+    "license_cheap_6": 45415.666666666664,
+    "license_contract_6": 48780.96666666667,
+    "switch_d10": 20080.466666666667,
+    "switch_d5": -11897.133333333333,
+    "switch_now": -37852.53333333333
+   },
+   "paying_minus_honest": 18747.9,
+   "paying_minus_honest_ci95": [
+    17308.531366790285,
+    20187.26863320972
+   ],
+   "pays": true,
+   "se_best_second": 960.6753828163942,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn10new|433|15|s42": {
+   "best": "license_contract_6",
+   "best_minus_second": 176794.56666666665,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 493836.26666666666,
+    "license_cheap_6": 870720.6333333333,
+    "license_contract_6": 1047515.2,
+    "switch_d10": 46044.9,
+    "switch_d5": -307941.5,
+    "switch_now": -572920.4
+   },
+   "paying_minus_honest": 376884.36666666664,
+   "paying_minus_honest_ci95": [
+    351326.99298334133,
+    402441.74034999195
+   ],
+   "pays": true,
+   "se_best_second": 15242.215439604508,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn10new|443|10|s06": {
+   "best": "license_contract_6",
+   "best_minus_second": 16104.200000000012,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 48610.5,
+    "license_cheap_6": 81827.4,
+    "license_contract_6": 97931.6,
+    "switch_d10": -12192.966666666667,
+    "switch_d5": -41287.23333333333,
+    "switch_now": -64491.1
+   },
+   "paying_minus_honest": 33216.9,
+   "paying_minus_honest_ci95": [
+    31144.80158405644,
+    35288.99841594356
+   ],
+   "pays": true,
+   "se_best_second": 1256.080072306689,
+   "second": "license_cheap_6"
+  },
+  "t100|ds1|pn10new|483|5|s24": {
+   "best": "license_contract_6",
+   "best_minus_second": 110263.43333333335,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 322241.2,
+    "license_cheap_6": 502490.6,
+    "license_contract_6": 612754.0333333333,
+    "switch_d10": -179904.73333333334,
+    "switch_d5": -345821.6666666667,
+    "switch_now": -469884.6
+   },
+   "paying_minus_honest": 180249.4,
+   "paying_minus_honest_ci95": [
+    168901.72188545554,
+    191597.07811454445
+   ],
+   "pays": true,
+   "se_best_second": 6965.971924609259,
+   "second": "license_cheap_6"
+  },
+  "t40|ds0|pn0|418|10|s26": {
+   "best": "license_contract_6",
+   "best_minus_second": 215113.63333333333,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 243163.43333333332,
+    "license_cheap_6": 153868.83333333334,
+    "license_contract_6": 458277.06666666665,
+    "switch_d10": 137486.73333333334,
+    "switch_d5": 85354.16666666667,
+    "switch_now": 44140.433333333334
+   },
+   "paying_minus_honest": -89294.6,
+   "paying_minus_honest_ci95": [
+    -103921.85733990591,
+    -74667.3426600941
+   ],
+   "pays": false,
+   "se_best_second": 6928.734317001472,
+   "second": "honest"
+  },
+  "t40|ds0|pn0|474|5|s26": {
+   "best": "license_contract_6",
+   "best_minus_second": 258450.73333333334,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 306487.36666666664,
+    "license_cheap_6": 184346.83333333334,
+    "license_contract_6": 564938.1,
+    "switch_d10": 157462.06666666668,
+    "switch_d5": 111471.86666666667,
+    "switch_now": 75752.36666666667
+   },
+   "paying_minus_honest": -122140.53333333334,
+   "paying_minus_honest_ci95": [
+    -138333.05696073142,
+    -105948.00970593526
+   ],
+   "pays": false,
+   "se_best_second": 5913.833861191721,
+   "second": "honest"
+  },
+  "t40|ds0|pn0|487|15|s34": {
+   "best": "license_contract_6",
+   "best_minus_second": 478449.5,
+   "best_paying_option": "switch_d10",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 499622.9,
+    "license_cheap_6": 356223.5,
+    "license_contract_6": 978072.4,
+    "switch_d10": 365621.5333333333,
+    "switch_d5": 215439.96666666667,
+    "switch_now": 103496.13333333333
+   },
+   "paying_minus_honest": -134001.36666666667,
+   "paying_minus_honest_ci95": [
+    -150128.15302714842,
+    -117874.58030618493
+   ],
+   "pays": false,
+   "se_best_second": 13716.634440996486,
+   "second": "honest"
+  },
+  "t40|ds0|pn0|492|20|s27": {
+   "best": "license_contract_6",
+   "best_minus_second": 108375.73333333334,
+   "best_paying_option": "switch_d10",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 105554.4,
+    "license_cheap_6": 93295.86666666667,
+    "license_contract_6": 213930.13333333333,
+    "switch_d10": 97804.76666666666,
+    "switch_d5": 63666.46666666667,
+    "switch_now": 31506.666666666668
+   },
+   "paying_minus_honest": -7749.633333333333,
+   "paying_minus_honest_ci95": [
+    -9708.271361762849,
+    -5790.995304903819
+   ],
+   "pays": false,
+   "se_best_second": 2690.4129901035653,
+   "second": "honest"
+  },
+  "t40|ds0|pn10new|404|10|s34": {
+   "best": "license_contract_6",
+   "best_minus_second": 613810.6,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 714485.1,
+    "license_cheap_6": 454861.0333333333,
+    "license_contract_6": 1328295.7,
+    "switch_d10": 406603.0,
+    "switch_d5": 266570.6666666667,
+    "switch_now": 159319.3
+   },
+   "paying_minus_honest": -259624.06666666668,
+   "paying_minus_honest_ci95": [
+    -296142.231497675,
+    -223105.90183565835
+   ],
+   "pays": false,
+   "se_best_second": 14425.982755550773,
+   "second": "honest"
+  },
+  "t40|ds0|pn10new|405|20|s13": {
+   "best": "license_contract_6",
+   "best_minus_second": 20714.433333333338,
+   "best_paying_option": "switch_d10",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 20888.866666666665,
+    "license_cheap_6": 18573.533333333333,
+    "license_contract_6": 41603.3,
+    "switch_d10": 19335.166666666668,
+    "switch_d5": 12687.566666666668,
+    "switch_now": 6224.0
+   },
+   "paying_minus_honest": -1553.7,
+   "paying_minus_honest_ci95": [
+    -2094.4920285924586,
+    -1012.9079714075415
+   ],
+   "pays": false,
+   "se_best_second": 632.5134711814868,
+   "second": "honest"
+  },
+  "t40|ds0|pn10new|423|5|s26": {
+   "best": "license_contract_6",
+   "best_minus_second": 278089.0,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 257245.0,
+    "license_cheap_6": 166425.8,
+    "license_contract_6": 535334.0,
+    "switch_d10": 130420.96666666666,
+    "switch_d5": 94515.5,
+    "switch_now": 69184.0
+   },
+   "paying_minus_honest": -90819.2,
+   "paying_minus_honest_ci95": [
+    -104237.66071490097,
+    -77400.73928509903
+   ],
+   "pays": false,
+   "se_best_second": 5363.392513192999,
+   "second": "honest"
+  },
+  "t40|ds0|pn10new|439|15|s35": {
+   "best": "license_contract_6",
+   "best_minus_second": 478645.60000000003,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 520159.2,
+    "license_cheap_6": 391074.6666666667,
+    "license_contract_6": 998804.8,
+    "switch_d10": 360881.8,
+    "switch_d5": 227981.96666666667,
+    "switch_now": 104912.8
+   },
+   "paying_minus_honest": -129084.53333333334,
+   "paying_minus_honest_ci95": [
+    -162676.77125899904,
+    -95492.29540766764
+   ],
+   "pays": false,
+   "se_best_second": 12677.138641365953,
+   "second": "honest"
+  },
+  "t40|ds1|pn0|416|20|s25": {
+   "best": "license_contract_6",
+   "best_minus_second": 105116.26666666666,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 133080.93333333332,
+    "license_cheap_6": 134587.4,
+    "license_contract_6": 239703.66666666666,
+    "switch_d10": 98125.3,
+    "switch_d5": -78812.83333333333,
+    "switch_now": -223781.46666666667
+   },
+   "paying_minus_honest": 1506.4666666666667,
+   "paying_minus_honest_ci95": [
+    -6153.9926137710245,
+    9166.925947104357
+   ],
+   "pays": true,
+   "se_best_second": 4539.956202111219,
+   "second": "license_cheap_6"
+  },
+  "t40|ds1|pn0|416|5|s00": {
+   "best": "license_contract_6",
+   "best_minus_second": 54355.2,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 56429.933333333334,
+    "license_cheap_6": 42513.36666666667,
+    "license_contract_6": 110785.13333333333,
+    "switch_d10": -34772.9,
+    "switch_d5": -64210.96666666667,
+    "switch_now": -87318.96666666666
+   },
+   "paying_minus_honest": -13916.566666666668,
+   "paying_minus_honest_ci95": [
+    -16435.440134847657,
+    -11397.693198485678
+   ],
+   "pays": false,
+   "se_best_second": 1180.900359213598,
+   "second": "honest"
+  },
+  "t40|ds1|pn0|420|10|s36": {
+   "best": "license_contract_6",
+   "best_minus_second": 665254.5333333333,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 647153.6666666666,
+    "license_cheap_6": 499484.6666666667,
+    "license_contract_6": 1312408.2,
+    "switch_d10": -416514.4666666667,
+    "switch_d5": -889818.0,
+    "switch_now": -1271051.6333333333
+   },
+   "paying_minus_honest": -147669.0,
+   "paying_minus_honest_ci95": [
+    -178078.0327685355,
+    -117259.96723146453
+   ],
+   "pays": false,
+   "se_best_second": 16196.1518940179,
+   "second": "honest"
+  },
+  "t40|ds1|pn0|475|15|s42": {
+   "best": "license_contract_6",
+   "best_minus_second": 494322.0,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 494655.06666666665,
+    "license_cheap_6": 425857.63333333336,
+    "license_contract_6": 988977.0666666667,
+    "switch_d10": -33182.933333333334,
+    "switch_d5": -475192.8,
+    "switch_now": -809742.7
+   },
+   "paying_minus_honest": -68797.43333333333,
+   "paying_minus_honest_ci95": [
+    -97097.94585039119,
+    -40496.92081627548
+   ],
+   "pays": false,
+   "se_best_second": 10999.285876923957,
+   "second": "honest"
+  },
+  "t40|ds1|pn10new|416|20|s46": {
+   "best": "license_contract_6",
+   "best_minus_second": 286246.43333333335,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 431711.76666666666,
+    "license_cheap_6": 437283.6,
+    "license_contract_6": 723530.0333333333,
+    "switch_d10": 332336.3,
+    "switch_d5": -146350.33333333334,
+    "switch_now": -553373.1
+   },
+   "paying_minus_honest": 5571.833333333333,
+   "paying_minus_honest_ci95": [
+    -18867.814400402913,
+    30011.481067069577
+   ],
+   "pays": true,
+   "se_best_second": 12914.57906618498,
+   "second": "license_cheap_6"
+  },
+  "t40|ds1|pn10new|429|10|s41": {
+   "best": "license_contract_6",
+   "best_minus_second": 605336.3333333334,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 868536.5333333333,
+    "license_cheap_6": 662118.5666666667,
+    "license_contract_6": 1473872.8666666667,
+    "switch_d10": -213487.1,
+    "switch_d5": -693474.0333333333,
+    "switch_now": -1073904.3333333333
+   },
+   "paying_minus_honest": -206417.96666666667,
+   "paying_minus_honest_ci95": [
+    -243157.0201519105,
+    -169678.91318142286
+   ],
+   "pays": false,
+   "se_best_second": 16801.149680717383,
+   "second": "honest"
+  },
+  "t40|ds1|pn10new|442|15|s35": {
+   "best": "license_contract_6",
+   "best_minus_second": 451167.30000000005,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 626307.3,
+    "license_cheap_6": 549055.3666666667,
+    "license_contract_6": 1077474.6,
+    "switch_d10": 12429.2,
+    "switch_d5": -519977.63333333336,
+    "switch_now": -924642.0
+   },
+   "paying_minus_honest": -77251.93333333333,
+   "paying_minus_honest_ci95": [
+    -101966.459822191,
+    -52537.40684447567
+   ],
+   "pays": false,
+   "se_best_second": 14566.773378563073,
+   "second": "honest"
+  },
+  "t40|ds1|pn10new|462|5|s22": {
+   "best": "license_contract_6",
+   "best_minus_second": 265472.80000000005,
+   "best_paying_option": "license_cheap_6",
+   "close_call": false,
+   "means": {
+    "exit": 0.0,
+    "honest": 299686.6,
+    "license_cheap_6": 202531.8,
+    "license_contract_6": 565159.4,
+    "switch_d10": -251997.9,
+    "switch_d5": -421081.3,
+    "switch_now": -560053.5333333333
+   },
+   "paying_minus_honest": -97154.8,
+   "paying_minus_honest_ci95": [
+    -109238.50607919753,
+    -85071.09392080248
+   ],
+   "pays": false,
+   "se_best_second": 7955.564726106146,
+   "second": "honest"
+  }
+ },
+ "pauses": 0,
+ "pays_by_market": {
+  "t100|ds0|pn0": {
+   "pays": 4,
+   "states": 4
+  },
+  "t100|ds0|pn10new": {
+   "pays": 4,
+   "states": 4
+  },
+  "t100|ds1|pn0": {
+   "pays": 4,
+   "states": 4
+  },
+  "t100|ds1|pn10new": {
+   "pays": 4,
+   "states": 4
+  },
+  "t40|ds0|pn0": {
+   "pays": 0,
+   "states": 4
+  },
+  "t40|ds0|pn10new": {
+   "pays": 0,
+   "states": 4
+  },
+  "t40|ds1|pn0": {
+   "pays": 1,
+   "states": 4
+  },
+  "t40|ds1|pn10new": {
+   "pays": 1,
+   "states": 4
+  }
+ },
+ "run": {
+  "code_dirty": false,
+  "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank.py --phase pilot --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67",
+  "commit": "b001f7d",
+  "engine": "1.1.0",
+  "numpy": "2.5.4",
+  "phase": "pilot",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "python": "3.12.7",
+  "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885",
+  "started": "2026-11-20 12:30:46",
+  "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67",
+  "workers": 4
+ },
+ "secs_per_continuation_job_mean": 16.662015471566054,
+ "wall_secs": 24151.621839761734
+}
