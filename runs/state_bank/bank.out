@@ -1,0 +1,35 @@
+2026-11-20 19:16:59 run record {"code_dirty": false, "command": "analysis/state_bank.py --phase bank --markets t40|ds0|pn0,t100|ds0|pn0 --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "commit": "1455315", "engine": "1.1.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885", "started": "2026-11-20 19:16:59", "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "workers": 4}
+2026-11-20 19:17:00 172 chains, 192 cached, 172 to run; workers 4; load [2.44, 3.61, 4.6]; memory {'swap_free_mb': 1067.19, 'free_pct': 61}
+2026-11-20 21:08:16 50/172 chains, 6676 s, load [6.47, 5.95, 5.77], memory {'swap_free_mb': 1675.19, 'free_pct': 66}
+2026-11-20 23:09:11 100/172 chains, 13931 s, load [6.24, 6.51, 6.04], memory {'swap_free_mb': 1683.19, 'free_pct': 66}
+2026-11-21 01:22:34 150/172 chains, 21934 s, load [5.6, 5.61, 5.61], memory {'swap_free_mb': 1699.19, 'free_pct': 64}
+2026-11-21 02:00:16 172/172 chains, 24196 s, load [4.19, 5.3, 5.52], memory {'swap_free_mb': 1699.19, 'free_pct': 63}
+2026-11-21 02:00:16 bank: 46 states of 200 (['t100|ds0|pn0', 't40|ds0|pn0']), K 20, 172 jobs
+2026-11-21 02:00:16 phase bank done in 24197 s
+2026-11-21 02:00:17 run record {"code_dirty": false, "command": "analysis/state_bank.py --phase bank --markets t40|ds0|pn10new,t100|ds0|pn10new --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "commit": "7d1395c", "engine": "1.1.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885", "started": "2026-11-21 02:00:17", "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "workers": 4}
+2026-11-21 02:00:18 160 chains, 364 cached, 160 to run; workers 4; load [3.93, 5.23, 5.49]; memory {'swap_free_mb': 1699.19, 'free_pct': 64}
+2026-11-21 03:53:49 50/160 chains, 6811 s, load [5.63, 5.75, 5.72], memory {'swap_free_mb': 1731.19, 'free_pct': 63}
+2026-11-21 05:42:43 100/160 chains, 13345 s, load [6.25, 6.33, 6.1], memory {'swap_free_mb': 1731.19, 'free_pct': 63}
+2026-11-21 07:33:54 150/160 chains, 20016 s, load [5.43, 5.65, 5.73], memory {'swap_free_mb': 1739.19, 'free_pct': 63}
+2026-11-21 07:54:15 160/160 chains, 21237 s, load [3.92, 5.08, 5.46], memory {'swap_free_mb': 1739.19, 'free_pct': 63}
+2026-11-21 07:54:15 bank: 42 states of 200 (['t100|ds0|pn10new', 't40|ds0|pn10new']), K 20, 160 jobs
+2026-11-21 07:54:15 phase bank done in 21238 s
+2026-11-21 07:54:15 run record {"code_dirty": false, "command": "analysis/state_bank.py --phase bank --markets t40|ds1|pn0,t100|ds1|pn0 --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "commit": "7d1395c", "engine": "1.1.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885", "started": "2026-11-21 07:54:15", "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "workers": 4}
+2026-11-21 07:54:16 156 chains, 524 cached, 156 to run; workers 4; load [3.92, 5.08, 5.46]; memory {'swap_free_mb': 1739.19, 'free_pct': 63}
+2026-11-21 09:45:24 50/156 chains, 6668 s, load [5.49, 5.79, 5.97], memory {'swap_free_mb': 1739.19, 'free_pct': 60}
+2026-11-21 11:19:57 100/156 chains, 12341 s, load [6.29, 5.96, 6.03], memory {'swap_free_mb': 1506.88, 'free_pct': 59}
+2026-11-21 13:04:40 150/156 chains, 18624 s, load [5.4, 5.58, 5.7], memory {'swap_free_mb': 1506.88, 'free_pct': 60}
+2026-11-21 13:17:17 156/156 chains, 19381 s, load [2.8, 4.6, 5.29], memory {'swap_free_mb': 1506.88, 'free_pct': 60}
+2026-11-21 13:17:17 bank: 40 states of 200 (['t100|ds1|pn0', 't40|ds1|pn0']), K 20, 156 jobs
+2026-11-21 13:17:17 phase bank done in 19382 s
+2026-11-21 13:17:17 run record {"code_dirty": false, "command": "analysis/state_bank.py --phase bank --markets t40|ds1|pn10new,t100|ds1|pn10new --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "commit": "7d1395c", "engine": "1.1.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885", "started": "2026-11-21 13:17:17", "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "workers": 4}
+2026-11-21 13:17:18 160 chains, 680 cached, 160 to run; workers 4; load [2.8, 4.6, 5.29]; memory {'swap_free_mb': 1506.88, 'free_pct': 61}
+2026-11-21 15:03:43 50/160 chains, 6384 s, load [6.85, 6.07, 5.83], memory {'swap_free_mb': 1506.88, 'free_pct': 60}
+2026-11-21 16:49:00 100/160 chains, 12702 s, load [6.02, 5.68, 5.69], memory {'swap_free_mb': 1506.88, 'free_pct': 60}
+2026-11-21 18:29:06 150/160 chains, 18708 s, load [5.68, 5.46, 5.69], memory {'swap_free_mb': 1506.88, 'free_pct': 60}
+2026-11-21 18:46:52 160/160 chains, 19773 s, load [3.61, 4.98, 5.49], memory {'swap_free_mb': 1506.88, 'free_pct': 60}
+2026-11-21 18:46:52 bank: 40 states of 200 (['t100|ds1|pn10new', 't40|ds1|pn10new']), K 20, 160 jobs
+2026-11-21 18:46:52 phase bank done in 19774 s
+2026-11-21 18:46:52 run record {"code_dirty": false, "command": "analysis/state_bank.py --phase build --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "commit": "7d1395c", "engine": "1.1.0", "numpy": "2.5.4", "phase": "build", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885", "started": "2026-11-21 18:46:52", "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67", "workers": 4}
+2026-11-21 18:46:53 build: 200 states, pays 90, close calls 3, guard {'stuck_buyers': 0, 'idle_choosers': 0, 'continuations': 25800}
+2026-11-21 18:46:53 phase build done in 1 s

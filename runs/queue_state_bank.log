@@ -1,0 +1,6 @@
+2026-11-20 19:16:59 queue start; commit 1455315; load { 2.44 3.61 4.60 }
+2026-11-21 02:00:16 block ds0|pn0 done; load { 4.19 5.30 5.52 }
+2026-11-21 07:54:15 block ds0|pn10new done; load { 3.92 5.08 5.46 }
+2026-11-21 13:17:17 block ds1|pn0 done; load { 2.80 4.60 5.29 }
+2026-11-21 18:46:52 block ds1|pn10new done; load { 3.61 4.98 5.49 }
+2026-11-21 18:46:53 build done; queue done; load { 3.61 4.98 5.49 }

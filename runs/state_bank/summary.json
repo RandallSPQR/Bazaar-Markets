@@ -1,0 +1,140 @@
+{
+ "K": 20,
+ "by_market": {
+  "t100|ds0|pn0": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 6,
+    "license_name_contract_quality": 18,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 1,
+   "pays": 24,
+   "states": 24
+  },
+  "t100|ds0|pn10new": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 4,
+    "license_name_contract_quality": 18,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 2,
+   "pays": 22,
+   "states": 22
+  },
+  "t100|ds1|pn0": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 0,
+    "license_name_contract_quality": 20,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 0,
+   "pays": 20,
+   "states": 20
+  },
+  "t100|ds1|pn10new": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 0,
+    "license_name_contract_quality": 20,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 0,
+   "pays": 20,
+   "states": 20
+  },
+  "t40|ds0|pn0": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 0,
+    "license_name_contract_quality": 30,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 0,
+   "pays": 0,
+   "states": 30
+  },
+  "t40|ds0|pn10new": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 0,
+    "license_name_contract_quality": 28,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 0,
+   "pays": 0,
+   "states": 28
+  },
+  "t40|ds1|pn0": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 0,
+    "license_name_contract_quality": 28,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 0,
+   "pays": 2,
+   "states": 28
+  },
+  "t40|ds1|pn10new": {
+   "best": {
+    "keep_supply": 0,
+    "leave_market": 0,
+    "license_name_cheap_quality": 0,
+    "license_name_contract_quality": 28,
+    "switch_supply_in_10_days": 0,
+    "switch_supply_in_5_days": 0,
+    "switch_supply_now": 0
+   },
+   "close_calls": 0,
+   "pays": 2,
+   "states": 28
+  }
+ },
+ "close_calls": 3,
+ "guard": {
+  "continuations": 25800,
+  "idle_choosers": 0,
+  "stuck_buyers": 0
+ },
+ "pays": 90,
+ "pays_weighted": 0.5178571428571428,
+ "run": {
+  "code_dirty": false,
+  "command": "analysis/state_bank.py --phase build --workers 4 --min-swap-mb 0 --tests runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67",
+  "commit": "7d1395c",
+  "engine": "1.1.0",
+  "numpy": "2.5.4",
+  "phase": "build",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "python": "3.12.7",
+  "script_sha256": "6cafd2ae17a7d4044d698e84404555944d61332529f9c1429fe85296068e8885",
+  "started": "2026-11-21 18:46:52",
+  "tests": "runs/tests_110.log + runs/tests_110_fix.log: 1,836 + fix 67/67",
+  "workers": 4
+ },
+ "states": 200
+}
