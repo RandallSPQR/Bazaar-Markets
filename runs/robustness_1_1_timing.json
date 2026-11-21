@@ -1,0 +1,759 @@
+{
+ "meta": {
+  "engine_version": "1.1.0",
+  "commit": "d75e3f0",
+  "code_dirty": false,
+  "script_sha256": "a53a90b73351b15b68d45059dfe726036aa0b5e14eb0a86bb2f745c120917aa9",
+  "command": "python -m analysis.robustness_1_1 --timing --workers 4 --min-swap-mb 0",
+  "tests": "",
+  "python": "3.12.7",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "workers": 4,
+  "load_start": [
+   2.06,
+   3.42,
+   4.68
+  ],
+  "mem_start": {
+   "swap_free_mb": 1506.88,
+   "free_pct": 61
+  },
+  "cells": [
+   "rating_indexed|lex",
+   "rating_indexed|soft",
+   "rating_indexed|sharp",
+   "cost_plus|lex",
+   "cost_plus|soft",
+   "cost_plus|sharp",
+   "match_rival|lex",
+   "match_rival|soft",
+   "match_rival|sharp",
+   "undercut|lex",
+   "undercut|soft",
+   "undercut|sharp",
+   "promo|lex",
+   "promo|soft",
+   "promo|sharp"
+  ],
+  "market_defaults": [
+   "ratings.display=stars",
+   "ratings.display_step=0.02",
+   "buyers.tie_break=random"
+  ],
+  "started": "2026-11-21 18:50:49"
+ },
+ "projection": {
+  "per_cell_h": 1.45115625,
+  "cells": 15,
+  "total_h": 21.76734375,
+  "after dropping nothing": {
+   "cells": 15,
+   "hours": 21.77
+  },
+  "after dropping promo": {
+   "cells": 12,
+   "hours": 17.41
+  },
+  "after dropping promo, match_rival": {
+   "cells": 9,
+   "hours": 13.06
+  },
+  "after dropping promo, match_rival, soft": {
+   "cells": 6,
+   "hours": 8.71
+  }
+ },
+ "chains": [
+  {
+   "key": "verification|rating_indexed|lex|A|t100|200|None|never",
+   "secs": 21.66,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "verification|rating_indexed|lex|A|t40|l1|200|s01|30",
+   "secs": 21.75,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "verification|undercut|soft|A|t100|200|None|never",
+   "secs": 21.77,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "verification|undercut|soft|A|t40|l1|200|s01|30",
+   "secs": 21.87,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "verification|match_rival|sharp|A|t100|200|None|never",
+   "secs": 23.39,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "verification|match_rival|sharp|A|t40|l1|200|s01|30",
+   "secs": 23.12,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "liability|rating_indexed|lex|col|t100|ds1.0|230|None|never",
+   "secs": 22.97,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "liability|rating_indexed|lex|col|t100|ds1.0|230|s42|30",
+   "secs": 22.73,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "liability|undercut|soft|col|t100|ds1.0|230|None|never",
+   "secs": 23.47,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "liability|undercut|soft|col|t100|ds1.0|230|s42|30",
+   "secs": 23.37,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "liability|match_rival|sharp|col|t100|ds1.0|230|None|never",
+   "secs": 23.47,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "liability|match_rival|sharp|col|t100|ds1.0|230|s42|30",
+   "secs": 23.13,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "licensing|rating_indexed|lex|never|-|t40|300|None|0.10",
+   "secs": 25.44,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "licensing|rating_indexed|lex|R|cheap|t40|300|s46|0.10",
+   "secs": 25.05,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "licensing|undercut|soft|never|-|t40|300|None|0.10",
+   "secs": 25.71,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "licensing|undercut|soft|R|cheap|t40|300|s46|0.10",
+   "secs": 25.31,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "licensing|match_rival|sharp|never|-|t40|300|None|0.10",
+   "secs": 25.83,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "licensing|match_rival|sharp|R|cheap|t40|300|s46|0.10",
+   "secs": 25.51,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "canal|rating_indexed|lex|off|t100|ds1.0|270",
+   "secs": 24.52,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "canal|rating_indexed|lex|phi0.4|t100|ds1.0|270",
+   "secs": 24.37,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "canal|undercut|soft|off|t100|ds1.0|270",
+   "secs": 24.95,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "canal|undercut|soft|phi0.4|t100|ds1.0|270",
+   "secs": 24.62,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "canal|match_rival|sharp|off|t100|ds1.0|270",
+   "secs": 24.83,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "canal|match_rival|sharp|phi0.4|t100|ds1.0|270",
+   "secs": 24.63,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 4500,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "equity|rating_indexed|lex|never|t40|330|None|0.10|0|60|new|stars0.02",
+   "secs": 53.14,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 9000,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "equity|rating_indexed|lex|Wg|t40|330|s26|0.10|400|60|new|stars0.02",
+   "secs": 53.74,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 9000,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "rating_indexed",
+     "lexicographic",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "equity|undercut|soft|never|t40|330|None|0.10|0|60|new|stars0.02",
+   "secs": 53.86,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 9000,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "equity|undercut|soft|Wg|t40|330|s26|0.10|400|60|new|stars0.02",
+   "secs": 54.49,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 9000,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "undercut",
+     "logit",
+     5.0,
+     5.0
+    ]
+   ]
+  },
+  {
+   "key": "equity|match_rival|sharp|never|t40|330|None|0.10|0|60|new|stars0.02",
+   "secs": 43.32,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 9000,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  },
+  {
+   "key": "equity|match_rival|sharp|Wg|t40|330|s26|0.10|400|60|new|stars0.02",
+   "secs": 43.47,
+   "arm_ok": true,
+   "guard": {
+    "stuck_buyers": 0,
+    "idle_choosers": 0,
+    "parked": 0,
+    "buyer_days": 9000,
+    "fallbacks": 0
+   },
+   "seen": [
+    [
+     "stars",
+     0.02,
+     "random",
+     "match_rival",
+     "logit",
+     20.0,
+     20.0
+    ]
+   ]
+  }
+ ]
+}
