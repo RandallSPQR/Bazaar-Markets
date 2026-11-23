@@ -4,11 +4,11 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 
 | | |
 |---|---|
-| Stage | 3 (Stages 1 and 2 done; v1.0.0 released: tag, GitHub release, Zenodo 10.5281/zenodo.24406533, run caches 10.5281/zenodo.24406657) |
-| Running | robustness sweep, all 15 cells, 11,100 chains (`runs/queue_robustness_1_1.sh`; log `runs/robustness_1_1_run.log`) |
-| Projected finish | about 16:45 on 2026-11-22 (21.8 h at the timing pilot's rates) |
-| Last gate | State bank complete: 200 states, K 20, guards 0 over 25,800 continuations; pays 90/200 (52% weighted); close calls 3 (target 30, D7) (`runs/state_bank_summary.md`) |
-| Next step | C6: sweep summary and `runs/REPORT_2026-11.md`; then stop |
+| Stage | Done: all three stages complete (Stages 1 and 2 done; v1.0.0 released: tag, GitHub release, Zenodo 10.5281/zenodo.24406533, run caches 10.5281/zenodo.24406657) |
+| Running | nothing |
+| Finished | 2026-11-22 20:37 (sweep, 25.7 h) |
+| Last gate | Robustness sweep complete: base cell reproduces 650/650 saved chains; guards 0; 0 flags (`runs/robustness_1_1_summary.md`) |
+| Next step | none; plan closed. Open items for Randall in `runs/REPORT_2026-11.md` |
 
 ## Checkpoints
 
@@ -19,7 +19,7 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 | C3 | Stage 2 cross-check done; tag v1.0.0 | 2026-11-20 09:05: full suite at 1.0.0 passes (1,817 passed, 17 skipped); v1.0.0 tagged locally, not pushed |
 | C4 | Stage 3 engine and pilots passed; state bank night 1 launched | 2026-11-20 19:17: pilot gates pass; full bank launched as four back-to-back blocks (D6); ETA about 18:40 on 2026-11-21 |
 | C5 | State bank complete | 2026-11-21 18:46: 200 states, 23.5 h over four blocks; summary written |
-| C6 | Robustness sweep complete; `runs/REPORT_2026-11.md` | – |
+| C6 | Robustness sweep complete; `runs/REPORT_2026-11.md` | 2026-11-22 20:37: 11,100 chains, 25.7 h, 0 flags; PX1–PX3 supported in 15/15 cells, PX4 contradicted; report written |
 
 ## Log
 
@@ -45,3 +45,4 @@ Plan: `runs/plan_autonomous_2026-11-19.md`, preregistered at 59e15de (2026-11-19
 - 2026-11-21 19:05: **Checkpoint C5.** State bank complete (2026-11-20 19:17 to 2026-11-21 18:46, 23.5 h in four blocks, projected 23.3 h): 200 states, K 20, guards 0 over 25,800 continuations. Deception (a switch or the cheap licence) pays in 90/200 states (51.8% weighted): all 86 tourists-only states, each with an interval above 0, and 4/114 where locals inspect, each within noise. Best option: contract licence 190, cheap licence 10. Under enforcement every switch is caught in every continuation; the cheap licence is never caught at the owner (owner_liable false: licensees take the catches). Close calls 3 against the plan's 30: the script counts them but cannot target them, a choice made at e757d47 and logged late as deviation D7. Summary `runs/state_bank_summary.md`, plot `runs/state_bank/paying_minus_honest.svg`. Next: the 3C sweep's timing pilot, then the full sweep.
 - 2026-11-21 18:55: Robustness sweep timing pilot (30 chains, 4 min, 0 flags, every arm applied): 22–25 s per 30-day chain, 50 s per 60-day equity chain; 1.45 h per cell, 21.8 h for all 15 cells (17.4, 13.1 and 8.7 h after the plan's three trims). Per D6 no trims: the full sweep launched at 18:55 (8d2bfe9), base cell first; ETA about 16:45 on 2026-11-22.
 - 2026-11-21 20:45: Base cell (rating_indexed × lex) done, 740 chains in 1.6 h, 0 flags so far. Reproduction check against the saved stars runs: 650 of 650 compared chains identical (verification, liability and canal totals; brand-equity digests). 20 canal chains (phi 0.8 and 0.4) have no saved stars chain, as expected: the stars sensitivity ran off, 1.0 and 0.6 only; licensing has no saved stars counterpart. The sweep continues; ETA about 16:45 on 2026-11-22.
+- 2026-11-22 20:45: **Checkpoint C6.** Robustness sweep done (2026-11-21 18:55 to 2026-11-22 20:37, 25.7 h, 11,100 chains, 0 flags, guards 0). PX1 (bust-out under enforcement < 0), PX2 (t100 gain > t40|l1 gain) and PX3 (contract > cheap licensing) supported in all 15 cells. PX4 contradicted: under rating_indexed × sharp logit, Canal Street's PK1 slope is −$5,358 [−5,607, −5,108], negative in every cell, so a price-sensitive buyer rule does not make undercutting pay. Exploratory: `undercut` drives prices to unit cost (2/3 of stall windows), so brand equity is about 0 and the t40|l1 bust-out gain turns positive under it. Summary `runs/robustness_1_1_summary.md`. Final report `runs/REPORT_2026-11.md`. Plan closed; nothing running.
