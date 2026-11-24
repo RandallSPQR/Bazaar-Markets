@@ -1,0 +1,52 @@
+{
+ "meta": {
+  "engine_version": "1.2.0",
+  "commit": "8cfaa73",
+  "code_dirty": false,
+  "script_sha256": "ae1ac5b2f226f27a5e7a20716744910957b4cb608ab1b94de20e163ddb4c077f",
+  "command": "python -m analysis.price_war --repro --outdir runs/pilot_price_war --min-swap-mb 0",
+  "tests": "",
+  "python": "3.12.7",
+  "numpy": "2.5.4",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "workers": 4,
+  "load_start": [
+   1.79,
+   2.61,
+   2.82
+  ],
+  "mem_start": {
+   "swap_free_mb": 1066.5,
+   "free_pct": 47
+  },
+  "cells": [
+   "A|RI|ds0|lex",
+   "A|RI|ds1|lex",
+   "A|U0|ds0|lex",
+   "A|U0|ds1|lex",
+   "A|U0.1|ds0|lex",
+   "A|U0.1|ds1|lex",
+   "A|U0.3|ds0|lex",
+   "A|U0.3|ds1|lex",
+   "A|U0|ds0|sharp",
+   "B|RI|lex",
+   "B|U0|lex",
+   "B|U0.1|lex",
+   "B|U0.3|lex"
+  ],
+  "market_defaults": [
+   "ratings.display=stars",
+   "ratings.display_step=0.02",
+   "buyers.tie_break=random"
+  ],
+  "started": "2026-11-24 16:44:43"
+ },
+ "repro": {
+  "compared": 60,
+  "matched": 60,
+  "missing": 0,
+  "bad": [],
+  "pass": true,
+  "wall_h": 0.1695412097374598
+ }
+}
