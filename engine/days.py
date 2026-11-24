@@ -180,7 +180,13 @@ def run_days(cfg: BazaarConfig, log=None, day_factories=None) -> dict:
     if D < 1:
         raise ValueError(f"market.days must be >= 1, got {D}")
     state = {"stalls": None, "book": None, "days": []}
-    run_span(cfg, log, state, 1, D, day_factories=day_factories)
+    from .budget import BudgetStop
+    try:
+        run_span(cfg, log, state, 1, D, day_factories=day_factories)
+    except BudgetStop as e:                  # 1.2.0: keep the completed days as the run's partial output
+        e.where["days_completed"] = len(state["days"])
+        e.partial_days = state["days"]
+        raise
     return finish(state)
 
 

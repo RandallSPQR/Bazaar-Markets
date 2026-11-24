@@ -1,4 +1,4 @@
-<!-- Exported from the project doc 'Bazaar Markets: The Agentic Ad Engine', section 'Formal model of the bazaar engine', rev 42, on 2026-11-19. Written against engine 0.15.0; cross-checked line by line against the engine 0.21.0 code at the 1.0.0 cross-check (2026-11-19, see runs/formal_model_check.md): items the doc had wrong are fixed, and the later keys (licensing, counterfeit entry/price factor, white_label_tier, prior_n/scope, display stars, tie_break, profile overrides) are added in paragraphs labelled "added at the 1.0.0 cross-check". -->
+<!-- Exported from the project doc 'Bazaar Markets: The Agentic Ad Engine', section 'Formal model of the bazaar engine', rev 42, on 2026-11-19. Written against engine 0.15.0; cross-checked line by line against the engine 0.21.0 code at the 1.0.0 cross-check (2026-11-19, see runs/formal_model_check.md): items the doc had wrong are fixed, and the later keys (licensing, counterfeit entry/price factor, white_label_tier, prior_n/scope, display stars, tie_break, profile overrides) are added in paragraphs labelled "added at the 1.0.0 cross-check". The 1.1.0 and 1.2.0 keys are added at the end, labelled "added at 1.2.0, not cross-checked". -->
 ## Formal model of the bazaar engine
 
 This section states the engine as a model: sets, stall and buyer primitives, messages, detection, decision rules, payoffs and outcomes, with every parameter's domain and default in the table at the end. It follows the specifications given to the engine through version 0.15.0, extended to 0.21.0; the code (`engine/*.py`, `agents/rule_based.py`) is the source of truth. The line-by-line cross-check against it was done at 1.0.0 against the engine 0.21.0 code (see `runs/formal_model_check.md`): statements found wrong are corrected here, and rules for keys added after 0.15.0 are in paragraphs labelled *added at the 1.0.0 cross-check*. PLACEHOLDER marks a modelling choice not yet backed by data.
@@ -195,3 +195,64 @@ where 𝓑 is the candidate set of bust-out days (or day-and-exit pairs), {10, 2
 | bargain share | buyers with low Q_b | [0, 1] | 0 in walk mode, 0.2 in choice-set mode |  |
 | bargain Q_b | bargain hunters' Q_b range | ⊂ [0, 1] | U[0.30, 0.45] (U[0.15, 0.40] in runs from verification on) |  |
 | tourist / local / expert | buyer profile shares | sum to 1 | 0.4 / 0.4 / 0.2 |  |
+
+### Engine 1.1.0 and 1.2.0 keys (added at 1.2.0, not cross-checked)
+
+The paragraphs and rows in this subsection were added at engine 1.2.0 from the code and `docs/config_reference.md`. Unlike the rest of this section, they have **not** been cross-checked line by line against the code. At their defaults each key reproduces the engine before it byte for byte. The tests are `tests/test_v110.py` and `tests/test_v120.py`.
+
+**Price policy (1.1.0; added at 1.2.0, not cross-checked).** With brands on, one market-wide policy sets every stall's own price p_{s,d} each morning (and at a rename) before the copy rules. The copy rules are unchanged: a counterfeit then posts round(χ p_{s'}) and an owner-branded licensee its owner's price. Let r̃ be the displayed start-of-day rating (unrated = 0.5), k_s the unit cost, and h(x) = ⌊x + ½⌋. Let R_s be the other stalls of s's category still in the market that posted a price yesterday. Then:
+
+$$
+p_{s,d} = \begin{cases}
+\operatorname{round}\bigl(b_c\,\phi_{\tau_s}\,(1 + \pi(\tilde r_{s,d} - 0.5))\bigr) & \text{rating\_indexed (1.0.0)} \\
+h\bigl(k_s (1 + \mu)\bigr) & \text{cost\_plus} \\
+\operatorname{median}\{p_{s',d-1} : s' \in R_s,\ \tilde r_{s'} \ge \tilde r_s - 0.1\} & \text{match\_rival} \\
+\max\bigl(\min\{p_{s',d-1} : s' \in R_s,\ \tilde r_{s'} \ge \tilde r_s\} - 1,\ f_s\bigr) & \text{undercut} \\
+h(0.85\, p^{\text{RI}}_{s,d}) \text{ if } n_{s,d-1} < \bar n_{s,7}, \text{ else } p^{\text{RI}}_{s,d} & \text{promo}
+\end{cases}
+$$
+
+Notes on the cases:
+
+- match_rival: the median of an even count is h of the mean of the middle two.
+- undercut: the floor is f_s = k_s when m = 0 (1.1.0) and f_s = h(k_s(1 + m)) when m > 0 (1.2.0, `sellers.undercut_floor_markup`).
+- promo: n̄_{s,7} is the mean of the stall's units over the last 7 days (fewer at the start), yesterday included.
+- match_rival and undercut post rating_indexed when their rival set is empty. So do match_rival, undercut and promo on day 1.
+
+**Logit choice (1.1.0; added at 1.2.0, not cross-checked).** With `buyers.choice` = logit, a searching rule buyer picks candidate j ∈ K_b with probability
+
+$$
+P_b(j) = \frac{\exp\bigl(w_r \tilde r_j - w_p\, p_j / b_c\bigr)}{\sum_{i \in K_b} \exp\bigl(w_r \tilde r_i - w_p\, p_i / b_c\bigr)}
+$$
+
+- w_r = 0 for a buyer who does not see ratings.
+- The draw is one uniform per buyer and day from default_rng([seed, 37, d, b]), by inverse CDF over K_b in lexicographic order.
+- Inspection, asking and the Q_b rule are unchanged.
+
+**Checkpoint, continuation and seller options (1.1.0; added at 1.2.0, not cross-checked).** A snapshot keeps the state after day d. Continuation k runs days d + 1..D with every stochastic stream re-seeded from [seed, 31, k] in place of [seed]. Two things are kept: the bust-out quality draw and the critics' day-1 ties.
+
+For one genuine stall, the options are:
+
+- honest;
+- a supply switch (bust-out) on day d + 1, d + 5 or d + 10;
+- a licence to 6 stalls of its category from day d + 1, contract or cheap, royalty 0.10;
+- exit at the end of day d.
+
+Option set "v2" (1.2.0) leaves out the contract licence in agent-facing files. The engine still runs it.
+
+**LLM spend ceiling (1.2.0; added at 1.2.0, not cross-checked).** `agents.budget` is not part of the market model: it acts only on LLM agents. A call is made only under allow_spend, and only if its worst case fits every limit, where:
+
+- calls are counted per run;
+- tokens are the input estimate ⌈characters/3⌉ plus max_tokens;
+- dollars are computed at the model's price, per run and per calendar day (from the ledger).
+
+A refused call is an invalid action, and the run stops at the next decision, marked INVALID: budget. Rule-agent runs are unaffected.
+
+| Symbol | Meaning | Domain | Default | Status |
+|---|---|---|---|---|
+| price policy | how a stall's own price is set | {rating_indexed, cost_plus, match_rival, undercut, promo} | rating_indexed | added at 1.2.0, not cross-checked |
+| μ | cost_plus markup | finite ≥ 0 | 0.5 | PLACEHOLDER; added at 1.2.0, not cross-checked |
+| m | undercut floor markup (1.2.0) | finite ≥ 0 | 0 | added at 1.2.0, not cross-checked |
+| choice | buyer choice rule | {lexicographic, logit} | lexicographic | added at 1.2.0, not cross-checked |
+| w_r, w_p | logit rating and price weights | finite ≥ 0 | 5, 5 (soft); 20, 20 (sharp) | PLACEHOLDER; added at 1.2.0, not cross-checked |
+| budget | LLM spend limits: calls, tokens, $ per run; $ per day; prices | ≥ 0; prices per model | all 0 (no call possible); prices empty | prices PLACEHOLDER; added at 1.2.0, not cross-checked |

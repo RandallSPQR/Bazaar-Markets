@@ -24,12 +24,19 @@ def main(argv=None) -> int:
     ap.add_argument("--log", help="write the JSONL event log here")
     ap.add_argument("--normalize", action="store_true",
                     help="bazaar: also run the random and informed reference buyers on the same world and seed")
+    ap.add_argument("--allow-spend", action="store_true",
+                    help="bazaar: permit paid LLM calls within agents.budget (every limit defaults to 0)")
+    ap.add_argument("--dry-run-cost", action="store_true",
+                    help="bazaar: estimate LLM calls, tokens and dollars without calling anything")
     args = ap.parse_args(argv)
+    if args.allow_spend and args.dry_run_cost:
+        ap.error("--allow-spend and --dry-run-cost exclude each other")
     overrides = list(args.set) + ([f"seed={args.seed}"] if args.seed is not None else [])
     cfg = load(args.config, overrides, mode=args.mode)
     if args.log:
         os.makedirs(os.path.dirname(os.path.abspath(args.log)), exist_ok=True)
-    out, _ = run_config(cfg, log_path=args.log, normalize=args.normalize)
+    out, _ = run_config(cfg, log_path=args.log, normalize=args.normalize, allow_spend=args.allow_spend,
+                        dry_run_cost=args.dry_run_cost)
     print(json.dumps(out, indent=1, sort_keys=True))
     if args.log:
         print(f"log: {args.log}", file=sys.stderr)

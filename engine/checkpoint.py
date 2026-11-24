@@ -34,6 +34,10 @@ from .config import BazaarConfig
 
 CONT_STREAM = 31
 OPTIONS = ("honest", "switch_now", "switch_d5", "switch_d10", "license_contract_6", "license_cheap_6", "exit")
+# 1.2.0: the option sets an agent-facing file may offer. "v1" = every option (state bank v1). "v2" leaves out
+# license_contract_6, which dominated bank v1 (best in 190 of 200 states at no cost to the owner,
+# runs/state_bank_summary.md); the engine still runs it (continue_from accepts every option in OPTIONS).
+OPTION_SETS = {"v1": OPTIONS, "v2": tuple(o for o in OPTIONS if o != "license_contract_6")}
 SWITCH_DELAY = {"switch_now": 1, "switch_d5": 5, "switch_d10": 10}
 LICENCE_N, LICENCE_ROYALTY = 6, 0.10
 

@@ -95,4 +95,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #        checkpoint / continue (engine/checkpoint.py: snapshot after day d, continue days d+1..D on streams
 #        [seed, 31, k] or the run's own, under a seller option for one stall). The streams keyed on the seed alone
 #        take an optional prefix (BazaarEngine sroot). Defaults reproduce 1.0.0 byte for byte.
-ENGINE_VERSION = "1.1.0"
+# 1.2.0: sellers.undercut_floor_markup (undercut's floor at unit cost x (1 + m); 0 = 1.1.0), agents.budget (a run-level
+#        LLM spend ceiling with a cross-run day limit, a price table, a response cache and a ledger; engine/budget.py;
+#        a refused call stops the run, marked INVALID: budget) and seller option sets (engine/checkpoint.py
+#        OPTION_SETS; "v2" leaves out license_contract_6). Defaults reproduce 1.1.0 byte for byte.
+ENGINE_VERSION = "1.2.0"

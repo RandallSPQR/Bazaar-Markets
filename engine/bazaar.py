@@ -28,6 +28,7 @@ from .jsonlog import JsonlLog, env_info
 from .valuation import unit_value
 from .scaling import scaled_config
 from . import brands as B
+from . import budget as BUDGET
 from . import critics as C
 from . import licensing as LIC
 from .world import (UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text,
@@ -299,11 +300,18 @@ class BazaarEngine:
     # ------------------------------------------------------------------ decide
 
     def decide(self, role: str, key: str, agent: Agent, obs: dict, check: Callable[[dict], str | None]) -> dict:
+        tr = BUDGET.current()                     # 1.2.0: stop at the first decision after a refused LLM call
+        if tr is not None and tr.stopped is not None:
+            raise BUDGET.BudgetStop(tr.stopped, {"day": getattr(self, "day", None), "t": self.t, "agent": key,
+                                                 "decisions": dict(self.decisions),
+                                                 "fallbacks": dict(self.fallbacks)})
         self.decisions[role] += 1
         self.log.emit("obs", t=self.t, agent=key, role=role, obs=obs)
         try:
             raw = agent.act(obs)
             agent_error = None
+        except BUDGET.BudgetStop:
+            raise
         except Exception as e:  # an agent crash is an invalid action, not an engine crash
             raw = None
             agent_error = getattr(e, "logged_message", None) or f"agent raised {type(e).__name__}: {e}"
@@ -1118,8 +1126,17 @@ def run(cfg: BazaarConfig, log: JsonlLog | None = None, agent_factory: AgentFact
         day_factories: Callable[[int], AgentFactory | None] | None = None) -> dict:
     """One run; with market.days > 1, the multi-day run (engine/days.py), whose result is
     {"days": [...]}. day_factories(day) gives a day's agent factory (replay)."""
-    if cfg.market.days > 1:
-        from .days import run_days
-        return run_days(cfg, log=log, day_factories=day_factories)
-    eng = BazaarEngine(cfg, log=log, agent_factory=agent_factory)
-    return eng.run()
+    with BUDGET.session(cfg) as tracker:     # 1.2.0: reuses a tracker installed by the caller (cli.run)
+        try:
+            if cfg.market.days > 1:
+                from .days import run_days
+                return run_days(cfg, log=log, day_factories=day_factories)
+            eng = BazaarEngine(cfg, log=log, agent_factory=agent_factory)
+            return eng.run()
+        except BUDGET.BudgetStop as e:
+            out = {"invalid": BUDGET.INVALID, "reason": e.reason, "stopped_at": e.where, "spend": tracker.summary()}
+            if log is not None:
+                log.emit("stopped", **out)
+            if getattr(e, "partial_days", None) is not None:
+                out["days"] = e.partial_days     # multi-day: the days completed before the stop
+            return out

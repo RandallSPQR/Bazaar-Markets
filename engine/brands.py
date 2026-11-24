@@ -215,6 +215,9 @@ def validate_price_policy(cfg) -> None:
     m = s.markup
     if isinstance(m, bool) or not isinstance(m, (int, float)) or not math.isfinite(m) or m < 0:
         raise ValueError(f"sellers.markup must be a finite number >= 0, got {m!r}")
+    f = s.undercut_floor_markup
+    if isinstance(f, bool) or not isinstance(f, (int, float)) or not math.isfinite(f) or f < 0:
+        raise ValueError(f"sellers.undercut_floor_markup must be a finite number >= 0, got {f!r}")
     if s.price_policy != "rating_indexed" and not cfg.brands.enabled:
         raise ValueError("sellers.price_policy other than rating_indexed needs brands.enabled")
 
@@ -250,7 +253,9 @@ def policy_price(cfg, st, stalls: list, rating: float | None) -> int:
     ps = [s.yesterday["price_cents"] for s in rivals if _shown_or_neutral(cfg, s.rating) >= own - 1e-9]
     if not ps:                                   # undercut
         return ri
-    return max(min(ps) - 1, int(st.unit_cost_cents))
+    m = float(cfg.sellers.undercut_floor_markup)     # 1.2.0: floor at unit cost x (1 + m); m = 0 is 1.1.0
+    floor = int(st.unit_cost_cents) if m == 0 else _half_up(st.unit_cost_cents * (1 + m))
+    return max(min(ps) - 1, floor)
 
 
 def morning_prices(cfg, stalls: list, book: BrandBook) -> None:

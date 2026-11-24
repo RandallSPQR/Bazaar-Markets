@@ -11,9 +11,14 @@ from .metrics import reference_configs, relative_outcomes
 
 
 def run_config(cfg, log_path: str | None = None, normalize: bool = False, keep_lines: bool = False,
-               agent_factory=None) -> tuple[dict, JsonlLog]:
+               agent_factory=None, allow_spend: bool = False, dry_run_cost: bool = False) -> tuple[dict, JsonlLog]:
+    """allow_spend / dry_run_cost (1.2.0, bazaar mode): the run's LLM spend tracker (engine/budget.py); the result
+    gains "spend" when either is set. Without allow_spend no LLM call can be made."""
+    from . import budget as BUDGET
     ctx = open(log_path, "w", encoding="utf-8") if log_path else nullcontext(None)
-    with ctx as sink:
+    spend = BUDGET.session(cfg, allow_spend=allow_spend, dry_run=dry_run_cost) if cfg.mode == "bazaar" \
+        else nullcontext(None)
+    with ctx as sink, spend as tracker:
         log = JsonlLog(sink, keep=keep_lines)
         if cfg.mode == "m0":
             hist = m0.run(cfg, log=log)
@@ -21,6 +26,8 @@ def run_config(cfg, log_path: str | None = None, normalize: bool = False, keep_l
                    "final_dec_pop": hist[-1]["dec_pop"], "final_fill": hist[-1]["fill"]}
         else:
             out = bazaar.run(cfg, log=log, agent_factory=agent_factory)
+            if tracker is not None and (allow_spend or dry_run_cost):
+                out = {**out, "spend": tracker.summary()}
     if normalize and cfg.mode == "bazaar":
         refs = {k: bazaar.run(c) for k, c in reference_configs(cfg).items()}
         out = {**out, **relative_outcomes(out, refs["random_ref"], refs["informed_ref"])}

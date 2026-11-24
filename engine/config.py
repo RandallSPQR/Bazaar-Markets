@@ -222,6 +222,10 @@ class SellersCfg:
     # rating_indexed.
     price_policy: str = "rating_indexed"
     markup: float = 0.5
+    # Engine 1.2.0. Under price_policy "undercut" the floor is round half up(unit cost x (1 + m)) instead of the unit
+    # cost; m >= 0, default 0 = the 1.1.0 floor (the unit cost itself, unrounded expression unchanged). Ignored by
+    # the other policies.
+    undercut_floor_markup: float = 0.0
 
 
 @dataclass
@@ -283,12 +287,31 @@ class ValuationCfg:
 
 
 @dataclass
+class BudgetCfg:
+    # Engine 1.2.0: run-level spend ceiling for LLM agents (engine/budget.py). Every limit defaults to 0, and a call
+    # is made only if the run was started with allow_spend (cli.run --allow-spend) and the call's worst case fits
+    # inside every limit, so with the defaults no call is possible. max_usd_day is enforced across runs from the
+    # ledger file (one line per paid call). prices: model_id -> {"in": $ per million input tokens, "out": $ per
+    # million output tokens}; PLACEHOLDER, empty: Randall fills it in before any real call, and a model without a
+    # price cannot be called. response_cache: a JSONL file of earlier replies; a reply found there costs nothing
+    # and does not count against any limit ("" = no cache).
+    max_calls_run: int = 0
+    max_tokens_run: int = 0
+    max_usd_run: float = 0.0
+    max_usd_day: float = 0.0
+    prices: dict = field(default_factory=dict)
+    ledger: str = "runs/llm_ledger.jsonl"
+    response_cache: str = ""
+
+
+@dataclass
 class AgentsCfg:
     # Policy names resolve through agents.registry.
     seller: dict = field(default_factory=lambda: {"genuine": "rule_honest", "seconds": "rule_honest",
                                                   "deceptive": "rule_deceptive"})
     buyer: str = "rule_buyer"
     params: dict = field(default_factory=dict)  # per-policy keyword arguments
+    budget: BudgetCfg = field(default_factory=BudgetCfg)  # 1.2.0: LLM spend ceiling (no effect on rule agents)
 
 
 @dataclass
@@ -445,6 +468,7 @@ PLACEHOLDERS = {
     "sellers.markup": "0.5 (placeholder 2026-11-19 plan, Stage 3)",
     "buyers.logit_rating_weight": "5 soft / 20 sharp (placeholder 2026-11-19 plan, Stage 3)",
     "buyers.logit_price_weight": "5 soft / 20 sharp (placeholder 2026-11-19 plan, Stage 3)",
+    "agents.budget.prices": "empty (placeholder 2026-11-23 plan, Stage 1): Randall fills in $ per million tokens",
 }
 
 
@@ -471,7 +495,8 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "valuation"): ValuationCfg, (BazaarConfig, "agents"): AgentsCfg,
                 (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg,
                 (BazaarConfig, "brands"): BrandsCfg, (BazaarConfig, "critics"): CriticsCfg,
-                (BazaarConfig, "licensing"): LicensingCfg, (BazaarConfig, "sellers"): SellersCfg}
+                (BazaarConfig, "licensing"): LicensingCfg, (BazaarConfig, "sellers"): SellersCfg,
+                (AgentsCfg, "budget"): BudgetCfg}
 
 
 def from_dict(d: dict):
@@ -528,4 +553,4 @@ def _deep_merge(a: dict, b: dict) -> dict:
 
 # Dict-valued fields that are replaced wholesale rather than merged key by key
 # (a partial share table should not silently keep default categories).
-_OPAQUE_DICTS = {"type_shares", "profile_shares", "search_depth"}
+_OPAQUE_DICTS = {"type_shares", "profile_shares", "search_depth", "prices"}

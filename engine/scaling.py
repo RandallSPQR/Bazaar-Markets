@@ -151,6 +151,8 @@ FIELDS: dict[str, tuple[str, str]] = {
     "licensing.white_label_tier": (NONE, "label"),
     "sellers.price_policy": (NONE, "label; its windows (promo 7 days) count market days, which scale does not change"),
     "sellers.markup": (NONE, "money ratio"),
+    "sellers.undercut_floor_markup": (NONE, "money ratio"),
+    "agents.budget": (NONE, "run-level spend limits, prices and file paths; counts of calls and tokens, not ticks"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
@@ -169,7 +171,8 @@ AGENT_PARAMS: dict[str, dict[str, tuple[str, str]]] = {
     "InformedReferenceBuyer": {"valuation": (NONE, "engine-supplied"), "base_price_cents": (NONE, "engine-supplied")},
     "LLMAgent": {"role": (NONE, "label"), "model_id": (NONE, "label"), "sampling": (NONE, "sampling settings"),
                  "provider": (NONE, "label"), "max_retries": (NONE, "count per decision"),
-                 "max_calls": (NONE, "spend cap; note that at k > 1 sellers get k times as many decision ticks")},
+                 "max_calls": (NONE, "per-agent call cap; note that at k > 1 sellers get k times as many decision "
+                               "ticks (the run-level cap is agents.budget)")},
 }
 
 

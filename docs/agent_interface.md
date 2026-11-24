@@ -275,7 +275,7 @@ Nothing is clamped. A `buy` of 3 units when 2 are needed is rejected, not cut to
 - **Buyer fallback side effects.** The buyer leaves the stop. A searching buyer standing at its chosen stall drops that choice (`engine/bazaar.py:710-717`).
 - **Logging.** `action` event: `{action, valid, error, fallback}` (`engine/bazaar.py:310-311`; `docs/log_schema.md`).
 - **Counting.** Per day, the outcome carries `decisions` and `fallbacks`, each `{seller, buyer}` (`engine/bazaar.py:139-140`, `308`, `987`). The analysis scripts treat any fallback as a guard failure (for example `analysis/licensing.py:386-388`, `analysis/chainrun.py:56`). Rule-based runs are expected to have zero.
-- **LLM adapter.** `LLMAgent.act` retries a schema failure up to `max_retries` (default 2), re-asking with the error text, and logs every attempt (`agents/llm_stub.py:77-90`). It does not run the state checks, so a state-invalid action is not retried (open point 3). When `max_calls` is reached it returns the fallback as a *valid* string, so the engine does not count it as a fallback (open point 2).
+- **LLM adapter.** `LLMAgent.act` retries a schema failure up to `max_retries` (default 2), re-asking with the error text, and logs every attempt (`agents/llm_stub.py:77-90`). It does not run the state checks, so a state-invalid action is not retried (open point 3). Since 1.2.0 every request goes through the run's spend tracker (`engine/budget.py`, `agents.budget`); a refused request, or one past the optional per-agent `max_calls`, raises, so the decision counts as a fallback and the run stops at the next decision point, marked INVALID: budget (open point 2, closed). At 1.0.0–1.1.0, when `max_calls` was reached it returned the fallback as a *valid* string, so the engine did not count it.
 
 ## 6. Determinism
 
@@ -316,7 +316,7 @@ Every observation, raw output (with retry attempts and crash messages) and appli
 
 A live LLM run is not reproducible from config and seed alone, since provider outputs can vary. It is reproducible from its log.
 
-### 6.4 Response cache keyed by the prompt: not implemented
+### 6.4 Response cache keyed by the prompt (implemented at 1.2.0: items 1–3 and 6; `agents.budget.response_cache`)
 
 There is no response cache in `engine/` or `agents/`. (The cache in `analysis/chainrun.py:60-105` stores finished chain results by job; it is not a model-response cache.) The contract an implementation must meet:
 
@@ -325,7 +325,7 @@ There is no response cache in `engine/` or `agents/`. (The cache in `analysis/ch
 3. **Miss.** Call the provider, write the entry to disk before returning, and never overwrite an entry: the first response wins.
 4. **Effect.** The same prompt always gets the same reply, so the LLM becomes a deterministic policy. Observations carry the tick, ids and the stall's own ledger, so identical prompts arise mainly in paired conditions that share a seed, up to the tick where they diverge. There the cache gives both conditions the same replies, the LLM counterpart of shared random draws.
 5. **Privilege.** The adapter's `meta()` must never declare `privileged`; the engine grants the oracle and the privileged seller block on that self-declaration (`engine/bazaar.py:183`, `672`).
-6. **Spend.** A run-level call and cost ceiling, separate from the per-agent `max_calls` (open point 2).
+6. **Spend.** A run-level call and cost ceiling, separate from the per-agent `max_calls`: done at 1.2.0 (`agents.budget`, `engine/budget.py`), with a response cache whose hits are free (items 1–3 above, as specified; open point 2, closed).
 
 ## 7. Information an agent would see that a rule-based agent does not use
 
@@ -371,8 +371,8 @@ Each is a deliberate design fact at 1.0.0, not an accident of the code.
 
 Found while writing this document. None is fixed here.
 
-1. **No LLM call and no response cache.** The plan's determinism wording assumes a cache keyed by the prompt; none exists (section 6.4). An LLM battery (outside the current plan) needs both.
-2. **`max_calls` is per agent-day, not per run.** The stub's docstring says "per run" (`agents/llm_stub.py:8-9`), but agents are rebuilt per stall and per buyer each day (`engine/bazaar.py:127-129`; `engine/days.py:186-189`), so the real ceiling is `max_calls` × agents × days. When the cap is hit, `act` returns the fallback as a valid string (`agents/llm_stub.py:81-83`), so `outcome.fallbacks` does not count it; only `raw.attempts` shows `skipped`. There is no run-level spend ceiling.
+1. **No LLM call.** No provider is wired in. The response cache keyed by the prompt exists since 1.2.0 (section 6.4; `agents.budget.response_cache`), as does the spend ceiling (open point 2).
+2. **Closed at 1.2.0: run-level spend ceiling.** At 1.0.0–1.1.0 `max_calls` was per agent-day, not per run, and a capped call returned the fallback as a valid string, uncounted, with no run-level ceiling. Engine 1.2.0 adds `agents.budget` (`engine/budget.py`): calls, tokens and dollars per run, dollars per day across runs through `runs/llm_ledger.jsonl`, a per-model price table (placeholders), all limits 0 by default and no call without `--allow-spend`; cache hits are free; a refused or capped call is counted as a fallback and stops the run, marked INVALID: budget; `--dry-run-cost` estimates without calling. Tested with a mock agent (`tests/test_v120.py`). Still open: no provider is wired in (`LLMAgent._call` raises), so no real call can be made.
 3. **LLM retries check the schema only.** State-invalid outputs (whisper out of range, over budget) go straight to fallback (`agents/llm_stub.py:86`).
 4. **One `agents.params.llm` block for both roles** (`agents/registry.py:43`, `49-50`): seller and buyer LLMs cannot have different models or sampling.
 5. **Loaded words on the wire.** `bust_out`, `rename: "counterfeit"`/`"lookalike"`, `stall_type: "deceptive"`, `counterfeit_of`, `busted_day`, `bust_out_unit_cost_cents`. The seller system prompt embeds the schema verbatim (`agents/llm_stub.py:30-35`), so an LLM would read them. Renaming changes log bytes; an adapter-level alias layer (neutral names in the prompt, mapped to wire names) avoids that.
