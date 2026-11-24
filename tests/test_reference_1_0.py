@@ -20,10 +20,16 @@ V110_DEFAULTS = {("sellers", "price_policy"): "rating_indexed", ("sellers", "mar
                  ("buyers", "logit_price_weight"): 5.0}
 
 
+# Keys added at 1.2.0, with their defaults (removed the same way).
+V120_DEFAULTS = {("sellers", "undercut_floor_markup"): 0.0}
+
+
 def _as_v100(d: dict) -> dict:
+    from engine.config import BudgetCfg
     d = json.loads(json.dumps(d))
-    for (sec, key), v in V110_DEFAULTS.items():
+    for (sec, key), v in {**V110_DEFAULTS, **V120_DEFAULTS}.items():
         assert d[sec].pop(key) == v, (sec, key)
+    assert d["agents"].pop("budget") == json.loads(json.dumps(BudgetCfg().__dict__)), "agents.budget"
     if d["sellers"] == {}:
         del d["sellers"]
     return d

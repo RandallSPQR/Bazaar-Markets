@@ -1,0 +1,111 @@
+commit f7f49a0, engine 1.2.0, started 2026-11-24 14:51:06
+........................................................................ [  3%]
+........................................................................ [  7%]
+...................................................s.................... [ 11%]
+........................................................................ [ 15%]
+............s....s.s.s.s................................................ [ 19%]
+.......FF............................................................... [ 22%]
+........................................................................ [ 26%]
+........................................................................ [ 30%]
+...............................................................FF....... [ 34%]
+........................................................................ [ 38%]
+........................................................................ [ 41%]
+........................................................................ [ 45%]
+........................................................................ [ 49%]
+........................................................................ [ 53%]
+........................................................................ [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 68%]
+........................................................................ [ 72%]
+........................................................................ [ 76%]
+........................................................................ [ 80%]
+........................................................................ [ 83%]
+........................................................................ [ 87%]
+........................................................................ [ 91%]
+........................................................................ [ 95%]
+......................s....s.s.s.sssss..ss.............................. [ 99%]
+.................                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_llm_stub_never_calls_and_falls_back ___________________
+
+    def test_llm_stub_never_calls_and_falls_back():
+        a = LLMAgent(role="buyer", model_id="example-model-2026-01-01", max_calls=0)
+>       raw = a.act({"tick": 0})
+              ^^^^^^^^^^^^^^^^^^
+
+tests/test_invariants.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agents.llm_stub.LLMAgent object at 0x10a93e030>, obs = {'tick': 0}
+
+    def act(self, obs: dict) -> str:
+        """One decision: up to 1 + max_retries requests, each through the run's SpendTracker. A refused request
+        raises BudgetExceeded (the engine counts the decision as a fallback, then stops the run)."""
+        self.last_attempts = []
+        error = None
+        tracker = BUDGET.current()
+        raw = None
+        for attempt in range(self.max_retries + 1):
+            why = None
+            if tracker is None:     # no run to stop cleanly: fail loudly instead of falling back
+>               raise BUDGET.BudgetStop("no spend tracker installed (run through engine.bazaar.run or "
+                                        "engine.budget.session)", {"agent": self.role})
+E               engine.budget.BudgetStop: no spend tracker installed (run through engine.bazaar.run or engine.budget.session)
+
+agents/llm_stub.py:95: BudgetStop
+________________ test_llm_stub_in_engine_is_logged_as_fallback _________________
+
+    def test_llm_stub_in_engine_is_logged_as_fallback():
+        cfg = load(overrides=SMALL + ["agents.buyer=llm", "market.ticks=60",
+                                      'agents.params={"llm":{"model_id":"example-model-2026-01-01","max_calls":3}}'],
+                   mode="bazaar")
+        log = JsonlLog()
+        out = bazaar.run(cfg, log=log)
+        # Each agent's first max_calls decisions reach the unimplemented call (agent raises ->
+        # engine fallback); after that the adapter's kill switch returns move_on without calling.
+>       assert out["decisions"]["buyer"] > out["fallbacks"]["buyer"] > 0
+               ^^^^^^^^^^^^^^^^
+E       KeyError: 'decisions'
+
+tests/test_invariants.py:259: KeyError
+_________________ test_reference_file_is_the_reference_market __________________
+
+    def test_reference_file_is_the_reference_market():
+>       assert _json(R.REF_PATH) == _as_v100(R.reference_dict())
+E       AssertionError: assert {'agents': {'... 6, ...}, ...} == {'mode': 'baz...'pitch'}, ...}
+E         
+E         Omitting 14 identical items, use -vv to show
+E         Differing items:
+E         {'agents': {'buyer': 'rule_buyer', 'params': {'rule_buyer': {'local_inspect_prob': 1.0}, 'rule_deceptive': {'reopen': 'fresh'}}, 'seller': {'deceptive': 'rule_deceptive', 'genuine': 'rule_honest', 'seconds': 'rule_honest'}}} != {'agents': {'seller': {'genuine': 'rule_honest', 'seconds': 'rule_honest', 'deceptive': 'rule_deceptive'}, 'buyer': 'r...'reopen': 'fresh'}}, 'budget': {'max_calls_run': 0, 'max_tokens_run': 0, 'max_usd_run': 0.0, 'max_usd_day': 0.0, ...}}}
+E         Right contains 1 more item:
+E         {'sellers': {'undercut_floor_markup': 0.0}}
+E         Use -v to get more diff
+
+tests/test_reference_1_0.py:38: AssertionError
+_______________ test_every_variant_cell_rebuilds_its_run_config ________________
+
+    def test_every_variant_cell_rebuilds_its_run_config():
+        """Each variant cell, built from the reference file, is the config its run's builder made (sha256 of the canonical
+        config, recorded when the variants were derived from the run scripts)."""
+        os.chdir(ROOT)
+        V = _json(R.VAR_PATH)["variants"]
+        assert len(V) == 12
+        for name, var in V.items():
+            for lab in var["cells"]:
+                d = _as_v100(R._noseed(R.EC.to_dict(R.build(var, lab, 0))))
+>               assert hashlib.sha256(R.canon(d).encode()).hexdigest() == var["cell_sha256"][lab], (name, lab)
+E               AssertionError: ('verification', 'A|t40|l1|None|never')
+E               assert '1a943225e470...b1e3e4fa30b4e' == '8cd29a086abc...bde0f9e6b5a7f'
+E                 
+E                 - 8cd29a086abc7cbf44cd40a7cc8cbc8fa87d443e9eb31fec14fbde0f9e6b5a7f
+E                 + 1a943225e470eff917f8c3e6560e875a9f9aa3cbd14f456deb5b1e3e4fa30b4e
+
+tests/test_reference_1_0.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_invariants.py::test_llm_stub_never_calls_and_falls_back - e...
+FAILED tests/test_invariants.py::test_llm_stub_in_engine_is_logged_as_fallback
+FAILED tests/test_reference_1_0.py::test_reference_file_is_the_reference_market
+FAILED tests/test_reference_1_0.py::test_every_variant_cell_rebuilds_its_run_config
+4 failed, 1868 passed, 17 skipped in 6319.74s (1:45:19)
+exit 1 ended 2026-11-24 16:36:26

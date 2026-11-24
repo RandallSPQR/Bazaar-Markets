@@ -239,33 +239,51 @@ def test_llm_stub_requires_pinned_model():
 
 
 def test_llm_stub_never_calls_and_falls_back():
+    """1.2.0: every request goes through the run's SpendTracker. With no tracker the stub fails loudly; with the
+    default budget each request is refused (BudgetExceeded, which the engine counts as a fallback) and no call is
+    made; past the gate the stub reaches its unimplemented call."""
+    from engine import budget as BUDGET
     a = LLMAgent(role="buyer", model_id="example-model-2026-01-01", max_calls=0)
-    raw = a.act({"tick": 0})
-    assert json.loads(raw) == {"action": "move_on"}
-    assert a.calls == 0 and a.last_attempts[0]["skipped"]
+    with pytest.raises(BUDGET.BudgetStop):
+        a.act({"tick": 0})
+    cfg = load(overrides=SMALL, mode="bazaar")
+    with BUDGET.session(cfg) as tr:
+        with pytest.raises(BUDGET.BudgetExceeded):
+            a.act({"tick": 0})
+        assert a.calls == 0 and "refused" in a.last_attempts[0] and tr.calls == 0
     b = LLMAgent(role="seller", model_id="example-model-2026-01-01", max_calls=5)
-    with pytest.raises(NotImplementedError):
-        b.act({"tick": 0})
+    with BUDGET.session(cfg) as tr:
+        with pytest.raises(BUDGET.BudgetExceeded):
+            b.act({"tick": 0})
+        assert b.calls == 0 and tr.calls == 0 and tr.refused == 1
+    cfg.agents.budget.max_calls_run, cfg.agents.budget.max_tokens_run = 5, 10 ** 6
+    cfg.agents.budget.max_usd_run = cfg.agents.budget.max_usd_day = 1.0
+    cfg.agents.budget.prices = {"example-model-2026-01-01": {"in": 1.0, "out": 1.0}}
+    cfg.agents.budget.ledger = ""
+    with BUDGET.session(cfg, allow_spend=True):
+        with pytest.raises(NotImplementedError):
+            b.act({"tick": 0})
 
 
 def test_llm_stub_in_engine_is_logged_as_fallback():
+    """1.2.0: the first decision's request is refused (default budget), logged as a fallback, and the run stops at
+    the next decision, marked INVALID: budget."""
     cfg = load(overrides=SMALL + ["agents.buyer=llm", "market.ticks=60",
                                   'agents.params={"llm":{"model_id":"example-model-2026-01-01","max_calls":3}}'],
                mode="bazaar")
     log = JsonlLog()
     out = bazaar.run(cfg, log=log)
-    # Each agent's first max_calls decisions reach the unimplemented call (agent raises ->
-    # engine fallback); after that the adapter's kill switch returns move_on without calling.
-    assert out["decisions"]["buyer"] > out["fallbacks"]["buyer"] > 0
+    assert out["invalid"] == "INVALID: budget" and "allow-spend" in out["reason"]
+    assert out["stopped_at"]["decisions"]["buyer"] == out["stopped_at"]["fallbacks"]["buyer"] == 1
+    assert out["spend"]["calls"] == 0 and out["spend"]["refused"] == 1
     acts = [json.loads(x) for x in log.lines if '"ev":"action"' in x and '"role":"buyer"' in x]
-    assert all(a["action"] == {"action": "move_on"} for a in acts)
+    assert len(acts) == 1 and acts[0]["action"] == {"action": "move_on"} and acts[0]["fallback"]
     head = json.loads(log.lines[0])
     meta = head["agents"]["buyer:llm"]
     assert meta["model_id"] == "example-model-2026-01-01" and meta["sampling"]["max_tokens"] == 256
     raws = [json.loads(x) for x in log.lines if '"ev":"raw"' in x and '"role":"buyer"' in x]
-    assert all("attempts" in r for r in raws)
-    _, new = replay(log.lines)
-    assert compare_logs(log.lines, new.lines)["identical"]
+    assert all("attempts" in r and "refused" in r["attempts"][0] for r in raws)
+    assert json.loads(log.lines[-1])["ev"] == "stopped"
 
 
 def test_system_prompts_carry_no_market_content():
