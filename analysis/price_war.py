@@ -363,11 +363,13 @@ def analyse(recs: list, seeds, samples) -> tuple[dict, list]:
         pred[pid] = {"text": txt, "est": st, "per_seed": vals[pid], "side": side(st), "verdict": verdict(st, sign)}
     est = {"gain": {cn: {**mean_ci(v), "per_seed": v} for cn, v in gain.items()},
            "E": {cn: {**mean_ci(v), "per_seed": v} for cn, v in eq.items()}}
+    # D4 (2026-11-25, after the main run): engine.metrics.paired_diff(a, b) is b - a; the arguments were in the
+    # wrong order, so the PW5 differences printed as RI - U0 (and lex - sharp). Order fixed; PW1-PW4 do not use it.
     pw5 = {"U0_minus_RI": {
-        "gain_ds0": paired_diff(gain["A|U0|ds0|lex"], gain["A|RI|ds0|lex"]),
-        "gain_ds1": paired_diff(gain["A|U0|ds1|lex"], gain["A|RI|ds1|lex"]),
-        "E": paired_diff(eq["B|U0|lex"], eq["B|RI|lex"])},
-        "sharp_minus_lex_U0_ds0": paired_diff(gain["A|U0|ds0|sharp"], gain["A|U0|ds0|lex"]),
+        "gain_ds0": paired_diff(gain["A|RI|ds0|lex"], gain["A|U0|ds0|lex"]),
+        "gain_ds1": paired_diff(gain["A|RI|ds1|lex"], gain["A|U0|ds1|lex"]),
+        "E": paired_diff(eq["B|RI|lex"], eq["B|U0|lex"])},
+        "sharp_minus_lex_U0_ds0": paired_diff(gain["A|U0|ds0|lex"], gain["A|U0|ds0|sharp"]),
         "slope_ds1": mean_ci(slope(ms, [gain[cell_name(("A", lv, 1.0, "lex"))] for lv in SLOPE_LEVELS])),
         "buyers": {}, "buyer_U0_minus_RI": {}}
     for cn, b in buyers.items():
@@ -377,8 +379,8 @@ def analyse(recs: list, seeds, samples) -> tuple[dict, list]:
     for ds in (0, 1):
         u, r = buyers[f"A|U0|ds{ds}|lex"], buyers[f"A|RI|ds{ds}|lex"]
         pw5["buyer_U0_minus_RI"][f"ds{ds}"] = {
-            "surplus": {p: paired_diff(u["surplus"][p], r["surplus"][p]) for p in (*PROFILES, "all")},
-            "shortfall": {p: paired_diff(u["shortfall"][p], r["shortfall"][p]) for p in (*PROFILES, "all")}}
+            "surplus": {p: paired_diff(r["surplus"][p], u["surplus"][p]) for p in (*PROFILES, "all")},
+            "shortfall": {p: paired_diff(r["shortfall"][p], u["shortfall"][p]) for p in (*PROFILES, "all")}}
     return {"pred": pred, "est": est, "pw5": pw5, "cells": [cell_name(c) for c in CELLS]}, fl
 
 
