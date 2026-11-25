@@ -116,5 +116,5 @@ Posted prices: own-name stalls every morning; margin = (price − unit cost) / p
   - The as-run outputs are kept in `runs/price_war_as_run/`.
 - **The gain is the best of five bust-out days (20, 25, 28, 29, 30) minus never.** Taking the best day biases each level upward, the same in every cell, so the comparisons across policies stand better than the levels. This is the liability study's benchmark, kept unchanged.
 - **One market for outcome A**: 30 days, tourist share 0.4 with locals inspecting, 2 patrolling inspectors with collectible fines. Outcome B is the t40 equity market at prior_n 400. Other markets may differ.
-- **Twenty seeds; intervals are 95% t over seeds, unadjusted.** The PW5 rows are exploratory, and with 26 of them some intervals that exclude 0 are expected by chance.
+- **Twenty seeds; intervals are 95% t over seeds, unadjusted.** The PW5 rows are exploratory, and with 21 paired differences some intervals that exclude 0 are expected by chance.
 - **The figure** has two cosmetic flaws in the frozen plotting code: in the third panel the "−0.58" and "0" tick labels overprint, and the middle panel's zero line runs under the third panel's top tick label. The numbers are in the tables above.
