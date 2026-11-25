@@ -1,0 +1,77 @@
+2026-11-24 18:09:52 run record {"cells": ["A|RI|ds0|lex", "A|RI|ds1|lex", "A|U0|ds0|lex", "A|U0|ds1|lex", "A|U0.1|ds0|lex", "A|U0.1|ds1|lex", "A|U0.3|ds0|lex", "A|U0.3|ds1|lex", "A|U0|ds0|sharp", "B|RI|lex", "B|U0|lex", "B|U0.1|lex", "B|U0.3|lex"], "code_dirty": false, "command": "python -m analysis.price_war --workers 4 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "030e7cb", "engine_version": "1.2.0", "load_start": [4.44, 5.55, 5.99], "market_defaults": ["ratings.display=stars", "ratings.display_step=0.02", "buyers.tie_break=random"], "mem_start": {"free_pct": 46, "swap_free_mb": 1146.5}, "numpy": "2.5.4", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "ae1ac5b2f226f27a5e7a20716744910957b4cb608ab1b94de20e163ddb4c077f", "started": "2026-11-24 18:09:52", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 4}
+2026-11-24 18:09:52 3440 chains, 0 cached, 3440 to run; workers 4; load [4.44, 5.55, 5.99]; memory {'swap_free_mb': 1146.5, 'free_pct': 46}
+2026-11-24 18:16:12 50/3440 chains, 380 s, load [5.36, 5.67, 5.9], memory {'swap_free_mb': 1146.5, 'free_pct': 47}
+2026-11-24 18:22:22 100/3440 chains, 750 s, load [7.12, 6.36, 6.12], memory {'swap_free_mb': 1146.5, 'free_pct': 49}
+2026-11-24 18:28:50 150/3440 chains, 1139 s, load [5.97, 6.06, 6.06], memory {'swap_free_mb': 1146.5, 'free_pct': 49}
+2026-11-24 18:35:03 200/3440 chains, 1511 s, load [5.86, 5.89, 5.98], memory {'swap_free_mb': 1146.5, 'free_pct': 50}
+2026-11-24 18:41:23 250/3440 chains, 1891 s, load [5.33, 5.79, 5.92], memory {'swap_free_mb': 1154.5, 'free_pct': 50}
+2026-11-24 18:47:37 300/3440 chains, 2265 s, load [6.32, 5.88, 5.88], memory {'swap_free_mb': 1154.5, 'free_pct': 50}
+2026-11-24 18:53:37 350/3440 chains, 2626 s, load [13.56, 7.46, 6.42], memory {'swap_free_mb': 1154.5, 'free_pct': 51}
+2026-11-24 18:59:38 400/3440 chains, 2987 s, load [6.02, 6.78, 6.49], memory {'swap_free_mb': 1162.5, 'free_pct': 47}
+2026-11-24 19:05:29 450/3440 chains, 3337 s, load [5.91, 6.36, 6.38], memory {'swap_free_mb': 1162.5, 'free_pct': 51}
+2026-11-24 19:11:29 500/3440 chains, 3697 s, load [6.28, 6.21, 6.29], memory {'swap_free_mb': 1162.5, 'free_pct': 51}
+2026-11-24 19:17:18 550/3440 chains, 4046 s, load [5.63, 5.76, 6.02], memory {'swap_free_mb': 1162.5, 'free_pct': 51}
+2026-11-24 19:23:22 600/3440 chains, 4410 s, load [5.21, 5.62, 5.88], memory {'swap_free_mb': 1162.5, 'free_pct': 52}
+2026-11-24 19:29:13 650/3440 chains, 4761 s, load [6.24, 5.9, 5.9], memory {'swap_free_mb': 1162.5, 'free_pct': 52}
+2026-11-24 19:35:42 700/3440 chains, 5150 s, load [5.95, 6.43, 6.23], memory {'swap_free_mb': 1162.5, 'free_pct': 52}
+2026-11-24 19:41:49 750/3440 chains, 5517 s, load [6.28, 6.59, 6.4], memory {'swap_free_mb': 1162.5, 'free_pct': 52}
+2026-11-24 19:48:15 800/3440 chains, 5903 s, load [5.75, 6.27, 6.33], memory {'swap_free_mb': 1162.5, 'free_pct': 52}
+2026-11-24 19:54:23 850/3440 chains, 6271 s, load [6.49, 6.33, 6.29], memory {'swap_free_mb': 1162.5, 'free_pct': 52}
+2026-11-24 20:00:52 900/3440 chains, 6660 s, load [6.55, 6.55, 6.37], memory {'swap_free_mb': 1162.5, 'free_pct': 47}
+2026-11-24 20:07:07 950/3440 chains, 7036 s, load [6.22, 6.29, 6.29], memory {'swap_free_mb': 1162.5, 'free_pct': 48}
+2026-11-24 20:13:08 1000/3440 chains, 7396 s, load [5.54, 5.93, 6.11], memory {'swap_free_mb': 1162.5, 'free_pct': 49}
+2026-11-24 20:19:07 1050/3440 chains, 7755 s, load [6.1, 5.93, 6.04], memory {'swap_free_mb': 1162.5, 'free_pct': 49}
+2026-11-24 20:25:01 1100/3440 chains, 8109 s, load [6.01, 6.12, 6.08], memory {'swap_free_mb': 1162.5, 'free_pct': 49}
+2026-11-24 20:31:05 1150/3440 chains, 8473 s, load [5.89, 6.06, 6.06], memory {'swap_free_mb': 1162.5, 'free_pct': 49}
+2026-11-24 20:36:54 1200/3440 chains, 8822 s, load [5.89, 6.0, 6.04], memory {'swap_free_mb': 1162.5, 'free_pct': 51}
+2026-11-24 20:43:04 1250/3440 chains, 9192 s, load [6.97, 6.57, 6.29], memory {'swap_free_mb': 1162.5, 'free_pct': 49}
+2026-11-24 20:49:00 1300/3440 chains, 9548 s, load [6.0, 6.11, 6.14], memory {'swap_free_mb': 1162.5, 'free_pct': 50}
+2026-11-24 20:55:27 1350/3440 chains, 9936 s, load [10.34, 7.58, 6.68], memory {'swap_free_mb': 1170.5, 'free_pct': 51}
+2026-11-24 21:01:54 1400/3440 chains, 10323 s, load [6.36, 6.82, 6.64], memory {'swap_free_mb': 1170.5, 'free_pct': 50}
+2026-11-24 21:08:18 1450/3440 chains, 10707 s, load [6.0, 6.42, 6.5], memory {'swap_free_mb': 1170.5, 'free_pct': 52}
+2026-11-24 21:15:00 1500/3440 chains, 11109 s, load [6.44, 6.57, 6.54], memory {'swap_free_mb': 1728.88, 'free_pct': 46}
+2026-11-24 21:21:07 1550/3440 chains, 11475 s, load [5.92, 6.39, 6.51], memory {'swap_free_mb': 1094.75, 'free_pct': 45}
+2026-11-24 21:27:52 1600/3440 chains, 11880 s, load [6.16, 6.8, 6.71], memory {'swap_free_mb': 1094.75, 'free_pct': 43}
+2026-11-24 21:33:24 1650/3440 chains, 12212 s, load [6.31, 6.38, 6.52], memory {'swap_free_mb': 1094.75, 'free_pct': 42}
+2026-11-24 21:39:21 1700/3440 chains, 12569 s, load [8.81, 6.85, 6.59], memory {'swap_free_mb': 1094.75, 'free_pct': 42}
+2026-11-24 21:45:01 1750/3440 chains, 12910 s, load [6.1, 6.23, 6.35], memory {'swap_free_mb': 1094.75, 'free_pct': 43}
+2026-11-24 21:50:48 1800/3440 chains, 13256 s, load [6.03, 6.17, 6.27], memory {'swap_free_mb': 1094.75, 'free_pct': 42}
+2026-11-24 21:56:36 1850/3440 chains, 13604 s, load [6.53, 6.15, 6.19], memory {'swap_free_mb': 1439.06, 'free_pct': 41}
+2026-11-24 22:02:15 1900/3440 chains, 13943 s, load [5.65, 5.76, 5.99], memory {'swap_free_mb': 1439.06, 'free_pct': 40}
+2026-11-24 22:08:33 1950/3440 chains, 14321 s, load [6.44, 6.48, 6.31], memory {'swap_free_mb': 1439.06, 'free_pct': 39}
+2026-11-24 22:14:32 2000/3440 chains, 14680 s, load [7.78, 6.76, 6.43], memory {'swap_free_mb': 1439.06, 'free_pct': 38}
+2026-11-24 22:20:51 2050/3440 chains, 15059 s, load [7.24, 6.64, 6.45], memory {'swap_free_mb': 1439.06, 'free_pct': 39}
+2026-11-24 22:26:48 2100/3440 chains, 15417 s, load [5.79, 6.08, 6.26], memory {'swap_free_mb': 1439.06, 'free_pct': 38}
+2026-11-24 22:33:01 2150/3440 chains, 15789 s, load [5.87, 5.83, 6.06], memory {'swap_free_mb': 1439.06, 'free_pct': 39}
+2026-11-24 22:39:18 2200/3440 chains, 16166 s, load [6.12, 6.02, 6.05], memory {'swap_free_mb': 1447.06, 'free_pct': 38}
+2026-11-24 22:45:26 2250/3440 chains, 16534 s, load [5.99, 6.45, 6.26], memory {'swap_free_mb': 1447.06, 'free_pct': 37}
+2026-11-24 22:51:09 2300/3440 chains, 16877 s, load [5.38, 6.0, 6.12], memory {'swap_free_mb': 1384.81, 'free_pct': 38}
+2026-11-24 22:57:16 2350/3440 chains, 17245 s, load [9.27, 8.07, 7.17], memory {'swap_free_mb': 447.75, 'free_pct': 42}
+2026-11-24 23:03:08 2400/3440 chains, 17596 s, load [6.5, 7.56, 7.27], memory {'swap_free_mb': 447.75, 'free_pct': 47}
+2026-11-24 23:09:19 2450/3440 chains, 17967 s, load [6.05, 7.58, 7.51], memory {'swap_free_mb': 455.75, 'free_pct': 48}
+2026-11-24 23:14:58 2500/3440 chains, 18306 s, load [6.29, 6.5, 6.98], memory {'swap_free_mb': 455.75, 'free_pct': 48}
+2026-11-24 23:20:37 2550/3440 chains, 18645 s, load [6.17, 6.33, 6.73], memory {'swap_free_mb': 455.75, 'free_pct': 49}
+2026-11-24 23:26:34 2600/3440 chains, 19003 s, load [6.12, 5.95, 6.38], memory {'swap_free_mb': 455.75, 'free_pct': 51}
+2026-11-24 23:32:30 2650/3440 chains, 19359 s, load [5.78, 5.93, 6.22], memory {'swap_free_mb': 455.75, 'free_pct': 50}
+2026-11-24 23:38:36 2700/3440 chains, 19724 s, load [6.08, 6.41, 6.36], memory {'swap_free_mb': 455.75, 'free_pct': 51}
+2026-11-24 23:44:27 2750/3440 chains, 20075 s, load [5.69, 5.88, 6.1], memory {'swap_free_mb': 615.88, 'free_pct': 51}
+2026-11-24 23:50:34 2800/3440 chains, 20442 s, load [6.4, 5.97, 6.05], memory {'swap_free_mb': 615.88, 'free_pct': 53}
+2026-11-24 23:56:20 2850/3440 chains, 20789 s, load [6.07, 5.81, 5.91], memory {'swap_free_mb': 615.88, 'free_pct': 53}
+2026-11-25 00:04:39 2900/3440 chains, 21287 s, load [5.45, 5.84, 5.9], memory {'swap_free_mb': 623.88, 'free_pct': 51}
+2026-11-25 00:16:23 2950/3440 chains, 21991 s, load [6.47, 6.21, 6.04], memory {'swap_free_mb': 623.88, 'free_pct': 52}
+2026-11-25 00:27:41 3000/3440 chains, 22669 s, load [5.75, 5.9, 5.94], memory {'swap_free_mb': 623.88, 'free_pct': 50}
+2026-11-25 00:39:57 3050/3440 chains, 23405 s, load [5.8, 6.27, 6.17], memory {'swap_free_mb': 623.88, 'free_pct': 50}
+2026-11-25 00:51:14 3100/3440 chains, 24082 s, load [5.63, 5.84, 5.95], memory {'swap_free_mb': 623.88, 'free_pct': 50}
+2026-11-25 01:03:06 3150/3440 chains, 24794 s, load [6.1, 6.08, 6.03], memory {'swap_free_mb': 639.88, 'free_pct': 49}
+2026-11-25 01:14:34 3200/3440 chains, 25483 s, load [5.89, 5.84, 5.96], memory {'swap_free_mb': 639.88, 'free_pct': 49}
+2026-11-25 01:26:14 3250/3440 chains, 26183 s, load [7.79, 6.59, 6.15], memory {'swap_free_mb': 639.88, 'free_pct': 52}
+2026-11-25 01:38:00 3300/3440 chains, 26888 s, load [5.74, 6.09, 6.18], memory {'swap_free_mb': 639.88, 'free_pct': 53}
+2026-11-25 01:49:46 3350/3440 chains, 27595 s, load [6.74, 6.73, 6.5], memory {'swap_free_mb': 647.88, 'free_pct': 52}
+2026-11-25 02:02:46 3400/3440 chains, 28374 s, load [6.26, 6.69, 6.62], memory {'swap_free_mb': 927.88, 'free_pct': 49}
+2026-11-25 02:12:40 3440/3440 chains, 28968 s, load [5.04, 6.64, 6.82], memory {'swap_free_mb': 935.88, 'free_pct': 50}
+2026-11-25 02:12:40 PW1: supported {"mean": 22747.43333333333, "lo": 17474.989772416295, "hi": 28019.876894250367}
+2026-11-25 02:12:40 PW2: supported {"mean": -77507.0238095238, "lo": -94219.9819098009, "hi": -60794.0657092467}
+2026-11-25 02:12:40 PW3: supported {"mean": 1182550.5714285714, "lo": 864421.6623164663, "hi": 1500679.4805406765}
+2026-11-25 02:12:40 PW4: supported {"mean": -32737.283333333326, "lo": -40606.08846748815, "hi": -24868.478199178495}
+2026-11-25 02:12:40 done; 0 flags; wall 8.05 h; load [5.04, 6.64, 6.82]
+exit 0 main 2026-11-25 02:12:40
