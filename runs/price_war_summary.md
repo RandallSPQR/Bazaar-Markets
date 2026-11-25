@@ -1,6 +1,6 @@
 # Price-war study (Stage 2, engine 1.2.0)
 
-Engine 1.2.0, commit 030e7cb, script sha256 ae1ac5b2f226; 3440 chains, 8.05 h on 4 workers; seeds 500–519, paired. Intervals: 95% t over seeds, unadjusted.
+Engine 1.2.0. Chains run at commit 030e7cb (script sha256 ae1ac5b2f226), 3440 chains, 8.05 h on 4 workers; seeds 500–519, paired. Tables regenerated from the chain cache at db0abba (script sha256 118d855272b8) after deviation D4, which put the PW5 paired differences in their labelled direction; nothing else changed (the as-run outputs are in `runs/price_war_as_run/`). Intervals: 95% t over seeds, unadjusted.
 
 ## Predictions
 
@@ -42,11 +42,11 @@ Rule (fixed before the run): supported if the interval lies on the predicted sid
 
 | Outcome | U0 − RI [95% CI] |
 |---|---|
-| Gain, ds 0 | −312.36 [−381.02, −243.71] * |
-| Gain, ds 1 | −190.17 [−248.02, −132.33] * |
-| E, prior_n 400 | +3,990.86 [+3,090.57, +4,891.16] * |
+| Gain, ds 0 | +312.36 [+243.71, +381.02] * |
+| Gain, ds 1 | +190.17 [+132.33, +248.02] * |
+| E, prior_n 400 | −3,990.86 [−4,891.16, −3,090.57] * |
 | Gain slope over m, ds 1 | −285.25 [−353.12, −217.39] * |
-| Logit sharp − lex, U0, ds 0 | +10.38 [+0.05, +20.72] * |
+| Logit sharp − lex, U0, ds 0 | −10.38 [−20.72, −0.05] * |
 
 ### Prices, margins and buyers (never chains, outcome A market)
 
@@ -68,14 +68,14 @@ Posted prices: own-name stalls every morning; margin = (price − unit cost) / p
 
 | | Profile | Surplus per buyer [95% CI] | Shortfall rate [95% CI] |
 |---|---|---|---|
-| ds0 | tourist | −23.33 [−23.72, −22.93] * | −0.009 [−0.011, −0.008] * |
-| ds0 | local | −29.37 [−30.05, −28.69] * | +0.000 [−0.000, +0.000] |
-| ds0 | expert | −29.60 [−30.13, −29.07] * | +0.000 [+0.000, +0.000] |
-| ds0 | all | −27.01 [−27.33, −26.69] * | −0.004 [−0.005, −0.003] * |
-| ds1 | tourist | −31.23 [−31.78, −30.68] * | −0.009 [−0.012, −0.005] * |
-| ds1 | local | −30.30 [−30.97, −29.62] * | +0.002 [+0.001, +0.003] * |
-| ds1 | expert | −29.77 [−30.31, −29.23] * | +0.000 [+0.000, +0.000] |
-| ds1 | all | −30.51 [−30.87, −30.16] * | +0.001 [−0.001, +0.003] |
+| ds0 | tourist | +23.33 [+22.93, +23.72] * | +0.009 [+0.008, +0.011] * |
+| ds0 | local | +29.37 [+28.69, +30.05] * | −0.000 [−0.000, +0.000] |
+| ds0 | expert | +29.60 [+29.07, +30.13] * | +0.000 [+0.000, +0.000] |
+| ds0 | all | +27.01 [+26.69, +27.33] * | +0.004 [+0.003, +0.005] * |
+| ds1 | tourist | +31.23 [+30.68, +31.78] * | +0.009 [+0.005, +0.012] * |
+| ds1 | local | +30.30 [+29.62, +30.97] * | −0.002 [−0.003, −0.001] * |
+| ds1 | expert | +29.77 [+29.23, +30.31] * | +0.000 [+0.000, +0.000] |
+| ds1 | all | +30.51 [+30.16, +30.87] * | −0.001 [−0.003, +0.001] |
 
 ## Checks
 
@@ -84,3 +84,37 @@ Posted prices: own-name stalls every morning; margin = (price − unit cost) / p
 - Flags: 0.
 
 ![Bust-out gain and brand equity by price policy](price_war.svg)
+
+## Reading (written after the results)
+
+- **BLUF: a price war at unit cost makes a bust-out pay when nobody enforces, and a margin floor or enforcement takes the payoff away.** All four confirmatory predictions are supported, each interval on the predicted side of 0.
+  - With genuine stalls pricing at unit cost (U0) and no enforcement, a bust-out gains +$227 per stall [+$175, +$280] (PW1).
+  - Under rating-indexed prices the same bust-out loses −$85 [−$116, −$54].
+- **A higher floor shrinks the gain** (PW2, −$775 per unit of m, i.e. about −$78 per 0.1 of markup).
+  - At a 10% floor the gain falls to +$52 [+$33, +$70].
+  - At a 30% floor it is −$25 [−$35, −$14], back on the losing side.
+- **The brand is worth nothing at cost and recovers with the floor** (PW3).
+  - Equity E is +$0.88 [−$0.55, +$2.30] under U0, an interval that includes 0.
+  - E is +$1,185 at a 10% floor, +$3,549 at 30%, and +$3,992 under rating-indexed prices.
+  - Read together with PW1 and PW2: what a seller loses by cheating is the margin honesty earns, and at cost that margin is about 1% of the price (genuine stalls' margin, U0 row of the price table). This is an interpretation, consistent with the reputation-rent argument; the study does not test the mechanism separately.
+- **Enforcement still wins** (PW4).
+  - With detect_scale 1 the bust-out loses under every policy: −$327 [−$406, −$249] under U0, down to −$518 under rating-indexed prices.
+  - The loss is smaller under the price war than under rating-indexed prices (U0 − RI +$190 [+$132, +$248], exploratory), because there is less honest margin to give up.
+  - With enforcement, the gain still falls as the floor rises (slope −$285 per unit of m, exploratory).
+- **Buyers gain from the price war, in the chains where nobody busts out** (PW5, exploratory).
+  - Surplus per arriving buyer is about $27 higher under U0 than under rating-indexed prices with no enforcement (+$31 with enforcement), for every buyer profile.
+  - The share of purchases below a buyer's quality requirement barely moves (−0.4 points with no enforcement; +0.1 with enforcement, interval includes 0).
+  - The shortfall depends on enforcement (about 27% without, 17.5% with), not on the price rule.
+  - These are never chains, so the buyer figures leave out what a bust-out itself would cost buyers.
+- **The buyer choice rule does not matter here.** Sharp logit choice gives a gain of +$217 against +$227 under lexicographic choice (sharp − lex −$10 [−$21, −$0.05], exploratory), the same story.
+
+## Caveats
+
+- **Deviation D4 (after the run).** The script passed its PW5 pairs to `paired_diff(a, b)` (which returns b − a) in the wrong order, so the as-run PW5 tables printed RI − U0 and lex − sharp under U0 − RI and sharp − lex labels.
+  - The argument order was fixed (db0abba) and the tables regenerated from the chain cache with no new chains.
+  - The regeneration was checked: PW1–PW4, every cell estimate, the price and buyer tables, guards and seed samples are identical, and all 20 PW5 differences flip sign exactly.
+  - The as-run outputs are kept in `runs/price_war_as_run/`.
+- **The gain is the best of five bust-out days (20, 25, 28, 29, 30) minus never.** Taking the best day biases each level upward, the same in every cell, so the comparisons across policies stand better than the levels. This is the liability study's benchmark, kept unchanged.
+- **One market for outcome A**: 30 days, tourist share 0.4 with locals inspecting, 2 patrolling inspectors with collectible fines. Outcome B is the t40 equity market at prior_n 400. Other markets may differ.
+- **Twenty seeds; intervals are 95% t over seeds, unadjusted.** The PW5 rows are exploratory, and with 26 of them some intervals that exclude 0 are expected by chance.
+- **The figure** has two cosmetic flaws in the frozen plotting code: in the third panel the "−0.58" and "0" tick labels overprint, and the middle panel's zero line runs under the third panel's top tick label. The numbers are in the tables above.

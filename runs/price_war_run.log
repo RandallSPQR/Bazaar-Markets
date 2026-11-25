@@ -74,3 +74,10 @@
 2026-11-25 02:12:40 PW3: supported {"mean": 1182550.5714285714, "lo": 864421.6623164663, "hi": 1500679.4805406765}
 2026-11-25 02:12:40 PW4: supported {"mean": -32737.283333333326, "lo": -40606.08846748815, "hi": -24868.478199178495}
 2026-11-25 02:12:40 done; 0 flags; wall 8.05 h; load [5.04, 6.64, 6.82]
+2026-11-25 02:14:10 run record {"cells": ["A|RI|ds0|lex", "A|RI|ds1|lex", "A|U0|ds0|lex", "A|U0|ds1|lex", "A|U0.1|ds0|lex", "A|U0.1|ds1|lex", "A|U0.3|ds0|lex", "A|U0.3|ds1|lex", "A|U0|ds0|sharp", "B|RI|lex", "B|U0|lex", "B|U0.1|lex", "B|U0.3|lex"], "code_dirty": false, "command": "python -m analysis.price_war --workers 4 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "db0abba", "engine_version": "1.2.0", "load_start": [2.97, 5.54, 6.38], "market_defaults": ["ratings.display=stars", "ratings.display_step=0.02", "buyers.tie_break=random"], "mem_start": {"free_pct": 50, "swap_free_mb": 935.88}, "numpy": "2.5.4", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "118d855272b86c89aab65aff2c62e144482480cbed1cdda849ed201834a6a7b3", "started": "2026-11-25 02:14:10", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 4}
+2026-11-25 02:14:11 3440 chains, 3440 cached, 0 to run; workers 4; load [2.97, 5.54, 6.38]; memory {'swap_free_mb': 935.88, 'free_pct': 50}
+2026-11-25 02:14:11 PW1: supported {"mean": 22747.43333333333, "lo": 17474.989772416295, "hi": 28019.876894250367}
+2026-11-25 02:14:11 PW2: supported {"mean": -77507.0238095238, "lo": -94219.9819098009, "hi": -60794.0657092467}
+2026-11-25 02:14:11 PW3: supported {"mean": 1182550.5714285714, "lo": 864421.6623164663, "hi": 1500679.4805406765}
+2026-11-25 02:14:11 PW4: supported {"mean": -32737.283333333326, "lo": -40606.08846748815, "hi": -24868.478199178495}
+2026-11-25 02:14:11 done; 0 flags; wall 0.00 h; load [2.97, 5.54, 6.38]
