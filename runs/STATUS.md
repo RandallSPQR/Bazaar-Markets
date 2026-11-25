@@ -5,7 +5,7 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 | | |
 |---|---|
 | Stage | 3: bank v2 |
-| Running | bank v2 blocks 1 and 2a (block 2 in two launches of ≤ 10 h, D5) |
+| Running | bank v2 block 1, then block 2a (≤ 10 h, D5), launched 2026-11-25 11:28; stdout `runs/state_bank_v2_bank_stdout.log` |
 | Last gate | C4: bank v2 pilot G1–G5 and G-leak passed (`runs/pilot_state_bank_v2.md`) |
 | Next step | block 2b, then block 3 (C5 at launch); build and summary (C6) |
 
@@ -17,7 +17,7 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 | C2 | Price-war study launched | 2026-11-24 18:09, commit 030e7cb, all 20 seeds (no cut) |
 | C3 | Price-war summary | 2026-11-25 02:12. PW1–PW4 supported; `runs/price_war_summary.md` (a2bee13); deviation D4 (PW5 sign fix) |
 | C4 | Bank v2 pilot and G-leak result | 2026-11-25 11:26. All gates pass; G-leak best single feature `units_7d` 77.8% (limit 80%); N 300, K 20, 29.6 h projected |
-| C5 | Bank v2 launched | – |
+| C5 | Bank v2 launched | 2026-11-25 11:28: blocks 1 and 2a; 2b and 3 follow, each ≤ 10 h |
 | C6 | Bank v2 complete | – |
 | C7 | Release prep; `runs/REPORT_2026-11b.md` | – |
 
@@ -37,3 +37,4 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 - 2026-11-25 05:19: bank v2 design (24 markets, attempt 1) and enumeration done: 2,400 chains, 172,800 states, 3.07 h. Markets without counterfeits have no states below 1.0, so 36 strata are non-empty.
 - 2026-11-25 11:26: C4. Pilot of 36 states at K 30 (6.11 h): G1–G5 pass, G-leak passes (best `units_7d` 77.8%). K 20 chosen; N 300 projected 29.6 h with 139.8 expected close calls. The prespecified allocation is concentrated: 176 states in one stratum, 56 in another, 2 in each of the other 34. Flagged for Randall, not changed (frozen design).
 - 2026-11-25: **D5.** The script's blocks are whole markets, and the concentrated market projects 19.7 h, over the plan's 10 h block limit (the script's G3 checked only the 36 h total). Block 2 runs as two launches of at most 10 h, resuming from the chain cache. No change to the design, states, K or analysis.
+- 2026-11-25 11:28: C5. Bank launched with `runs/state_bank_v2_block.sh`: block 1, then block 2a with a 10 h limit.
