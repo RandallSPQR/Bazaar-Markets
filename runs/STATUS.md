@@ -6,16 +6,17 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
 
 | | |
 |---|---|
-| Stage | 2: engine 1.3.1, full suite, then second pilot |
-| Running | full suite at 9023acf (`runs/tests_131.log`), started 17:16 |
+| Stage | 2: second pilot (engine 1.3.1) |
+| Running | second pilot, seeds 900–902 (`runs/pilot_aisles/aisles_run.log`), started 18:59 |
 | Last gate | **STOP at pilot G4**: B\|cash2\|a1\|ds1 and B\|cash2\|a0\|ds1 exit 52.1% and 51.4% of stalls before day 10 (limit 50%); G1, G2, G3 (11.95 h), G5 pass |
-| Next step | suite passes → fresh calibration and second pilot (all gates) → launch if they pass and ≤ 14 h |
+| Next step | pilot gates (G1, G2a–d, G3 ≤ 14 h, G4, G4b, G5) → launch if they pass |
 
 ## Checkpoints
 
 | Checkpoint | When | Result |
 |---|---|---|
 | C1 | 2026-11-26 14:19 | Engine 1.3.0 (494d1bd); full suite 1,889 passed, 17 skipped, 0 failed, 1:43 h (`runs/tests_130.log`) |
+| C1 (1.3.1) | 2026-11-26 18:59 | Engine 1.3.1 (3c4bd3b, script 4f66849); full suite 1,901 passed, 17 skipped, 0 failed, 1:43 h (`runs/tests_131.log`) |
 | C2 | Pilot passed and launch | **not reached**: STOP at G4 (2026-11-26 16:14) |
 | C3 | Run A summary | – |
 | C4 | Runs B and C summaries | – |
@@ -41,3 +42,4 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
   - **D6 (engine 1.3.1, decided by Randall; 3c4bd3b).** Each stall's fixed cost = fixed_cost_share × max(0, its own type's baseline gross), the type baselines calibrated per category and type in fresh calibration chains; start cash and credit stay on the genuine baseline. Seconds get a per-category cost target, `seconds_cost_share` = the genuine cost share (PLACEHOLDER: fish 0.70, electronics 0.77, designer 0.20; Run A's thin 0.70, fat 0.20): a seconds stall's unit cost at the cheap mean quality is that share of the seconds price at rating 1.0. Genuine and deceptive costs, bust-outs included, are unchanged. `tests/test_v131.py` 12/12 (with test_v130 and the reference digests, 43/43). Fixed cost is charged by the stall's type that morning; a bust-out keeps the stall's type (genuine), so its fixed cost does not change.
   - **D7 (gates and outcome, decided by Randall).** G2d: seconds baseline gross > 0 in every category of every calibration scenario. G4b: genuine stalls exiting before day 10 ≤ 5% in every cell. G4 still applies. Exits by type and reason in every cell are an exploratory outcome. The thin-margin genuine exits are kept, not calibrated away.
   - The first pilot's outputs moved to `runs/pilot_aisles_130/` (the chain cache is keyed without the engine version, so it must not be reused).
+- 2026-11-26 18:59: **C1 (1.3.1).** Full suite at 9023acf: 1,901 passed, 17 skipped, 0 failed, 1 h 43 min (`runs/tests_131.log`). Second pilot launched: fresh calibration with the D4-fixed script, seeds 900–902, 7 workers, normal priority, `caffeinate -i`.
