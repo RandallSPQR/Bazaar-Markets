@@ -9,7 +9,7 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
 | Stage | 2: aisles pilot |
 | Running | nothing |
 | Last gate | **STOP at pilot G4**: B\|cash2\|a1\|ds1 and B\|cash2\|a0\|ds1 exit 52.1% and 51.4% of stalls before day 10 (limit 50%); G1, G2, G3 (11.95 h), G5 pass |
-| Next step | waiting for Randall: options in `runs/pilot_aisles.md` |
+| Next step | waiting for Randall: G4 rule gave 2b (STOP); fixed-cost proposal in `runs/pilot_aisles.md` |
 
 ## Checkpoints
 
@@ -32,3 +32,7 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
   - **Estimand rule (not a deviation; fixed before any chain).** A stall's share is gain ÷ its never-chain profit when that profit is > 0, else undefined (left out and counted). Seeds are paired where both sides are defined. A ratio-of-sums version is reported as a sensitivity check.
 - 2026-11-26 14:19: **C1.** Full suite at 494d1bd: 1,889 passed, 17 skipped, 0 failed, 1 h 43 min. Pilot launched on seeds 900–902 (7 workers, normal priority, `caffeinate -i`).
 - 2026-11-26 16:14: pilot done (1.90 h, 1,230 chains, memory pauses 0). G1, G2a, G2b, G2c, G5 pass; G3 projects 11.95 h (limit 14). **G4 fails: STOP.** Two Run B cells with start cash 2 and ds 1 exit 75 and 74 of 144 stalls before day 10 (52.1%, 51.4%; limit 72), 24–26 of 48 on every seed; early leavers are seconds and deceptive stalls, at most 1 genuine per seed. Main runs not launched. Report and options: `runs/pilot_aisles.md`. Calibration `runs/aisles_calibration.json` (no flags).
+- 2026-11-26 (evening), Randall's G4 decision, made before any main-run result: report exits by type × cell × day with reasons; if seconds exits by day 30 at ds 0, cash 2 are < 25% waive G4 for the two cash-2, ds-1 cells, add G4b (genuine before day 10 ≤ 5%) and launch; otherwise STOP and propose scaling the fixed cost to each type's own baseline.
+  - **D3 (instrumentation).** `exit_reason` (insolvency / other) added to the aisles job record, read from the outcome only; `analysis/aisles_g4_exits.py` reran the 90 pilot never chains (1213d2c, 8819f33). Output `runs/pilot_aisles/exits_by_type.json`.
+  - **D4 (bug fix, 8819f33).** The pilot script stacked its two observers on every job, so the k-th job in a worker recorded each day k times: `stall_agg`, `harm` and `ledger_days` were k ×, and the calibration weighted seeds by k (baselines off by ≤ 1.8%, rent advantages by ≤ $6.70 a day). Outcome fields (exits, totals, busts, guards) are unaffected: all 90 reruns match the pilot outcome exactly, with observer fields exactly k ×, and in-process sequences now equal fresh processes. The pilot calibration must be remade before any launch.
+  - **Result: rule 2b, STOP.** Every exit is insolvency; calibration chains (no fixed cost) have none. Seconds exiting by day 30 at ds 0, cash 2: 44/45 (α 0) and 42/45 (α 1). Seconds gross per day is about 8% of the genuine baseline the fixed cost is sized to (fish −$0.47 vs $18.03). Also reported: genuine stalls in A|thin|·|t100|ds0 exit 48 and 50 of 54 by day 30. Proposal and open points in `runs/pilot_aisles.md`; nothing changed in the engine.
