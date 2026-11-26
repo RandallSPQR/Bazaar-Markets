@@ -6,16 +6,16 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
 
 | | |
 |---|---|
-| Stage | 1: engine 1.3.0 |
-| Running | full test suite at 494d1bd (`runs/tests_130.log`), started 12:35 |
-| Last gate | – (plan 2026-11-23 closed at C7, v1.2.0 tagged locally) |
-| Next step | engine 1.3.0: category profiles, solvency, rent gradient, gamma by profile; tests; full suite (C1) |
+| Stage | 2: aisles pilot |
+| Running | pilot (seeds 900–902), `runs/pilot_aisles/stdout.log` |
+| Last gate | C1 passed (full suite 1,889 passed, 17 skipped) |
+| Next step | pilot gates G1–G5, then C2 (launch Runs A, B, C) |
 
 ## Checkpoints
 
 | Checkpoint | When | Result |
 |---|---|---|
-| C1 | Engine 1.3.0 committed, full suite passes | – |
+| C1 | 2026-11-26 14:19 | Engine 1.3.0 (494d1bd); full suite 1,889 passed, 17 skipped, 0 failed, 1:43 h (`runs/tests_130.log`) |
 | C2 | Pilot passed and launch | – |
 | C3 | Run A summary | – |
 | C4 | Runs B and C summaries | – |
@@ -30,3 +30,4 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
   - **D1 (naming).** The plan's `market.gamma` is the engine's existing `buyers.position_rent` (0 in the reference market). `buyers.gamma_by_profile` overrides it per profile, as the plan specifies.
   - **D2 (stall sampling).** The 3 benchmark stalls per seed come from `default_rng([seed, 17])` as in the verification run, but one per aisle (fish, electronics, designer), so the plan's per-aisle reporting and PB2 (designer vs fish) are paired by seed. Same count and stream; decided before any chain.
   - **Estimand rule (not a deviation; fixed before any chain).** A stall's share is gain ÷ its never-chain profit when that profit is > 0, else undefined (left out and counted). Seeds are paired where both sides are defined. A ratio-of-sums version is reported as a sensitivity check.
+- 2026-11-26 14:19: **C1.** Full suite at 494d1bd: 1,889 passed, 17 skipped, 0 failed, 1 h 43 min. Pilot launched on seeds 900–902 (7 workers, normal priority, `caffeinate -i`).
