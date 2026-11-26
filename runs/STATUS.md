@@ -5,9 +5,9 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 | | |
 |---|---|
 | Stage | 3: bank v2 |
-| Running | bank v2 block 2b, then block 3, each ≤ 10 h, 7 workers (D6), launched 2026-11-25 15:03; stdout `runs/state_bank_v2_bank_stdout.log` |
+| Running | bank v2 block 2c (the last 105 chains of block 2), 7 workers, launched 2026-11-26 09:34; stdout `runs/state_bank_v2_bank_stdout.log` |
 | Last gate | C4: bank v2 pilot G1–G5 and G-leak passed (`runs/pilot_state_bank_v2.md`) |
-| Next step | any block 2 remainder if 2b reaches its 10 h limit; build and summary (C6) |
+| Next step | build and summary (C6) |
 
 ## Checkpoints
 
@@ -40,3 +40,5 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 - 2026-11-25 11:28: C5. Bank launched with `runs/state_bank_v2_block.sh`: block 1, then block 2a with a 10 h limit.
 - 2026-11-25: Randall: "keep going with the allocation as is." The concentrated N 300 allocation stands. He will free the full CPU after finishing two other projects; later blocks may then use more workers. Chains are seeded per job, so the worker count changes wall clock only, not results.
 - 2026-11-25 15:02: **D6.** Randall freed the CPU and asked for 7 workers. Block 1 had finished at 11:36 (220 chains). Block 2a was stopped by hand after 100 of block 2's 560 chains (3.4 h); the 4 chains in flight were lost and are rerun, and the cache's last line parses (320 lines). `runs/state_bank_v2_block.sh` takes an optional fourth argument, the worker count (default 4). Block 2b and then block 3 run on 7 workers, each with the 10 h limit. Chains are seeded per job, so this changes wall clock only: no change to the design, states, K, seeds or analysis. Each launch's run record states its worker count.
+- 2026-11-26 01:03: block 2b reached its 10 h limit after 355 more chains (675 cached in all). Block 3 then ran its 332 chains in 8.49 h, ending 09:32; the cache's last line parses (1,007 lines). On 7 workers a chain took about 101 s of wall clock, against 116 s on 4: the three extra workers run on efficiency cores.
+- 2026-11-26 09:34: block 2c launched for block 2's last 105 chains (7 workers, 10 h limit).
