@@ -4,9 +4,9 @@
 
 A deterministic market simulator for studying deception, verification and brand value, built as an evaluation environment for AI agents.
 
-**Main result so far:** in this market, deception is bounded by verification. Once about a third of buyers check what they buy, cashing in a good name stops paying, and enforcement does the same job where buyers don't check. A brand's reputation earns money only while rivals are still building theirs.
+**Main result so far:** in this market, deception is bounded by verification. Once enough buyers check what they buy (about a third here), cashing in a good name stops paying, and enforcement does the same job where buyers don't check. A brand's reputation earns money only while rivals are still building theirs.
 
-> Status: engine v1.0.0 is the frozen rule-based baseline. All agents are rule-based. LLM agent experiments are in progress and will be compared against v1.0.0.
+> Status: engine v1.0.0 is the frozen rule-based baseline; v1.2.0 adds price policies, logit choice, an undercut floor, an LLM spend ceiling and a seller state bank for agent evaluation, and reproduces v1.0.0 at its defaults. All agents are rule-based. LLM agent experiments are in progress and will be compared against the baseline.
 
 ## What it is
 
@@ -20,13 +20,15 @@ The market engine is deterministic. Agents act only at decision points, so any a
 
 ## Findings (v1.0.0, rule-based agents)
 
-Each finding, its run, its estimate and its status (prespecified and supported, exploratory, or provisional) is listed in [`runs/BASELINE_1_0_0.md`](runs/BASELINE_1_0_0.md). The headlines:
+Each finding, its run, its estimate and its status (prespecified and supported, exploratory, or provisional) is listed in [`runs/BASELINE_1_0_0.md`](runs/BASELINE_1_0_0.md), with the 1.1.0 and 1.2.0 additions in [`runs/BASELINE_1_2_0.md`](runs/BASELINE_1_2_0.md). The headlines:
 
-- **Verification sets the boundary for cashing in a brand.** With no inspectors, a stall that switches to cheap goods under its good name gains when no buyer checks and loses once about a third do.
-- **Enforcement substitutes for verification,** and raises honest sellers' profit by closing deceptive stalls.
+- **Verification sets the boundary for cashing in a brand.** With no inspectors, a stall that switches to cheap goods under its good name gains when no buyer checks and loses once enough buyers check (about a third in this market; the threshold is exploratory).
+- **Enforcement substitutes for verification,** and raises honest sellers' profit, likely by closing deceptive stalls.
 - **Enforcement leaks through gaps in space and time.** Fixed inspectors leave pockets; visible patrols get waited out.
 - **Catch counts mislead.** Sellers who dodge inspectors earn more only by paying fewer fines.
-- **A reputation is worth the head start it gives over rivals still building theirs** (provisional): about $190 for each day of head start here, and nothing once rivals show the same stars.
+- **A reputation is worth the head start it gives over rivals still building theirs, where buyers read ratings** (provisional): about $190 for each day of head start here, and nothing once rivals show the same stars.
+
+The verification, enforcement and licensing results hold in all 15 cells of a robustness sweep over price policies and buyer-choice rules (PX1–PX3, engine 1.1.0); the exception found so far is a price war at unit cost, where a cash-in pays even though locals check, unless inspectors enforce; the payoff shrinks as a price floor above cost is raised (engine 1.2.0).
 
 These are results of one stylized model, not claims about real markets.
 

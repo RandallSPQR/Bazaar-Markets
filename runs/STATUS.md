@@ -4,10 +4,10 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 
 | | |
 |---|---|
-| Stage | 4: release prep |
+| Stage | plan 2026-11-23 closed (C7); next: plan 2026-11-27 |
 | Running | nothing |
-| Last gate | C6: bank v2 complete; final G-leak passed (`runs/state_bank_v2_summary.md`) |
-| Next step | Stage 4: baseline, README headlines, release notes, data package, local tag v1.2.0, C7 |
+| Last gate | C7: release prep done; v1.2.0 tagged locally, not pushed (`runs/REPORT_2026-11b.md`) |
+| Next step | commit `runs/plan_autonomous_2026-11-27.md` unchanged and follow it; push nothing |
 
 ## Checkpoints
 
@@ -18,8 +18,8 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 | C3 | Price-war summary | 2026-11-25 02:12. PW1–PW4 supported; `runs/price_war_summary.md` (a2bee13); deviation D4 (PW5 sign fix) |
 | C4 | Bank v2 pilot and G-leak result | 2026-11-25 11:26. All gates pass; G-leak best single feature `units_7d` 77.8% (limit 80%); N 300, K 20, 29.6 h projected |
 | C5 | Bank v2 launched | 2026-11-25 11:28: blocks 1 and 2a; 2b and 3 follow, each ≤ 10 h |
-| C6 | Bank v2 complete | 2026-11-26 12:40. 300 states, 31,000 continuations, guards 0; pays 107 (49.8% weighted); close calls 98 (target 100); below 1.0 198; final G-leak pass (`units_7d` 75.3%) |
-| C7 | Release prep; `runs/REPORT_2026-11b.md` | – |
+| C6 | Bank v2 complete | 2026-11-26 12:18. 300 states, 31,000 continuations, guards 0; pays 107 (49.8% weighted); close calls 98 (target 100); below 1.0 198; final G-leak pass (`units_7d` 75.3%) |
+| C7 | Release prep; `runs/REPORT_2026-11b.md` | 2026-11-26. BASELINE_1_2_0, README headlines, release notes, CITATION, data package (`dist/v1.2.0/`, 25 files, checksums verified); v1.2.0 tagged locally |
 
 ## Log
 
@@ -44,4 +44,6 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 - 2026-11-26 09:34: block 2c launched for block 2's last 105 chains (7 workers, 10 h limit).
 - 2026-11-26 12:14: block 2c done; all 1,112 chains cached. Bank phase 24.7 h of wall clock in five launches.
 - 2026-11-26: Randall (before dinner): when this plan reaches C7 with v1.2.0 tagged locally, commit `runs/plan_autonomous_2026-11-27.md` unchanged and follow it (7 workers, normal priority, caffeinate). **Push nothing** until he is back. If plan 11-27's pilot projects over 14 h, run the full design and log the deviation (no trims).
-- 2026-11-26 12:40: C6. Build (6 s): 300 states, pays 107 (35.7% unweighted, missing the 40–60% aim; 49.8% weighted), close calls 98 (target 100, missed by 2; the pilot projected 140), 198 below 1.0, guards 0, final G-leak pass (best single `units_7d` 75.3%, logistic 76.0%). Neither missed target is a gate; nothing changed. Summary `runs/state_bank_v2_summary.md`, README `runs/state_bank_v2/README.md`; descriptive tables and plot written after the results.
+- 2026-11-26 12:18: C6. Build (6 s): 300 states, pays 107 (35.7% unweighted, missing the 40–60% aim; 49.8% weighted), close calls 98 (target 100, missed by 2; the pilot projected 140), 198 below 1.0, guards 0, final G-leak pass (best single `units_7d` 75.3%, logistic 76.0%). Neither missed target is a gate; nothing changed. Summary `runs/state_bank_v2_summary.md`, README `runs/state_bank_v2/README.md`; descriptive tables and plot written after the results.
+- 2026-11-26: Stage 4. `runs/BASELINE_1_2_0.md` (section 7: X1–X4, P1–P5, S1, S2, headline check), README headline edits as the plan words them, `docs/release_notes_1_2_0.md` (draft), `CITATION.cff` (1.2.0, all-versions DOI), data package in `dist/v1.2.0/` (bank v2 files and caches, price-war caches; 17.1 MB; manifest `runs/data_package_1_2_0.md`; all 25 checksums verified after extraction).
+- 2026-11-26: C7. `runs/REPORT_2026-11b.md`. Tag v1.2.0 made locally (annotated), not pushed. Plan 2026-11-23 closed.
