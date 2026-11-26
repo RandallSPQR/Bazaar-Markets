@@ -263,10 +263,23 @@ def _hooks() -> None:
     EB.BazaarEngine.run = run
 
 
+_INSTALLED = False
+
+
+def _install() -> None:
+    """D4 (bug fix, 2026-11-26): install the two observers once per process. Each checks only its own flag on the
+    outermost BazaarEngine.run, so calling both on every job (as the pilot did) stacked two more layers per job and the
+    k-th job in a worker recorded every day k times in _DAYREC (stall_agg, harm, ledger_days) and _PARKED."""
+    global _INSTALLED
+    if not _INSTALLED:
+        LB._observe()
+        _hooks()
+        _INSTALLED = True
+
+
 def _init_worker() -> None:
     """Normal priority (plan 2026-11-27): the parked-buyer observer only, no renice."""
-    LB._observe()
-    _hooks()
+    _install()
 
 
 def _guard(out) -> dict:
@@ -277,8 +290,7 @@ def job(j) -> dict:
     """j = (kind, name, seed, watch, stall, b, cal): kind "cal" (a calibration never chain; name = its scenario) or
     "bench" (name = a cell; stall None and b NEVER for the never chain); cal = the frozen calibration (None for "cal")."""
     kind, name, seed, watch, stall, b, cal = j
-    LB._observe()
-    _hooks()
+    _install()
     LB._PARKED.clear()
     _DAYREC.clear()
     t0 = time.time()
@@ -294,9 +306,9 @@ def job(j) -> dict:
            "engine_version": ENGINE_VERSION, "secs": round(secs, 2), "guard": _guard(out),
            "exited": out["liability"]["exited"]}
     # D3 (Randall's G4 decision, 2026-11-26): exit reason, read from the outcome only. "insolvency" if the stall is in
-    # the engine's cumulative solvency exit list, else "other" (the stall's own exit decision).
-    sv = out["days"][-1]["outcome"].get("solvency") if out["days"] else None
-    rec["exit_reason"] = {s: ("insolvency" if sv and s in sv["exits"] else "other") for s in rec["exited"]}
+    # some day's solvency exit list (the engine is rebuilt each day, so each day lists that day's exits), else "other".
+    insolvent = {s for dd in out["days"] for s in (dd["outcome"].get("solvency") or {}).get("exits", [])}
+    rec["exit_reason"] = {s: ("insolvency" if s in insolvent else "other") for s in rec["exited"]}
     if kind == "bench":
         rec["totals"] = {s: benchmark.stall_total(out, s) for s in watch}
         rec["busts"] = [(x["stall"], x["day"]) for dd in out["days"] for x in dd["bust_outs"]]
