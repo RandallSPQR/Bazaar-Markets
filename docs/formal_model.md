@@ -1,4 +1,4 @@
-<!-- Exported from the project doc 'Bazaar Markets: The Agentic Ad Engine', section 'Formal model of the bazaar engine', rev 42, on 2026-11-19. Written against engine 0.15.0; cross-checked line by line against the engine 0.21.0 code at the 1.0.0 cross-check (2026-11-19, see runs/formal_model_check.md): items the doc had wrong are fixed, and the later keys (licensing, counterfeit entry/price factor, white_label_tier, prior_n/scope, display stars, tie_break, profile overrides) are added in paragraphs labelled "added at the 1.0.0 cross-check". The 1.1.0 and 1.2.0 keys are added at the end, labelled "added at 1.2.0, not cross-checked". -->
+<!-- Exported from the project doc 'Bazaar Markets: The Agentic Ad Engine', section 'Formal model of the bazaar engine', rev 42, on 2026-11-19. Written against engine 0.15.0; cross-checked line by line against the engine 0.21.0 code at the 1.0.0 cross-check (2026-11-19, see runs/formal_model_check.md): items the doc had wrong are fixed, and the later keys (licensing, counterfeit entry/price factor, white_label_tier, prior_n/scope, display stars, tie_break, profile overrides) are added in paragraphs labelled "added at the 1.0.0 cross-check". The 1.1.0 and 1.2.0 keys are added at the end, labelled "added at 1.2.0, not cross-checked"; the 1.3.0 keys after them, labelled "added at 1.3.0, not cross-checked". -->
 ## Formal model of the bazaar engine
 
 This section states the engine as a model: sets, stall and buyer primitives, messages, detection, decision rules, payoffs and outcomes, with every parameter's domain and default in the table at the end. It follows the specifications given to the engine through version 0.15.0, extended to 0.21.0; the code (`engine/*.py`, `agents/rule_based.py`) is the source of truth. The line-by-line cross-check against it was done at 1.0.0 against the engine 0.21.0 code (see `runs/formal_model_check.md`): statements found wrong are corrected here, and rules for keys added after 0.15.0 are in paragraphs labelled *added at the 1.0.0 cross-check*. PLACEHOLDER marks a modelling choice not yet backed by data.
@@ -256,3 +256,36 @@ A refused call is an invalid action, and the run stops at the next decision, mar
 | choice | buyer choice rule | {lexicographic, logit} | lexicographic | added at 1.2.0, not cross-checked |
 | w_r, w_p | logit rating and price weights | finite ≥ 0 | 5, 5 (soft); 20, 20 (sharp) | PLACEHOLDER; added at 1.2.0, not cross-checked |
 | budget | LLM spend limits: calls, tokens, $ per run; $ per day; prices | ≥ 0; prices per model | all 0 (no call possible); prices empty | prices PLACEHOLDER; added at 1.2.0, not cross-checked |
+
+### Engine 1.3.0 keys (added at 1.3.0, not cross-checked)
+
+Every 1.3.0 key is off by default; with the defaults the model is the 1.2.0 model exactly.
+
+**Category profiles (added at 1.3.0, not cross-checked).** A category c may carry a profile with any of the keys below. Let \bar q_H and \bar q_L be the means of the genuine and the cheap quality ranges (q_high, q_low), and P^1_c the genuine posted price at rating 1.0, round(b_c (1 + π/2)) with brands on, else b_c.
+
+- *Unit cost.* With a cost share g_c and a cheap-supply share s_c, the unit cost of a stall of c with true quality q is
+$$k_c(q) = \max\bigl(0, \operatorname{round}(b_c (a_c + d_c q))\bigr), \qquad a_c + d_c \bar q_H = g_c P^1_c / b_c, \quad a_c + d_c \bar q_L = s_c g_c P^1_c / b_c.$$
+  Without them k_c(q) = round(b_c (c_0 + c_1 q)) as before. The price rule is unchanged, so g_c moves the margin, not the price.
+- *Fixed cost.* Each stall of c still in the market is charged F_c = h(f_c B_c) every morning, where B_c is a genuine stall's baseline daily gross profit (revenue − unit cost) measured by the analysis from honest never chains, and f_c the fixed-cost share.
+- *Inspection noise.* An inspection by buyer b of stall s on day d sees \tilde q = clip_{[0,1]}(q_s + σ_c z), z ~ N(0, 1) from [seed, 41, d, b, s], rounded to 4 decimals; σ_c = 0 is exact. The buyer rule uses \tilde q wherever it used the inspection result.
+- *Inspection cost.* round(κ_{prof(b)} b_c μ_c) with multiplier μ_c (1 = unchanged).
+- *Review accuracy.* Each rated unit's honesty indicator 1[q_s ≥ last claim] is kept with probability α^R_c and flipped otherwise, one uniform per unit in purchase order from [seed, 43, d, s]. The rating update then uses the judged indicators. Critics' reviews are unaffected.
+
+**Solvency (added at 1.3.0, not cross-checked).** With solvency on, stall s of category c starts with cash C_{s,0} = h(γ_0 B_c) and, after each day d it is in the market,
+$$C_{s,d} = C_{s,d-1} + \pi_{s,d}, \qquad \pi_{s,d} = \text{revenue} - \text{unit costs} - \text{ad spend} - \text{fines charged} - \text{switch cost} - \text{royalties paid} + \text{royalties received} - F_c - \rho_s,$$
+the stall's profit as accounted, overhead included. If C_{s,d} < −λ B_c the stall leaves at the end of day d by the exit rule (0.15.0): it never reopens, is in no later consideration set, and its fines not yet due are uncollectible. Here γ_0 is start_cash_days (default 10) and λ is credit_limit_days (default 3).
+
+**Rent gradient and position weights (added at 1.3.0, not cross-checked).** Spot s pays rent ρ_s = h(α A_s) every morning it is in the market, where α ∈ [0, 1] and A_s, the spot's traffic advantage, is its expected extra daily gross profit over the mean spot. A_s is measured by the analysis from honest never chains with α = 0 and supplied as a table. A negative A_s is a rebate. Rent enters the stall's profit with the fixed cost. In choice-set demand, buyer b's draw weights use γ_{prof(b)} (buyers.gamma_by_profile) in place of the position rent γ when it is set:
+$$\Pr(\text{draw } j) \propto e^{-\gamma_{\text{prof}(b)}\, \text{rank}_b(j)}.$$
+The plan calls γ "market.gamma". In the engine it is `buyers.position_rent`.
+
+| Symbol | Meaning | Domain | Default | Status |
+|---|---|---|---|---|
+| g_c | genuine unit cost share of P^1_c at \bar q_H | ≥ 0 | unset (1.2.0 costs) | PLACEHOLDER (fish 0.70, electronics 0.77, designer 0.20); added at 1.3.0, not cross-checked |
+| s_c | cheap-supply unit cost share of the genuine unit cost | ≥ 0 | unset | PLACEHOLDER (0.80, 0.55, 0.30); added at 1.3.0, not cross-checked |
+| f_c, B_c | fixed-cost share; baseline daily gross profit (cents) | ≥ 0; measured | unset (no fixed cost) | f PLACEHOLDER (0.90, 0.85, 0.50); B calibrated; added at 1.3.0, not cross-checked |
+| σ_c, μ_c | inspection noise sd; inspection cost multiplier | ≥ 0 | 0; 1 | PLACEHOLDER (0.15, 0.02, 0.25; 1, 0.5, 3); added at 1.3.0, not cross-checked |
+| α^R_c | review accuracy | [0, 1] | 1 | PLACEHOLDER (0.95, 0.90, 0.60); added at 1.3.0, not cross-checked |
+| γ_0, λ | start cash and credit limit, in days of B_c | finite; ≥ 0 | 10; 3 (solvency off) | added at 1.3.0, not cross-checked |
+| α, A_s | rent share; spot traffic advantage (cents per day) | [0, 1]; measured | 0; none | added at 1.3.0, not cross-checked |
+| γ_prof | position weight by buyer profile | ≥ 0 | γ for every profile | added at 1.3.0, not cross-checked |
