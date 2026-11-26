@@ -293,6 +293,10 @@ def job(j) -> dict:
     rec = {"key": key(j), "kind": kind, "name": name, "seed": seed, "stall": stall, "b": str(b),
            "engine_version": ENGINE_VERSION, "secs": round(secs, 2), "guard": _guard(out),
            "exited": out["liability"]["exited"]}
+    # D3 (Randall's G4 decision, 2026-11-26): exit reason, read from the outcome only. "insolvency" if the stall is in
+    # the engine's cumulative solvency exit list, else "other" (the stall's own exit decision).
+    sv = out["days"][-1]["outcome"].get("solvency") if out["days"] else None
+    rec["exit_reason"] = {s: ("insolvency" if sv and s in sv["exits"] else "other") for s in rec["exited"]}
     if kind == "bench":
         rec["totals"] = {s: benchmark.stall_total(out, s) for s in watch}
         rec["busts"] = [(x["stall"], x["day"]) for dd in out["days"] for x in dd["bust_outs"]]
