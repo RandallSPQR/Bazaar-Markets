@@ -273,6 +273,13 @@ class CategoriesCfg:
     #     by the analysis from honest never chains; used by fixed_cost_share and sellers.solvency.
     #   fixed_cost_share: each stall of the category is charged round half up(fixed_cost_share x
     #     baseline_gross_cents) every morning it is in the market (Stall.overhead_cents).
+    #   seconds_cost_share (1.3.1; needs cost_share and cheap_share): a seconds stall's unit cost at the cheap mean
+    #     quality as a share of the seconds posted price at rating 1.0 (base x seconds_price_factor x (1 + premium x
+    #     0.5) with brands on); its cost line is the category's, scaled by one factor so the target holds (never below
+    #     0). Genuine and deceptive stalls, bust-outs included, keep the category's line.
+    #   baseline_gross_by_type_cents (1.3.1): {"genuine", "seconds", "deceptive"} -> each type's baseline daily gross;
+    #     with it, fixed cost = round half up(fixed_cost_share x max(0, the stall's type's baseline)), by the stall's
+    #     type that morning. Start cash and the credit limit still use baseline_gross_cents.
     #   inspect_sigma: a buyer's inspection sees q + N(0, sigma^2), clipped to [0, 1] and rounded to 4 decimals, one
     #     draw from default_rng([seed, 41, day, buyer index, stall index]); 0 = exact (no draw).
     #   inspect_cost_mult: multiplies the inspection cost (buyers.inspect_cost_frac[profile] x base); 1 = unchanged.

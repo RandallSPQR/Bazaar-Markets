@@ -106,4 +106,8 @@ points, through role-specific JSON observations and schema-validated actions.
 #        -credit_limit_days x baseline at a day's end the stall leaves by the 0.15.0 exit rule), market.rent (alpha x
 #        a per-spot table, charged with the fixed cost in Stall.overhead_cents) and buyers.gamma_by_profile (per-profile
 #        position_rent). engine/categories.py. Defaults reproduce 1.2.0 byte for byte.
-ENGINE_VERSION = "1.3.0"
+# 1.3.1: categories.profiles.<cat>.seconds_cost_share (seconds unit cost at the cheap mean quality as a share of the
+#        seconds posted price at rating 1.0; the category's cost line rescaled for seconds stalls only) and
+#        baseline_gross_by_type_cents (fixed cost = fixed_cost_share x max(0, the stall type's own baseline); start cash
+#        and the credit limit stay on baseline_gross_cents). Plan 2026-11-27, D5-D7. Without the keys, 1.3.0 exactly.
+ENGINE_VERSION = "1.3.1"

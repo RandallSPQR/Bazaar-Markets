@@ -38,7 +38,7 @@ def run(c):
 
 
 def test_version():
-    assert ENGINE_VERSION == "1.3.0"
+    assert tuple(int(x) for x in ENGINE_VERSION.split(".")) >= (1, 3, 0)
 
 
 def test_defaults_add_nothing():

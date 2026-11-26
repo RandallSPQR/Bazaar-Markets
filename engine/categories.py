@@ -15,6 +15,10 @@ Solvency (sellers.solvency): cash from start_cash_days x baseline; a stall below
 end leaves the market at the end of that day (the 0.15.0 exit rule).
 Rent (market.rent): alpha x table[stall id] every morning.
 Fixed cost and rent are charged together in Stall.overhead_cents, part of the stall's profit.
+
+1.3.1 (plan 2026-11-27, Randall's decision of 2026-11-26): seconds_cost_share gives seconds stalls their own cost target
+(the category's cost line scaled for seconds only), and baseline_gross_by_type_cents sizes each stall's fixed cost to
+its own type's baseline, floored at 0. Without these keys the engine is 1.3.0 exactly.
 """
 from __future__ import annotations
 
@@ -23,7 +27,8 @@ import math
 import numpy as np
 
 PROFILE_KEYS = ("cost_share", "cheap_share", "baseline_gross_cents", "fixed_cost_share", "inspect_sigma",
-                "inspect_cost_mult", "review_accuracy")
+                "inspect_cost_mult", "review_accuracy", "seconds_cost_share", "baseline_gross_by_type_cents")
+STALL_TYPES = ("genuine", "seconds", "deceptive")
 INSPECT_STREAM, REVIEW_STREAM = 41, 43
 
 
@@ -69,6 +74,17 @@ def validate(cfg) -> None:
             _num(p["inspect_cost_mult"], f"{cat}.inspect_cost_mult", 0.0)
         if "review_accuracy" in p:
             _num(p["review_accuracy"], f"{cat}.review_accuracy", 0.0, 1.0)
+        if "seconds_cost_share" in p:
+            if "cost_share" not in p:
+                raise ValueError(f"categories.profiles.{cat}: seconds_cost_share needs cost_share and cheap_share")
+            _num(p["seconds_cost_share"], f"{cat}.seconds_cost_share", 0.0)
+        if "baseline_gross_by_type_cents" in p:
+            bt = p["baseline_gross_by_type_cents"]
+            if not isinstance(bt, dict) or set(bt) != set(STALL_TYPES):
+                raise ValueError(f"categories.profiles.{cat}.baseline_gross_by_type_cents must map exactly "
+                                 f"{STALL_TYPES} to cents, got {bt!r}")
+            for k, v in bt.items():
+                _num(v, f"{cat}.baseline_gross_by_type_cents.{k}")
     sv = cfg.sellers.solvency
     if sv.enabled:
         _num(sv.start_cash_days, "sellers.solvency.start_cash_days")
@@ -117,23 +133,61 @@ def cost_coefficients(cfg, category: str) -> tuple[float, float] | None:
     return top - c1 * qh, c1
 
 
-def unit_cost(cfg, category: str, q: float) -> int:
-    """Unit cost in cents of a stall of `category` with true quality q. Without a cost profile this is exactly the
-    1.2.0 expression round(base x (unit_cost[0] + unit_cost[1] x q))."""
+def seconds_price_at_top(cfg, category: str) -> int:
+    """The seconds posted price at rating 1.0 (brands.premium_price with the seconds tier), else the neutral price."""
+    base = cfg.pricing.base_price_cents[category]
+    f = cfg.pricing.seconds_price_factor
+    if not cfg.brands.enabled:
+        return int(round(base * f))
+    return int(round(base * f * (1 + cfg.brands.premium * (1.0 - 0.5))))
+
+
+def seconds_scale(cfg, category: str) -> float | None:
+    """1.3.1: the factor on the category's cost line that puts a seconds stall's unit cost at the cheap mean quality at
+    seconds_cost_share x the seconds price at rating 1.0; None without seconds_cost_share."""
+    p = profile(cfg, category)
+    if "seconds_cost_share" not in p:
+        return None
+    c0, c1 = cost_coefficients(cfg, category)
+    base = cfg.pricing.base_price_cents[category]
+    ql = (cfg.stalls.q_low[0] + cfg.stalls.q_low[1]) / 2
+    at_ql = base * (c0 + c1 * ql)
+    target = float(p["seconds_cost_share"]) * seconds_price_at_top(cfg, category)
+    return target / at_ql if at_ql > 0 else math.inf
+
+
+def unit_cost(cfg, category: str, q: float, stype: str | None = None) -> int:
+    """Unit cost in cents of a stall of `category` (and type `stype`) with true quality q. Without a cost profile this
+    is exactly the 1.2.0 expression round(base x (unit_cost[0] + unit_cost[1] x q)). 1.3.1: a seconds stall of a
+    category with seconds_cost_share has the category's line times seconds_scale (flat at the target if the line is 0
+    at the cheap mean quality)."""
     pr = cfg.pricing
     base = pr.base_price_cents[category]
     cc = cost_coefficients(cfg, category) if cfg.categories.profiles else None
     if cc is None:
         return int(round(base * (pr.unit_cost[0] + pr.unit_cost[1] * float(q))))
-    return max(0, int(round(base * (cc[0] + cc[1] * float(q)))))
+    line = base * (cc[0] + cc[1] * float(q))
+    if stype == "seconds":
+        m = seconds_scale(cfg, category)
+        if m is not None:
+            if math.isinf(m):
+                return max(0, int(round(float(profile(cfg, category)["seconds_cost_share"])
+                                        * seconds_price_at_top(cfg, category))))
+            line *= m
+    return max(0, int(round(line)))
 
 
 # ------------------------------------------------------------------ overhead and solvency
 
-def fixed_cost(cfg, category: str) -> int:
+def fixed_cost(cfg, category: str, stype: str | None = None) -> int:
+    """Daily fixed cost of a stall of `category`; 1.3.1: with baseline_gross_by_type_cents and a stall type, sized to
+    that type's own baseline, floored at 0."""
     p = profile(cfg, category)
     if not p.get("fixed_cost_share"):
         return 0
+    bt = p.get("baseline_gross_by_type_cents")
+    if bt is not None and stype is not None:
+        return _half_up(float(p["fixed_cost_share"]) * max(0.0, float(bt[stype])))
     return _half_up(float(p["fixed_cost_share"]) * float(p["baseline_gross_cents"]))
 
 
@@ -145,7 +199,8 @@ def rent(cfg, sid: str) -> int:
 
 
 def overhead_on(cfg) -> bool:
-    return bool(float(cfg.market.rent.alpha) > 0 or any(fixed_cost(cfg, c) for c in cfg.market.categories))
+    return bool(float(cfg.market.rent.alpha) > 0 or any(fixed_cost(cfg, c, t) for c in cfg.market.categories
+                                                        for t in (None, *STALL_TYPES)))
 
 
 def solvency_on(cfg) -> bool:

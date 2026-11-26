@@ -236,7 +236,7 @@ def build_stalls(cfg: BazaarConfig, layout: Layout, rng: np.random.Generator) ->
         stalls.append(Stall(
             sid=f"s{i:02d}", idx=i, category=c, stype=stype, pos=pos, brand=brand,
             q_true=round(q_true, 4), q_pitch=round(q_pitch, 4), sign=sign, price_cents=int(price),
-            unit_cost_cents=CAT.unit_cost(cfg, c, q_true),     # 1.3.0: categories.profiles (1.2.0 expression without)
+            unit_cost_cents=CAT.unit_cost(cfg, c, q_true, stype),   # 1.3.0/1.3.1: categories.profiles (1.2.0 without)
             yell_cost_cents=int(round(base * pr.yell_cost_frac)),
             whisper_cost_cents=int(round(base * pr.whisper_cost_frac)),
             penalty_cents=int(round(base * pr.penalty_mult))))

@@ -403,4 +403,4 @@ def bust_quality(cfg, st) -> float:
 
 def unit_cost(cfg, st, q: float) -> int:
     from . import categories as CAT                 # 1.3.0: categories.profiles (the 1.2.0 expression without)
-    return CAT.unit_cost(cfg, st.category, q)
+    return CAT.unit_cost(cfg, st.category, q, st.stype)   # 1.3.1: seconds cost target by type

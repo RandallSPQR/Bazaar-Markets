@@ -238,7 +238,7 @@ class BazaarEngine:
             if st.exited_day is not None:
                 continue
             if self.overhead_on:
-                st.overhead_cents = CAT.fixed_cost(cfg, st.category) + CAT.rent(cfg, st.sid)
+                st.overhead_cents = CAT.fixed_cost(cfg, st.category, st.stype) + CAT.rent(cfg, st.sid)
             if self.solvency_on and st.cash_cents is None:
                 st.cash_cents = CAT.start_cash(cfg, st.category)
 

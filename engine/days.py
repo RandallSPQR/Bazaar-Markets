@@ -86,7 +86,7 @@ def set_type(cfg: BazaarConfig, st, stype: str, hi: float, lo: float) -> None:
     else:
         raise ValueError(f"stalls cannot switch to {stype!r}")
     st.stype, st.q_true, st.q_pitch, st.sign, st.price_cents = stype, round(float(q_true), 4), round(float(q_pitch), 4), sign, int(price)
-    st.unit_cost_cents = CAT.unit_cost(cfg, st.category, q_true)
+    st.unit_cost_cents = CAT.unit_cost(cfg, st.category, q_true, stype)
 
 
 def revise(cfg: BazaarConfig, stalls: list, profits: dict, day: int, sroot: tuple | None = None) -> list[dict]:
