@@ -6,10 +6,10 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
 
 | | |
 |---|---|
-| Stage | 2: aisles pilot |
-| Running | nothing |
+| Stage | 2: engine 1.3.1, full suite, then second pilot |
+| Running | full suite at 9023acf (`runs/tests_131.log`), started 17:16 |
 | Last gate | **STOP at pilot G4**: B\|cash2\|a1\|ds1 and B\|cash2\|a0\|ds1 exit 52.1% and 51.4% of stalls before day 10 (limit 50%); G1, G2, G3 (11.95 h), G5 pass |
-| Next step | waiting for Randall: G4 rule gave 2b (STOP); fixed-cost proposal in `runs/pilot_aisles.md` |
+| Next step | suite passes → fresh calibration and second pilot (all gates) → launch if they pass and ≤ 14 h |
 
 ## Checkpoints
 
@@ -36,3 +36,8 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
   - **D3 (instrumentation).** `exit_reason` (insolvency / other) added to the aisles job record, read from the outcome only; `analysis/aisles_g4_exits.py` reran the 90 pilot never chains (1213d2c, 8819f33). Output `runs/pilot_aisles/exits_by_type.json`.
   - **D4 (bug fix, 8819f33).** The pilot script stacked its two observers on every job, so the k-th job in a worker recorded each day k times: `stall_agg`, `harm` and `ledger_days` were k ×, and the calibration weighted seeds by k (baselines off by ≤ 1.8%, rent advantages by ≤ $6.70 a day). Outcome fields (exits, totals, busts, guards) are unaffected: all 90 reruns match the pilot outcome exactly, with observer fields exactly k ×, and in-process sequences now equal fresh processes. The pilot calibration must be remade before any launch.
   - **Result: rule 2b, STOP.** Every exit is insolvency; calibration chains (no fixed cost) have none. Seconds exiting by day 30 at ds 0, cash 2: 44/45 (α 0) and 42/45 (α 1). Seconds gross per day is about 8% of the genuine baseline the fixed cost is sized to (fish −$0.47 vs $18.03). Also reported: genuine stalls in A|thin|·|t100|ds0 exit 48 and 50 of 54 by day 30. Proposal and open points in `runs/pilot_aisles.md`; nothing changed in the engine.
+- 2026-11-26 (evening), Randall approved the proposal with two additions and these deviations, all decided before any main-run result:
+  - **D5 (estimand, decided by Randall).** The primary estimand becomes a ratio of means: per aisle and seed, (sum of gains) / (sum of never-chain profits) over the sampled stalls, then mean and 95% t over seeds; reported with the number of stall-seeds whose never-chain profit is ≤ 0; the per-stall mean of ratios is kept as the secondary figure. Reason (Randall): thin-margin honest profits near or below 0 make per-stall ratios unstable and bias the thin-vs-fat comparison. Note: under D2 each aisle has one sampled stall per seed, so the per-aisle figure is that stall's own ratio (undefined when its never profit is ≤ 0); the pooled figure sums the seed's three stalls.
+  - **D6 (engine 1.3.1, decided by Randall; 3c4bd3b).** Each stall's fixed cost = fixed_cost_share × max(0, its own type's baseline gross), the type baselines calibrated per category and type in fresh calibration chains; start cash and credit stay on the genuine baseline. Seconds get a per-category cost target, `seconds_cost_share` = the genuine cost share (PLACEHOLDER: fish 0.70, electronics 0.77, designer 0.20; Run A's thin 0.70, fat 0.20): a seconds stall's unit cost at the cheap mean quality is that share of the seconds price at rating 1.0. Genuine and deceptive costs, bust-outs included, are unchanged. `tests/test_v131.py` 12/12 (with test_v130 and the reference digests, 43/43). Fixed cost is charged by the stall's type that morning; a bust-out keeps the stall's type (genuine), so its fixed cost does not change.
+  - **D7 (gates and outcome, decided by Randall).** G2d: seconds baseline gross > 0 in every category of every calibration scenario. G4b: genuine stalls exiting before day 10 ≤ 5% in every cell. G4 still applies. Exits by type and reason in every cell are an exploratory outcome. The thin-margin genuine exits are kept, not calibrated away.
+  - The first pilot's outputs moved to `runs/pilot_aisles_130/` (the chain cache is keyed without the engine version, so it must not be reused).

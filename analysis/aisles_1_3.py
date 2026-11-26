@@ -54,6 +54,21 @@ reproduce from a second calculation and a rerun chain); G3 timing <= 14 h (if ov
 2026-11-26, run the full design and log the deviation); G4 exits per cell, STOP if any cell's never chains exit more
 than half of all stalls before day 10; G5 stuck, parked and idle counts 0.
 
+Changes after the first pilot (2026-11-26; deviations in runs/STATUS.md, decided by Randall before any main-run result;
+the first pilot's outputs are kept as run in runs/pilot_aisles_130/):
+  D3  exit_reason (insolvency / other) in every job record, read from the outcome only.
+  D4  bug fix: the observers are installed once per process (the first pilot stacked them per job).
+  D5  primary estimand: per aisle and seed, (sum of gains) / (sum of never-chain profits) over the sampled stalls
+      (pooled: the three stalls of the seed; per aisle: that aisle's stall, one per seed under D2), undefined when the
+      sum is <= 0; mean and 95% t over seeds. Reported with the count of stall-seeds whose never-chain profit is <= 0.
+      The per-stall mean of ratios above is kept as the secondary figure.
+  D6  engine 1.3.1: each stall's fixed cost is fixed_cost_share x its own type's baseline gross (calibrated per
+      category and type in the same calibration chains), floored at 0; start cash and credit stay on the genuine
+      baseline. Seconds get seconds_cost_share = the genuine cost_share of the profile (PLACEHOLDER).
+  D7  gates: G2d, seconds baseline gross > 0 in every category of every calibration scenario; G4b, genuine stalls
+      exiting before day 10 <= 5% in every cell (G4 still applies). Exits by type and reason in every cell are an
+      exploratory outcome. The thin-margin genuine exits are kept, not calibrated away.
+
 Compute (plan): 7 workers at normal priority, caffeinate, free-memory guard on, blocks of at most 10 h.
 
     .venv/bin/python -m analysis.aisles_1_3 --phase pilot
@@ -100,14 +115,17 @@ PILOT_DIR = f"{OUT}/pilot_aisles"
 TIME_LIMIT_H = 14.0
 
 # The plan's Stage 1 table (PLACEHOLDER values), per aisle.
+# D6 (engine 1.3.1, Randall 2026-11-26): seconds_cost_share = the genuine cost_share of the same profile (PLACEHOLDER).
 REAL = {"fish": {"cost_share": 0.70, "cheap_share": 0.80, "fixed_cost_share": 0.90, "inspect_sigma": 0.15,
-                 "inspect_cost_mult": 1.0, "review_accuracy": 0.95},
+                 "inspect_cost_mult": 1.0, "review_accuracy": 0.95, "seconds_cost_share": 0.70},
         "electronics": {"cost_share": 0.77, "cheap_share": 0.55, "fixed_cost_share": 0.85, "inspect_sigma": 0.02,
-                        "inspect_cost_mult": 0.5, "review_accuracy": 0.90},
+                        "inspect_cost_mult": 0.5, "review_accuracy": 0.90, "seconds_cost_share": 0.77},
         "designer": {"cost_share": 0.20, "cheap_share": 0.30, "fixed_cost_share": 0.50, "inspect_sigma": 0.25,
-                     "inspect_cost_mult": 3.0, "review_accuracy": 0.60}}
-MARGIN = {"thin": {"cost_share": 0.70, "cheap_share": 0.80, "fixed_cost_share": 0.90},
-          "fat": {"cost_share": 0.20, "cheap_share": 0.30, "fixed_cost_share": 0.50}}
+                     "inspect_cost_mult": 3.0, "review_accuracy": 0.60, "seconds_cost_share": 0.20}}
+MARGIN = {"thin": {"cost_share": 0.70, "cheap_share": 0.80, "fixed_cost_share": 0.90, "seconds_cost_share": 0.70},
+          "fat": {"cost_share": 0.20, "cheap_share": 0.30, "fixed_cost_share": 0.50, "seconds_cost_share": 0.20}}
+TYPES = ("genuine", "seconds", "deceptive")
+G4B_LIMIT = 0.05
 VERIF = {"easy": {"inspect_sigma": 0.02, "inspect_cost_mult": 0.5, "review_accuracy": 0.95},
          "hard": {"inspect_sigma": 0.25, "inspect_cost_mult": 3.0, "review_accuracy": 0.60}}
 SHARES = {"t40": {"tourist": 0.4, "local": 0.3, "expert": 0.3}, "t100": {"tourist": 1.0, "local": 0.0, "expert": 0.0}}
@@ -189,7 +207,8 @@ def cal_config(group: str, seed: int):
 def cell_config(c, seed: int, cal: dict):
     P = _cell_parts(c)
     g = cal[cal_group(c)]
-    prof = {k: {**v, "baseline_gross_cents": g["baseline"][k]} for k, v in P["prof"].items()}
+    prof = {k: {**v, "baseline_gross_cents": g["baseline"][k],
+                "baseline_gross_by_type_cents": g["baseline_by_type"][k]} for k, v in P["prof"].items()}
     ov = [*_common(P["t"], P["ds"], P["gamma"], seed), f"categories.profiles={json.dumps(prof)}",
           "sellers.solvency.enabled=true", f"sellers.solvency.start_cash_days={P['cash']!r}"]
     if P["alpha"] > 0:
@@ -439,9 +458,14 @@ def calibrate(recs: list[dict], groups) -> dict:
         rs = [r for r in recs if r["kind"] == "cal" and r["name"] == g]
         num = {c: 0 for c in CATS}
         den = {c: 0 for c in CATS}
+        tnum = {c: {t: 0 for t in TYPES} for c in CATS}
+        tden = {c: {t: 0 for t in TYPES} for c in CATS}
         grp = {}
         for r in rs:
             for s, a in r["stall_agg"].items():
+                c_ = r["spots"][s][0]
+                tnum[c_][a["stype"]] += a["gross"]
+                tden[c_][a["stype"]] += a["days_in"]
                 if a["stype"] != "genuine":
                     continue
                 c, k = r["spots"][s]
@@ -451,7 +475,13 @@ def calibrate(recs: list[dict], groups) -> dict:
                 x[0] += a["gross"]
                 x[1] += a["days_in"]
         base = {c: round(num[c] / den[c], 2) if den[c] else None for c in CATS}
+        # D6: each type's own baseline (mean daily gross over its stall-days in the market), for the fixed cost
+        btype = {c: {t: round(tnum[c][t] / tden[c][t], 2) if tden[c][t] else 0.0 for t in TYPES} for c in CATS}
         adv, flags = {}, []
+        for c in CATS:
+            for t in TYPES:
+                if not tden[c][t]:
+                    flags.append(f"{g}: no {t} stall-day in {c}; type baseline set to 0")
         for c in CATS:
             means = {}
             for k in range(4):
@@ -465,8 +495,9 @@ def calibrate(recs: list[dict], groups) -> dict:
                 adv[f"{c}|{k}"] = round(means[k] - mbar, 2) if k in means else 0.0
         spots = rs[0]["spots"] if rs else {}
         table = {s: adv[f"{c}|{k}"] for s, (c, k) in sorted(spots.items())}
-        out[g] = {"baseline": base, "advantage": adv, "rent_table": table, "flags": flags,
-                  "seeds": sorted({r["seed"] for r in rs}), "stall_days": den}
+        out[g] = {"baseline": base, "baseline_by_type": btype, "advantage": adv, "rent_table": table,
+                  "flags": flags, "seeds": sorted({r["seed"] for r in rs}), "stall_days": den,
+                  "stall_days_by_type": tden}
     return out
 
 
@@ -517,6 +548,28 @@ def per_seed(G, seeds, samples, field="share", aisle=None) -> list:
     return vals
 
 
+def per_seed_ratio(G, seeds, samples, aisle=None) -> list:
+    """D5 (Randall, 2026-11-26), the primary estimand: per seed, (sum of gains) / (sum of never-chain profits) over
+    the sampled stalls (all three, or the aisle's), None when that sum is <= 0 or a stall is missing."""
+    vals = []
+    for sd in seeds:
+        g = G.get(sd)
+        idx = range(3) if aisle is None else [CATS.index(aisle)]
+        ss = [samples[sd][i] for i in idx]
+        if g is None or any(s not in g for s in ss):
+            vals.append(None)
+            continue
+        den = sum(g[s]["never"] for s in ss)
+        vals.append(sum(g[s]["gain"] for s in ss) / den if den > 0 else None)
+    return vals
+
+
+def honest_le0(G, samples, aisle=None) -> int:
+    """D5: stall-seeds whose never-chain profit is <= 0 (reported with the estimand)."""
+    return sum(1 for sd, g in G.items() for i, s in enumerate(samples[sd])
+               if (aisle is None or CATS[i] == aisle) and s in g and g[s]["never"] <= 0)
+
+
 def base_units(G, samples, cfg_base) -> None:
     for sd, g in G.items():
         for i, s in enumerate(samples[sd]):
@@ -560,8 +613,24 @@ def exits_summary(recs, name, seeds) -> dict:
             total += 1
             early += d < 10
             by_type[types[s]] = by_type.get(types[s], 0) + 1
+    # D7: exits by type and reason (exploratory outcome; G4b reads the genuine row)
+    tr = {t: {"stalls": 0, "before10": 0, "by30": 0, "before10_insolvency": 0, "by30_insolvency": 0} for t in TYPES}
+    for r in rs:
+        types = {s: a["stype"] for s, a in r["stall_agg"].items()}
+        for t in types.values():
+            tr[t]["stalls"] += 1
+        for s, d in r["exited"].items():
+            x = tr[types[s]]
+            ins = r.get("exit_reason", {}).get(s) == "insolvency"
+            x["by30"] += 1
+            x["before10"] += d < 10
+            x["by30_insolvency"] += ins
+            x["before10_insolvency"] += ins and d < 10
+    for t in TYPES:
+        tr[t]["share_before10"] = tr[t]["before10"] / tr[t]["stalls"] if tr[t]["stalls"] else None
     return {"chains": len(rs), "stalls": n, "exit_before_day10": early, "share_before_day10": early / n if n else None,
-            "exit_by_day30": total, "share_by_day30": total / n if n else None, "by_type": by_type}
+            "exit_by_day30": total, "share_by_day30": total / n if n else None, "by_type": by_type,
+            "by_type_reason": tr}
 
 
 def entrance_gap(recs, name, seeds) -> dict:
@@ -640,6 +709,9 @@ def g2_costs(cal) -> dict:
                 if abs(CAT.unit_cost(cfg, cat, qh) - g) > 0.5 or \
                         abs(CAT.unit_cost(cfg, cat, ql) - p["cheap_share"] * g) > 0.5:
                     bad.append(f"{cell_name(c)} {cat}")
+                gs = p["seconds_cost_share"] * CAT.seconds_price_at_top(cfg, cat)        # D6: seconds target
+                if abs(CAT.unit_cost(cfg, cat, ql, "seconds") - gs) > 0.5:
+                    bad.append(f"{cell_name(c)} {cat} seconds")
     return {"bad": bad, "pass": not bad}
 
 
@@ -711,17 +783,28 @@ def main():
                    "chain_cpu_s_mean": round(float(np.mean(secs)), 2) if secs else None},
             "G4": {"cells": g4, "max_share_before_day10": max(v["share_before_day10"] or 0 for v in g4.values()),
                    "pass": all((v["share_before_day10"] or 0) <= 0.5 for v in g4.values())},
+            # D7 (Randall, 2026-11-26): genuine stalls exiting before day 10 <= 5% in every cell
+            "G4b": {"genuine_share_before10": {n: v["by_type_reason"]["genuine"]["share_before10"] for n, v in g4.items()},
+                    "limit": G4B_LIMIT,
+                    "pass": all((v["by_type_reason"]["genuine"]["share_before10"] or 0) <= G4B_LIMIT
+                                for v in g4.values())},
+            # D6 test: seconds gross > 0 in every category in the calibration chains
+            "G2d": {"seconds_baseline": {g: cal[g]["baseline_by_type"] and {c: cal[g]["baseline_by_type"][c]["seconds"]
+                                                                            for c in CATS} for g in cal},
+                    "pass": all(cal[g]["baseline_by_type"][c]["seconds"] > 0 for g in cal for c in CATS)},
             "G5": {"guard": guard, "pass": not (guard["stuck_buyers"] or guard["idle_choosers"] or guard["parked"]
                                                 or guard["fallbacks"])},
             "samples": samples, "calibration_flags": {g: v["flags"] for g, v in cal.items() if v["flags"]},
             "wall_s": round(time.time() - t0, 1), "memory_pauses": p1 + p2,
         }
-        gates["all_pass_except_G3"] = all(gates[g]["pass"] for g in ("G1", "G2a", "G2b", "G2c", "G4", "G5"))
+        gates["all_pass_except_G3"] = all(gates[g]["pass"] for g in ("G1", "G2a", "G2b", "G2c", "G2d", "G4", "G4b",
+                                                                     "G5"))
         with open(f"{PILOT_DIR}/aisles_pilot_gates.json", "w", encoding="utf-8") as f:
             json.dump(gates, f, indent=1, sort_keys=True, default=str)
         log(f"pilot: G1 {gates['G1']['pass']}, G2a {gates['G2a']['pass']}, G2b {gates['G2b']['pass']}, G2c "
-            f"{gates['G2c']['pass']}, G3 {proj_h:.1f} h (limit {TIME_LIMIT_H}), G4 max early-exit share "
-            f"{gates['G4']['max_share_before_day10']:.3f}, G5 {guard}; all pass except G3: "
+            f"{gates['G2c']['pass']}, G2d {gates['G2d']['pass']}, G3 {proj_h:.1f} h (limit {TIME_LIMIT_H}), G4 max "
+            f"early-exit share {gates['G4']['max_share_before_day10']:.3f}, G4b {gates['G4b']['pass']}, G5 {guard}; "
+            f"all pass except G3: "
             f"{gates['all_pass_except_G3']}")
     elif a.phase == "run":
         log = CR.file_logger(f"{OUT}/aisles_run.log")
@@ -769,6 +852,11 @@ def analyse(recs, runs, samples, cal) -> dict:
                 Gs[n] = G
                 cell = {"exits": exits_summary(recs, n, seeds),
                         "undefined_share": sum(1 for sd in G for s in G[sd] if G[sd][s]["share"] is None),
+                        "honest_le0": {"pooled": honest_le0(G, samples), **{c_: honest_le0(G, samples, c_) for c_ in CATS}},
+                        "ratio": {"pooled": mean_ci(per_seed_ratio(G, seeds, samples)),
+                                  **{c_: mean_ci(per_seed_ratio(G, seeds, samples, c_)) for c_ in CATS}},
+                        "per_seed_ratio": per_seed_ratio(G, seeds, samples),
+                        "per_seed_ratio_by_aisle": {c_: per_seed_ratio(G, seeds, samples, c_) for c_ in CATS},
                         "best_day": {}}
                 for f in ("share", "dollars", "base_units"):
                     cell[f] = {"pooled": mean_ci(per_seed(G, seeds, samples, f)),
@@ -779,73 +867,72 @@ def analyse(recs, runs, samples, cal) -> dict:
                         cell["best_day"][b] = cell["best_day"].get(b, 0) + 1
                 cell["per_seed_share"] = per_seed(G, seeds, samples, "share")
                 cell["per_seed_share_by_aisle"] = {c_: per_seed(G, seeds, samples, "share", c_) for c_ in CATS}
-                # ratio of sums per seed (sensitivity)
-                rsum = []
-                for sd in seeds:
-                    g = G.get(sd, {})
-                    num = sum(v["gain"] for v in g.values())
-                    den = sum(v["never"] for v in g.values())
-                    rsum.append(num / den if den > 0 else None)
-                cell["ratio_of_sums"] = mean_ci(rsum)
                 out["cells"][n] = cell
-            P = lambda n, aisle=None: per_seed(Gs[n], seeds, samples, "share", aisle)
-            if r == "A":
-                pr = {}
-                for m in MARGIN:
-                    st = diff(P(f"A|{m}|easy|t40|ds0"), P(f"A|{m}|hard|t40|ds0"))
-                    pr[f"PA1|{m}"] = {"what": f"t40 ds0 {m}: hard - easy", "stat": st, "verdict": verdict(st, +1)}
-                for v in VERIF:
-                    st = diff(P(f"A|fat|{v}|t40|ds0"), P(f"A|thin|{v}|t40|ds0"))
-                    pr[f"PA2|{v}"] = {"what": f"t40 ds0 {v}: thin - fat", "stat": st, "verdict": verdict(st, +1)}
-                for m in MARGIN:
+            def predictions(P):
+                if r == "A":
+                    pr = {}
+                    for m in MARGIN:
+                        st = diff(P(f"A|{m}|easy|t40|ds0"), P(f"A|{m}|hard|t40|ds0"))
+                        pr[f"PA1|{m}"] = {"what": f"t40 ds0 {m}: hard - easy", "stat": st, "verdict": verdict(st, +1)}
                     for v in VERIF:
-                        for t in SHARES:
-                            st = mean_ci(P(f"A|{m}|{v}|{t}|ds1"))
-                            pr[f"PA3|{m}|{v}|{t}"] = {"what": f"ds1 {m} {v} {t}: gain share", "stat": st,
-                                                      "verdict": verdict(st, -1)}
-                # PA4 exploratory: interaction at t40 ds0, t100 analogues
-                inter = [None if None in (a_, b_, c_, d_) else (d_ - c_) - (b_ - a_) for a_, b_, c_, d_ in
-                         zip(P("A|fat|easy|t40|ds0"), P("A|fat|hard|t40|ds0"), P("A|thin|easy|t40|ds0"),
-                             P("A|thin|hard|t40|ds0"))]
-                pr["PA4|interaction|t40"] = {"what": "(thin hard - thin easy) - (fat hard - fat easy), t40 ds0",
-                                             "stat": mean_ci(inter), "verdict": "exploratory"}
-                for m in MARGIN:
-                    st = diff(P(f"A|{m}|easy|t100|ds0"), P(f"A|{m}|hard|t100|ds0"))
-                    pr[f"PA4|t100|PA1|{m}"] = {"what": f"t100 ds0 {m}: hard - easy", "stat": st,
-                                               "verdict": "exploratory"}
-                for v in VERIF:
-                    st = diff(P(f"A|fat|{v}|t100|ds0"), P(f"A|thin|{v}|t100|ds0"))
-                    pr[f"PA4|t100|PA2|{v}"] = {"what": f"t100 ds0 {v}: thin - fat", "stat": st,
-                                               "verdict": "exploratory"}
-                for k in ("PA1", "PA2"):
-                    vs = [x["verdict"] for kk, x in pr.items() if kk.startswith(k + "|")]
-                    pr[k] = {"verdict": "supported" if all(x == "supported" for x in vs) else
-                             ("partly supported" if any(x == "supported" for x in vs) else
-                              ("contradicted" if all(x == "contradicted" for x in vs) else "not supported")),
-                             "parts": vs}
-                vs = [x["verdict"] for kk, x in pr.items() if kk.startswith("PA3|")]
-                pr["PA3"] = {"verdict": "supported" if all(x == "supported" for x in vs) else
-                             ("partly supported" if any(x == "supported" for x in vs) else "not supported"),
-                             "parts": vs, "supported_cells": sum(x == "supported" for x in vs)}
-            else:
-                pr = {}
-                st = diff(P("B|cash20|a0|ds0"), P("B|cash2|a0|ds0"))
-                pr["PB1"] = {"what": "ds0 a0: start cash 2 - start cash 20, pooled", "stat": st,
-                             "verdict": verdict(st, +1)}
-                st = diff(P("B|cash20|a0|ds0", "fish"), P("B|cash20|a0|ds0", "designer"))
-                pr["PB2"] = {"what": "ds0 cash20 a0: designer - fish", "stat": st, "verdict": verdict(st, +1)}
-                for aisle in CATS:
-                    st = diff(P("B|cash20|a0|ds0", aisle), P("B|cash2|a0|ds0", aisle))
-                    pr[f"PB3|cash|{aisle}"] = {"what": f"ds0 a0 {aisle}: cash 2 - cash 20", "stat": st,
-                                               "verdict": "exploratory"}
-                for cash in ("2", "20"):
-                    st = diff(P(f"B|cash{cash}|a0|ds0"), P(f"B|cash{cash}|a1|ds0"))
-                    pr[f"PB3|alpha|cash{cash}"] = {"what": f"ds0 cash {cash}: alpha 1 - alpha 0", "stat": st,
+                        st = diff(P(f"A|fat|{v}|t40|ds0"), P(f"A|thin|{v}|t40|ds0"))
+                        pr[f"PA2|{v}"] = {"what": f"t40 ds0 {v}: thin - fat", "stat": st, "verdict": verdict(st, +1)}
+                    for m in MARGIN:
+                        for v in VERIF:
+                            for t in SHARES:
+                                st = mean_ci(P(f"A|{m}|{v}|{t}|ds1"))
+                                pr[f"PA3|{m}|{v}|{t}"] = {"what": f"ds1 {m} {v} {t}: gain share", "stat": st,
+                                                          "verdict": verdict(st, -1)}
+                    # PA4 exploratory: interaction at t40 ds0, t100 analogues
+                    inter = [None if None in (a_, b_, c_, d_) else (d_ - c_) - (b_ - a_) for a_, b_, c_, d_ in
+                             zip(P("A|fat|easy|t40|ds0"), P("A|fat|hard|t40|ds0"), P("A|thin|easy|t40|ds0"),
+                                 P("A|thin|hard|t40|ds0"))]
+                    pr["PA4|interaction|t40"] = {"what": "(thin hard - thin easy) - (fat hard - fat easy), t40 ds0",
+                                                 "stat": mean_ci(inter), "verdict": "exploratory"}
+                    for m in MARGIN:
+                        st = diff(P(f"A|{m}|easy|t100|ds0"), P(f"A|{m}|hard|t100|ds0"))
+                        pr[f"PA4|t100|PA1|{m}"] = {"what": f"t100 ds0 {m}: hard - easy", "stat": st,
                                                    "verdict": "exploratory"}
-                st = diff(P("B|cash20|a0|ds1"), P("B|cash2|a0|ds1"))
-                pr["PB3|ds1|PB1"] = {"what": "ds1 a0: cash 2 - cash 20", "stat": st, "verdict": "exploratory"}
-                st = diff(P("B|cash20|a0|ds1", "fish"), P("B|cash20|a0|ds1", "designer"))
-                pr["PB3|ds1|PB2"] = {"what": "ds1 cash20 a0: designer - fish", "stat": st, "verdict": "exploratory"}
+                    for v in VERIF:
+                        st = diff(P(f"A|fat|{v}|t100|ds0"), P(f"A|thin|{v}|t100|ds0"))
+                        pr[f"PA4|t100|PA2|{v}"] = {"what": f"t100 ds0 {v}: thin - fat", "stat": st,
+                                                   "verdict": "exploratory"}
+                    for k in ("PA1", "PA2"):
+                        vs = [x["verdict"] for kk, x in pr.items() if kk.startswith(k + "|")]
+                        pr[k] = {"verdict": "supported" if all(x == "supported" for x in vs) else
+                                 ("partly supported" if any(x == "supported" for x in vs) else
+                                  ("contradicted" if all(x == "contradicted" for x in vs) else "not supported")),
+                                 "parts": vs}
+                    vs = [x["verdict"] for kk, x in pr.items() if kk.startswith("PA3|")]
+                    pr["PA3"] = {"verdict": "supported" if all(x == "supported" for x in vs) else
+                                 ("partly supported" if any(x == "supported" for x in vs) else "not supported"),
+                                 "parts": vs, "supported_cells": sum(x == "supported" for x in vs)}
+                else:
+                    pr = {}
+                    st = diff(P("B|cash20|a0|ds0"), P("B|cash2|a0|ds0"))
+                    pr["PB1"] = {"what": "ds0 a0: start cash 2 - start cash 20, pooled", "stat": st,
+                                 "verdict": verdict(st, +1)}
+                    st = diff(P("B|cash20|a0|ds0", "fish"), P("B|cash20|a0|ds0", "designer"))
+                    pr["PB2"] = {"what": "ds0 cash20 a0: designer - fish", "stat": st, "verdict": verdict(st, +1)}
+                    for aisle in CATS:
+                        st = diff(P("B|cash20|a0|ds0", aisle), P("B|cash2|a0|ds0", aisle))
+                        pr[f"PB3|cash|{aisle}"] = {"what": f"ds0 a0 {aisle}: cash 2 - cash 20", "stat": st,
+                                                   "verdict": "exploratory"}
+                    for cash in ("2", "20"):
+                        st = diff(P(f"B|cash{cash}|a0|ds0"), P(f"B|cash{cash}|a1|ds0"))
+                        pr[f"PB3|alpha|cash{cash}"] = {"what": f"ds0 cash {cash}: alpha 1 - alpha 0", "stat": st,
+                                                       "verdict": "exploratory"}
+                    st = diff(P("B|cash20|a0|ds1"), P("B|cash2|a0|ds1"))
+                    pr["PB3|ds1|PB1"] = {"what": "ds1 a0: cash 2 - cash 20", "stat": st, "verdict": "exploratory"}
+                    st = diff(P("B|cash20|a0|ds1", "fish"), P("B|cash20|a0|ds1", "designer"))
+                    pr["PB3|ds1|PB2"] = {"what": "ds1 cash20 a0: designer - fish", "stat": st, "verdict": "exploratory"}
+                return pr
+
+            # D5 (Randall, 2026-11-26): primary = per-seed ratio of sums; secondary = per-stall mean of ratios
+            pr = predictions(lambda n, aisle=None: per_seed_ratio(Gs[n], seeds, samples, aisle))
+            sec = predictions(lambda n, aisle=None: per_seed(Gs[n], seeds, samples, "share", aisle))
+            for k, v in pr.items():
+                v["secondary_mean_of_ratios"] = {kk: sec[k][kk] for kk in ("stat", "verdict", "parts") if kk in sec[k]}
             out["predictions"] = pr
         else:
             for c in CELLS[r]:

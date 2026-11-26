@@ -1,4 +1,6 @@
-# Pilot: aisles study (plan 2026-11-27, Stage 2), seeds 900–902
+# Pilot: aisles study (plan 2026-11-27, Stage 2), seeds 900–902 (first pilot, engine 1.3.0)
+
+The first pilot's files have moved to `runs/pilot_aisles_130/` (gates, logs, exits table, calibration, cache); paths below are as written at the time. The second pilot (engine 1.3.1) is reported in `runs/pilot_aisles_131.md`.
 
 **BLUF. STOP at G4.**
 - Gates G1, G2 (all three parts), G3 and G5 pass.
