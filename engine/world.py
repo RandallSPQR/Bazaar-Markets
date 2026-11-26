@@ -17,6 +17,7 @@ import math
 
 import numpy as np
 
+from . import categories as CAT
 from .config import BazaarConfig
 
 BRANDS = {
@@ -93,6 +94,9 @@ class Stall:
     white_label: bool = False         # a licensee under its own fresh brand (licensing.brand "white_label")
     # engine 1.1.0
     units_hist: list = field(default_factory=list)   # units sold on each of the last 7 days, oldest first
+    # engine 1.3.0 (engine/categories.py)
+    overhead_cents: int = 0           # today's fixed cost and rent, charged in the morning
+    cash_cents: int | None = None     # sellers.solvency: cash at the end of the last day (None when off)
 
     def truth(self) -> dict:
         return {"sid": self.sid, "category": self.category, "stype": self.stype, "pos": list(self.pos),
@@ -232,7 +236,7 @@ def build_stalls(cfg: BazaarConfig, layout: Layout, rng: np.random.Generator) ->
         stalls.append(Stall(
             sid=f"s{i:02d}", idx=i, category=c, stype=stype, pos=pos, brand=brand,
             q_true=round(q_true, 4), q_pitch=round(q_pitch, 4), sign=sign, price_cents=int(price),
-            unit_cost_cents=int(round(base * (pr.unit_cost[0] + pr.unit_cost[1] * q_true))),
+            unit_cost_cents=CAT.unit_cost(cfg, c, q_true),     # 1.3.0: categories.profiles (1.2.0 expression without)
             yell_cost_cents=int(round(base * pr.yell_cost_frac)),
             whisper_cost_cents=int(round(base * pr.whisper_cost_frac)),
             penalty_cents=int(round(base * pr.penalty_mult))))
@@ -287,18 +291,23 @@ def position_ranks(cat_stalls: list, from_left: bool) -> dict:
     return {st.sid: r[st.pos[0]] for st in cat_stalls}
 
 
-def consideration_set(cfg: BazaarConfig, root: tuple, i: int, cat_stalls: list) -> tuple[bool, list]:
+def consideration_set(cfg: BazaarConfig, root: tuple, i: int, cat_stalls: list,
+                      profile: str | None = None) -> tuple[bool, list]:
     """Entrance end and consideration set of buyer i (buyers.demand_mode "choice_set"), from the
     stream [root, 18, i]: one draw for the entrance (left end with probability 1/2), then
     buyers.consider draws for the set, always all consumed. Successive sampling without
     replacement with weight exp(-position_rent x position rank); position_rent = 0 is uniform.
-    Returns (enters from the left, set members in walking order)."""
+    Returns (enters from the left, set members in walking order). 1.3.0: buyers.gamma_by_profile[profile], when set,
+    replaces position_rent for this buyer."""
     bc = cfg.buyers
     rng = np.random.default_rng([*root, 18, i])
     left = bool(rng.random() < 0.5)
     u = rng.random(int(bc.consider))
     ranks = position_ranks(cat_stalls, left)
     g = float(bc.position_rent)
+    gp = bc.gamma_by_profile or {}
+    if profile in gp:
+        g = float(gp[profile])
     pool = sorted(cat_stalls, key=lambda st: st.idx)
     chosen = []
     for k in range(min(int(bc.consider), len(pool))):
@@ -384,7 +393,7 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
         arrive = int(round(i * last_arrival / max(1, bc.count)))
         route, consider = random_route(), None
         if choice:
-            left, members = consideration_set(cfg, root, i, by_cat[cat])
+            left, members = consideration_set(cfg, root, i, by_cat[cat], profile)
             route = layout.route_through([mk.categories.index(cat)], left)
             consider = members
         people.append(Person(
@@ -394,7 +403,7 @@ def build_people(cfg: BazaarConfig, layout: Layout, rng_routes: np.random.Genera
                   **({} if bc.budget_factor_override is None else {"budget_factor": factor}),
                   **({"bargain": True} if is_bargain else {}),
                   **({"consider": consider} if choice else {})},
-            inspect_cost_cents=int(round(base_cat[cat] * bc.inspect_cost_frac[profile])),
+            inspect_cost_cents=CAT.inspect_cost_cents(cfg, cat, profile),   # 1.3.0: profile inspect_cost_mult
             consider=None if consider is None else frozenset(consider)))
 
     # Inspectors. Observable profile follows the feature-correlation dial.

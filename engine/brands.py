@@ -379,7 +379,9 @@ def update_brand_ratings(book: BrandBook, buys: list[dict], memory: float, extra
             continue
         n = b["filed_under"]
         claimed[n] = claimed.get(n, 0) + b["units"]
-        if b["q_true"] >= b["known_claims"][-1] - 1e-12:
+        if "judged_honest_units" in b:            # 1.3.0: categories.profiles review_accuracy
+            honest[n] = honest.get(n, 0) + b["judged_honest_units"]
+        elif b["q_true"] >= b["known_claims"][-1] - 1e-12:
             honest[n] = honest.get(n, 0) + b["units"]
     for n, c in claimed.items():
         w = book.prior_w.get(n, 0.0)
@@ -400,6 +402,5 @@ def bust_quality(cfg, st) -> float:
 
 
 def unit_cost(cfg, st, q: float) -> int:
-    pr = cfg.pricing
-    base = pr.base_price_cents[st.category]
-    return int(round(base * (pr.unit_cost[0] + pr.unit_cost[1] * float(q))))
+    from . import categories as CAT                 # 1.3.0: categories.profiles (the 1.2.0 expression without)
+    return CAT.unit_cost(cfg, st.category, q)

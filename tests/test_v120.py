@@ -22,7 +22,7 @@ REF = "configs/reference_1_0.json"
 
 
 def test_version():
-    assert ENGINE_VERSION == "1.2.0"
+    assert tuple(int(x) for x in ENGINE_VERSION.split(".")) >= (1, 2, 0)     # 1.3.0 keeps every 1.2.0 test
 
 
 def _ref(*ov, seed=500, days=None):

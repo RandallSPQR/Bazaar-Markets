@@ -99,4 +99,11 @@ points, through role-specific JSON observations and schema-validated actions.
 #        LLM spend ceiling with a cross-run day limit, a price table, a response cache and a ledger; engine/budget.py;
 #        a refused call stops the run, marked INVALID: budget) and seller option sets (engine/checkpoint.py
 #        OPTION_SETS; "v2" leaves out license_contract_6). Defaults reproduce 1.1.0 byte for byte.
-ENGINE_VERSION = "1.2.0"
+# 1.3.0: categories.profiles (per category: unit cost rescaled to a cost share and a cheap-supply share at the mean
+#        qualities, a fixed daily cost as a share of a calibrated baseline daily gross profit, inspection noise from
+#        [seed, 41, day, buyer index, stall index] and an inspection cost multiplier, review accuracy from
+#        [seed, 43, day, stall index]), sellers.solvency (cash from start_cash_days x baseline; below
+#        -credit_limit_days x baseline at a day's end the stall leaves by the 0.15.0 exit rule), market.rent (alpha x
+#        a per-spot table, charged with the fixed cost in Stall.overhead_cents) and buyers.gamma_by_profile (per-profile
+#        position_rent). engine/categories.py. Defaults reproduce 1.2.0 byte for byte.
+ENGINE_VERSION = "1.3.0"

@@ -93,6 +93,19 @@ class MarketCfg:
     # Known horizon (engine 0.8.0): sellers' observations carry the day number and market.days
     # ("horizon") and their own previous day's ledger ("yesterday").
     horizon_known: bool = False
+    # Rent gradient (engine 1.3.0; engine/categories.py). See RentCfg. alpha 0 = 1.2.0 bytes.
+    rent: "RentCfg" = field(default_factory=lambda: RentCfg())
+
+
+@dataclass
+class RentCfg:
+    # Engine 1.3.0. Each morning a stall still in the market is charged rent = round half up(alpha x table[stall id])
+    # cents for its spot, in its accounts (Stall.overhead_cents). table: stall id -> the spot's traffic advantage, its
+    # expected extra daily gross profit (revenue - unit cost) over the mean spot, in cents; measured by the analysis
+    # from honest never chains with alpha 0 and stored per scenario (a negative entry is a rebate). alpha in [0, 1];
+    # 0 (default) = no rent, 1.2.0 bytes. alpha > 0 needs an entry for every stall.
+    alpha: float = 0.0
+    table: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -204,6 +217,10 @@ class BuyersCfg:
     choice: str = "lexicographic"
     logit_rating_weight: float = 5.0
     logit_price_weight: float = 5.0
+    # Engine 1.3.0 (plan 2026-11-27 calls position_rent "market.gamma"): per profile ("tourist", "local", "expert"), the
+    # position_rent this buyer's consideration set uses (choice_set demand). Unset profiles use buyers.position_rent.
+    # Default {} = 1.2.0 bytes. Bargain hunters use their profile's value.
+    gamma_by_profile: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -226,6 +243,42 @@ class SellersCfg:
     # cost; m >= 0, default 0 = the 1.1.0 floor (the unit cost itself, unrounded expression unchanged). Ignored by
     # the other policies.
     undercut_floor_markup: float = 0.0
+    # Engine 1.3.0: solvency (engine/categories.py). See SolvencyCfg. Off by default (1.2.0 bytes).
+    solvency: "SolvencyCfg" = field(default_factory=lambda: SolvencyCfg())
+
+
+@dataclass
+class SolvencyCfg:
+    # Engine 1.3.0. When enabled, each stall starts day 1 with cash C0 = start_cash_days x B, B = its category's
+    # baseline daily gross profit (categories.profiles.<cat>.baseline_gross_cents, required for every category). At
+    # the end of each day cash += the day's profit (revenue - unit costs - ad spend - fines charged - switch costs -
+    # royalties paid + received - fixed cost - rent). A stall whose cash ends a day below -credit_limit_days x B leaves
+    # the market at the end of that day by the exit rule (engine 0.15.0): it never reopens and its fines not yet due
+    # are uncollectible.
+    enabled: bool = False
+    start_cash_days: float = 10.0
+    credit_limit_days: float = 3.0
+
+
+@dataclass
+class CategoriesCfg:
+    # Engine 1.3.0: category profiles (engine/categories.py). profiles: category -> {key: value}; a category with no
+    # profile (default {}: none) behaves exactly as 1.2.0. Keys, each optional (PLACEHOLDER values in the plan):
+    #   cost_share: genuine unit cost at the genuine mean quality (mean of stalls.q_high) as a share of the genuine
+    #     posted price at rating 1.0 (base x (1 + brands.premium x 0.5) with brands on, else base);
+    #   cheap_share: unit cost at the cheap mean quality (mean of stalls.q_low) as a share of that genuine unit cost.
+    #     With both set, the category's unit cost is base x (c0 + c1 x q), c0 and c1 solved so both targets hold at
+    #     the two mean qualities (rounded to the cent as before; never below 0). Needs both or neither.
+    #   baseline_gross_cents: a genuine stall's baseline daily gross profit (revenue - unit cost), in cents, measured
+    #     by the analysis from honest never chains; used by fixed_cost_share and sellers.solvency.
+    #   fixed_cost_share: each stall of the category is charged round half up(fixed_cost_share x
+    #     baseline_gross_cents) every morning it is in the market (Stall.overhead_cents).
+    #   inspect_sigma: a buyer's inspection sees q + N(0, sigma^2), clipped to [0, 1] and rounded to 4 decimals, one
+    #     draw from default_rng([seed, 41, day, buyer index, stall index]); 0 = exact (no draw).
+    #   inspect_cost_mult: multiplies the inspection cost (buyers.inspect_cost_frac[profile] x base); 1 = unchanged.
+    #   review_accuracy: each rated unit's honesty is judged correctly with this probability, otherwise flipped, one
+    #     uniform per rated unit in purchase order from default_rng([seed, 43, day, stall index]); 1 = exact (no draw).
+    profiles: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -450,6 +503,7 @@ class BazaarConfig:
     critics: CriticsCfg = field(default_factory=CriticsCfg)
     licensing: LicensingCfg = field(default_factory=LicensingCfg)
     sellers: SellersCfg = field(default_factory=SellersCfg)
+    categories: CategoriesCfg = field(default_factory=CategoriesCfg)
 
 
 PLACEHOLDERS = {
@@ -469,6 +523,9 @@ PLACEHOLDERS = {
     "buyers.logit_rating_weight": "5 soft / 20 sharp (placeholder 2026-11-19 plan, Stage 3)",
     "buyers.logit_price_weight": "5 soft / 20 sharp (placeholder 2026-11-19 plan, Stage 3)",
     "agents.budget.prices": "empty (placeholder 2026-11-23 plan, Stage 1): Randall fills in $ per million tokens",
+    "categories.profiles": "every value in plan 2026-11-27's Stage 1 table is a placeholder (fish, electronics, "
+                           "designer: cost share, cheap-supply share, fixed cost share, inspection noise and cost, "
+                           "review accuracy)",
 }
 
 
@@ -496,7 +553,8 @@ _SUBSECTIONS = {(BazaarConfig, "market"): MarketCfg, (BazaarConfig, "stalls"): S
                 (BazaarConfig, "evolution"): EvolutionCfg, (BazaarConfig, "ratings"): RatingsCfg,
                 (BazaarConfig, "brands"): BrandsCfg, (BazaarConfig, "critics"): CriticsCfg,
                 (BazaarConfig, "licensing"): LicensingCfg, (BazaarConfig, "sellers"): SellersCfg,
-                (AgentsCfg, "budget"): BudgetCfg}
+                (AgentsCfg, "budget"): BudgetCfg, (BazaarConfig, "categories"): CategoriesCfg,
+                (MarketCfg, "rent"): RentCfg, (SellersCfg, "solvency"): SolvencyCfg}
 
 
 def from_dict(d: dict):
@@ -553,4 +611,4 @@ def _deep_merge(a: dict, b: dict) -> dict:
 
 # Dict-valued fields that are replaced wholesale rather than merged key by key
 # (a partial share table should not silently keep default categories).
-_OPAQUE_DICTS = {"type_shares", "profile_shares", "search_depth", "prices"}
+_OPAQUE_DICTS = {"type_shares", "profile_shares", "search_depth", "prices", "table", "gamma_by_profile"}

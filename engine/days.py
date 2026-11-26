@@ -39,6 +39,7 @@ import copy
 import numpy as np
 
 from . import brands as B
+from . import categories as CAT
 from . import critics as C
 from . import licensing as LIC
 from .config import BazaarConfig
@@ -49,7 +50,7 @@ EXITED = 1 << 40        # closed_until of a stall that has left the market (0.15
 
 def stall_profit(st) -> int:
     return (st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents - st.switch_cost_cents
-            - st.royalty_paid_cents + st.royalty_received_cents)
+            - st.royalty_paid_cents + st.royalty_received_cents - st.overhead_cents)
 
 
 def update_ratings(stalls: list, buys: list[dict], memory: float) -> None:
@@ -64,7 +65,9 @@ def update_ratings(stalls: list, buys: list[dict], memory: float) -> None:
             continue
         sid = b["stall"]
         claimed[sid] = claimed.get(sid, 0) + b["units"]
-        if b["q_true"] >= b["known_claims"][-1] - 1e-12:
+        if "judged_honest_units" in b:            # 1.3.0: categories.profiles review_accuracy
+            honest[sid] = honest.get(sid, 0) + b["judged_honest_units"]
+        elif b["q_true"] >= b["known_claims"][-1] - 1e-12:
             honest[sid] = honest.get(sid, 0) + b["units"]
     for st in stalls:
         if claimed.get(st.sid):
@@ -83,7 +86,7 @@ def set_type(cfg: BazaarConfig, st, stype: str, hi: float, lo: float) -> None:
     else:
         raise ValueError(f"stalls cannot switch to {stype!r}")
     st.stype, st.q_true, st.q_pitch, st.sign, st.price_cents = stype, round(float(q_true), 4), round(float(q_pitch), 4), sign, int(price)
-    st.unit_cost_cents = int(round(base * (pr.unit_cost[0] + pr.unit_cost[1] * float(q_true))))
+    st.unit_cost_cents = CAT.unit_cost(cfg, st.category, q_true)
 
 
 def revise(cfg: BazaarConfig, stalls: list, profits: dict, day: int, sroot: tuple | None = None) -> list[dict]:
@@ -151,6 +154,7 @@ def reset_for_day(cfg: BazaarConfig, stalls: list) -> list:
         if s.licensed_from is not None:            # 0.16.0: a licensee shows the licence's sign
             s.sign = LIC.sign(cfg, s)
         s.royalty_paid_cents = s.royalty_received_cents = 0
+        s.overhead_cents = 0                       # 1.3.0: charged again each morning
         s.decided_today = False
         s.fines_pending = list(st.fines_pending)   # 0.15.0: lagged fines carry over
         if s.exited_day is not None:               # 0.15.0: a stall that left never reopens
@@ -239,6 +243,8 @@ def run_span(cfg: BazaarConfig, log, state: dict, first: int, last: int, day_fac
         out = eng.run(header=False)
         profits = {st.sid: stall_profit(st) for st in eng.stalls}
         reviews = None
+        if rated and CAT.reviews_noisy(cfg):      # 1.3.0: review accuracy, before any rating update
+            CAT.judge_reviews(cfg, eng.sroot, day, eng.purchases, eng.by_sid)
         crit = C.critics_day(cfg, book, eng.stalls, root, day) if C.critics_on(cfg) else None
         if rated and brands:
             reviews = B.update_brand_ratings(book, eng.purchases, cfg.ratings.memory,

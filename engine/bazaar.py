@@ -29,6 +29,7 @@ from .valuation import unit_value
 from .scaling import scaled_config
 from . import brands as B
 from . import budget as BUDGET
+from . import categories as CAT
 from . import critics as C
 from . import licensing as LIC
 from .world import (UNIFORMABLE, Layout, Person, Stall, build_people, build_stalls, refine_world, spec_text,
@@ -90,6 +91,7 @@ class BazaarEngine:
         self.rng_detect = np.random.default_rng([*r, 3])
         self.rng_treat = np.random.default_rng([*r, 5])
         self.rng_insp = np.random.default_rng([*r, 6])
+        CAT.validate(cfg)                         # 1.3.0: categories.profiles, sellers.solvency, market.rent
         self.layout = Layout(cfg)
         built = stalls is None
         self.stalls: list[Stall] = build_stalls(cfg, self.layout, self.rng_world) if built else stalls
@@ -228,6 +230,17 @@ class BazaarEngine:
                 for f in due:
                     st.penalties_cents += f["cents"]
                     self.fines["charged"].append((st.sid, f["cents"]))
+        # 1.3.0 (engine/categories.py): fixed cost and rent are charged every morning a stall is in the market;
+        # solvency starts each stall's cash on day 1.
+        self.overhead_on, self.solvency_on = CAT.overhead_on(cfg), CAT.solvency_on(cfg)
+        self.solvency_exits: list[str] = []
+        for st in self.stalls:
+            if st.exited_day is not None:
+                continue
+            if self.overhead_on:
+                st.overhead_cents = CAT.fixed_cost(cfg, st.category) + CAT.rent(cfg, st.sid)
+            if self.solvency_on and st.cash_cents is None:
+                st.cash_cents = CAT.start_cash(cfg, st.category)
 
     # ------------------------------------------------------------------ helpers
 
@@ -751,7 +764,9 @@ class BazaarEngine:
             p.inspect_spent_cents += p.inspect_cost_cents
             self.inspection_spend_cents += p.inspect_cost_cents
             self.inspections += 1
-            p.info.setdefault(st.sid, {"claims": [], "inspected_q": None})["inspected_q"] = st.q_true
+            # 1.3.0: categories.profiles inspect_sigma (exact without)
+            q_seen = CAT.inspected_quality(self.cfg, self.sroot, self.day, self.buyer_idx[p.pid], st, st.q_true)
+            p.info.setdefault(st.sid, {"claims": [], "inspected_q": None})["inspected_q"] = q_seen
             self._inspects_now.append({"buyer": p.pid, "stall": st.sid, "cost_cents": p.inspect_cost_cents})
         elif a["action"] == "buy":
             self.purchase(p, st, a["units"])
@@ -982,10 +997,12 @@ class BazaarEngine:
             if self.licensing_on:
                 d["royalty_paid_cents"] = d.get("royalty_paid_cents", 0) + st.royalty_paid_cents
                 d["royalty_received_cents"] = d.get("royalty_received_cents", 0) + st.royalty_received_cents
+            if self.overhead_on:                  # 1.3.0
+                d["overhead_cents"] = d.get("overhead_cents", 0) + st.overhead_cents
         for d in by_type.values():
             d["profit_cents"] = (d["revenue_cents"] - d["cost_cents"] - d["ad_spend_cents"] - d["penalties_cents"]
                                  - d.get("switch_cost_cents", 0) - d.get("royalty_paid_cents", 0)
-                                 + d.get("royalty_received_cents", 0))
+                                 + d.get("royalty_received_cents", 0) - d.get("overhead_cents", 0))
             d["profit_per_stall_cents"] = d["profit_cents"] / d["stalls"]
         reach = [p for p in arrived if self.is_reachable(p)]
         r_surplus = [p.value - p.paid_cents - p.inspect_spent_cents for p in reach]
@@ -1033,11 +1050,25 @@ class BazaarEngine:
             **self.stuck_guard(),
             "liability": self.liability_outcome(),
             **({"licensing": LIC.outcome(self)} if self.licensing_on else {}),
+            **({"solvency": {"exits": sorted(self.solvency_exits),
+                             "cash_cents": {st.sid: st.cash_cents for st in self.stalls}}} if self.solvency_on else {}),
+            **({"overhead_by_stall_cents": {st.sid: st.overhead_cents for st in self.stalls}}
+               if self.overhead_on else {}),
         }
 
     def close_day(self) -> None:
         """End of the day (0.15.0): stalls that chose to exit leave the market; their fines not yet
-        due are uncollectible (logged in the outcome, never charged)."""
+        due are uncollectible (logged in the outcome, never charged). 1.3.0, sellers.solvency: each stall's cash takes the
+        day's profit, and a stall whose cash is below -credit_limit_days x baseline leaves by the same rule."""
+        if self.solvency_on:
+            from .days import stall_profit
+            for st in self.stalls:
+                if st.exited_day is not None:
+                    continue
+                st.cash_cents += stall_profit(st)
+                if st.cash_cents < CAT.credit_floor(self.cfg, st.category):
+                    st.exit_pending = True
+                    self.solvency_exits.append(st.sid)
         for st in self.stalls:
             if st.exit_pending and st.exited_day is None:
                 st.exited_day, st.exit_pending = self.day, False
@@ -1112,7 +1143,8 @@ class BazaarEngine:
 
     def brand_outcome(self) -> dict:
         prof = {st.sid: st.revenue_cents - st.cost_cents - st.ad_spend_cents - st.penalties_cents
-                - st.switch_cost_cents - st.royalty_paid_cents + st.royalty_received_cents for st in self.stalls}
+                - st.switch_cost_cents - st.royalty_paid_cents + st.royalty_received_cents - st.overhead_cents
+                for st in self.stalls}
         return {"renames": len(self.rename_log),
                 "renames_by_how": {h: sum(r["how"] == h for r in self.rename_log) for h in ("fresh", "counterfeit")},
                 "bust_outs": len(self.bust_log),

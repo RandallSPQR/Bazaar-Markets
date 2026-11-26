@@ -30,6 +30,12 @@ def _as_v100(d: dict) -> dict:
     for (sec, key), v in {**V110_DEFAULTS, **V120_DEFAULTS}.items():
         assert d[sec].pop(key) == v, (sec, key)
     assert d["agents"].pop("budget") == json.loads(json.dumps(BudgetCfg().__dict__)), "agents.budget"
+    # Keys added at 1.3.0, at their defaults (removed the same way).
+    assert d["market"].pop("rent") == {"alpha": 0.0, "table": {}}, "market.rent"
+    assert d["buyers"].pop("gamma_by_profile") == {}, "buyers.gamma_by_profile"
+    assert d["sellers"].pop("solvency") == {"enabled": False, "start_cash_days": 10.0, "credit_limit_days": 3.0}, \
+        "sellers.solvency"
+    assert d.pop("categories") == {"profiles": {}}, "categories"
     if d["sellers"] == {}:
         del d["sellers"]
     return d

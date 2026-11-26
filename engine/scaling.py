@@ -153,6 +153,10 @@ FIELDS: dict[str, tuple[str, str]] = {
     "sellers.markup": (NONE, "money ratio"),
     "sellers.undercut_floor_markup": (NONE, "money ratio"),
     "agents.budget": (NONE, "run-level spend limits, prices and file paths; counts of calls and tokens, not ticks"),
+    "market.rent": (NONE, "money per market day; spots are stall ids"),
+    "buyers.gamma_by_profile": (NONE, "per position rank"),
+    "sellers.solvency": (NONE, "money in days of baseline gross profit; market days, which scale does not change"),
+    "categories.profiles": (NONE, "money ratios, cents per market day, quality noise, probabilities"),
 }
 
 # Keyword arguments of every registered policy class (rng excluded).
