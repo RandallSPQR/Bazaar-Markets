@@ -93,3 +93,11 @@
 2026-11-26 09:32:47 phase bank done in 30564 s
 2026-11-26 09:34:27 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase bank --markets t40|li1|ds1|pn10|ol0|cf1 --workers 7 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "971151b", "engine": "1.2.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-26 09:34:27", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 7}
 2026-11-26 09:34:32 560 chains, 1007 cached, 105 to run; workers 7; load [2.21, 5.36, 7.89]; memory {'swap_free_mb': 785.25, 'free_pct': 72}
+2026-11-26 10:45:40 50/105 chains, 4268 s, load [8.36, 8.72, 9.37], memory {'swap_free_mb': 809.25, 'free_pct': 73}
+2026-11-26 12:11:52 100/105 chains, 9439 s, load [8.13, 10.62, 11.23], memory {'swap_free_mb': 809.25, 'free_pct': 70}
+2026-11-26 12:13:47 105/105 chains, 9555 s, load [3.97, 8.42, 10.29], memory {'swap_free_mb': 809.25, 'free_pct': 70}
+2026-11-26 12:13:47 bank: 178 states of 300 (1 markets), K 20, 560 jobs
+2026-11-26 12:13:47 phase bank done in 9560 s
+2026-11-26 12:15:23 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase build --workers 7 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "a3e997e", "engine": "1.2.0", "numpy": "2.5.4", "phase": "build", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-26 12:15:23", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 7}
+2026-11-26 12:15:29 build: 300 states, pays 107, close calls 98, below 198, guard {'stuck_buyers': 0, 'idle_choosers': 0, 'fallbacks': 0, 'continuations': 31000}, leak pass True
+2026-11-26 12:15:29 phase build done in 6 s

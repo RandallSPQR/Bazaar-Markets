@@ -1,0 +1,56 @@
+start block1 2026-11-25 11:28:50
+2026-11-25 11:28:51 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase bank --markets t100|li0.5|ds0|pn10|ol0|cf0 --workers 4 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "1fdc327", "engine": "1.2.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-25 11:28:51", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 4}
+2026-11-25 11:28:56 4 chains, 216 cached, 4 to run; workers 4; load [2.77, 4.51, 6.08]; memory {'swap_free_mb': 1595.94, 'free_pct': 45}
+2026-11-25 11:36:42 4/4 chains, 466 s, load [5.02, 5.15, 5.8], memory {'swap_free_mb': 1603.94, 'free_pct': 50}
+2026-11-25 11:36:42 bank: 2 states of 300 (1 markets), K 20, 4 jobs
+2026-11-25 11:36:42 phase bank done in 472 s
+exit 0 block1 2026-11-25 11:36:43
+start block2a 2026-11-25 11:36:43
+2026-11-25 11:36:43 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase bank --markets t40|li1|ds1|pn10|ol0|cf1 --workers 4 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "db0f183", "engine": "1.2.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-25 11:36:43", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 4}
+2026-11-25 11:36:49 560 chains, 220 cached, 560 to run; workers 4; load [4.56, 5.05, 5.75]; memory {'swap_free_mb': 1603.94, 'free_pct': 49}
+2026-11-25 13:16:42 50/560 chains, 5992 s, load [5.76, 6.1, 6.66], memory {'swap_free_mb': 1691.94, 'free_pct': 49}
+2026-11-25 14:50:15 100/560 chains, 11605 s, load [6.57, 6.11, 6.0], memory {'swap_free_mb': 1518.56, 'free_pct': 39}
+runs/state_bank_v2_block.sh: line 10: 58728 Terminated: 15          PYTHONPATH=. nice -n 19 .venv/bin/python -m analysis.state_bank_v2 --phase bank --markets "$2" --workers 4 --min-swap-mb 0 --tests "$T"
+/Users/randallbennington/.local/share/uv/python/cpython-3.12.7-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 5 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+exit 143 block2a 2026-11-25 15:02:51
+runs/state_bank_v2_block.sh: line 13: 58729 Terminated: 15          ( sleep "$3"; echo "time limit $3 s reached $(date '+%Y-%m-%d %H:%M:%S')"; pkill -TERM -P $pid; kill -TERM $pid )
+start block2b 2026-11-25 15:03:22 workers 7
+2026-11-25 15:03:23 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase bank --markets t40|li1|ds1|pn10|ol0|cf1 --workers 7 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "b9b8378", "engine": "1.2.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-25 15:03:23", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 7}
+2026-11-25 15:03:28 560 chains, 320 cached, 460 to run; workers 7; load [4.41, 6.1, 6.22]; memory {'swap_free_mb': 1513.19, 'free_pct': 75}
+2026-11-25 16:22:13 50/460 chains, 4724 s, load [8.83, 8.78, 9.54], memory {'swap_free_mb': 1609.19, 'free_pct': 76}
+2026-11-25 17:48:24 100/460 chains, 9895 s, load [8.24, 9.88, 10.76], memory {'swap_free_mb': 1617.19, 'free_pct': 75}
+2026-11-25 19:16:47 150/460 chains, 15199 s, load [9.03, 9.48, 9.37], memory {'swap_free_mb': 1633.19, 'free_pct': 75}
+2026-11-25 20:41:01 200/460 chains, 20252 s, load [10.56, 11.43, 10.95], memory {'swap_free_mb': 1657.19, 'free_pct': 75}
+2026-11-25 22:21:26 250/460 chains, 26278 s, load [9.66, 9.74, 10.05], memory {'swap_free_mb': 1657.19, 'free_pct': 73}
+2026-11-25 23:29:50 300/460 chains, 30382 s, load [14.56, 11.59, 11.54], memory {'swap_free_mb': 1657.19, 'free_pct': 72}
+2026-11-26 00:53:38 350/460 chains, 35409 s, load [8.56, 9.44, 10.17], memory {'swap_free_mb': 1665.19, 'free_pct': 73}
+time limit 36000 s reached 2026-11-26 01:03:23
+runs/state_bank_v2_block.sh: line 12: 68721 Terminated: 15          PYTHONPATH=. nice -n 19 .venv/bin/python -m analysis.state_bank_v2 --phase bank --markets "$2" --workers "$W" --min-swap-mb 0 --tests "$T"
+exit 143 block2b 2026-11-26 01:03:23
+/Users/randallbennington/.local/share/uv/python/cpython-3.12.7-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 5 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+start block3 2026-11-26 01:03:23 workers 7
+2026-11-26 01:03:23 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase bank --markets t70|li1|ds0|pn0|ol0|cf1,t100|li1|ds1|pn10|ol1|cf0,t100|li0.5|ds0|pn10|ol1|cf1,t40|li0.5|ds0.1|pn10|ol0|cf1,t70|li1|ds0|pn0|ol0|cf0,t40|li0.5|ds0|pn0|ol0|cf0,t100|li0.5|ds0.1|pn10|ol1|cf1,t40|li1|ds1|pn0|ol1|cf0,t100|li1|ds1|pn10|ol1|cf1,t70|li1|ds0|pn10|ol0|cf1,t40|li1|ds0.1|pn0|ol1|cf0,t100|li0.5|ds1|pn10|ol0|cf0,t70|li1|ds1|pn0|ol1|cf0,t70|li0.5|ds0.1|pn10|ol1|cf1,t100|li1|ds1|pn0|ol0|cf0,t70|li0.5|ds1|pn0|ol1|cf0,t70|li1|ds0.1|pn10|ol0|cf0,t100|li0.5|ds0.1|pn0|ol1|cf1,t40|li0.5|ds0.1|pn0|ol1|cf0,t40|li0.5|ds0|pn0|ol0|cf1,t70|li1|ds0.1|pn0|ol0|cf1,t40|li0.5|ds0|pn10|ol1|cf1 --workers 7 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "971151b", "engine": "1.2.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-26 01:03:23", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 7}
+2026-11-26 01:03:29 332 chains, 675 cached, 332 to run; workers 7; load [8.88, 10.02, 10.2]; memory {'swap_free_mb': 1665.19, 'free_pct': 75}
+2026-11-26 02:21:08 50/332 chains, 4659 s, load [11.91, 11.2, 10.88], memory {'swap_free_mb': 1681.19, 'free_pct': 74}
+2026-11-26 03:30:41 100/332 chains, 8833 s, load [32.44, 19.49, 14.96], memory {'swap_free_mb': 1681.19, 'free_pct': 72}
+2026-11-26 04:50:42 150/332 chains, 13633 s, load [9.94, 13.96, 13.71], memory {'swap_free_mb': 1681.19, 'free_pct': 71}
+2026-11-26 06:09:09 200/332 chains, 18340 s, load [12.48, 10.09, 10.49], memory {'swap_free_mb': 769.25, 'free_pct': 72}
+2026-11-26 07:25:09 250/332 chains, 22900 s, load [8.84, 10.61, 11.2], memory {'swap_free_mb': 777.25, 'free_pct': 72}
+2026-11-26 08:43:19 300/332 chains, 27590 s, load [14.46, 15.74, 13.24], memory {'swap_free_mb': 785.25, 'free_pct': 70}
+2026-11-26 09:32:47 332/332 chains, 30558 s, load [4.61, 6.92, 8.72], memory {'swap_free_mb': 785.25, 'free_pct': 71}
+2026-11-26 09:32:47 bank: 120 states of 300 (22 markets), K 20, 332 jobs
+2026-11-26 09:32:47 phase bank done in 30564 s
+exit 0 block3 2026-11-26 09:32:47
+runs/state_bank_v2_block.sh: line 15: 92061 Terminated: 15          ( sleep "$3"; echo "time limit $3 s reached $(date '+%Y-%m-%d %H:%M:%S')"; pkill -TERM -P $pid; kill -TERM $pid )
+start block2c 2026-11-26 09:34:27 workers 7
+2026-11-26 09:34:27 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase bank --markets t40|li1|ds1|pn10|ol0|cf1 --workers 7 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "commit": "971151b", "engine": "1.2.0", "numpy": "2.5.4", "phase": "bank", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d", "started": "2026-11-26 09:34:27", "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28", "workers": 7}
+2026-11-26 09:34:32 560 chains, 1007 cached, 105 to run; workers 7; load [2.21, 5.36, 7.89]; memory {'swap_free_mb': 785.25, 'free_pct': 72}
+2026-11-26 10:45:40 50/105 chains, 4268 s, load [8.36, 8.72, 9.37], memory {'swap_free_mb': 809.25, 'free_pct': 73}
+2026-11-26 12:11:52 100/105 chains, 9439 s, load [8.13, 10.62, 11.23], memory {'swap_free_mb': 809.25, 'free_pct': 70}
+2026-11-26 12:13:47 105/105 chains, 9555 s, load [3.97, 8.42, 10.29], memory {'swap_free_mb': 809.25, 'free_pct': 70}
+2026-11-26 12:13:47 bank: 178 states of 300 (1 markets), K 20, 560 jobs
+2026-11-26 12:13:47 phase bank done in 9560 s
+exit 0 block2c 2026-11-26 12:13:47
+runs/state_bank_v2_block.sh: line 15: 11312 Terminated: 15          ( sleep "$3"; echo "time limit $3 s reached $(date '+%Y-%m-%d %H:%M:%S')"; pkill -TERM -P $pid; kill -TERM $pid )

@@ -1,0 +1,261 @@
+{
+ "full": {
+  "base_rate_acc": 0.6433333333333333,
+  "best_single": {
+   "accuracy": 0.7533333333333333,
+   "auc": 0.7733523800300227,
+   "feature": "units_7d"
+  },
+  "features": [
+   "day",
+   "rating",
+   "rating_min_7d",
+   "rating_change_7d",
+   "price_cents",
+   "unit_cost_cents",
+   "cheap_supply_unit_cost_cents",
+   "cost_saving_share",
+   "margin_share",
+   "units_7d",
+   "revenue_7d",
+   "rivals",
+   "rivals_mean_rating",
+   "rivals_min_rating",
+   "rivals_mean_price",
+   "inspected_share_7d",
+   "catch_notices_7d",
+   "own_catches_7d"
+  ],
+  "logistic": {
+   "accuracy": 0.76,
+   "auc": 0.8021403321873033
+  },
+  "n": 300,
+  "pays": 107,
+  "single": {
+   "catch_notices_7d": {
+    "accuracy": 0.7366666666666667,
+    "auc": 0.7213936371120042
+   },
+   "cheap_supply_unit_cost_cents": {
+    "accuracy": 0.62,
+    "auc": 0.48121156360466805
+   },
+   "cost_saving_share": {
+    "accuracy": 0.66,
+    "auc": 0.5929252820686649
+   },
+   "day": {
+    "accuracy": 0.5966666666666667,
+    "auc": 0.5562442496731393
+   },
+   "inspected_share_7d": {
+    "accuracy": 0.75,
+    "auc": 0.7916323664713574
+   },
+   "margin_share": {
+    "accuracy": 0.6866666666666666,
+    "auc": 0.5585201685148419
+   },
+   "own_catches_7d": {
+    "accuracy": 0.6433333333333333,
+    "auc": 0.5
+   },
+   "price_cents": {
+    "accuracy": 0.6533333333333333,
+    "auc": 0.4846012299646506
+   },
+   "rating": {
+    "accuracy": 0.7,
+    "auc": 0.4849644085032202
+   },
+   "rating_change_7d": {
+    "accuracy": 0.6633333333333333,
+    "auc": 0.4909931722434749
+   },
+   "rating_min_7d": {
+    "accuracy": 0.7033333333333334,
+    "auc": 0.49978209287685826
+   },
+   "revenue_7d": {
+    "accuracy": 0.7166666666666667,
+    "auc": 0.5862185850564138
+   },
+   "rivals": {
+    "accuracy": 0.6433333333333333,
+    "auc": 0.5
+   },
+   "rivals_mean_price": {
+    "accuracy": 0.6866666666666666,
+    "auc": 0.5274562975158588
+   },
+   "rivals_mean_rating": {
+    "accuracy": 0.64,
+    "auc": 0.5238245121301632
+   },
+   "rivals_min_rating": {
+    "accuracy": 0.6233333333333333,
+    "auc": 0.46765289816473776
+   },
+   "unit_cost_cents": {
+    "accuracy": 0.6733333333333333,
+    "auc": 0.5525398285797298
+   },
+   "units_7d": {
+    "accuracy": 0.7533333333333333,
+    "auc": 0.7733523800300227
+   }
+  },
+  "tree": {
+   "accuracy": 0.7266666666666667,
+   "auc": 0.787467919229093
+  },
+  "tree_full_fit": {
+   "c": 0.5047169811320755,
+   "f": 15,
+   "l": {
+    "c": 11.5,
+    "f": 16,
+    "l": {
+     "leaf": 0.7916666666666666
+    },
+    "r": {
+     "leaf": 0.43859649122807015
+    }
+   },
+   "r": {
+    "c": 0.59,
+    "f": 2,
+    "l": {
+     "leaf": 0.48148148148148145
+    },
+    "r": {
+     "leaf": 0.08333333333333333
+    }
+   }
+  }
+ },
+ "pass": true,
+ "reduced": {
+  "base_rate_acc": 0.6433333333333333,
+  "best_single": {
+   "accuracy": 0.7533333333333333,
+   "auc": 0.7733523800300227,
+   "feature": "units_7d"
+  },
+  "features": [
+   "day",
+   "rating",
+   "rating_min_7d",
+   "rating_change_7d",
+   "price_cents",
+   "unit_cost_cents",
+   "cheap_supply_unit_cost_cents",
+   "cost_saving_share",
+   "margin_share",
+   "units_7d",
+   "revenue_7d",
+   "rivals",
+   "rivals_mean_rating",
+   "rivals_min_rating",
+   "rivals_mean_price"
+  ],
+  "logistic": {
+   "accuracy": 0.76,
+   "auc": 0.7772989201491454
+  },
+  "n": 300,
+  "pays": 107,
+  "single": {
+   "cheap_supply_unit_cost_cents": {
+    "accuracy": 0.62,
+    "auc": 0.48121156360466805
+   },
+   "cost_saving_share": {
+    "accuracy": 0.66,
+    "auc": 0.5929252820686649
+   },
+   "day": {
+    "accuracy": 0.5966666666666667,
+    "auc": 0.5562442496731393
+   },
+   "margin_share": {
+    "accuracy": 0.6866666666666666,
+    "auc": 0.5585201685148419
+   },
+   "price_cents": {
+    "accuracy": 0.6533333333333333,
+    "auc": 0.4846012299646506
+   },
+   "rating": {
+    "accuracy": 0.7,
+    "auc": 0.4849644085032202
+   },
+   "rating_change_7d": {
+    "accuracy": 0.6633333333333333,
+    "auc": 0.4909931722434749
+   },
+   "rating_min_7d": {
+    "accuracy": 0.7033333333333334,
+    "auc": 0.49978209287685826
+   },
+   "revenue_7d": {
+    "accuracy": 0.7166666666666667,
+    "auc": 0.5862185850564138
+   },
+   "rivals": {
+    "accuracy": 0.6433333333333333,
+    "auc": 0.5
+   },
+   "rivals_mean_price": {
+    "accuracy": 0.6866666666666666,
+    "auc": 0.5274562975158588
+   },
+   "rivals_mean_rating": {
+    "accuracy": 0.64,
+    "auc": 0.5238245121301632
+   },
+   "rivals_min_rating": {
+    "accuracy": 0.6233333333333333,
+    "auc": 0.46765289816473776
+   },
+   "unit_cost_cents": {
+    "accuracy": 0.6733333333333333,
+    "auc": 0.5525398285797298
+   },
+   "units_7d": {
+    "accuracy": 0.7533333333333333,
+    "auc": 0.7733523800300227
+   }
+  },
+  "tree": {
+   "accuracy": 0.7566666666666667,
+   "auc": 0.8017287298435911
+  },
+  "tree_full_fit": {
+   "c": 30.5,
+   "f": 9,
+   "l": {
+    "c": 0.22475988700564972,
+    "f": 7,
+    "l": {
+     "leaf": 0.4418604651162791
+    },
+    "r": {
+     "leaf": 0.8620689655172413
+    }
+   },
+   "r": {
+    "c": 0.59,
+    "f": 2,
+    "l": {
+     "leaf": 0.55
+    },
+    "r": {
+     "leaf": 0.10062893081761007
+    }
+   }
+  }
+ },
+ "rule": "no single feature above 80% cross-validated accuracy on the full observation"
+}

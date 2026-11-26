@@ -1,0 +1,188 @@
+{
+ "K": 20,
+ "N": 300,
+ "below": 198,
+ "best": {
+  "keep_supply": 193,
+  "leave_market": 0,
+  "license_name_cheap_quality": 71,
+  "switch_supply_in_10_days": 2,
+  "switch_supply_in_5_days": 1,
+  "switch_supply_now": 33
+ },
+ "by_market": {
+  "t100|li0.5|ds0.1|pn0|ol1|cf1": {
+   "close_calls": 1,
+   "pays": 3,
+   "states": 4
+  },
+  "t100|li0.5|ds0.1|pn10|ol1|cf1": {
+   "close_calls": 33,
+   "pays": 39,
+   "states": 58
+  },
+  "t100|li0.5|ds0|pn10|ol0|cf0": {
+   "close_calls": 0,
+   "pays": 2,
+   "states": 2
+  },
+  "t100|li0.5|ds0|pn10|ol1|cf1": {
+   "close_calls": 0,
+   "pays": 4,
+   "states": 4
+  },
+  "t100|li0.5|ds1|pn10|ol0|cf0": {
+   "close_calls": 0,
+   "pays": 2,
+   "states": 2
+  },
+  "t100|li1|ds1|pn0|ol0|cf0": {
+   "close_calls": 0,
+   "pays": 2,
+   "states": 2
+  },
+  "t100|li1|ds1|pn10|ol1|cf0": {
+   "close_calls": 0,
+   "pays": 0,
+   "states": 2
+  },
+  "t100|li1|ds1|pn10|ol1|cf1": {
+   "close_calls": 0,
+   "pays": 0,
+   "states": 4
+  },
+  "t40|li0.5|ds0.1|pn0|ol1|cf0": {
+   "close_calls": 1,
+   "pays": 0,
+   "states": 2
+  },
+  "t40|li0.5|ds0.1|pn10|ol0|cf1": {
+   "close_calls": 0,
+   "pays": 1,
+   "states": 4
+  },
+  "t40|li0.5|ds0|pn0|ol0|cf0": {
+   "close_calls": 1,
+   "pays": 0,
+   "states": 2
+  },
+  "t40|li0.5|ds0|pn0|ol0|cf1": {
+   "close_calls": 2,
+   "pays": 0,
+   "states": 4
+  },
+  "t40|li0.5|ds0|pn10|ol1|cf1": {
+   "close_calls": 3,
+   "pays": 2,
+   "states": 4
+  },
+  "t40|li1|ds0.1|pn0|ol1|cf0": {
+   "close_calls": 0,
+   "pays": 0,
+   "states": 2
+  },
+  "t40|li1|ds1|pn0|ol1|cf0": {
+   "close_calls": 0,
+   "pays": 0,
+   "states": 2
+  },
+  "t40|li1|ds1|pn10|ol0|cf1": {
+   "close_calls": 54,
+   "pays": 35,
+   "states": 178
+  },
+  "t70|li0.5|ds0.1|pn10|ol1|cf1": {
+   "close_calls": 3,
+   "pays": 1,
+   "states": 4
+  },
+  "t70|li0.5|ds1|pn0|ol1|cf0": {
+   "close_calls": 0,
+   "pays": 0,
+   "states": 2
+  },
+  "t70|li1|ds0.1|pn0|ol0|cf1": {
+   "close_calls": 0,
+   "pays": 4,
+   "states": 4
+  },
+  "t70|li1|ds0.1|pn10|ol0|cf0": {
+   "close_calls": 0,
+   "pays": 2,
+   "states": 2
+  },
+  "t70|li1|ds0|pn0|ol0|cf0": {
+   "close_calls": 0,
+   "pays": 2,
+   "states": 2
+  },
+  "t70|li1|ds0|pn0|ol0|cf1": {
+   "close_calls": 0,
+   "pays": 4,
+   "states": 4
+  },
+  "t70|li1|ds0|pn10|ol0|cf1": {
+   "close_calls": 0,
+   "pays": 4,
+   "states": 4
+  },
+  "t70|li1|ds1|pn0|ol1|cf0": {
+   "close_calls": 0,
+   "pays": 0,
+   "states": 2
+  }
+ },
+ "close_calls": 98,
+ "guard": {
+  "continuations": 31000,
+  "fallbacks": 0,
+  "idle_choosers": 0,
+  "stuck_buyers": 0
+ },
+ "leak_final": {
+  "best_single_full": {
+   "accuracy": 0.7533333333333333,
+   "auc": 0.7733523800300227,
+   "feature": "units_7d"
+  },
+  "best_single_reduced": {
+   "accuracy": 0.7533333333333333,
+   "auc": 0.7733523800300227,
+   "feature": "units_7d"
+  },
+  "logistic_full": {
+   "accuracy": 0.76,
+   "auc": 0.8021403321873033
+  },
+  "logistic_reduced": {
+   "accuracy": 0.76,
+   "auc": 0.7772989201491454
+  },
+  "pass": true,
+  "tree_full": {
+   "accuracy": 0.7266666666666667,
+   "auc": 0.787467919229093
+  },
+  "tree_reduced": {
+   "accuracy": 0.7566666666666667,
+   "auc": 0.8017287298435911
+  }
+ },
+ "pays": 107,
+ "pays_weighted": 0.49777821462391775,
+ "run": {
+  "code_dirty": false,
+  "command": "/Users/randallbennington/Bazaar Markets/analysis/state_bank_v2.py --phase build --workers 7 --min-swap-mb 0 --tests runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28",
+  "commit": "a3e997e",
+  "engine": "1.2.0",
+  "numpy": "2.5.4",
+  "phase": "build",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "python": "3.12.7",
+  "script_sha256": "b5a0362f384f5c92236a1108b0768e45bb53d1753a71f9199ee56ea73348760d",
+  "started": "2026-11-26 12:15:23",
+  "tests": "runs/tests_120.log: 1868 passed, 17 skipped, 4 outdated tests updated (8cfaa73), their files 69/69; tests/test_v120.py 28/28",
+  "workers": 7
+ },
+ "states": 300
+}

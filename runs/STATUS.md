@@ -4,10 +4,10 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 
 | | |
 |---|---|
-| Stage | 3: bank v2 |
-| Running | bank v2 block 2c (the last 105 chains of block 2), 7 workers, launched 2026-11-26 09:34; stdout `runs/state_bank_v2_bank_stdout.log` |
-| Last gate | C4: bank v2 pilot G1–G5 and G-leak passed (`runs/pilot_state_bank_v2.md`) |
-| Next step | build and summary (C6) |
+| Stage | 4: release prep |
+| Running | nothing |
+| Last gate | C6: bank v2 complete; final G-leak passed (`runs/state_bank_v2_summary.md`) |
+| Next step | Stage 4: baseline, README headlines, release notes, data package, local tag v1.2.0, C7 |
 
 ## Checkpoints
 
@@ -18,7 +18,7 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 | C3 | Price-war summary | 2026-11-25 02:12. PW1–PW4 supported; `runs/price_war_summary.md` (a2bee13); deviation D4 (PW5 sign fix) |
 | C4 | Bank v2 pilot and G-leak result | 2026-11-25 11:26. All gates pass; G-leak best single feature `units_7d` 77.8% (limit 80%); N 300, K 20, 29.6 h projected |
 | C5 | Bank v2 launched | 2026-11-25 11:28: blocks 1 and 2a; 2b and 3 follow, each ≤ 10 h |
-| C6 | Bank v2 complete | – |
+| C6 | Bank v2 complete | 2026-11-26 12:40. 300 states, 31,000 continuations, guards 0; pays 107 (49.8% weighted); close calls 98 (target 100); below 1.0 198; final G-leak pass (`units_7d` 75.3%) |
 | C7 | Release prep; `runs/REPORT_2026-11b.md` | – |
 
 ## Log
@@ -42,3 +42,6 @@ Plan: `runs/plan_autonomous_2026-11-23.md`, preregistered at 326abfa (2026-11-24
 - 2026-11-25 15:02: **D6.** Randall freed the CPU and asked for 7 workers. Block 1 had finished at 11:36 (220 chains). Block 2a was stopped by hand after 100 of block 2's 560 chains (3.4 h); the 4 chains in flight were lost and are rerun, and the cache's last line parses (320 lines). `runs/state_bank_v2_block.sh` takes an optional fourth argument, the worker count (default 4). Block 2b and then block 3 run on 7 workers, each with the 10 h limit. Chains are seeded per job, so this changes wall clock only: no change to the design, states, K, seeds or analysis. Each launch's run record states its worker count.
 - 2026-11-26 01:03: block 2b reached its 10 h limit after 355 more chains (675 cached in all). Block 3 then ran its 332 chains in 8.49 h, ending 09:32; the cache's last line parses (1,007 lines). On 7 workers a chain took about 101 s of wall clock, against 116 s on 4: the three extra workers run on efficiency cores.
 - 2026-11-26 09:34: block 2c launched for block 2's last 105 chains (7 workers, 10 h limit).
+- 2026-11-26 12:14: block 2c done; all 1,112 chains cached. Bank phase 24.7 h of wall clock in five launches.
+- 2026-11-26: Randall (before dinner): when this plan reaches C7 with v1.2.0 tagged locally, commit `runs/plan_autonomous_2026-11-27.md` unchanged and follow it (7 workers, normal priority, caffeinate). **Push nothing** until he is back. If plan 11-27's pilot projects over 14 h, run the full design and log the deviation (no trims).
+- 2026-11-26 12:40: C6. Build (6 s): 300 states, pays 107 (35.7% unweighted, missing the 40–60% aim; 49.8% weighted), close calls 98 (target 100, missed by 2; the pilot projected 140), 198 below 1.0, guards 0, final G-leak pass (best single `units_7d` 75.3%, logistic 76.0%). Neither missed target is a gate; nothing changed. Summary `runs/state_bank_v2_summary.md`, README `runs/state_bank_v2/README.md`; descriptive tables and plot written after the results.
