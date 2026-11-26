@@ -1,0 +1,33 @@
+2026-11-26 14:20:14 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/aisles_1_3.py --phase pilot --tests full suite at 494d1bd: 1889 passed, 17 skipped (runs/tests_130.log)", "commit": "876829e", "engine": "1.3.0", "numpy": "2.5.4", "phase": "pilot", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "811a54ee41298f9d19eda277d97a71d944637fca58dfd7cf8c6d6ad108a9b1ad", "started": "2026-11-26 14:20:14", "tests": "full suite at 494d1bd: 1889 passed, 17 skipped (runs/tests_130.log)", "workers": 7}
+2026-11-26 14:20:14 60 chains, 60 to run (0 cached); workers 7; load [2.06, 2.31, 2.54]; memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:25:12 50/60 chains, 298 s, load [8.59, 7.0, 4.76], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:25:44 60/60 chains, 330 s, load [7.26, 6.84, 4.78], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:25:44 calibration: 20 scenarios, written to runs/aisles_calibration.json; flags 0
+2026-11-26 14:26:04 1170 chains, 1170 to run (0 cached); workers 7; load [6.27, 6.64, 4.75]; memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:30:24 50/1170 chains, 260 s, load [8.23, 7.77, 5.78], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:33:53 100/1170 chains, 469 s, load [8.87, 8.18, 6.38], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:37:35 150/1170 chains, 691 s, load [8.57, 8.3, 6.83], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:42:13 200/1170 chains, 969 s, load [8.6, 8.42, 7.28], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:46:19 250/1170 chains, 1215 s, load [9.53, 8.92, 7.77], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:49:45 300/1170 chains, 1421 s, load [8.17, 8.56, 7.86], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:53:13 350/1170 chains, 1629 s, load [14.09, 9.92, 8.51], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 14:57:15 400/1170 chains, 1871 s, load [10.98, 11.66, 9.71], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:02:52 450/1170 chains, 2208 s, load [10.0, 11.26, 10.25], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:09:24 500/1170 chains, 2600 s, load [9.12, 9.59, 9.74], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:14:23 550/1170 chains, 2899 s, load [10.29, 9.53, 9.61], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:19:16 600/1170 chains, 3192 s, load [9.04, 9.31, 9.5], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:24:16 650/1170 chains, 3492 s, load [8.72, 9.57, 9.62], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:29:28 700/1170 chains, 3804 s, load [9.43, 9.3, 9.43], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:35:16 750/1170 chains, 4152 s, load [10.75, 9.31, 9.32], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:39:14 800/1170 chains, 4390 s, load [8.95, 10.25, 9.83], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:42:46 850/1170 chains, 4602 s, load [8.45, 9.36, 9.53], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:46:37 900/1170 chains, 4833 s, load [8.95, 10.06, 9.9], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:50:10 950/1170 chains, 5046 s, load [9.32, 9.74, 9.79], memory {'swap_free_mb': 825.25, 'free_pct': 72}
+2026-11-26 15:57:01 1000/1170 chains, 5457 s, load [9.62, 9.64, 9.71], memory {'swap_free_mb': 825.25, 'free_pct': 73}
+2026-11-26 16:01:54 1050/1170 chains, 5751 s, load [9.24, 9.6, 9.69], memory {'swap_free_mb': 825.25, 'free_pct': 73}
+2026-11-26 16:07:15 1100/1170 chains, 6071 s, load [9.54, 9.54, 9.63], memory {'swap_free_mb': 825.25, 'free_pct': 73}
+2026-11-26 16:12:14 1150/1170 chains, 6370 s, load [9.54, 9.55, 9.59], memory {'swap_free_mb': 825.25, 'free_pct': 73}
+2026-11-26 16:13:34 1170/1170 chains, 6450 s, load [8.95, 9.41, 9.54], memory {'swap_free_mb': 825.25, 'free_pct': 73}
+2026-11-26 16:13:54 G2a A|RI|ds0|lex|col|t40|ds0.0|500|None|never: identical
+2026-11-26 16:14:13 G2a A|RI|ds1|lex|col|t40|ds1.0|500|None|never: identical
+2026-11-26 16:14:13 pilot: G1 True, G2a True, G2b True, G2c True, G3 11.9 h (limit 14.0), G4 max early-exit share 0.521, G5 {'stuck_buyers': 0, 'idle_choosers': 0, 'parked': 0, 'fallbacks': 0, 'buyer_days': 5535000}; all pass except G3: False
