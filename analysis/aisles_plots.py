@@ -98,5 +98,58 @@ def plot_A():
     print("written runs/aisles_A_cells.svg")
 
 
+def plot_C():
+    """runs/aisles_C_entrance.svg: deceptive share of units at the entrance spots and elsewhere, by rent alpha, for
+    t40 and t100 (small multiples on one scale), mean and 95% t interval over seeds 740-759."""
+    C = json.load(open("runs/aisles_C.json", encoding="utf-8"))["cells"]
+    W, H = 900, 600
+    lo, hi = 0.0, 0.25
+    top, bot = 150, 480
+    Y = lambda v: bot - (v - lo) / (hi - lo) * (bot - top)
+    svg = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" role="img" '
+           f'aria-label="Run C: at alpha 0 deceptive stalls sell a larger share of units at the entrance spots than '
+           f'elsewhere (gap +0.10 at t40 and t100); position rent narrows the gap, to 0 at alpha 1 with tourists only.">',
+           f'<rect width="{W}" height="{H}" fill="{BG}"/>',
+           _t(24, 36, "Deceptive stalls sell more at the entrance; rent on the entrance spots narrows the gap", 19),
+           _t(24, 58, "Run C, deceptive share of units sold, entrance spots (nearest two ranks) and the rest, never "
+              "chains, mean and 95% t interval over seeds 740–759 (n 20)", 13, INK2)]
+    for i, (t, title) in enumerate((("t40", "Tourists 40% (locals inspect)"), ("t100", "Tourists only"))):
+        x0, w = 110 + i * 400, 300
+        X = lambda a: x0 + a * w
+        svg.append(_t(x0, 110, title, 14))
+        if i == 0:
+            for v in (0, 0.05, 0.10, 0.15, 0.20, 0.25):
+                svg.append(_t(x0 - 14, Y(v) + 4, f"{v:.2f}", 11, INK3, "end", SANS))
+            svg.append(f'<line x1="{x0 - 8}" y1="{Y(0):.1f}" x2="{x0 - 8}" y2="{Y(0.25):.1f}" stroke="{RULE}" stroke-width="0.6"/>')
+        for a in (0, 0.5, 1):
+            svg.append(_t(X(a), bot + 24, f"α {a:g}", 11, INK3, "middle", SANS))
+        svg.append(f'<line x1="{X(0):.1f}" y1="{bot + 8}" x2="{X(1):.1f}" y2="{bot + 8}" stroke="{RULE}" stroke-width="0.6"/>')
+        for key, col, name in (("entrance", ACC, "entrance"), ("rest", INK2, "rest")):
+            pts = []
+            for a, lab in ((0, "0"), (0.5, "0.5"), (1, "1")):
+                st = C[f"C|a{lab}|{t}"][key]
+                pts.append((X(a), Y(st["mean"])))
+                svg.append(f'<line x1="{X(a):.1f}" y1="{Y(st["lo"]):.1f}" x2="{X(a):.1f}" y2="{Y(st["hi"]):.1f}" '
+                           f'stroke="{col}" stroke-width="1.2" opacity="0.6"/>')
+                svg.append(f'<circle cx="{X(a):.1f}" cy="{Y(st["mean"]):.1f}" r="3" fill="{col}"/>')
+            svg.append(f'<polyline points="{" ".join(f"{x:.1f},{y:.1f}" for x, y in pts)}" fill="none" '
+                       f'stroke="{col}" stroke-width="1.6"/>')
+            svg.append(_t(pts[-1][0] + 10, pts[-1][1] + (-4 if key == "entrance" else 14) if t == "t100" else pts[-1][1] + 4,
+                          name, 12, col))
+        g0 = C[f"C|a0|{t}"]["gap"]
+        g1 = C[f"C|a1|{t}"]["gap"]
+        svg.append(_t(x0, 140, f"gap at α 0: {g0['mean']:+.3f} [{g0['lo']:+.3f}, {g0['hi']:+.3f}];  at α 1: "
+                              f"{g1['mean']:+.3f} [{g1['lo']:+.3f}, {g1['hi']:+.3f}]", 11, INK2, style="italic"))
+    svg.append(_t(24, H - 46, "Rent α: share of the calibrated position advantage charged as daily rent (γ tourist 1.0, "
+                  "γ local 0.2). PC1 (confirmatory) is the gap at t40, α 0.", 10, "#aaa", family=SANS))
+    svg.append(_t(24, H - 32, "Engine 1.3.1; realistic aisle profiles, solvency on; analysis/aisles_1_3.py (frozen), "
+                  "runs/aisles_C.json.", 10, "#aaa", family=SANS))
+    svg.append("</svg>")
+    with open("runs/aisles_C_entrance.svg", "w", encoding="utf-8") as f:
+        f.write("\n".join(svg))
+    print("written runs/aisles_C_entrance.svg")
+
+
 if __name__ == "__main__":
     plot_A()
+    plot_C()

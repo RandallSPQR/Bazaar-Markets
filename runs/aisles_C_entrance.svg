@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="100%" role="img" aria-label="Run C: at alpha 0 deceptive stalls sell a larger share of units at the entrance spots than elsewhere (gap +0.10 at t40 and t100); position rent narrows the gap, to 0 at alpha 1 with tourists only.">
+<rect width="900" height="600" fill="#fffff8"/>
+<text x="24.0" y="36.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="19" fill="#111" text-anchor="start" font-weight="normal">Deceptive stalls sell more at the entrance; rent on the entrance spots narrows the gap</text>
+<text x="24.0" y="58.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="13" fill="#666" text-anchor="start" font-weight="normal">Run C, deceptive share of units sold, entrance spots (nearest two ranks) and the rest, never chains, mean and 95% t interval over seeds 740–759 (n 20)</text>
+<text x="110.0" y="110.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="14" fill="#111" text-anchor="start" font-weight="normal">Tourists 40% (locals inspect)</text>
+<text x="96.0" y="484.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="end" font-weight="normal">0.00</text>
+<text x="96.0" y="418.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="end" font-weight="normal">0.05</text>
+<text x="96.0" y="352.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="end" font-weight="normal">0.10</text>
+<text x="96.0" y="286.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="end" font-weight="normal">0.15</text>
+<text x="96.0" y="220.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="end" font-weight="normal">0.20</text>
+<text x="96.0" y="154.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="end" font-weight="normal">0.25</text>
+<line x1="102" y1="480.0" x2="102" y2="150.0" stroke="#ccc" stroke-width="0.6"/>
+<text x="110.0" y="504.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="middle" font-weight="normal">α 0</text>
+<text x="260.0" y="504.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="middle" font-weight="normal">α 0.5</text>
+<text x="410.0" y="504.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="middle" font-weight="normal">α 1</text>
+<line x1="110.0" y1="488" x2="410.0" y2="488" stroke="#ccc" stroke-width="0.6"/>
+<line x1="110.0" y1="307.0" x2="110.0" y2="223.8" stroke="#e41a1c" stroke-width="1.2" opacity="0.6"/>
+<circle cx="110.0" cy="265.4" r="3" fill="#e41a1c"/>
+<line x1="260.0" y1="316.1" x2="260.0" y2="246.4" stroke="#e41a1c" stroke-width="1.2" opacity="0.6"/>
+<circle cx="260.0" cy="281.3" r="3" fill="#e41a1c"/>
+<line x1="410.0" y1="328.4" x2="410.0" y2="259.8" stroke="#e41a1c" stroke-width="1.2" opacity="0.6"/>
+<circle cx="410.0" cy="294.1" r="3" fill="#e41a1c"/>
+<polyline points="110.0,265.4 260.0,281.3 410.0,294.1" fill="none" stroke="#e41a1c" stroke-width="1.6"/>
+<text x="420.0" y="298.1" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="12" fill="#e41a1c" text-anchor="start" font-weight="normal">entrance</text>
+<line x1="110.0" y1="414.4" x2="110.0" y2="381.0" stroke="#666" stroke-width="1.2" opacity="0.6"/>
+<circle cx="110.0" cy="397.7" r="3" fill="#666"/>
+<line x1="260.0" y1="409.2" x2="260.0" y2="372.8" stroke="#666" stroke-width="1.2" opacity="0.6"/>
+<circle cx="260.0" cy="391.0" r="3" fill="#666"/>
+<line x1="410.0" y1="400.5" x2="410.0" y2="359.4" stroke="#666" stroke-width="1.2" opacity="0.6"/>
+<circle cx="410.0" cy="380.0" r="3" fill="#666"/>
+<polyline points="110.0,397.7 260.0,391.0 410.0,380.0" fill="none" stroke="#666" stroke-width="1.6"/>
+<text x="420.0" y="384.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="12" fill="#666" text-anchor="start" font-weight="normal">rest</text>
+<text x="110.0" y="140.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="11" fill="#666" text-anchor="start" font-weight="normal" font-style="italic">gap at α 0: +0.100 [+0.061, +0.140];  at α 1: +0.065 [+0.027, +0.103]</text>
+<text x="510.0" y="110.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="14" fill="#111" text-anchor="start" font-weight="normal">Tourists only</text>
+<text x="510.0" y="504.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="middle" font-weight="normal">α 0</text>
+<text x="660.0" y="504.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="middle" font-weight="normal">α 0.5</text>
+<text x="810.0" y="504.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="11" fill="#999" text-anchor="middle" font-weight="normal">α 1</text>
+<line x1="510.0" y1="488" x2="810.0" y2="488" stroke="#ccc" stroke-width="0.6"/>
+<line x1="510.0" y1="290.5" x2="510.0" y2="204.7" stroke="#e41a1c" stroke-width="1.2" opacity="0.6"/>
+<circle cx="510.0" cy="247.6" r="3" fill="#e41a1c"/>
+<line x1="660.0" y1="332.2" x2="660.0" y2="247.8" stroke="#e41a1c" stroke-width="1.2" opacity="0.6"/>
+<circle cx="660.0" cy="290.0" r="3" fill="#e41a1c"/>
+<line x1="810.0" y1="359.2" x2="810.0" y2="282.6" stroke="#e41a1c" stroke-width="1.2" opacity="0.6"/>
+<circle cx="810.0" cy="320.9" r="3" fill="#e41a1c"/>
+<polyline points="510.0,247.6 660.0,290.0 810.0,320.9" fill="none" stroke="#e41a1c" stroke-width="1.6"/>
+<text x="820.0" y="316.9" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="12" fill="#e41a1c" text-anchor="start" font-weight="normal">entrance</text>
+<line x1="510.0" y1="406.2" x2="510.0" y2="354.0" stroke="#666" stroke-width="1.2" opacity="0.6"/>
+<circle cx="510.0" cy="380.1" r="3" fill="#666"/>
+<line x1="660.0" y1="406.3" x2="660.0" y2="339.7" stroke="#666" stroke-width="1.2" opacity="0.6"/>
+<circle cx="660.0" cy="373.0" r="3" fill="#666"/>
+<line x1="810.0" y1="362.3" x2="810.0" y2="274.8" stroke="#666" stroke-width="1.2" opacity="0.6"/>
+<circle cx="810.0" cy="318.6" r="3" fill="#666"/>
+<polyline points="510.0,380.1 660.0,373.0 810.0,318.6" fill="none" stroke="#666" stroke-width="1.6"/>
+<text x="820.0" y="332.6" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="12" fill="#666" text-anchor="start" font-weight="normal">rest</text>
+<text x="510.0" y="140.0" font-family="'ET Book', Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" font-size="11" fill="#666" text-anchor="start" font-weight="normal" font-style="italic">gap at α 0: +0.100 [+0.052, +0.148];  at α 1: -0.002 [-0.056, +0.052]</text>
+<text x="24.0" y="554.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="start" font-weight="normal">Rent α: share of the calibrated position advantage charged as daily rent (γ tourist 1.0, γ local 0.2). PC1 (confirmatory) is the gap at t40, α 0.</text>
+<text x="24.0" y="568.0" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="10" fill="#aaa" text-anchor="start" font-weight="normal">Engine 1.3.1; realistic aisle profiles, solvency on; analysis/aisles_1_3.py (frozen), runs/aisles_C.json.</text>
+</svg>
