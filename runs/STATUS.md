@@ -6,10 +6,10 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
 
 | | |
 |---|---|
-| Stage | 2: main runs A, B, C (engine 1.3.1) |
-| Running | main runs A,B,C, 7,800 chains, blocks ≤ 10 h (`runs/aisles_run.log`, `runs/aisles_main_stdout.log`), started 21:05; expected about 10:00 on 11-27 |
+| Stage | 2: summaries (runs complete) |
+| Running | nothing |
 | Last gate | second pilot: all pass (G3 13.0 h, G4 0.306, G4b 0.037, G2d min $0.68/day) |
-| Next step | runs complete → C3 Run A summary |
+| Next step | C4 Runs B and C summaries → C5 report |
 
 ## Checkpoints
 
@@ -18,7 +18,7 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
 | C1 | 2026-11-26 14:19 | Engine 1.3.0 (494d1bd); full suite 1,889 passed, 17 skipped, 0 failed, 1:43 h (`runs/tests_130.log`) |
 | C1 (1.3.1) | 2026-11-26 18:59 | Engine 1.3.1 (3c4bd3b, script 4f66849); full suite 1,901 passed, 17 skipped, 0 failed, 1:43 h (`runs/tests_131.log`) |
 | C2 | Pilot passed and launch | First pilot: STOP at G4 (2026-11-26 16:14). Second pilot (1.3.1): all gates pass; launched 2026-11-26 21:05 (`runs/pilot_aisles_131.md`) |
-| C3 | Run A summary | – |
+| C3 | Run A summary | 2026-11-27: PA1 partly supported (thin not testable), PA2 not supported (n 4 / not testable), PA3 supported 8/8 (`runs/aisles_A_summary.md`) |
 | C4 | Runs B and C summaries | – |
 | C5 | `runs/REPORT_2026-12a.md` | – |
 
@@ -44,3 +44,5 @@ Randall (2026-11-26, before dinner): push nothing; he pushes v1.2.0 and later ta
   - The first pilot's outputs moved to `runs/pilot_aisles_130/` (the chain cache is keyed without the engine version, so it must not be reused).
 - 2026-11-26 18:59: **C1 (1.3.1).** Full suite at 9023acf: 1,901 passed, 17 skipped, 0 failed, 1 h 43 min (`runs/tests_131.log`). Second pilot launched: fresh calibration with the D4-fixed script, seeds 900–902, 7 workers, normal priority, `caffeinate -i`.
 - 2026-11-26 21:05: **C2.** Second pilot (engine 1.3.1, fresh calibration, seeds 900–902; 060c02b): G1, G2a–d, G3 (13.02 h), G4 (max 0.306), G4b (max 0.037), G5 all pass; no calibration flags. Main runs A,B,C launched via `analysis/aisles_main_driver.sh` (e4bed1c), blocks ≤ 10 h back to back. Dry run of `analyse` on the pilot records works. Noted for Randall (not a gate): under D5 the pooled per-seed ratio is undefined when the sampled never profits sum to ≤ 0, which happened in 1–3 of 3 pilot seeds in the ds 0 thin cells; per-aisle figures (one stall, D2) drop out more often (PB2 not testable in the pilot). Report `runs/pilot_aisles_131.md`.
+- 2026-11-27 09:35: main runs complete: 7,800 chains in 12.50 h (block 1 6,240 chains to 07:05, block 2 1,560 chains), memory pauses 0, guards 0. Analysis written 09:37 (`runs/aisles_{A,B,C}.json`).
+- 2026-11-27: **C3.** Run A summary `runs/aisles_A_summary.md`. In the thin-margin ds 0 cells, never-chain profit is negative on average (−$257 to −$421 per stall over 30 days), so the D5 ratio is undefined in 16–20 of 20 seeds and PA1 thin and PA2 hard are not testable. Cause: fixed cost = 0.90 × gross profit (revenue − unit cost, as the plan specifies) while honest profit also pays ad spend (a flat ~$2.4, $16, $39 a day by aisle; 14–34% of thin gross). Not a code bug; nothing changed. Post hoc addition (not a deviation; changes no verdict): paired contrasts in the plan's secondary units (`analysis/aisles_secondary_units.py`, `runs/aisles_secondary_units.json`); plot `analysis/aisles_plots.py`.
