@@ -1,0 +1,28 @@
+2026-11-27 21:09:12 run record {"code_dirty": false, "command": "/Users/randallbennington/Bazaar Markets/analysis/aisles_rerun.py --phase pilot --tests engine 1.3.1 unchanged; tests/test_v130.py + tests/test_v131.py 29 passed; full suite 1901 passed at 9023acf", "commit": "c256c55", "engine": "1.3.1", "numpy": "2.5.4", "phase": "pilot", "platform": "macOS-27.2.1-arm64-arm-64bit", "python": "3.12.7", "script_sha256": "b67dd1b019494712af307fe96d3228227e7c06eee53d4ac897f274a81dd90d0f", "started": "2026-11-27 21:09:12", "tests": "engine 1.3.1 unchanged; tests/test_v130.py + tests/test_v131.py 29 passed; full suite 1901 passed at 9023acf", "workers": 7}
+2026-11-27 21:09:12 90 jobs, 90 to run (0 cached); workers 7; load [2.35, 2.6, 2.58]; memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:10:16 10/90 jobs, 65 s, load [6.29, 3.71, 3.0], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:10:52 20/90 jobs, 101 s, load [7.16, 4.21, 3.21], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:12:01 30/90 jobs, 169 s, load [8.27, 5.14, 3.64], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:12:39 40/90 jobs, 207 s, load [9.24, 5.7, 3.9], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:13:46 50/90 jobs, 275 s, load [9.11, 6.41, 4.31], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:14:27 60/90 jobs, 315 s, load [8.65, 6.62, 4.48], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:15:08 70/90 jobs, 356 s, load [8.47, 6.83, 4.65], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:16:14 80/90 jobs, 422 s, load [8.29, 7.09, 4.91], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:16:51 90/90 jobs, 459 s, load [7.18, 6.97, 4.97], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:16:51 calibration: 18 scenarios on seeds [900, 901, 902, 903, 904], written to runs/aisles_r_calibration.json; floor binds {'cal|A|thin|easy|t40|ds0': ['fish|seconds', 'electronics|seconds', 'designer|seconds'], 'cal|A|thin|hard|t40|ds0': ['fish|seconds', 'electronics|seconds', 'designer|seconds'], 'cal|A|fat|easy|t40|ds0': ['electronics|seconds'], 'cal|A|fat|hard|t40|ds0': ['fish|seconds', 'electronics|seconds', 'designer|seconds'], 'cal|B|ds0': ['fish|seconds', 'electronics|seconds', 'designer|seconds']}; flags 0
+2026-11-27 21:17:11 72 jobs, 72 to run (0 cached); workers 7; load [5.98, 6.71, 4.92]; memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:24:51 10/72 jobs, 460 s, load [11.34, 9.64, 7.24], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:31:20 20/72 jobs, 849 s, load [10.05, 9.6, 8.02], memory {'swap_free_mb': 906.81, 'free_pct': 74}
+2026-11-27 21:37:48 30/72 jobs, 1237 s, load [13.55, 12.13, 9.6], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 21:44:21 40/72 jobs, 1630 s, load [9.49, 10.86, 9.98], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 21:51:31 50/72 jobs, 2060 s, load [8.68, 11.47, 11.04], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 21:56:42 60/72 jobs, 2371 s, load [9.08, 10.35, 10.7], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:04:10 70/72 jobs, 2819 s, load [5.78, 8.09, 9.53], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:04:24 72/72 jobs, 2833 s, load [5.46, 7.91, 9.44], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:04:24 24 jobs, 24 to run (0 cached); workers 7; load [5.46, 7.91, 9.44]; memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:13:51 10/24 jobs, 566 s, load [8.82, 8.68, 9.13], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:19:02 20/24 jobs, 877 s, load [7.33, 8.34, 8.86], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:21:37 24/24 jobs, 1032 s, load [4.33, 6.75, 8.13], memory {'swap_free_mb': 906.81, 'free_pct': 75}
+2026-11-27 22:21:57 G2a A|RI|ds0|lex|col|t40|ds0.0|500|None|never: identical
+2026-11-27 22:22:15 G2a A|RI|ds1|lex|col|t40|ds1.0|500|None|never: identical
+2026-11-27 22:22:15 pilot: G1 True, G2a True, G2b True, G2c True, G2e True, G2m False, G3 True, G4b False, G5 True, G6 True; G3 5.25 h (15 seeds 3.94 h, limit 14.0); all pass except G3: False
