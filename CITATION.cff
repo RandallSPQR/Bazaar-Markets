@@ -20,11 +20,17 @@ identifiers:
     value: 10.5281/zenodo.24406533
     description: "Software, version 1.0.0"
   - type: doi
+    value: 10.5281/zenodo.24615189
+    description: "Software, version 1.2.0"
+  - type: doi
     value: 10.5281/zenodo.24406532
     description: "Software, all versions (resolves to the latest)"
   - type: doi
     value: 10.5281/zenodo.24406657
     description: "Run caches for version 1.0.0 (dataset, CC BY 4.0)"
+  - type: doi
+    value: 10.5281/zenodo.24615256
+    description: "Seller state bank v2 and run caches for version 1.2.0 (dataset, CC BY 4.0)"
 license: MIT
 repository-code: "https://github.com/RandallSPQR/Bazaar-Markets"
 keywords:

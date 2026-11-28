@@ -1,6 +1,6 @@
 # Bazaar Markets v1.2.0: data package
 
-Dataset for Zenodo, licence CC BY 4.0 ([creativecommons.org/licenses/by/4.0](https://creativecommons.org/licenses/by/4.0/)). Built 2026-11-26; engine 1.2.0. Every file that is also in git matches commit 54c57c4; the caches are not in git. Prepared by Claude for Randall; not uploaded.
+Dataset for Zenodo, licence CC BY 4.0 ([creativecommons.org/licenses/by/4.0](https://creativecommons.org/licenses/by/4.0/)). Built 2026-11-26; engine 1.2.0. Every file that is also in git matches commit 54c57c4; the caches are not in git. Prepared by Claude for Randall; uploaded by Randall 2026-11-28 as a new version of the run-cache dataset: [10.5281/zenodo.24615256](https://doi.org/10.5281/zenodo.24615256).
 
 ## Archive
 

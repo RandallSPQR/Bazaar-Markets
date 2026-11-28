@@ -87,10 +87,12 @@ Inspired by Don Marti's posts on deceptive advertising and ad reform (blog.zgp.o
 See [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" reads it). Each release is archived on Zenodo, with its run caches as a separate dataset.
 
 - Software, v1.0.0: [10.5281/zenodo.24406533](https://doi.org/10.5281/zenodo.24406533)
+- Software, v1.2.0: [10.5281/zenodo.24615189](https://doi.org/10.5281/zenodo.24615189)
 - Software, all versions (resolves to the latest): [10.5281/zenodo.24406532](https://doi.org/10.5281/zenodo.24406532)
 - Run caches for v1.0.0 (dataset, CC BY 4.0): [10.5281/zenodo.24406657](https://doi.org/10.5281/zenodo.24406657)
+- Seller state bank v2 and run caches for v1.2.0 (dataset, CC BY 4.0): [10.5281/zenodo.24615256](https://doi.org/10.5281/zenodo.24615256)
 
-> Bennington, R. S. (2026). *Bazaar Markets: The Agentic Ad Engine* (v1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.24406533
+> Bennington, R. S. (2026). *Bazaar Markets: The Agentic Ad Engine* (v1.2.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.24615189
 
 ## License
 
